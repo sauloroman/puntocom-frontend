@@ -1,12 +1,12 @@
 import React from 'react'
 import { RoutesApp } from './router/Routes'
-import { Provider } from 'react-redux'
-import { store } from './store'
+import { AlertContainer } from './shared/components/AlertContainer'
 
 export const App: React.FC = () => {
   return (
-    <Provider store={store}>
+    <>
       <RoutesApp />
-    </Provider>
+      <AlertContainer />
+    </>
   )
 } 
