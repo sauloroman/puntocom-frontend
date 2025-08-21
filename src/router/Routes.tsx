@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { PrivateRoutes } from './PrivateRoutes'
 import { PublicRoutes } from './PublicRoutes'
 import { useAuth } from '../shared/hooks'
@@ -16,6 +16,7 @@ export const RoutesApp: React.FC = () => {
             ? <Route path='/*' element={<PrivateRoutes />} />
             : <Route path='auth/*' element={<PublicRoutes />} />
           }
+          <Route path='/*' element={<Navigate to={'/auth/login'} />} />
         </Routes>
     </BrowserRouter>
   )

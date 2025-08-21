@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from 'react-router-dom'
 import { LayoutAuth } from '../../layouts/LayoutAuth'
-import { Button, Input, Label, Spinner } from '../../shared/components'
+import { Button, Input, Label, SpinnerContainer } from '../../shared/components'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../shared/hooks/useAuth';
 
@@ -75,7 +75,7 @@ export const Login: React.FC = () => {
                 { showPassword ? <FaEyeSlash /> : <FaEye /> }
               </div>
             </div>
-            { errors.password && (<p className='text-sm text-red-600 mt-1 text-right text-xs'>{errors.password.message}</p>)}
+            { errors.password && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.password.message}</p>)}
           </div>
 
           <Button className='
@@ -89,7 +89,7 @@ export const Login: React.FC = () => {
             rounded-lg
             w-full
           ' type='submit'>
-            { isLoading ? <div className='flex justify-center items-center'><Spinner size='lg' /></div> : 'Iniciar sesión'}
+            { isLoading ? <SpinnerContainer /> : 'Iniciar sesión'}
           </Button>
         </form>
       </div>

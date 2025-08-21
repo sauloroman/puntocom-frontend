@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { motion, AnimatePresence } from "framer-motion";
-import { useAlert } from '../hooks'
+import { useAlert } from '../../hooks'
 import { Alert } from './Alert'
 import { IoMdClose } from "react-icons/io";
 

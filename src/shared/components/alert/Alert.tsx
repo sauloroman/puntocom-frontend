@@ -3,7 +3,7 @@ import { type IconType } from "react-icons";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { MdErrorOutline, MdWarningAmber } from "react-icons/md";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
-import type { AlertType } from "../../interfaces/ui/alert.interface";
+import type { AlertType } from "../../../interfaces/ui/alert.interface";
 
 interface AlertProps {
   type?: AlertType;

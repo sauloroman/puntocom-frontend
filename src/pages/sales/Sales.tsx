@@ -1,7 +1,8 @@
 import React from 'react'
+import { PuntoComLayout } from '../../layouts/PuntoComLayout'
 
 export const Sales: React.FC = () => {
   return (
-    <div>Sales</div>
+    <PuntoComLayout>Sales</PuntoComLayout>
   )
 }

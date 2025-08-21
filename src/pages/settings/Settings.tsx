@@ -1,8 +1,8 @@
 import React from 'react'
 import { PuntoComLayout } from '../../layouts/PuntoComLayout'
 
-export const Access: React.FC = () => {
+export const Settings: React.FC = () => {
   return (
-    <PuntoComLayout>Access</PuntoComLayout>
+    <PuntoComLayout>Settings</PuntoComLayout>
   )
 }
