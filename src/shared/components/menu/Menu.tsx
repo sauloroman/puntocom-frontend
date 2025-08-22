@@ -8,7 +8,11 @@ import { useAuth, useTheme } from "../../hooks"
 import { ThemeType } from "../../../interfaces/ui/theme.interface"
 import { UserWidget } from "../user/UserWidget"
 
-export const Menu: React.FC = () => {
+interface MenuProps {
+  collapsed: boolean
+}
+
+export const Menu: React.FC<MenuProps> = ({ collapsed }) => {
 
   const { onLogout } = useAuth()
   const { activateDarkMode, activateLightMode, theme } = useTheme()
@@ -29,15 +33,16 @@ export const Menu: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full space-y-8">
-      <MenuSection title="Menú General" items={generalItems}/>
-      <MenuSection title="Sistema" items={systemItems}/>
+      <MenuSection title="Menú General" collapsed={collapsed} items={generalItems}/>
+      <MenuSection title="Sistema" collapsed={collapsed} items={systemItems}/>
 
       <ul className="list-none mt-auto space-y-6">
-        <UserWidget />
+        <UserWidget collapsed={collapsed} />
         <MenuItem 
           onClick={ onLogout }
           label="Cerrar Sesión"
           icon={<IoLogOutOutline />}
+          collapsed={collapsed}
         />
       </ul>
     </div>

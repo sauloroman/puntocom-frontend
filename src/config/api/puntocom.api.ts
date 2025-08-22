@@ -14,8 +14,8 @@ export const puntocomApiPrivate = axios.create({
 })
 
 puntocomApiPrivate.interceptors.request.use( (config) => {
-    const token = localStorage.getItem(VITE_TOKEN_NAME) ?? ''
-
+    const token = JSON.parse(localStorage.getItem(VITE_TOKEN_NAME) ?? '')
+    
     if ( token ) {
         config.headers['Authorization'] = `Bearer ${token}`
     }

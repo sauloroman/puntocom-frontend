@@ -10,6 +10,12 @@ export interface UserResponse {
   token: string
 }
 
+export interface UserRenewAuth {
+  ok: boolean,
+  user: User,
+  token: string
+}
+
 export interface User {
   id: string,
   name: string,

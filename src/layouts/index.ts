@@ -1,2 +1,3 @@
 export { LayoutAuth } from './LayoutAuth'
-export {} from './PuntoComLayout'
+export { PuntoComLayout } from './PuntoComLayout'
+export { TabsLayout } from './TabsLayout'

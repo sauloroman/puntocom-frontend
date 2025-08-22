@@ -8,10 +8,10 @@ interface UserPhotoProps {
 export const UserPhoto: React.FC<UserPhotoProps> = ({ usernameInitial, image }) => {
   return (
     <div
-      className={`w-10 h-10 rounded-full flex justify-center items-center overflow-hidden bg-gray-50`}
+      className={`w-10 h-10 rounded-full flex justify-center items-center overflow-hidden bg-gray-50 shadow-lg`}
     >
       {image === 'Usuario sin imagen' || !image ? (
-        <span className='text-lg font-semibold text-gray-700'>{usernameInitial}</span>
+        <div className='text-lg font-semibold w-full h-full rounded-full bg-purple-900 text-white flex items-center justify-center'>{usernameInitial}</div>
       ) : (
         <img
           className='object-cover w-full h-full rounded-full'

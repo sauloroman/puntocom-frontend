@@ -1,3 +1,6 @@
 export { useAlert } from './useAlert'
 export { useAuth } from './useAuth'
 export { useTheme } from './useTheme'
+export { useMenu } from './useMenu'
+export { useTabs } from './useTabs'
+export { useCategories } from './useCategories'

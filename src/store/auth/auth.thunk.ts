@@ -1,20 +1,20 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { UserRequest, UserResponse } from "../../interfaces/user.interface";
+import type { UserRenewAuth, UserRequest, UserResponse } from "../../interfaces/user.interface";
 import { login, setIsLoading } from "./auth.slice";
-import { puntocomApiPublic } from "../../config/api/puntocom.api";
+import { puntocomApiPrivate, puntocomApiPublic } from "../../config/api/puntocom.api";
 import { getEnvVariables } from "../../shared/helpers";
 import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
-import axios from "axios";
+import { handleError } from "../../config/api/handle-error";
 
-const urlUsers = '/api/user/login'
+const urlUsers = '/api/user'
 const { VITE_TOKEN_NAME } = getEnvVariables()
 
 export const startLoginUserWithEmailAndPassword = ( credentials: UserRequest ) => {
     return async ( dispatch: Dispatch ) => {
         dispatch( setIsLoading( true ) )
         try {
-            const { data } = await puntocomApiPublic.post<UserResponse>(urlUsers, credentials)
+            const { data } = await puntocomApiPublic.post<UserResponse>(`${urlUsers}/login`, credentials)
             const { user, token } = data
 
             localStorage.setItem(VITE_TOKEN_NAME, JSON.stringify(token))
@@ -26,12 +26,7 @@ export const startLoginUserWithEmailAndPassword = ( credentials: UserRequest ) =
             }))
 
         } catch( error ) {
-            let errorMessage = "Ocurrió un error inesperado";
-
-            if (axios.isAxiosError(error) && error.response?.data?.message) {
-                errorMessage = error.response.data.message;
-            }
-
+            const errorMessage = handleError(error)
             dispatch(
                 showAlert({
                     title: "⚠️ Error al iniciar sesión",
@@ -39,10 +34,36 @@ export const startLoginUserWithEmailAndPassword = ( credentials: UserRequest ) =
                     type: AlertType.error,
                 })
             );
-
-            console.error("Login error:", error);
         }
         
         dispatch( setIsLoading( false ) )
+    }
+}
+
+export const startRenewingAuth = () => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+
+        try {
+
+            const { data } = await puntocomApiPrivate.get<UserRenewAuth>(`${urlUsers}/renew-token`)
+            const { token, user } = data
+
+            localStorage.setItem(VITE_TOKEN_NAME, JSON.stringify(token))
+            dispatch( login( user ) )
+
+        } catch( error ) {
+            const errorMessage = handleError(error)
+            dispatch(
+                showAlert({
+                    title: "⚠️ Inicia sesión nuevamente",
+                    text: errorMessage,
+                    type: AlertType.error,
+                })
+            );
+        }
+
+        dispatch(setIsLoading(false))
+
     }
 }
