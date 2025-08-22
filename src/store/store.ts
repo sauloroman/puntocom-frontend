@@ -5,6 +5,8 @@ import { themeSlice } from "./theme/theme.slice";
 import { menuSlice } from "./menu/menu.slice";
 import { tabsSlice } from "./tabs/tabs.slice";
 import { categoriesSlice } from "./categories/categories.slice";
+import { modalSlice } from "./modal/modal.slice";
+import { drawerSlice } from "./drawer/drawer.slice";
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +15,8 @@ export const store = configureStore({
         alert: alertSlice.reducer,
         menu: menuSlice.reducer,
         tabs: tabsSlice.reducer,
+        modal: modalSlice.reducer,
+        drawer: drawerSlice.reducer,
 
         categories: categoriesSlice.reducer
     }

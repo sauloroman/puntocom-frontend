@@ -11,7 +11,7 @@ export const UserPhoto: React.FC<UserPhotoProps> = ({ usernameInitial, image }) 
       className={`w-10 h-10 rounded-full flex justify-center items-center overflow-hidden bg-gray-50 shadow-lg`}
     >
       {image === 'Usuario sin imagen' || !image ? (
-        <div className='text-lg font-semibold w-full h-full rounded-full bg-purple-900 text-white flex items-center justify-center'>{usernameInitial}</div>
+        <div className='text-lg font-semibold w-full h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white flex items-center justify-center'>{usernameInitial}</div>
       ) : (
         <img
           className='object-cover w-full h-full rounded-full'

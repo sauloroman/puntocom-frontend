@@ -1,10 +1,10 @@
 import React from 'react'
 
-interface LayoutAuthProps {
+interface AuthLayoutProps {
   children: React.ReactNode
 }
 
-export const LayoutAuth: React.FC<LayoutAuthProps> = ({ children }) => {
+export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
   return (
     <div className='relative min-h-screen flex bg-white overflow-hidden'>
       

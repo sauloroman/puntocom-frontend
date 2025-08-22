@@ -3,6 +3,8 @@ import type { Category } from "../../../interfaces/category.interface";
 import { TableActions } from "./TableActions";
 import { TableStatus } from "./TableStatus";
 import { TableImage } from "./TableImage";
+import { useCategories, useDrawer } from "../../hooks";
+import { DrawelNames } from "../../../interfaces/ui/drawel.interface";
 
 interface TableCategoriesProps {
     data: Category[];
@@ -10,12 +12,21 @@ interface TableCategoriesProps {
     onDelete?: (id: string) => void;
 }
 
-export const TableCategories: React.FC<TableCategoriesProps> = ({ data, onEdit, onDelete }) => {
+export const TableCategories: React.FC<TableCategoriesProps> = ({ data, onEdit, onDelete }) => {    
+
+    const { onOpenRightDrawer } = useDrawer()
+    const { onSelectCategory } = useCategories()
+
+    const onSelecteCategory = ( id: string ) => {
+        onOpenRightDrawer(DrawelNames.infoCategory)
+        onSelectCategory( id )
+    }
+
     return (
         <div className="border border-gray-300 rounded-lg overflow-hidden">
-            <div className="max-h-96 overflow-y-auto">
+            <div className="max-h-[800px] overflow-y-auto">
                 <table className="min-w-full bg-white text-sm">
-                    <thead className="bg-gray-50 text-gray-600 text-xs uppercase tracking-wide sticky top-0 z-10">
+                    <thead className="bg-gray-50 text-indigo-600 text-xs uppercase tracking-wide sticky top-0 z-10">
                         <tr>
                             <th className="px-4 py-3 text-left font-medium">Nombre</th>
                             <th className="px-4 py-3 text-left font-medium">Descripción</th>
@@ -28,7 +39,7 @@ export const TableCategories: React.FC<TableCategoriesProps> = ({ data, onEdit, 
                     <tbody className="divide-y divide-gray-200 text-xs">
                         {data.length > 0 ? (
                             data.map((cat) => (
-                                <tr key={cat.id} className="hover:bg-gray-50 transition-colors">
+                                <tr key={cat.id} className="hover:bg-gray-50 transition-colors cursor-pointer">
                                     <td className="px-4 py-3 font-medium text-gray-900 flex items-center gap-2">
                                         <TableImage 
                                             width='w-6' 
@@ -39,10 +50,11 @@ export const TableCategories: React.FC<TableCategoriesProps> = ({ data, onEdit, 
                                     </td>
                                     <td className="px-4 py-3 text-gray-600">{cat.description}</td>
                                     <td className="px-4 py-3"><TableStatus status={cat.isActive} /></td>
-                                    <td className="px-4 py-3">{new Date(cat.createdAt).toLocaleDateString()}</td>
-                                    <td className="px-4 py-3">{new Date(cat.updatedAt).toLocaleDateString()}</td>
+                                    <td className="px-4 py-3">{cat.createdAt}</td>
+                                    <td className="px-4 py-3">{cat.updatedAt}</td>
                                     <td className="px-4 py-3 text-center relative">
-                                        <TableActions 
+                                        <TableActions
+                                            onView={ () => onSelecteCategory(cat.id ) }
                                             onDelete={() => onDelete?.(cat.id)}
                                             onEdit={() => onEdit?.(cat.id)}
                                         />

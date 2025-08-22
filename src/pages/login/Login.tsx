@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from 'react-router-dom'
-import { LayoutAuth } from '../../layouts/LayoutAuth'
+import { AuthLayout } from '../../layouts/AuthLayout'
 import { Button, Input, Label, SpinnerContainer } from '../../shared/components'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../shared/hooks/useAuth';
@@ -28,7 +28,7 @@ export const Login: React.FC = () => {
   }
 
   return (
-   <LayoutAuth>
+   <AuthLayout>
     <div className="w-full px-8 md:px-10 lg:px-16">
       <div className='flex flex-col justify-center'>  
         <div className="mb-8">
@@ -95,6 +95,6 @@ export const Login: React.FC = () => {
       </div>
 
     </div>
-   </LayoutAuth>
+   </AuthLayout>
   )
 }

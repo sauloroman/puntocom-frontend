@@ -4,11 +4,13 @@ import type { Category } from "../../interfaces/category.interface";
 interface ICategories {
     isLoading: boolean,
     categories: Category[] | null
+    categorySelected: Category | null,
 }
 
 const initialState: ICategories = {
     isLoading: false,
-    categories: null
+    categories: null,
+    categorySelected: null
 }
 
 export const categoriesSlice = createSlice({
@@ -20,14 +22,31 @@ export const categoriesSlice = createSlice({
             state.isLoading = payload
         },
 
+        addCategory: ( state, {payload}: PayloadAction<Category>) => {
+            state.categories?.unshift( payload )
+        },
+
         setCategories: ( state, {payload}: PayloadAction<Category[]>) => {
             state.categories = payload
+        },
+
+        setCategorySelected: (state, {payload}: PayloadAction<Category>) => {
+            state.categorySelected = payload
+        },
+
+        resetCategories: ( state ) => {
+            state.isLoading = false
+            state.categories = null
+            state.categorySelected = null
         }
 
     }
 })
 
 export const {
+    addCategory,
     setIsLoading,
-    setCategories
+    setCategories,
+    setCategorySelected,
+    resetCategories
 } = categoriesSlice.actions

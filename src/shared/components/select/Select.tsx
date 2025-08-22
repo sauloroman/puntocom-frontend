@@ -28,7 +28,7 @@ export const Select: React.FC<SelectProps> = ({
           transition-all cursor-pointer
         "
       >
-        <option value="" selected>{placeholder}</option>
+        <option value="" defaultValue={placeholder}>{placeholder}</option>
         {options.map((option) => (
           <option key={option} value={option}>
             {option}

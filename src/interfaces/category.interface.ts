@@ -6,6 +6,17 @@ export interface CategoryResponse {
     categories: Category[]
 }
 
+export interface CreateCategory {
+    name: string,
+    description?: string
+}
+
+export interface CreateCategoryResponse {
+    ok: boolean,
+    message: string,
+    category: Category
+}
+
 export interface Category {
     id: string,
     name: string,
