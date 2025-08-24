@@ -22,6 +22,11 @@ export const TableCategories: React.FC<TableCategoriesProps> = ({ data, onEdit, 
         onSelectCategory( id )
     }
 
+    const onEditCategory = (id: string) => {
+        onOpenRightDrawer(DrawelNames.editCategory)
+        onSelectCategory(id)
+    }
+
     return (
         <div className="border border-gray-300 rounded-lg overflow-hidden">
             <div className="max-h-[800px] overflow-y-auto">
@@ -56,7 +61,7 @@ export const TableCategories: React.FC<TableCategoriesProps> = ({ data, onEdit, 
                                         <TableActions
                                             onView={ () => onSelecteCategory(cat.id ) }
                                             onDelete={() => onDelete?.(cat.id)}
-                                            onEdit={() => onEdit?.(cat.id)}
+                                            onEdit={() => onEditCategory(cat.id)}
                                         />
                                     </td>
                                 </tr>

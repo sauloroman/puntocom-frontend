@@ -5,3 +5,10 @@ export const AlertType = {
     warning: 'warning' as AlertType,
     error: 'error' as AlertType
 }
+
+export interface AlertI {
+    title: string | null,
+    text: string | null,
+    type: AlertType,
+    isVisible: boolean,
+}

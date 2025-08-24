@@ -6,10 +6,11 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 
 interface DrawerProps {
   title: string,
+  width: string,
   children: React.ReactNode;
 }
 
-export const RightDrawerLayout: React.FC<DrawerProps> = ({ title, children }) => {
+export const RightDrawerLayout: React.FC<DrawerProps> = ({ title, width, children }) => {
     const { rightDrawerIsOpen, onCloseDrawers } = useDrawer()
 
   return (
@@ -25,7 +26,7 @@ export const RightDrawerLayout: React.FC<DrawerProps> = ({ title, children }) =>
           />
 
           <motion.div
-            className="fixed top-0 right-0 h-full w-xl bg-white shadow-xl z-50 flex flex-col"
+            className={`fixed top-0 right-0 h-full ${width} bg-white shadow-xl z-50 flex flex-col`}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}

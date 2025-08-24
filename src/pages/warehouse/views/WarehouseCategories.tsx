@@ -5,6 +5,7 @@ import { ModalNames } from '../../../interfaces/ui/modal.interface'
 import { ModalCreateCategory } from '../../../shared/components/modal/ModalCreateCategory'
 import { DrawelNames } from '../../../interfaces/ui/drawel.interface'
 import { CategoryInfoDrawer } from '../../../shared/components/drawer/CategoryInfoDrawer'
+import { CategoryEditDrawer } from '../../../shared/components/drawer/CategoryEditDrawer'
 
 export const WarehouseCategories: React.FC = () => {
 
@@ -39,6 +40,7 @@ export const WarehouseCategories: React.FC = () => {
       </section>
       { modalIsOpen && modalName === ModalNames.createCategory && <ModalCreateCategory/>}
       { rightDrawerIsOpen && drawelName === DrawelNames.infoCategory && <CategoryInfoDrawer />}
+      { rightDrawerIsOpen && drawelName === DrawelNames.editCategory && <CategoryEditDrawer />}
     </>
   )
 }

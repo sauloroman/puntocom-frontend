@@ -17,6 +17,17 @@ export interface CreateCategoryResponse {
     category: Category
 }
 
+export interface UpdateCategory {
+    name?: string,
+    description?: string,
+}
+
+export interface UpdateCategoryResponse {
+    ok: boolean,
+    message: string,
+    category: Category
+}
+
 export interface Category {
     id: string,
     name: string,

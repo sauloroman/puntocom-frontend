@@ -1,8 +1,8 @@
 import type { Dispatch } from "@reduxjs/toolkit"
-import { addCategory, setCategories, setIsLoading } from "./categories.slice"
+import { addCategory, setCategories, setIsLoading, updateCategory } from "./categories.slice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 import type { Pagination } from "../../interfaces/pagination.interface"
-import { type CategoryResponse, type CreateCategory, type CreateCategoryResponse } from "../../interfaces/category.interface"
+import { type CategoryResponse, type CreateCategory, type CreateCategoryResponse, type UpdateCategory, type UpdateCategoryResponse } from "../../interfaces/category.interface"
 import { showAlert } from "../alert/alert.slice"
 import { handleError } from "../../config/api/handle-error"
 import { AlertType } from "../../interfaces/ui/alert.interface"
@@ -39,15 +39,48 @@ export const startCreatingCategory = ( createCategoryData: CreateCategory ) => {
                 showAlert({
                     title: createCategoryData.name,
                     text: message,
-                    type: AlertType.info,
+                    type: AlertType.success,
                 })
             );
-
         } catch( error ) {
             const errorMessage = handleError(error)
             dispatch(
                 showAlert({
                     title: "⚠️ No se pudo crear la categoría",
+                    text: errorMessage,
+                    type: AlertType.error,
+                })
+            );
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startUpdatingCategory = ( categoryId: string, categoryData: UpdateCategory ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            const { data } = await puntocomApiPrivate.put<UpdateCategoryResponse>(`${urlCategories}/${categoryId}`, categoryData)
+            const { category, message } = data
+
+            dispatch(updateCategory({
+                categoryId: categoryId,
+                category: category,
+            }))
+
+            dispatch(
+                showAlert({
+                    title: category.name,
+                    text: message,
+                    type: AlertType.success,
+                })
+            );
+        } catch(error) {
+            const errorMessage = handleError(error)
+            dispatch(
+                showAlert({
+                    title: "⚠️ No se pudo actualizar la categoría",
                     text: errorMessage,
                     type: AlertType.error,
                 })

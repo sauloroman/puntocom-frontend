@@ -8,7 +8,7 @@ interface ICategories {
 }
 
 const initialState: ICategories = {
-    isLoading: false,
+    isLoading: true,
     categories: null,
     categorySelected: null
 }
@@ -24,6 +24,15 @@ export const categoriesSlice = createSlice({
 
         addCategory: ( state, {payload}: PayloadAction<Category>) => {
             state.categories?.unshift( payload )
+        },
+
+        updateCategory:  ( state, {payload}: PayloadAction<{categoryId: string, category: Category}>) => {
+            state.categories = state.categories!.map( (category: Category) => {
+                if(category.id === payload.categoryId) {
+                    return payload.category
+                }
+                return category
+            })
         },
 
         setCategories: ( state, {payload}: PayloadAction<Category[]>) => {
@@ -45,6 +54,7 @@ export const categoriesSlice = createSlice({
 
 export const {
     addCategory,
+    updateCategory,
     setIsLoading,
     setCategories,
     setCategorySelected,

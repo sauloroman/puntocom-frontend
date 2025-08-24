@@ -1,12 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { AlertType } from "../../interfaces/ui/alert.interface";
-
-interface AlertI {
-    title: string | null,
-    text: string | null,
-    type: AlertType,
-    isVisible: boolean,
-}
+import { AlertType, type AlertI } from "../../interfaces/ui/alert.interface";
 
 const initialState: AlertI = {
     title: null,

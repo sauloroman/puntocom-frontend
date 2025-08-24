@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
-import { startCreatingCategory, startGettingCategories } from "../../store/categories/categories.thunk"
-import type { CreateCategory } from "../../interfaces/category.interface"
+import { startCreatingCategory, startGettingCategories, startUpdatingCategory } from "../../store/categories/categories.thunk"
+import type { CreateCategory, UpdateCategory } from "../../interfaces/category.interface"
 import { setCategorySelected } from "../../store/categories/categories.slice"
 
 export const useCategories = () => {
@@ -17,6 +17,10 @@ export const useCategories = () => {
         dispatch( startCreatingCategory(data) )
     }
 
+    const updateCategory = ( categoryId: string, categoryData: UpdateCategory ) => {
+        dispatch( startUpdatingCategory(categoryId, categoryData))
+    }
+
     const onSelectCategory = ( id: string ) => {
         const category = categories?.find( category => category.id === id )
         dispatch( setCategorySelected(category!) )
@@ -29,6 +33,7 @@ export const useCategories = () => {
 
         onSelectCategory,
         getCategories,
-        createCategory
+        createCategory,
+        updateCategory
     }
 }
