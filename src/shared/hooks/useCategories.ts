@@ -5,11 +5,12 @@ import {
     startCreatingCategory, 
     startFilteringCategoriesByStatus, 
     startGettingCategories, 
+    startSearchingCategories, 
     startUpdatingCategory, 
     startUploadingCategoryImage 
 } from "../../store/categories/categories.thunk"
 import type { CreateCategory, UpdateCategory } from "../../interfaces/category.interface"
-import { setCategorySelected, setPage, setStatusFilter } from "../../store/categories/categories.slice"
+import { setCategorySelected, setPage, setPaginationVisible, setStatusFilter } from "../../store/categories/categories.slice"
 
 export const useCategories = () => {
 
@@ -19,7 +20,8 @@ export const useCategories = () => {
         categorySelected, 
         isLoading, 
         pagination,
-        filter 
+        filter,
+        isPaginationVisible
     } = useSelector( (state: RootState) => state.categories )
 
     const getCategories = () => {
@@ -27,12 +29,12 @@ export const useCategories = () => {
     }
 
     const filterCategoriesByStatus = ( status: boolean ) => {
-        dispatch( setStatusFilter(status) )
+        dispatch( setStatusFilter({status, isVisible: true}) )
         dispatch(startFilteringCategoriesByStatus({ page: 1, limit: 10}, status))
     }
 
-    const onSetFilterStatus = (status: boolean | null) => {
-        dispatch( setStatusFilter(status) )
+    const onSetFilterStatus = (status: boolean | null, isVisible: boolean) => {
+        dispatch( setStatusFilter({status, isVisible}) )
     }
 
     const createCategory = ( data: CreateCategory ) => {
@@ -56,6 +58,10 @@ export const useCategories = () => {
         dispatch(startChangingCategoryStatus(categoryId, status))
     }
 
+    const onSearchCategory = ( categorySearched: string ) => {
+        dispatch(startSearchingCategories(categorySearched))
+    }
+
     const onSetPage = ( page: number ) => {
          dispatch(setPage(page))
 
@@ -66,12 +72,17 @@ export const useCategories = () => {
         }
     }
 
+    const onChangePaginationVisibility = ( isVisible: boolean ) => {
+        dispatch( setPaginationVisible(isVisible) )
+    }
+
     return {
         categorySelected,
         categories,
         isLoading,
         pagination,
         filter,
+        isPaginationVisible,
 
         onSelectCategory,
         getCategories,
@@ -81,6 +92,8 @@ export const useCategories = () => {
         changeCategoryStatus,
         filterCategoriesByStatus,
         onSetPage,
-        onSetFilterStatus
+        onSetFilterStatus,
+        onSearchCategory,
+        onChangePaginationVisibility
     }
 }

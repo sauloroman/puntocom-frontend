@@ -6,10 +6,9 @@ import { TableImage, TableActions, TableStatus } from "../../../../../shared/com
 
 interface TableCategoriesProps {
     data: Category[];
-    onEdit?: (id: string) => void;
 }
 
-export const TableCategories: React.FC<TableCategoriesProps> = ({ data, onEdit }) => {    
+export const TableCategories: React.FC<TableCategoriesProps> = ({ data }) => {    
 
     const { onOpenRightDrawer } = useDrawer()
     const { onSelectCategory } = useCategories()

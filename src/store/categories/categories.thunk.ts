@@ -52,6 +52,21 @@ export const startFilteringCategoriesByStatus = ( pagination: Pagination, status
     }
 }
 
+export const startSearchingCategories = ( categorySearched: string ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            const {data} = await puntocomApiPrivate.get<CategoryResponse>(`${urlCategories}/search?sort=categoryName:asc&filter={"categoryName": "${categorySearched}"}`)
+            const { categories } = data
+            dispatch( setCategories(categories) )
+        } catch(error) {
+            console.log(error)
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
 export const startCreatingCategory = ( createCategoryData: CreateCategory ) => {
     return async ( dispatch: Dispatch ) => {
         dispatch(setIsLoading(true))

@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState, type FormEvent } from "react";
 import { FiSearch } from "react-icons/fi";
 
 interface SearchProps {
     placeholder: string,
-    onChange?: ( value: string ) => void
+    onChange: ( value: string ) => void
 }
 
 export const Search: React.FC<SearchProps> = ({ placeholder, onChange }) => {
+
+  const [valueSearched, setvalueSearched] = useState<string>('')
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onChange( valueSearched )
+  }
+
   return (
-    <div className="relative w-full max-w-sm">
+    <form onSubmit={ handleSubmit } className="relative w-full max-w-sm">
       <input
         type="text"
         placeholder={placeholder}
@@ -21,12 +29,12 @@ export const Search: React.FC<SearchProps> = ({ placeholder, onChange }) => {
           focus:ring-2 focus:ring-indigo-100
           transition-all
         "
-        onChange={ (e) => onChange?.(e.target.value)}
+        onChange={ (e) => setvalueSearched(e.target.value)}
       />
       <FiSearch
         className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
         size={18}
       />
-    </div>
+    </form>
   );
 };

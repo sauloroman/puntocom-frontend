@@ -4,7 +4,7 @@ import { useCategories } from '../../../../../shared/hooks'
 
 export const PaginationCategories: React.FC = () => {
     
-    const { pagination, onSetPage } = useCategories()
+    const { pagination, onSetPage, isPaginationVisible } = useCategories()
     const { page, total, totalPages } = pagination
 
     const onPageChange = ( page: number ) => {
@@ -13,12 +13,15 @@ export const PaginationCategories: React.FC = () => {
 
     return (
         <div className='flex flex-end items-center'>
-            <Pagination 
-                onPageChange={onPageChange}  
-                page={page} 
-                total={total} 
-                totalPages={totalPages} 
-            />
+            {
+                isPaginationVisible &&
+                <Pagination 
+                    onPageChange={onPageChange}  
+                    page={page} 
+                    total={total} 
+                    totalPages={totalPages} 
+                />
+            }
         </div>
     )
 }

@@ -4,12 +4,13 @@ import { useCategories } from '../../../../../shared/hooks'
 
 export const SelectCategoriesByStatus: React.FC = () => {
 
-    const { filterCategoriesByStatus, getCategories, onSetFilterStatus } = useCategories()
+    const { filter: { isVisible }, filterCategoriesByStatus, getCategories, onSetFilterStatus, onChangePaginationVisibility } = useCategories()
 
     const onChange = (value: string) => {
+        onChangePaginationVisibility(true)
         if ( value === 'Estado' ) {
             getCategories()
-            onSetFilterStatus(null)
+            onSetFilterStatus(null, true)
             return
         }
         filterCategoriesByStatus( value === 'Activo' )
@@ -17,11 +18,13 @@ export const SelectCategoriesByStatus: React.FC = () => {
 
     return (
         <div>
-            <Select
-                onChange={onChange}
-                placeholder='Estado'
-                options={['Activo', 'Inactivo']}
-            />
+            {
+                isVisible && <Select
+                    onChange={onChange}
+                    placeholder='Estado'
+                    options={['Activo', 'Inactivo']}
+                /> 
+            }
         </div>
     )
 }

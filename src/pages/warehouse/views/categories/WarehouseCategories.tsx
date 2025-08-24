@@ -8,6 +8,7 @@ import {
   CategoryInfoDrawer, 
   ModalCreateCategory, 
   PaginationCategories, 
+  SearchCategory, 
   SelectCategoriesByStatus, 
   TableCategories 
 } from './components'
@@ -26,7 +27,7 @@ export const WarehouseCategories: React.FC = () => {
     <>
       <section>
         <div className="flex items-center justify-between mb-7">
-          <Search placeholder='Buscar categoría por nombre' />
+          <SearchCategory />
           <div className='flex items-center gap-5'>
             <SelectCategoriesByStatus />
             <div className='w-40' onClick={() => onOpenModal( ModalNames.createCategory )}>

@@ -6,20 +6,25 @@ interface ICategories {
     isLoading: boolean,
     categories: Category[] | null
     categorySelected: Category | null,
-    filter: { status: boolean | null },
+    filter: { status: boolean | null, isVisible: boolean },
     pagination: MetaPagination
+    isPaginationVisible: boolean
 }
 
 const initialState: ICategories = {
     isLoading: false,
     categories: null,
     categorySelected: null,
-    filter: { status: null },
+    filter: { 
+        status: null,
+        isVisible: false 
+    },
     pagination: {
         page: 1,
         total: 1,
         totalPages: 1
-    }
+    },
+    isPaginationVisible: true,
 }
 
 export const categoriesSlice = createSlice({
@@ -67,8 +72,13 @@ export const categoriesSlice = createSlice({
             state.categorySelected = null
         },
 
-        setStatusFilter: (state, { payload}: PayloadAction<boolean | null>) => {
-            state.filter.status = payload
+        setStatusFilter: (state, { payload}: PayloadAction<{status: boolean | null, isVisible: boolean}>) => {
+            state.filter.status = payload.status
+            state.filter.isVisible = payload.isVisible
+        },
+
+        setPaginationVisible: ( state, {payload}: PayloadAction<boolean>) => {
+            state.isPaginationVisible = payload
         }
 
     }
@@ -84,4 +94,5 @@ export const {
     setCategoriesMetaPagination,
     setPage,
     setStatusFilter,
+    setPaginationVisible,
 } = categoriesSlice.actions
