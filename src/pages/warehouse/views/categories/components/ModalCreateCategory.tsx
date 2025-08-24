@@ -4,7 +4,7 @@ import type { CreateCategory } from '../../../../../interfaces/category.interfac
 import { useCategories, useModal } from '../../../../../shared/hooks'
 import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { Input, Label, Textarea } from '../../../../../shared/components'
-import { IoTextOutline } from 'react-icons/io5'
+import { LuAsterisk } from "react-icons/lu";
 import { SaveButton } from '../../../../../shared/components/button/SaveButton'
 import { CancelButton } from '../../../../../shared/components/button/CancelButton'
 
@@ -29,7 +29,7 @@ export const ModalCreateCategory: React.FC = () => {
                 <div>
                     <Label htmlFor='categoryName' className='mb-3 flex items-center justify-between gap-2'>
                         Nombre de la categoría
-                        <IoTextOutline size={15} className='text-indigo-600' />
+                        <LuAsterisk size={15} className='text-indigo-600' />
                     </Label>
                     <Input  
                         autoComplete='off'
@@ -49,7 +49,6 @@ export const ModalCreateCategory: React.FC = () => {
                 <div>
                    <Label htmlFor='categoryDescription' className='mb-3 flex items-center justify-between gap-2'>
                         Descripción de la categoría
-                        <IoTextOutline size={15} className='text-indigo-600' />
                     </Label>
                     <Textarea 
                         rows={5}

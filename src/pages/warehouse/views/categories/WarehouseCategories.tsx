@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useCategories, useDrawer, useModal } from '../../../../shared/hooks'
-import { CreateButton, Search } from '../../../../shared/components'
+import { CreateButton } from '../../../../shared/components'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 import { 
