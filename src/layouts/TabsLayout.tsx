@@ -38,7 +38,7 @@ export const TabsLayout: React.FC<TabsLayoutProps> = ({
         })}
       </nav>
 
-      <div className="flex-1 p-4 bg-white">
+      <div className="flex-1 p-4 py-6 bg-white">
         {children}
       </div>
     </div>

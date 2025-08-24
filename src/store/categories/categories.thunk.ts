@@ -1,5 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit"
-import { addCategory, setCategories, setCategorySelected, setIsLoading, updateCategory } from "./categories.slice"
+import { addCategory, setCategories, setCategoriesMetaPagination, setCategorySelected, setIsLoading, updateCategory } from "./categories.slice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 import type { Pagination } from "../../interfaces/pagination.interface"
 import { 
@@ -23,16 +23,31 @@ export const startGettingCategories = (pagination: Pagination) => {
         const { limit, page } = pagination
         try {
 
-            const { data } = await puntocomApiPrivate.get<CategoryResponse>(`
-                ${urlCategories}?page=${page}&limit=${limit}&sort=categoryCreatedAt:desc
-            `)
+            const { data } = await puntocomApiPrivate.get<CategoryResponse>(`${urlCategories}?page=${page}&limit=${limit}&sort=categoryCreatedAt:desc`)
             const { categories, meta } = data
             dispatch( setCategories(categories) )
-
+            dispatch( setCategoriesMetaPagination(meta) )
         } catch(error) {
             console.log(error)
         } finally {
             dispatch( setIsLoading( false ) )
+        }
+    }
+}
+
+export const startFilteringCategoriesByStatus = ( pagination: Pagination, status: boolean ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            const {limit, page} = pagination
+            const {data} = await puntocomApiPrivate.get<CategoryResponse>(`${urlCategories}?page=${page}&limit=${limit}&sort=categoryName:asc&filter={"categoryStatus": ${status}}`)
+            const { categories, meta } = data
+            dispatch( setCategories(categories) )
+            dispatch( setCategoriesMetaPagination(meta) )
+        } catch(error) {
+            console.log(error)
+        } finally {
+            dispatch(setIsLoading(false))
         }
     }
 }

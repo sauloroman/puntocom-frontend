@@ -1,16 +1,25 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Category } from "../../interfaces/category.interface";
+import type { MetaPagination } from "../../interfaces/pagination.interface";
 
 interface ICategories {
     isLoading: boolean,
     categories: Category[] | null
     categorySelected: Category | null,
+    filter: { status: boolean | null },
+    pagination: MetaPagination
 }
 
 const initialState: ICategories = {
     isLoading: false,
     categories: null,
-    categorySelected: null
+    categorySelected: null,
+    filter: { status: null },
+    pagination: {
+        page: 1,
+        total: 1,
+        totalPages: 1
+    }
 }
 
 export const categoriesSlice = createSlice({
@@ -24,6 +33,7 @@ export const categoriesSlice = createSlice({
 
         addCategory: ( state, {payload}: PayloadAction<Category>) => {
             state.categories?.unshift( payload )
+            state.pagination.total++
         },
 
         updateCategory:  ( state, {payload}: PayloadAction<{categoryId: string, category: Category}>) => {
@@ -43,10 +53,22 @@ export const categoriesSlice = createSlice({
             state.categorySelected = payload
         },
 
+        setCategoriesMetaPagination: (state, {payload}: PayloadAction<MetaPagination>) => {
+            state.pagination = payload
+        },
+
+        setPage: (state, {payload}: PayloadAction<number>) => {
+            state.pagination.page = payload
+        },
+
         resetCategories: ( state ) => {
             state.isLoading = false
             state.categories = null
             state.categorySelected = null
+        },
+
+        setStatusFilter: (state, { payload}: PayloadAction<boolean | null>) => {
+            state.filter.status = payload
         }
 
     }
@@ -58,5 +80,8 @@ export const {
     setIsLoading,
     setCategories,
     setCategorySelected,
-    resetCategories
+    resetCategories,
+    setCategoriesMetaPagination,
+    setPage,
+    setStatusFilter,
 } = categoriesSlice.actions

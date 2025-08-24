@@ -3,20 +3,36 @@ import type { RootState } from "../../store"
 import { 
     startChangingCategoryStatus, 
     startCreatingCategory, 
+    startFilteringCategoriesByStatus, 
     startGettingCategories, 
     startUpdatingCategory, 
     startUploadingCategoryImage 
 } from "../../store/categories/categories.thunk"
 import type { CreateCategory, UpdateCategory } from "../../interfaces/category.interface"
-import { setCategorySelected } from "../../store/categories/categories.slice"
+import { setCategorySelected, setPage, setStatusFilter } from "../../store/categories/categories.slice"
 
 export const useCategories = () => {
 
     const dispatch = useDispatch<any>() 
-    const { categories, categorySelected, isLoading } = useSelector( (state: RootState) => state.categories )
+    const { 
+        categories, 
+        categorySelected, 
+        isLoading, 
+        pagination,
+        filter 
+    } = useSelector( (state: RootState) => state.categories )
 
     const getCategories = () => {
-        dispatch( startGettingCategories({ page: 1, limit: 9 }) )
+        dispatch( startGettingCategories({ page: 1, limit: 10 }) )
+    }
+
+    const filterCategoriesByStatus = ( status: boolean ) => {
+        dispatch( setStatusFilter(status) )
+        dispatch(startFilteringCategoriesByStatus({ page: 1, limit: 10}, status))
+    }
+
+    const onSetFilterStatus = (status: boolean | null) => {
+        dispatch( setStatusFilter(status) )
     }
 
     const createCategory = ( data: CreateCategory ) => {
@@ -40,16 +56,31 @@ export const useCategories = () => {
         dispatch(startChangingCategoryStatus(categoryId, status))
     }
 
+    const onSetPage = ( page: number ) => {
+         dispatch(setPage(page))
+
+        if (filter.status !== null) {
+            dispatch(startFilteringCategoriesByStatus({ page, limit: 10 }, filter.status))
+        } else {
+            dispatch(startGettingCategories({ page, limit: 10 }))
+        }
+    }
+
     return {
         categorySelected,
         categories,
         isLoading,
+        pagination,
+        filter,
 
         onSelectCategory,
         getCategories,
         createCategory,
         updateCategory,
         uploadCategoryIcon,
-        changeCategoryStatus
+        changeCategoryStatus,
+        filterCategoriesByStatus,
+        onSetPage,
+        onSetFilterStatus
     }
 }
