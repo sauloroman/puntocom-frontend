@@ -2,7 +2,7 @@ import type { Dispatch } from "@reduxjs/toolkit"
 import { addCategory, setCategories, setIsLoading, updateCategory } from "./categories.slice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 import type { Pagination } from "../../interfaces/pagination.interface"
-import { type CategoryResponse, type CreateCategory, type CreateCategoryResponse, type UpdateCategory, type UpdateCategoryResponse } from "../../interfaces/category.interface"
+import { type CategoryResponse, type CreateCategory, type CreateCategoryResponse, type UpdateCategory, type UpdateCategoryResponse, type UploadCategoryImage } from "../../interfaces/category.interface"
 import { showAlert } from "../alert/alert.slice"
 import { handleError } from "../../config/api/handle-error"
 import { AlertType } from "../../interfaces/ui/alert.interface"
@@ -15,7 +15,9 @@ export const startGettingCategories = (pagination: Pagination) => {
         const { limit, page } = pagination
         try {
 
-            const { data } = await puntocomApiPrivate.get<CategoryResponse>(`${urlCategories}?page=${page}&limit=${limit}&sort=categoryCreatedAt:desc`)
+            const { data } = await puntocomApiPrivate.get<CategoryResponse>(`
+                ${urlCategories}?page=${page}&limit=${limit}&sort=categoryCreatedAt:desc
+            `)
             const { categories, meta } = data
             dispatch( setCategories(categories) )
 
@@ -81,6 +83,41 @@ export const startUpdatingCategory = ( categoryId: string, categoryData: UpdateC
             dispatch(
                 showAlert({
                     title: "⚠️ No se pudo actualizar la categoría",
+                    text: errorMessage,
+                    type: AlertType.error,
+                })
+            );
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startUploadingCategoryImage = ( categoryId: string, files: FormData ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+
+            const { data } = await puntocomApiPrivate.patch<UploadCategoryImage>(
+                `${urlCategories}/upload-image/${categoryId}`, 
+                files, 
+                { headers: { "Content-Type": "multipart/form-data"}}
+            )
+            const { category, message } = data
+
+            dispatch(updateCategory({categoryId, category}))
+            dispatch(
+                showAlert({
+                    title: "Imagen Subida",
+                    text: message,
+                    type: AlertType.success,
+                })
+            );
+        } catch(error) {
+            const errorMessage = handleError(error)
+            dispatch(
+                showAlert({
+                    title: "⚠️ No se pudo subir el ícono de la categoría",
                     text: errorMessage,
                     type: AlertType.error,
                 })

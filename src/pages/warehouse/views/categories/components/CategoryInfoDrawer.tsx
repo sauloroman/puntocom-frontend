@@ -1,13 +1,15 @@
 import React from "react";
-import { RightDrawerLayout } from "../../../layouts/RightDrawerLayout";
-import { useCategories } from "../../hooks";
 import { motion } from "framer-motion";
-import { DrawerInfoStatus } from "./DrawerInfoStatus";
+import { useCategories } from "../../../../../shared/hooks";
+import { RightDrawerLayout } from "../../../../../layouts/RightDrawerLayout";
+import { DrawerInfoStatus } from "../../../../../shared/components/drawer/DrawerInfoStatus";
+import { UploadCategoryImage } from "./UploadCategoryImage";
+import { SpinnerContainer } from "../../../../../shared/components";
 
 const getInitial = (text: string) => text.charAt(0).toUpperCase();
 
 export const CategoryInfoDrawer: React.FC = () => {
-    const { categorySelected } = useCategories();
+    const { categorySelected, isLoading } = useCategories();
 
     if (!categorySelected) return null;
     const { id, name, description, icon, isActive, createdAt, updatedAt } = categorySelected;
@@ -18,14 +20,14 @@ export const CategoryInfoDrawer: React.FC = () => {
                 <div className="flex items-center gap-4 mb-6">
                     {icon !== 'Categoría sin ícono' ? (
                         <motion.div
-                            className="h-14 w-14 rounded-xl overflow-hidden shadow bg-gray-100 flex items-center justify-center"
+                            className="h-20 w-20 rounded-xl overflow-hidden flex items-center justify-center"
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                         >
                             <img src={icon} alt={name} className="h-full w-full object-cover" />
                         </motion.div>
                     ) : (
-                        <div className="h-14 w-14 rounded-xl flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xl font-bold shadow">
+                        <div className="h-20 w-20 rounded-xl flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-4xl font-bold shadow">
                             {getInitial(name)}
                         </div>
                     )}
@@ -52,9 +54,8 @@ export const CategoryInfoDrawer: React.FC = () => {
                     <p><span className="font-medium text-gray-800">Última actualización: </span>{updatedAt}</p>
                 </div>
 
-                <div className="flex justify-end gap-3">
-                    <DrawerInfoStatus status={isActive} />
-                </div>
+                <div className="w-52 mb-4"><DrawerInfoStatus status={isActive} /></div>
+                {isLoading ? <SpinnerContainer color="border-indigo-700" size="lg" /> : <UploadCategoryImage />}
 
             </div>
         </RightDrawerLayout>

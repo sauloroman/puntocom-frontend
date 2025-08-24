@@ -9,7 +9,8 @@ export const UploadButton: React.FC<ButtonProps> = ({ text }) => (
   <Button
     type="button"
     className="
-      text-sm flex items-center gap-2 justify-center cursor-pointer
+      cursor-pointer
+      text-sm flex items-center gap-2 justify-center
       bg-[linear-gradient(to_right,#005C97_0%,#363795_51%,#005C97_100%)]
       bg-[length:200%_auto]
       hover:bg-[position:right_center]

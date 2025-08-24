@@ -1,14 +1,12 @@
 import React from 'react'
-import { ModalLayout } from '../../../layouts/ModalLayout'
-import { Label } from '../label/Label'
-import { Input } from '../input/Input'
 import { useForm } from 'react-hook-form'
-import { type CreateCategory } from '../../../interfaces/category.interface'
-import { Textarea } from '../textarea/Textarea'
-import { IoTextOutline } from "react-icons/io5";
-import { SaveButton } from '../button/SaveButton'
-import { CancelButton } from '../button/CancelButton'
-import { useCategories, useModal } from '../../hooks'
+import type { CreateCategory } from '../../../../../interfaces/category.interface'
+import { useCategories, useModal } from '../../../../../shared/hooks'
+import { ModalLayout } from '../../../../../layouts/ModalLayout'
+import { Input, Label, Textarea } from '../../../../../shared/components'
+import { IoTextOutline } from 'react-icons/io5'
+import { SaveButton } from '../../../../../shared/components/button/SaveButton'
+import { CancelButton } from '../../../../../shared/components/button/CancelButton'
 
 export const ModalCreateCategory: React.FC = () => {
 

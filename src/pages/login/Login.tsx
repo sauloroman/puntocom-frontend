@@ -89,7 +89,7 @@ export const Login: React.FC = () => {
             rounded-lg
             w-full
           ' type='submit'>
-            { isLoading ? <SpinnerContainer /> : 'Iniciar sesión'}
+            { isLoading ? <SpinnerContainer size='md' color='border-white' /> : 'Iniciar sesión'}
           </Button>
         </form>
       </div>

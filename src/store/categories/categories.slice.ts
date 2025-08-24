@@ -8,7 +8,7 @@ interface ICategories {
 }
 
 const initialState: ICategories = {
-    isLoading: true,
+    isLoading: false,
     categories: null,
     categorySelected: null
 }

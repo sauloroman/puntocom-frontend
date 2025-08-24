@@ -3,7 +3,7 @@ import { PuntoComLayout } from '../../layouts/PuntoComLayout'
 import { TabsLayout } from '../../layouts'
 import { useTabs } from '../../shared/hooks/useTabs'
 import { WindowsTab } from '../../interfaces/ui/tabs.interface'
-import { WarehouseCategories } from './views/WarehouseCategories'
+import { WarehouseCategories } from './views/categories/WarehouseCategories'
 
 const tabs = ["Categorías", "Productos", "Bajo Stock", "Ajustes de Almacén"]
 

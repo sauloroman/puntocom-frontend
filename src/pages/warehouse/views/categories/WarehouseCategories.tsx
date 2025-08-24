@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react'
-import { CreateButton, Search, Select, TableCategories } from '../../../shared/components'
-import { useCategories, useDrawer, useModal } from '../../../shared/hooks'
-import { ModalNames } from '../../../interfaces/ui/modal.interface'
-import { ModalCreateCategory } from '../../../shared/components/modal/ModalCreateCategory'
-import { DrawelNames } from '../../../interfaces/ui/drawel.interface'
-import { CategoryInfoDrawer } from '../../../shared/components/drawer/CategoryInfoDrawer'
-import { CategoryEditDrawer } from '../../../shared/components/drawer/CategoryEditDrawer'
+import { useCategories, useDrawer, useModal } from '../../../../shared/hooks'
+import { CreateButton, Search, Select } from '../../../../shared/components'
+import { ModalNames } from '../../../../interfaces/ui/modal.interface'
+import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
+import { CategoryEditDrawer, CategoryInfoDrawer, ModalCreateCategory, TableCategories } from './components'
 
 export const WarehouseCategories: React.FC = () => {
 
@@ -14,9 +12,7 @@ export const WarehouseCategories: React.FC = () => {
   const { rightDrawerIsOpen, drawelName } = useDrawer()
 
   useEffect(() => {
-    if ( !categories ) {
-      getCategories()
-    }
+    if ( !categories ) getCategories()
   }, [])
 
   return (
@@ -38,7 +34,7 @@ export const WarehouseCategories: React.FC = () => {
           <TableCategories data={categories ?? []} />
         </div>
       </section>
-      { modalIsOpen && modalName === ModalNames.createCategory && <ModalCreateCategory/>}
+      { modalIsOpen && modalName === ModalNames.createCategory && <ModalCreateCategory />}
       { rightDrawerIsOpen && drawelName === DrawelNames.infoCategory && <CategoryInfoDrawer />}
       { rightDrawerIsOpen && drawelName === DrawelNames.editCategory && <CategoryEditDrawer />}
     </>

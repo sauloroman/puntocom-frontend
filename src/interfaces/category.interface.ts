@@ -28,6 +28,12 @@ export interface UpdateCategoryResponse {
     category: Category
 }
 
+export interface UploadCategoryImage {
+    ok: boolean,
+    message: string,
+    category: Category
+}
+
 export interface Category {
     id: string,
     name: string,

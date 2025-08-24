@@ -1,10 +1,8 @@
 import React from "react";
-import type { Category } from "../../../interfaces/category.interface";
-import { TableActions } from "./TableActions";
-import { TableStatus } from "./TableStatus";
-import { TableImage } from "./TableImage";
-import { useCategories, useDrawer } from "../../hooks";
-import { DrawelNames } from "../../../interfaces/ui/drawel.interface";
+import type { Category } from "../../../../../interfaces/category.interface";
+import { useCategories, useDrawer } from "../../../../../shared/hooks";
+import { DrawelNames } from "../../../../../interfaces/ui/drawel.interface";
+import { TableImage, TableActions, TableStatus } from "../../../../../shared/components/table";
 
 interface TableCategoriesProps {
     data: Category[];
