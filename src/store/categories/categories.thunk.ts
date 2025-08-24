@@ -1,8 +1,16 @@
 import type { Dispatch } from "@reduxjs/toolkit"
-import { addCategory, setCategories, setIsLoading, updateCategory } from "./categories.slice"
+import { addCategory, setCategories, setCategorySelected, setIsLoading, updateCategory } from "./categories.slice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 import type { Pagination } from "../../interfaces/pagination.interface"
-import { type CategoryResponse, type CreateCategory, type CreateCategoryResponse, type UpdateCategory, type UpdateCategoryResponse, type UploadCategoryImage } from "../../interfaces/category.interface"
+import { 
+    type ChangeCategoryStatus, 
+    type CategoryResponse, 
+    type CreateCategory, 
+    type CreateCategoryResponse, 
+    type UpdateCategory, 
+    type UpdateCategoryResponse, 
+    type UploadCategoryImage 
+} from "../../interfaces/category.interface"
 import { showAlert } from "../alert/alert.slice"
 import { handleError } from "../../config/api/handle-error"
 import { AlertType } from "../../interfaces/ui/alert.interface"
@@ -70,7 +78,7 @@ export const startUpdatingCategory = ( categoryId: string, categoryData: UpdateC
                 categoryId: categoryId,
                 category: category,
             }))
-
+            dispatch(setCategorySelected(category))
             dispatch(
                 showAlert({
                     title: category.name,
@@ -106,6 +114,7 @@ export const startUploadingCategoryImage = ( categoryId: string, files: FormData
             const { category, message } = data
 
             dispatch(updateCategory({categoryId, category}))
+            dispatch(setCategorySelected(category))
             dispatch(
                 showAlert({
                     title: "Imagen Subida",
@@ -114,16 +123,48 @@ export const startUploadingCategoryImage = ( categoryId: string, files: FormData
                 })
             );
         } catch(error) {
-            const errorMessage = handleError(error)
             dispatch(
                 showAlert({
-                    title: "⚠️ No se pudo subir el ícono de la categoría",
-                    text: errorMessage,
+                    title: "⚠️ Error imagen categoría",
+                    text: "No se pudo subir la imagen",
                     type: AlertType.error,
                 })
             );
         } finally {
             dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startChangingCategoryStatus = ( categoryId: string, status: boolean ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch( setIsLoading(true) )
+        try {
+
+            const { data } = await puntocomApiPrivate.patch<ChangeCategoryStatus>(
+                `${urlCategories}/${status ? 'activate' : 'deactivate'}/${categoryId}`)
+            const { category, message } = data
+
+            dispatch(updateCategory({categoryId, category}))
+            dispatch(setCategorySelected(category))
+            dispatch(
+                showAlert({
+                    title: "Cambio de estado",
+                    text: message,
+                    type: AlertType.success,
+                })
+            );
+
+        } catch(error) {
+            dispatch(
+                showAlert({
+                    title: `⚠️ Error cambio estado categoría`,
+                    text: `No se pudo ${status ? 'activar' : 'desactivar'} la categoría`,
+                    type: AlertType.error,
+                })
+            );
+        } finally {
+            dispatch( setIsLoading(false) )
         }
     }
 }

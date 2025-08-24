@@ -34,6 +34,12 @@ export interface UploadCategoryImage {
     category: Category
 }
 
+export interface ChangeCategoryStatus {
+    ok: boolean,
+    message: string,
+    category: Category
+}
+
 export interface Category {
     id: string,
     name: string,

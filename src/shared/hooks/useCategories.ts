@@ -1,6 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
-import { startCreatingCategory, startGettingCategories, startUpdatingCategory, startUploadingCategoryImage } from "../../store/categories/categories.thunk"
+import { 
+    startChangingCategoryStatus, 
+    startCreatingCategory, 
+    startGettingCategories, 
+    startUpdatingCategory, 
+    startUploadingCategoryImage 
+} from "../../store/categories/categories.thunk"
 import type { CreateCategory, UpdateCategory } from "../../interfaces/category.interface"
 import { setCategorySelected } from "../../store/categories/categories.slice"
 
@@ -30,6 +36,10 @@ export const useCategories = () => {
         dispatch(startUploadingCategoryImage(categoryId, files))
     }
 
+    const changeCategoryStatus = (categoryId: string, status: boolean) => {
+        dispatch(startChangingCategoryStatus(categoryId, status))
+    }
+
     return {
         categorySelected,
         categories,
@@ -39,6 +49,7 @@ export const useCategories = () => {
         getCategories,
         createCategory,
         updateCategory,
-        uploadCategoryIcon
+        uploadCategoryIcon,
+        changeCategoryStatus
     }
 }

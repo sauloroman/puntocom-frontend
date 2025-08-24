@@ -9,10 +9,14 @@ import { SpinnerContainer } from "../../../../../shared/components";
 const getInitial = (text: string) => text.charAt(0).toUpperCase();
 
 export const CategoryInfoDrawer: React.FC = () => {
-    const { categorySelected, isLoading } = useCategories();
+    const { categorySelected, isLoading, changeCategoryStatus } = useCategories();
 
     if (!categorySelected) return null;
     const { id, name, description, icon, isActive, createdAt, updatedAt } = categorySelected;
+
+    const onChangeCategoryStatus = () => {
+        changeCategoryStatus( categorySelected.id, !categorySelected.isActive )
+    }
 
     return (
         <RightDrawerLayout width="w-xl" title="Información de categoría">
@@ -54,7 +58,9 @@ export const CategoryInfoDrawer: React.FC = () => {
                     <p><span className="font-medium text-gray-800">Última actualización: </span>{updatedAt}</p>
                 </div>
 
-                <div className="w-52 mb-4"><DrawerInfoStatus status={isActive} /></div>
+                <div className="w-52 mb-4">
+                    <DrawerInfoStatus onChangeStatus={onChangeCategoryStatus} />
+                </div>
                 {isLoading ? <SpinnerContainer color="border-indigo-700" size="lg" /> : <UploadCategoryImage />}
 
             </div>
