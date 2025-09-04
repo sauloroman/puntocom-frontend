@@ -1,21 +1,23 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useSuppliers } from "../../../../../shared/hooks";
+import { useModal, useSuppliers } from "../../../../../shared/hooks";
 import { RightDrawerLayout } from "../../../../../layouts/RightDrawerLayout";
 import { DrawerInfoStatus } from "../../../../../shared/components/drawer/DrawerInfoStatus";
 import { SpinnerContainer } from "../../../../../shared/components";
 import type { Supplier } from "../../../../../interfaces/supplier.interface";
+import { ModalNames } from "../../../../../interfaces/ui/modal.interface";
 
 const getInitial = (text: string) => text.charAt(0).toUpperCase();
 
 export const SupplierInfoDrawer: React.FC = () => {
-  const { supplierSelected, isLoading, changeSupplierStatus } = useSuppliers();
+  const { onOpenModal } = useModal()
+  const { supplierSelected, isLoading } = useSuppliers();
   const supplier: Supplier = supplierSelected!!
   const { address, company, createdAt, email, id, isActive, lastname, name, phone, updatedAt } = supplier
 
-  const onChangeSupplierStatus = () => {
-    changeSupplierStatus( id, !isActive )
-  };
+  const onOpenModalToConfirmChangeStatus = () => {
+    onOpenModal(ModalNames.confirmChangeStatusSupplier)
+  }
 
   return (
     <RightDrawerLayout width="w-xl" title="Información de proveedor">
@@ -55,7 +57,7 @@ export const SupplierInfoDrawer: React.FC = () => {
         </div>
 
         <div className="w-52 mb-4">
-          <DrawerInfoStatus status={isActive} onChangeStatus={onChangeSupplierStatus} />
+          <DrawerInfoStatus status={isActive} onChangeStatus={onOpenModalToConfirmChangeStatus} />
         </div>
 
         {isLoading && <SpinnerContainer color="border-indigo-700" size="lg" />}

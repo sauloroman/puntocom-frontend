@@ -1,21 +1,22 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useCategories } from "../../../../../shared/hooks";
+import { useCategories, useModal } from "../../../../../shared/hooks";
 import { RightDrawerLayout } from "../../../../../layouts/RightDrawerLayout";
 import { DrawerInfoStatus } from "../../../../../shared/components/drawer/DrawerInfoStatus";
 import { UploadCategoryImage } from "./UploadCategoryImage";
 import { SpinnerContainer } from "../../../../../shared/components";
+import { ModalNames } from "../../../../../interfaces/ui/modal.interface";
 
 const getInitial = (text: string) => text.charAt(0).toUpperCase();
 
 export const CategoryInfoDrawer: React.FC = () => {
-    const { categorySelected, isLoading, changeCategoryStatus } = useCategories();
-
+    const { categorySelected, isLoading } = useCategories();
+    const { onOpenModal } = useModal()
     if (!categorySelected) return null;
     const { id, name, description, icon, isActive, createdAt, updatedAt } = categorySelected;
 
-    const onChangeCategoryStatus = () => {
-        changeCategoryStatus( categorySelected.id, !categorySelected.isActive )
+    const onOpenModalToConfirmChangeStatus = () => {
+        onOpenModal(ModalNames.confirmChangeStatusCategory)
     }
 
     return (
@@ -59,7 +60,7 @@ export const CategoryInfoDrawer: React.FC = () => {
                 </div>
 
                 <div className="w-52 mb-4">
-                    <DrawerInfoStatus status={categorySelected.isActive} onChangeStatus={onChangeCategoryStatus} />
+                    <DrawerInfoStatus status={categorySelected.isActive} onChangeStatus={onOpenModalToConfirmChangeStatus} />
                 </div>
                 {isLoading ? <SpinnerContainer color="border-indigo-700" size="lg" /> : <UploadCategoryImage />}
 

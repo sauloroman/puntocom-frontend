@@ -6,6 +6,7 @@ import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 import { 
   CategoryEditDrawer, 
   CategoryInfoDrawer, 
+  ModalConfirmChangeStatusCategory, 
   ModalCreateCategory, 
   PaginationCategories, 
   SearchCategory, 
@@ -41,6 +42,7 @@ export const WarehouseCategories: React.FC = () => {
         </div>
       </section>
       { modalIsOpen && modalName === ModalNames.createCategory && <ModalCreateCategory />}
+      { modalIsOpen && modalName === ModalNames.confirmChangeStatusCategory && <ModalConfirmChangeStatusCategory />}
       { rightDrawerIsOpen && drawelName === DrawelNames.infoCategory && <CategoryInfoDrawer />}
       { rightDrawerIsOpen && drawelName === DrawelNames.editCategory && <CategoryEditDrawer />}
     </>

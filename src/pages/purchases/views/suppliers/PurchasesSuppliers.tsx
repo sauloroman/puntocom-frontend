@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { CreateButton } from '../../../../shared/components'
 import { 
   ButtonSuppliersReport,
+  ModalConfirmChangeStatusSupplier,
   ModalConfirmCreateSupplierReport,
   ModalCreateSupplier, 
   ModalSupplierReport, 
@@ -51,6 +52,7 @@ export const PurchasesSuppliers: React.FC = () => {
       {modalIsOpen && modalName === ModalNames.createSupplier && <ModalCreateSupplier />}
       {modalIsOpen && modalName === ModalNames.confirmCreateSupplierReport && <ModalConfirmCreateSupplierReport />}
       {modalIsOpen && modalName === ModalNames.reportSuppliers && <ModalSupplierReport />}
+      {modalIsOpen && modalName === ModalNames.confirmChangeStatusSupplier && <ModalConfirmChangeStatusSupplier />}
       {rightDrawerIsOpen && drawelName === DrawelNames.infoSupplier && <SupplierInfoDrawer />}
       {rightDrawerIsOpen && drawelName === DrawelNames.editSupplier && <SupplierEditDrawer />}
     </>
