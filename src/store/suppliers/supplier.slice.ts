@@ -7,9 +7,14 @@ interface ISuppliers {
     suppliers: Supplier[] | null,
     companies: string[] | null,
     supplierSelected: Supplier | null,
-    filter: { status: boolean | null, isVisible: boolean },
-    pagination: MetaPagination,
-    isPaginationVisible: boolean
+    filter: {
+        company: string | null, 
+        status: boolean | null, 
+        isVisible: boolean 
+    },
+    pagination: MetaPagination & {itemsPerPage: number},
+    isPaginationVisible: boolean,
+    report: string,
 }
 
 const initialState: ISuppliers = {
@@ -18,15 +23,18 @@ const initialState: ISuppliers = {
     companies: null,
     supplierSelected: null,
     filter: { 
+        company: null,
         status: null,
-        isVisible: false 
+        isVisible: true 
     },
     pagination: {
         page: 1,
         total: 1,
-        totalPages: 1
+        totalPages: 1,
+        itemsPerPage: 10
     },
     isPaginationVisible: true,
+    report: ''
 }
 
 export const suppliersSlice = createSlice({
@@ -47,6 +55,14 @@ export const suppliersSlice = createSlice({
             state.pagination.total++
         },
 
+        addCompanySupplier: (state, {payload}: PayloadAction<string>) => {
+            state.companies?.push(payload)
+        },
+
+        setReport: (state, {payload}: PayloadAction<string>) => {
+            state.report = payload
+        },
+
         updateSupplier:  ( state, {payload}: PayloadAction<{supplierId: string, supplier: Supplier}>) => {
             state.suppliers = state.suppliers!.map( (supplier: Supplier) => {
                 if(supplier.id === payload.supplierId) {
@@ -64,7 +80,7 @@ export const suppliersSlice = createSlice({
             state.supplierSelected = payload
         },
 
-        setSuppliersMetaPagination: (state, {payload}: PayloadAction<MetaPagination>) => {
+        setSuppliersMetaPagination: (state, {payload}: PayloadAction<MetaPagination & {itemsPerPage: number}>) => {
             state.pagination = payload
         },
 
@@ -80,6 +96,11 @@ export const suppliersSlice = createSlice({
 
         setStatusFilter: (state, { payload}: PayloadAction<{status: boolean | null, isVisible: boolean}>) => {
             state.filter.status = payload.status
+            state.filter.isVisible = payload.isVisible
+        },
+
+        setCompanyFilter: (state, {payload}: PayloadAction<{company: string | null, isVisible: boolean}>) => {
+            state.filter.company = payload.company
             state.filter.isVisible = payload.isVisible
         },
 
@@ -100,6 +121,8 @@ export const {
     resetSuppliers,
     setSuppliersMetaPagination,
     setPage,
+    setReport,
     setStatusFilter,
+    setCompanyFilter,
     setPaginationVisible,
 } = suppliersSlice.actions

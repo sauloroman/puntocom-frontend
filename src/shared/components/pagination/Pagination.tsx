@@ -3,6 +3,7 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
 interface PaginationProps {
   total: number;
+  itemsPerPage: number,
   page: number;
   totalPages: number;
   onPageChange: (page: number) => void;
@@ -12,8 +13,11 @@ export const Pagination: React.FC<PaginationProps> = ({
   total,
   page,
   totalPages,
+  itemsPerPage,
   onPageChange,
 }) => {
+
+  console.log(itemsPerPage)
     
   const handlePrev = () => {
     if (page > 1) onPageChange(page - 1);
@@ -27,9 +31,9 @@ export const Pagination: React.FC<PaginationProps> = ({
     <div className="w-full flex items-center justify-between border-t border-gray-200 py-3">
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <p className="text-sm text-gray-700">
-          Mostrando <span className="font-medium">{(page - 1) * 10 + 1}</span> a{" "}
+          Mostrando <span className="font-medium">{(page - 1) * itemsPerPage + 1}</span> a{" "}
           <span className="font-medium">
-            {page === totalPages ? total : page * 10}
+            {page === totalPages ? total : page * itemsPerPage}
           </span>{" "}
           de <span className="font-medium">{total}</span> resultados
         </p>

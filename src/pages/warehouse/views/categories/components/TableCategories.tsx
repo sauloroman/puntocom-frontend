@@ -24,7 +24,7 @@ export const TableCategories: React.FC<TableCategoriesProps> = ({ data }) => {
     }
 
     return (
-        <div className="border border-gray-300 rounded-lg overflow-hidden">
+        <div className="border border-gray-300 rounded-lg overflow-hidden mb-5">
             <div className="max-h-[650px] overflow-y-auto">
                 <table className="min-w-full bg-white text-sm">
                     <thead className="bg-gray-50 text-indigo-600 text-xs uppercase tracking-wide sticky top-0 z-10">
@@ -40,7 +40,7 @@ export const TableCategories: React.FC<TableCategoriesProps> = ({ data }) => {
                     <tbody className="divide-y divide-gray-200 text-xs">
                         {data.length > 0 ? (
                             data.map((cat) => (
-                                <tr key={cat.id} className="hover:bg-gray-50 transition-colors cursor-pointer">
+                                <tr key={cat.id} className="hover:bg-gray-50 transition-colors">
                                     <td className="px-4 py-3 font-medium text-gray-900 flex items-center gap-2">
                                         <TableImage 
                                             width='w-6' 

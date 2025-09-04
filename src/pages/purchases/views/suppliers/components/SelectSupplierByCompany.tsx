@@ -4,10 +4,24 @@ import { Select } from '../../../../../shared/components'
 
 export const SelectSupplierByCompany: React.FC = () => {
 
-    const { companies } = useSuppliers()
+    const {
+        filterSuppliersByCompany,
+        onChangePaginationVisibility, 
+        onSetFilterCompanies,
+        getSuppliers,
+        companies 
+    } = useSuppliers()
 
-    const onChange = () => {
+    const onChange = ( value: string ) => {
+        onChangePaginationVisibility( true )
 
+        if ( value === 'Empresas' ) {
+            getSuppliers()
+            onSetFilterCompanies(null, true)
+            return
+        }
+
+        filterSuppliersByCompany(value)
     }
 
     return (

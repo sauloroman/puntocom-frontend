@@ -40,7 +40,7 @@ export const UploadImage: React.FC<UploadImageProps> = ({ onUpload }) => {
 
   return (
     <div className="flex flex-col items-center space-y-4 w-full">
-      {/* Zona drop */}
+      
       <div
         {...getRootProps()}
         className={`${preview && "hidden"} w-full border-2 border-dashed border-indigo-400 p-6 rounded-xl text-center cursor-pointer h-52 flex items-center justify-center hover:border-indigo-500 transition`}
@@ -56,11 +56,10 @@ export const UploadImage: React.FC<UploadImageProps> = ({ onUpload }) => {
         </div>
       </div>
 
-      {/* Preview + acciones */}
       {preview && (
         <>
-          <div className="flex justify-center w-full h-64 bg-gray-100 p-6 rounded-md">
-            <div className="relative w-80 h-52 rounded-xl overflow-hidden shadow-md border border-gray-200">
+          <div className="flex justify-center w-full h-46 bg-gray-100 p-6 rounded-md">
+            <div className="relative w-32 h-32 rounded-xl overflow-hidden shadow-md border border-gray-200">
               <img
                 src={preview}
                 alt="Preview"

@@ -46,6 +46,12 @@ export interface ChangeSupplierStatusResponse {
     supplier: Supplier
 }
 
+export interface CreateSuppliersReportResponse {
+    ok: boolean, 
+    message: string,
+    url: string
+}
+
 export interface Supplier {
     id: string,
     name: string,

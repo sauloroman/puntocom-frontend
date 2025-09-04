@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { LocationTab, Menu } from '../shared/components';
 import { useMenu } from '../shared/hooks';
@@ -13,16 +13,20 @@ export const PuntoComLayout: React.FC<PuntoComLayoutProps> = ({ children }) => {
   const toggleMenu = () => collapsed ? closeMenu() : openMenu()
 
   return (
-    <div className="flex min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
       
+      {/* Menú lateral fijo */}
       <aside
         className={`
+          fixed top-0 left-0 h-screen z-20
           bg-gray-50 border-r border-gray-200 shadow-sm flex flex-col
           transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'}
         `}
       >
-
-        <div className={`h-14 flex items-center justify-between px-3 border-b border-gray-200 ${collapsed && 'text-xl justify-center'}`}>
+        <div
+          className={`h-14 flex items-center justify-between px-3 border-b border-gray-200 
+          ${collapsed && 'text-xl justify-center'}`}
+        >
           {!collapsed && (
             <div className="bg-gray-50 inline-block">
               <img
@@ -43,10 +47,15 @@ export const PuntoComLayout: React.FC<PuntoComLayoutProps> = ({ children }) => {
         <div className="flex-1 p-4">
           <Menu collapsed={collapsed} />
         </div>
-
       </aside>
 
-      <main className="flex-1 p-6 md:p-4">
+      {/* Contenido principal con margen dinámico */}
+      <main
+        className={`
+          p-6 md:p-4 transition-all duration-300
+          ${collapsed ? 'ml-20' : 'ml-64'}
+        `}
+      >
         <LocationTab />
         {children}
       </main>

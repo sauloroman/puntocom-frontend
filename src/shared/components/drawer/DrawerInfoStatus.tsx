@@ -1,15 +1,12 @@
 import { FaPowerOff, FaPowerOff as FaPowerOn } from "react-icons/fa"
-import { useCategories } from "../../hooks"
 
 interface DrawerInfoStatusProps {
+    status: boolean
     onChangeStatus: () => void
 }
 
-export const DrawerInfoStatus: React.FC<DrawerInfoStatusProps> = ({ onChangeStatus }) => {
+export const DrawerInfoStatus: React.FC<DrawerInfoStatusProps> = ({ status, onChangeStatus }) => {
     
-    const { categorySelected } = useCategories()
-    const status = categorySelected?.isActive
-
     return (
         <>
             {

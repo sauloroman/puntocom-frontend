@@ -7,9 +7,7 @@ import { LuAsterisk } from "react-icons/lu";
 import { SaveButton } from '../../../../../shared/components/button/SaveButton'
 import { CancelButton } from '../../../../../shared/components/button/CancelButton'
 import type { CreateSupplier } from '../../../../../interfaces/supplier.interface'
-
-const EmailRegEx: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const phoneRegEx: RegExp = /^[0-9\s\-()+]*$/
+import { EmailRegEx, phoneRegEx } from '../../../../../shared/utils/regexp'
 
 export const ModalCreateSupplier: React.FC = () => {
 
@@ -126,7 +124,7 @@ export const ModalCreateSupplier: React.FC = () => {
                         <Input 
                             id='supplierCompany'
                             type='text'
-                            placeholder='Calle 1. No. #1, Fraccionamiento A, Bloque B'
+                            placeholder='RomanCode'
                             {
                                 ...register('company', {
                                     required: 'La empresa es obligatoria'

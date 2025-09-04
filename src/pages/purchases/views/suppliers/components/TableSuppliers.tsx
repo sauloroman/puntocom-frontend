@@ -1,5 +1,5 @@
 import React from "react";
-import { useCategories, useDrawer } from "../../../../../shared/hooks";
+import { useDrawer, useSuppliers } from "../../../../../shared/hooks";
 import { DrawelNames } from "../../../../../interfaces/ui/drawel.interface";
 import { TableActions, TableStatus } from "../../../../../shared/components/table";
 import type { Supplier } from "../../../../../interfaces/supplier.interface";
@@ -11,20 +11,20 @@ interface TableSuppliersProps {
 export const TableSuppliers: React.FC<TableSuppliersProps> = ({ data }) => {    
 
     const { onOpenRightDrawer } = useDrawer()
-    const { onSelectCategory } = useCategories()
+    const { onSelectSupplier } = useSuppliers()
 
     const onSelecteSupplier = ( id: string ) => {
-        onOpenRightDrawer(DrawelNames.infoCategory)
-        onSelectCategory( id )
+        onOpenRightDrawer(DrawelNames.infoSupplier)
+        onSelectSupplier( id )
     }
 
     const onEditSupplier = (id: string) => {
-        onOpenRightDrawer(DrawelNames.editCategory)
-        onSelectCategory(id)
+        onOpenRightDrawer(DrawelNames.editSupplier)
+        onSelectSupplier(id)
     }
 
     return (
-        <div className="border border-gray-300 rounded-lg overflow-hidden">
+        <div className="border border-gray-300 rounded-lg overflow-hidden mb-5">
             <div className="max-h-[650px] overflow-y-auto">
                 <table className="min-w-full bg-white text-sm">
                     <thead className="bg-gray-50 text-indigo-600 text-xs uppercase tracking-wide sticky top-0 z-10">
@@ -43,7 +43,7 @@ export const TableSuppliers: React.FC<TableSuppliersProps> = ({ data }) => {
                     <tbody className="divide-y divide-gray-200 text-xs">
                         {data.length > 0 ? (
                             data.map((sup: Supplier) => (
-                                <tr key={sup.id} className="hover:bg-gray-50 transition-colors cursor-pointer">
+                                <tr key={sup.id} className="hover:bg-gray-50 transition-colors">
                                     <td className="px-4 py-3 font-medium text-gray-900 flex items-center gap-2">
                                         {sup.name} {sup.lastname}
                                     </td>

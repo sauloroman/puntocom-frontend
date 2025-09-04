@@ -59,7 +59,7 @@ export const CategoryInfoDrawer: React.FC = () => {
                 </div>
 
                 <div className="w-52 mb-4">
-                    <DrawerInfoStatus onChangeStatus={onChangeCategoryStatus} />
+                    <DrawerInfoStatus status={categorySelected.isActive} onChangeStatus={onChangeCategoryStatus} />
                 </div>
                 {isLoading ? <SpinnerContainer color="border-indigo-700" size="lg" /> : <UploadCategoryImage />}
 

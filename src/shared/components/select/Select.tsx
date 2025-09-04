@@ -15,7 +15,7 @@ export const Select: React.FC<SelectProps> = ({
   placeholder = "Selecciona una opción",
 }) => {
   return (
-    <div className="relative w-50 max-w-sm">
+    <div className="relative w-36 max-w-sm">
       <select
         value={value}
         onChange={(e) => onChange?.(e.target.value)}

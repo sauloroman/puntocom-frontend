@@ -25,12 +25,12 @@ export const useCategories = () => {
     } = useSelector( (state: RootState) => state.categories )
 
     const getCategories = () => {
-        dispatch( startGettingCategories({ page: 1, limit: 10 }) )
+        dispatch( startGettingCategories({ page: 1, limit: pagination.itemsPerPage }) )
     }
 
     const filterCategoriesByStatus = ( status: boolean ) => {
         dispatch( setStatusFilter({status, isVisible: true}) )
-        dispatch(startFilteringCategoriesByStatus({ page: 1, limit: 10}, status))
+        dispatch(startFilteringCategoriesByStatus({ page: 1, limit: pagination.itemsPerPage}, status))
     }
 
     const onSetFilterStatus = (status: boolean | null, isVisible: boolean) => {
@@ -66,9 +66,9 @@ export const useCategories = () => {
          dispatch(setPage(page))
 
         if (filter.status !== null) {
-            dispatch(startFilteringCategoriesByStatus({ page, limit: 10 }, filter.status))
+            dispatch(startFilteringCategoriesByStatus({ page, limit: pagination.itemsPerPage }, filter.status))
         } else {
-            dispatch(startGettingCategories({ page, limit: 10 }))
+            dispatch(startGettingCategories({ page, limit: pagination.itemsPerPage }))
         }
     }
 

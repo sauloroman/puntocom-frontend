@@ -26,7 +26,7 @@ export const startGettingCategories = (pagination: Pagination) => {
             const { data } = await puntocomApiPrivate.get<CategoryResponse>(`${urlCategories}?page=${page}&limit=${limit}&sort=categoryCreatedAt:desc`)
             const { categories, meta } = data
             dispatch( setCategories(categories) )
-            dispatch( setCategoriesMetaPagination(meta) )
+            dispatch( setCategoriesMetaPagination({...meta, itemsPerPage: 10}) )
         } catch(error) {
             console.log(error)
         } finally {
@@ -43,7 +43,7 @@ export const startFilteringCategoriesByStatus = ( pagination: Pagination, status
             const {data} = await puntocomApiPrivate.get<CategoryResponse>(`${urlCategories}?page=${page}&limit=${limit}&sort=categoryName:asc&filter={"categoryStatus": ${status}}`)
             const { categories, meta } = data
             dispatch( setCategories(categories) )
-            dispatch( setCategoriesMetaPagination(meta) )
+            dispatch( setCategoriesMetaPagination({...meta, itemsPerPage: 10}) )
         } catch(error) {
             console.log(error)
         } finally {
