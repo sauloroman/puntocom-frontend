@@ -14,6 +14,8 @@ interface IUsers {
   pagination: MetaPagination & { itemsPerPage: number };
   isPaginationVisible: boolean;
   hasEnteredPasswordCorrectly: boolean,
+  isTableStyleActive: boolean,
+  isGridStyleActive: boolean,
 }
 
 const initialState: IUsers = {
@@ -33,6 +35,8 @@ const initialState: IUsers = {
   },
   isPaginationVisible: true,
   hasEnteredPasswordCorrectly: false,
+  isTableStyleActive: true,
+  isGridStyleActive: false,
 };
 
 export const usersSlice = createSlice({
@@ -104,7 +108,12 @@ export const usersSlice = createSlice({
 
     setHasEnteredPasswordCorrectly: ( state, {payload}: PayloadAction<boolean> ) => {
       state.hasEnteredPasswordCorrectly = payload
-    }
+    },
+
+    setTableView: (state, {payload}: PayloadAction<boolean>) => {
+      state.isTableStyleActive = payload
+      state.isGridStyleActive = !payload
+    },
   },
 });
 
@@ -121,4 +130,5 @@ export const {
   setStatusFilter,
   setPaginationVisible,
   setHasEnteredPasswordCorrectly,
+  setTableView
 } = usersSlice.actions;

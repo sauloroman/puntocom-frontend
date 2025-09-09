@@ -1,3 +1,5 @@
+import { AvatarInitial } from "../avatar/AvatarInitial"
+
 interface TableImageProps {
     width: string,
     text: string,
@@ -18,9 +20,7 @@ export const TableImage: React.FC<TableImageProps> = ({ width, text, icon, initi
                     />
                 )
                 : (
-                    <div className={`text-lg font-semibold w-full h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white flex items-center justify-center`}>
-                        {initial}
-                    </div>
+                   <AvatarInitial initial={ initial ?? '' } />
                 )
             }
         </div>

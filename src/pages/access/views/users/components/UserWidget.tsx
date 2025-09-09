@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import { UserPhoto } from './UserPhoto'
-import { useAuth } from '../../hooks'
 import { UserRoleTag } from './UserRoleTag'
-import { Roles } from '../../../interfaces/user.interface'
+import { useAuth } from '../../../../../shared/hooks'
+import { Roles } from '../../../../../interfaces/user.interface'
 
 interface UserWidgetProps {
     collapsed: boolean

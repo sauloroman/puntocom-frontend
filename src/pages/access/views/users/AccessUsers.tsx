@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react'
-import { useModal, useUsers } from '../../../../shared/hooks'
-import { CreateUserButton, ModalRequestPasswordAdmin, PaginationUsers, SearchUsers, SelectUsersByRole, SelectUsersByStatus, TableUsers } from './components'
+import { useDrawer, useModal, useUsers } from '../../../../shared/hooks'
+import { CreateUserButton, ModalRequestPasswordAdmin, PaginationUsers, SearchUsers, SelectUsersByRole, SelectUsersByStatus, TableUsers, UserEditDrawer, UserInfoDrawer, UsersGrid } from './components'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { ModalCreateUser } from './components/ModalCreateUser'
-import { SpinnerContainer } from '../../../../shared/components'
 import { ModalEmailSentToUser } from './components/ModalEmailSentToUser'
+import { ToggleGridTableView } from '../../../../shared/components/button'
+import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 
 export const AccessUsers: React.FC = () => {
 
     const { modalIsOpen, modalName } = useModal()
-    const { users, getUsers, isLoading } = useUsers()
+    const { users, getUsers, setTableStyle, isTableStyleActive } = useUsers()
+    const { rightDrawerIsOpen, drawelName } = useDrawer()
 
     useEffect(() => {
         if (!users) getUsers()
@@ -22,6 +24,7 @@ export const AccessUsers: React.FC = () => {
                     <SearchUsers />
                     <div className='flex items-center gap-5'>
                         <div className="flex items-center gap-4">
+                            <ToggleGridTableView onToggle={setTableStyle} status={isTableStyleActive} />
                             <SelectUsersByStatus />
                             <SelectUsersByRole />
                         </div>
@@ -30,15 +33,18 @@ export const AccessUsers: React.FC = () => {
                 </div>
 
                 {
-                    isLoading
-                        ? <SpinnerContainer color='bg-white' size='lg' />
-                        : <TableUsers data={users ?? []} />
+                    isTableStyleActive
+                    ? (<TableUsers data={users ?? []} />) 
+                    : (<UsersGrid data={users ?? []} />)
                 }
+                
                 <PaginationUsers />
             </section>
             {modalIsOpen && modalName === ModalNames.confirmCreateUser && <ModalRequestPasswordAdmin />}
             {modalIsOpen && modalName === ModalNames.createUser && <ModalCreateUser />}
             {modalIsOpen && modalName === ModalNames.emailSentToUser && <ModalEmailSentToUser />}
+            {rightDrawerIsOpen && drawelName === DrawelNames.infoUser && <UserInfoDrawer />}
+            {rightDrawerIsOpen && drawelName === DrawelNames.editUser && <UserEditDrawer />}
         </>
     )
 }

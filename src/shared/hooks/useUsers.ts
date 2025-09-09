@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import { startCheckingAdminPass, startCreatingUser, startFilteringUsersByRole, startFilteringUsersByStatus, startGettingUsers, startSearchingUsers } from "../../store/users/users.thunk"
-import { setHasEnteredPasswordCorrectly, setPage, setPaginationVisible, setRoleFilter, setStatusFilter } from "../../store/users/users.slice"
+import { setHasEnteredPasswordCorrectly, setPage, setPaginationVisible, setRoleFilter, setStatusFilter, setTableView, setUserSelected } from "../../store/users/users.slice"
 import type { CheckAdminPassword, CreateUser, Roles } from "../../interfaces/user.interface"
 
 export const useUsers = () => {
@@ -14,7 +14,8 @@ export const useUsers = () => {
         isPaginationVisible,
         hasEnteredPasswordCorrectly,
         filter,
-        isLoading
+        isLoading,
+        isTableStyleActive
     } = useSelector((state: RootState) => state.users )
 
     const getUsers = () => {
@@ -86,25 +87,37 @@ export const useUsers = () => {
         dispatch(startSearchingUsers(userSearched))
     }
 
+    const setTableStyle = ( status: boolean ) => {
+        dispatch( setTableView(status) )
+    }
+
+    const onSelectUser = ( id: string ) => {
+        const user = users?.find( user => user.id === id )
+        if ( user ) dispatch(setUserSelected(user))
+    }
+
     return {
         filter,
-        pagination,
-        isPaginationVisible,
         hasEnteredPasswordCorrectly,
-        users,
         isLoading,
+        isPaginationVisible,
+        isTableStyleActive,
+        pagination,
+        users,
 
-        getUsers,
-        createUser,
-        onSetPage,
         checkAdminPassword,
-        resetConfirmAdminPasswordStatus,
-        filterUsersByStatus,
+        createUser,
         filterUsersByRole,
-        onSetFilterStatus,
+        filterUsersByStatus,
+        getUsers,
         onChangePaginationVisibility,
-        onSetFilterRole,
         onSearchUser,
+        onSetFilterRole,
+        onSetFilterStatus,
+        onSetPage,
+        onSelectUser,
+        resetConfirmAdminPasswordStatus,
+        setTableStyle,
     }
 
 }

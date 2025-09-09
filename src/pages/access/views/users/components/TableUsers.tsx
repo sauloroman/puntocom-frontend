@@ -1,14 +1,31 @@
 import React from 'react'
 import type { Roles, User } from '../../../../../interfaces/user.interface'
-import { TableActions, TableImage, TableStatus, TableValidate } from '../../../../../shared/components/table';
-import { UserRoleTag } from '../../../../../shared/components/user/UserRoleTag';
+import { TableActions, TableImage, TableStatus } from '../../../../../shared/components/table';
+import { UserRoleTag } from './UserRoleTag';
+import { UserValidateTag } from './UserValidateTag';
+import { useDrawer, useUsers } from '../../../../../shared/hooks';
+import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface';
 
 interface TableUsersProps {
   data: User[]
 }
 
 export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
-   return (
+
+    const { onOpenRightDrawer } = useDrawer()
+    const { onSelectUser } = useUsers()
+
+    const onSelectUserAc = (id: string) => {
+        onOpenRightDrawer(DrawelNames.infoUser)
+        onSelectUser( id )
+    }
+
+    const onEditUser = (id: string) => {
+        onOpenRightDrawer(DrawelNames.editUser)
+        onSelectUser(id)
+    }
+
+    return (
           <div className="border border-gray-300 rounded-lg overflow-hidden mb-5">
               <div className="max-h-[650px] overflow-y-auto">
                   <table className="min-w-full bg-white text-sm">
@@ -42,11 +59,11 @@ export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
                                       <td className="px-4 py-3"><TableStatus status={user.isActive} /></td>
                                       <td className="px-4 py-3">{user.createdAt}</td>
                                       <td className="px-4 py-3">{user.updatedAt}</td>
-                                      <td className='px-4 py-3'><TableValidate isValidated={user.isValidated} /></td>
+                                      <td className='px-4 py-3'><UserValidateTag isValidated={user.isValidated} /></td>
                                       <td className="px-4 py-3 text-center relative">
                                           <TableActions
-                                              onView={ () => {} }
-                                              onEdit={() => {}}
+                                              onView={() => onSelectUserAc(user.id)}
+                                              onEdit={() => onEditUser(user.id)}
                                           />
                                       </td>
                                   </tr>

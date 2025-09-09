@@ -3,6 +3,7 @@ import { useDrawer, useSuppliers } from "../../../../../shared/hooks";
 import { DrawelNames } from "../../../../../interfaces/ui/drawel.interface";
 import { TableActions, TableStatus } from "../../../../../shared/components/table";
 import type { Supplier } from "../../../../../interfaces/supplier.interface";
+import { AvatarInitial } from "../../../../../shared/components";
 
 interface TableSuppliersProps {
     data: Supplier[];
@@ -13,7 +14,7 @@ export const TableSuppliers: React.FC<TableSuppliersProps> = ({ data }) => {
     const { onOpenRightDrawer } = useDrawer()
     const { onSelectSupplier } = useSuppliers()
 
-    const onSelecteSupplier = ( id: string ) => {
+    const onSelecteSupplierAc = ( id: string ) => {
         onOpenRightDrawer(DrawelNames.infoSupplier)
         onSelectSupplier( id )
     }
@@ -45,6 +46,7 @@ export const TableSuppliers: React.FC<TableSuppliersProps> = ({ data }) => {
                             data.map((sup: Supplier) => (
                                 <tr key={sup.id} className="hover:bg-gray-50 transition-colors">
                                     <td className="px-4 py-3 font-medium text-gray-900 flex items-center gap-2">
+                                        <div className="w-8 h-8"><AvatarInitial initial={sup.name[0]} /></div>
                                         {sup.name} {sup.lastname}
                                     </td>
                                     <td className="px-4 py-3 text-gray-600">{sup.email}</td>
@@ -58,7 +60,7 @@ export const TableSuppliers: React.FC<TableSuppliersProps> = ({ data }) => {
                                     <td className="px-4 py-3">{sup.updatedAt}</td>
                                     <td className="px-4 py-3 text-center relative">
                                         <TableActions
-                                            onView={ () => onSelecteSupplier(sup.id ) }
+                                            onView={ () => onSelecteSupplierAc(sup.id ) }
                                             onEdit={() => onEditSupplier(sup.id)}
                                         />
                                     </td>

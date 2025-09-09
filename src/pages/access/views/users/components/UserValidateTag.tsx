@@ -4,7 +4,7 @@ interface Props {
     isValidated: boolean
 }
 
-export const TableValidate: React.FC<Props> = ({ isValidated }) => {
+export const UserValidateTag: React.FC<Props> = ({ isValidated }) => {
     return (
         <>
             {isValidated ? (

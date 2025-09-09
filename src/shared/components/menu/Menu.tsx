@@ -6,7 +6,7 @@ import { TfiStatsUp } from "react-icons/tfi"
 import { MenuSection } from "./MenuSection"
 import { useAuth, useTheme } from "../../hooks"
 import { ThemeType } from "../../../interfaces/ui/theme.interface"
-import { UserWidget } from "../user/UserWidget"
+import { UserWidget } from "../../../pages/access/views/users/components"
 
 interface MenuProps {
   collapsed: boolean
