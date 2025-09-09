@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
-import { startCheckingAdminPass, startCreatingUser, startFilteringUsersByRole, startFilteringUsersByStatus, startGettingUsers, startSearchingUsers } from "../../store/users/users.thunk"
+import { startChangingUserStatus, startCheckingAdminPass, startCreatingUser, startFilteringUsersByRole, startFilteringUsersByStatus, startGettingUsers, startSearchingUsers, startUploadingUserImage } from "../../store/users/users.thunk"
 import { setHasEnteredPasswordCorrectly, setPage, setPaginationVisible, setRoleFilter, setStatusFilter, setTableView, setUserSelected } from "../../store/users/users.slice"
 import type { CheckAdminPassword, CreateUser, Roles } from "../../interfaces/user.interface"
 
@@ -15,7 +15,8 @@ export const useUsers = () => {
         hasEnteredPasswordCorrectly,
         filter,
         isLoading,
-        isTableStyleActive
+        isTableStyleActive,
+        userSelected
     } = useSelector((state: RootState) => state.users )
 
     const getUsers = () => {
@@ -96,6 +97,14 @@ export const useUsers = () => {
         if ( user ) dispatch(setUserSelected(user))
     }
 
+    const onChangeUserStatus = (id: string, status: boolean) => {
+        dispatch(startChangingUserStatus(id, status))
+    }
+
+    const uploadUserImage = (userId: string, files: FormData) => {
+        dispatch(startUploadingUserImage(userId, files))
+    }
+
     return {
         filter,
         hasEnteredPasswordCorrectly,
@@ -104,6 +113,7 @@ export const useUsers = () => {
         isTableStyleActive,
         pagination,
         users,
+        userSelected,
 
         checkAdminPassword,
         createUser,
@@ -118,6 +128,8 @@ export const useUsers = () => {
         onSelectUser,
         resetConfirmAdminPasswordStatus,
         setTableStyle,
+        onChangeUserStatus,
+        uploadUserImage
     }
 
 }

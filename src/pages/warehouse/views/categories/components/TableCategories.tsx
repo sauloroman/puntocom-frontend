@@ -1,8 +1,9 @@
 import React from "react";
-import type { Category } from "../../../../../interfaces/category.interface";
 import { useCategories, useDrawer } from "../../../../../shared/hooks";
 import { DrawelNames } from "../../../../../interfaces/ui/drawel.interface";
-import { TableImage, TableActions, TableStatus } from "../../../../../shared/components/table";
+import { TableImage, TableActions } from "../../../../../shared/components/table";
+import { StatusBadge } from "../../../../../shared/components";
+import type { Category } from "../../../../../interfaces/category.interface";
 
 interface TableCategoriesProps {
     data: Category[];
@@ -51,7 +52,7 @@ export const TableCategories: React.FC<TableCategoriesProps> = ({ data }) => {
                                         {cat.name}
                                     </td>
                                     <td className="px-4 py-3 text-gray-600">{cat.description}</td>
-                                    <td className="px-4 py-3"><TableStatus status={cat.isActive} /></td>
+                                    <td className="px-4 py-3"><StatusBadge status={cat.isActive} /></td>
                                     <td className="px-4 py-3">{cat.createdAt}</td>
                                     <td className="px-4 py-3">{cat.updatedAt}</td>
                                     <td className="px-4 py-3 text-center relative">

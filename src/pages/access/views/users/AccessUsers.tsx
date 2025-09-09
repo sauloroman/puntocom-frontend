@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDrawer, useModal, useUsers } from '../../../../shared/hooks'
-import { CreateUserButton, ModalRequestPasswordAdmin, PaginationUsers, SearchUsers, SelectUsersByRole, SelectUsersByStatus, TableUsers, UserEditDrawer, UserInfoDrawer, UsersGrid } from './components'
+import { CreateUserButton, ModalConfirmChangeStatusUser, ModalRequestPasswordAdmin, PaginationUsers, SearchUsers, SelectUsersByRole, SelectUsersByStatus, TableUsers, UserEditDrawer, UserInfoDrawer, UsersGrid } from './components'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { ModalCreateUser } from './components/ModalCreateUser'
 import { ModalEmailSentToUser } from './components/ModalEmailSentToUser'
@@ -43,6 +43,7 @@ export const AccessUsers: React.FC = () => {
             {modalIsOpen && modalName === ModalNames.confirmCreateUser && <ModalRequestPasswordAdmin />}
             {modalIsOpen && modalName === ModalNames.createUser && <ModalCreateUser />}
             {modalIsOpen && modalName === ModalNames.emailSentToUser && <ModalEmailSentToUser />}
+            {modalIsOpen && modalName === ModalNames.confirmChangeStatusUser && <ModalConfirmChangeStatusUser />}
             {rightDrawerIsOpen && drawelName === DrawelNames.infoUser && <UserInfoDrawer />}
             {rightDrawerIsOpen && drawelName === DrawelNames.editUser && <UserEditDrawer />}
         </>

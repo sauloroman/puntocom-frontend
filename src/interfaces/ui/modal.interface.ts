@@ -1,4 +1,4 @@
-export type ModalNames = 'emailSentToUser' | 'createCategory' | 'createSupplier' | 'confirmCreateSupplierReport' | 'reportSuppliers' | 'confirmChangeStatusSupplier' | 'confirmChangeStatusCategory' | 'createUser' | 'confirmCreateUser'
+export type ModalNames = 'emailSentToUser' | 'createCategory' | 'createSupplier' | 'confirmCreateSupplierReport' | 'reportSuppliers' | 'confirmChangeStatusSupplier' | 'confirmChangeStatusCategory' | 'createUser' | 'confirmCreateUser' | 'confirmChangeStatusUser'
 
 export const ModalNames = {
     emailSentToUser: 'emailSentToUser' as ModalNames,
@@ -8,6 +8,7 @@ export const ModalNames = {
     reportSuppliers: 'reportSuppliers' as ModalNames,
     confirmChangeStatusSupplier: 'confirmChangeStatusSupplier' as ModalNames,
     confirmChangeStatusCategory: 'confirmChangeStatusCategory' as ModalNames,
+    confirmChangeStatusUser: 'confirmChangeStatusUser' as ModalNames,
     createUser: 'createUser' as ModalNames,
     confirmCreateUser: 'confirmCreateUser' as ModalNames,
 }

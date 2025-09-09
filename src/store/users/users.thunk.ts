@@ -4,14 +4,18 @@ import {
     setHasEnteredPasswordCorrectly, 
     setIsLoading, 
     setUsers, 
-    setUsersMetaPagination 
+    setUserSelected, 
+    setUsersMetaPagination, 
+    updateUser
 } from "./users.slice"
 import { 
     type CreateUserResponse, 
     type CreateUser, 
     type GetUsersResponse, 
     type CheckAdminPassword, 
-    type Roles 
+    type Roles, 
+    type ChangeUserStatusResponse,
+    type UploadUserImage
 } from "../../interfaces/user.interface"
 import type { Dispatch } from "@reduxjs/toolkit"
 import type { Pagination } from "../../interfaces/pagination.interface"
@@ -40,6 +44,66 @@ export const startCheckingAdminPass = (dataAdminPassword: CheckAdminPassword) =>
                 })
             )
             dispatch(setHasEnteredPasswordCorrectly(false))
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startChangingUserStatus = ( userId: string, status: boolean ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading( true ))
+        try {
+            
+            const { data } = await puntocomApiPrivate.patch<ChangeUserStatusResponse>(`${urlUser}/${status ? 'activate' : 'deactivate'}/${userId}`)
+
+            const { message, user } = data
+
+            dispatch(updateUser({ userId, user }))
+            dispatch(setUserSelected(user))
+            dispatch(showAlert({
+                title: 'Cambio de estado',
+                text: message,
+                type: AlertType.success 
+            }))
+
+        } catch(error) {
+            dispatch(
+                showAlert({
+                    title: `⚠️ Error cambio estado del usuario`,
+                    text: `No se pudo ${status ? 'activar' : 'desactivar'} el usuario`,
+                    type: AlertType.error,
+                })
+            );
+        } finally {
+            dispatch(setIsLoading( false ))
+        }
+    }
+}
+
+export const startUploadingUserImage = ( userId: string, files: FormData ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+
+            const url = `${urlUser}/upload-image/${userId}`
+            const { data } = await puntocomApiPrivate.patch<UploadUserImage>(url, files, { headers: { 'Content-Type': 'multipart/form-data'}})
+            const { message, user } = data
+
+            dispatch(updateUser({ userId, user }))
+            dispatch(setUserSelected(user))
+            dispatch(showAlert({
+                title: 'Imagen Subida',
+                text: message,
+                type: AlertType.success
+            }))
+
+        } catch(error) {
+            dispatch(showAlert({
+                title: '⚠️ Error imagen usuario',
+                text: 'No se pudo subir la imagen',
+                type: AlertType.error
+            }))
         } finally {
             dispatch(setIsLoading(false))
         }

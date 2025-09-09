@@ -1,13 +1,11 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { useModal, useSuppliers } from "../../../../../shared/hooks";
 import { RightDrawerLayout } from "../../../../../layouts/RightDrawerLayout";
 import { DrawerInfoStatus } from "../../../../../shared/components/drawer/DrawerInfoStatus";
 import { SpinnerContainer } from "../../../../../shared/components";
 import type { Supplier } from "../../../../../interfaces/supplier.interface";
 import { ModalNames } from "../../../../../interfaces/ui/modal.interface";
-
-const getInitial = (text: string) => text.charAt(0).toUpperCase();
+import { AvatarInitialSquare } from "../../../../../shared/components/avatar/AvatarInitialSquare";
 
 export const SupplierInfoDrawer: React.FC = () => {
   const { onOpenModal } = useModal()
@@ -24,14 +22,7 @@ export const SupplierInfoDrawer: React.FC = () => {
       <div className="p-4 flex flex-col h-full">
        
         <div className="flex items-center gap-4 mb-6">
-          <motion.div
-            className="h-20 w-20 rounded-xl flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-4xl font-bold shadow"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-          >
-            {getInitial(name)}
-          </motion.div>
-
+          <AvatarInitialSquare name={ name }  />
           <div>
             <h3 className="text-lg font-semibold">{name} {lastname}</h3>
             <span
@@ -56,7 +47,7 @@ export const SupplierInfoDrawer: React.FC = () => {
           <p><span className="font-medium text-gray-800">Dirección:</span> {address}</p>
         </div>
 
-        <div className="w-52 mb-4">
+        <div className="w-full mb-4">
           <DrawerInfoStatus status={isActive} onChangeStatus={onOpenModalToConfirmChangeStatus} />
         </div>
 

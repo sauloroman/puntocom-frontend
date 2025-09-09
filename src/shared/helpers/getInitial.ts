@@ -1,0 +1,1 @@
+export const getInitial = (text: string) => text.charAt(0).toUpperCase()

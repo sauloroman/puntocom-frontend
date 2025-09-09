@@ -14,13 +14,13 @@ export const UploadCategoryImage: React.FC = () => {
     }
 
     return (
-        <div>
+        <>
             {
                 showUploadBox
                 ? <div className='mb-5' onClick={() => setShowUploadBox(false)}><ImageButton text="Cancelar Actualización de ícono" /></div>
                 : <div className='mb-5' onClick={() => setShowUploadBox(true)}><ImageButton text="Actualizar ícono" /></div>
             }
             { showUploadBox && <UploadImage onUpload={uploadIcon} />}
-        </div>
+        </>
     )
 }

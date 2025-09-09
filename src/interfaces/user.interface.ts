@@ -24,6 +24,18 @@ export interface UserRenewAuth {
   token: string
 }
 
+export interface ChangeUserStatusResponse {
+  ok: boolean,
+  message: string,
+  user: User
+}
+
+export interface UploadUserImage {
+  ok: boolean,
+  message: string,
+  user: User
+}
+
 export interface CreateUser {
   name: string,
   lastname: string,

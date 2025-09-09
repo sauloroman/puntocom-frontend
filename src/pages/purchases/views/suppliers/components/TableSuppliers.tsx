@@ -1,9 +1,9 @@
 import React from "react";
 import { useDrawer, useSuppliers } from "../../../../../shared/hooks";
 import { DrawelNames } from "../../../../../interfaces/ui/drawel.interface";
-import { TableActions, TableStatus } from "../../../../../shared/components/table";
+import { TableActions } from "../../../../../shared/components/table";
 import type { Supplier } from "../../../../../interfaces/supplier.interface";
-import { AvatarInitial } from "../../../../../shared/components";
+import { AvatarInitial, StatusBadge } from "../../../../../shared/components";
 
 interface TableSuppliersProps {
     data: Supplier[];
@@ -55,7 +55,7 @@ export const TableSuppliers: React.FC<TableSuppliersProps> = ({ data }) => {
                                     </td>
                                     <td className="px-4 py-3 text-gray-600">{sup.address}</td>
                                     <td className="px-4 py-3 text-gray-600">{sup.company}</td>
-                                    <td className="px-4 py-3"><TableStatus status={sup.isActive} /></td>
+                                    <td className="px-4 py-3"><StatusBadge status={sup.isActive} /></td>
                                     <td className="px-4 py-3">{sup.createdAt}</td>
                                     <td className="px-4 py-3">{sup.updatedAt}</td>
                                     <td className="px-4 py-3 text-center relative">

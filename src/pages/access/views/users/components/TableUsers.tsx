@@ -1,10 +1,11 @@
 import React from 'react'
 import type { Roles, User } from '../../../../../interfaces/user.interface'
-import { TableActions, TableImage, TableStatus } from '../../../../../shared/components/table';
+import { TableActions, TableImage } from '../../../../../shared/components/table';
 import { UserRoleTag } from './UserRoleTag';
 import { UserValidateTag } from './UserValidateTag';
 import { useDrawer, useUsers } from '../../../../../shared/hooks';
 import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface';
+import { StatusBadge } from '../../../../../shared/components';
 
 interface TableUsersProps {
   data: User[]
@@ -56,7 +57,7 @@ export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
                                       </td>
                                       <td className="px-4 py-3 text-gray-600">{user.email}</td>
                                       <td className="px-4 py-3 text-gray-600"><UserRoleTag role={user.role as Roles} /></td>
-                                      <td className="px-4 py-3"><TableStatus status={user.isActive} /></td>
+                                      <td className="px-4 py-3"><StatusBadge status={user.isActive} /></td>
                                       <td className="px-4 py-3">{user.createdAt}</td>
                                       <td className="px-4 py-3">{user.updatedAt}</td>
                                       <td className='px-4 py-3'><UserValidateTag isValidated={user.isValidated} /></td>

@@ -1,10 +1,10 @@
-import type React from "react"
+import React from 'react'
 
-interface TableStatusProps {
+interface Props {
     status: boolean
 }
 
-export const TableStatus: React.FC<TableStatusProps> = ({ status }) => {
+export const StatusBadge: React.FC<Props> = ({ status }) => {
     return (
         <span
             className={`px-3 py-1 rounded-full text-xs font-medium
