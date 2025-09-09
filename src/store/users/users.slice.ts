@@ -16,6 +16,7 @@ interface IUsers {
   hasEnteredPasswordCorrectly: boolean,
   isTableStyleActive: boolean,
   isGridStyleActive: boolean,
+  isOrderedAsc: boolean,
 }
 
 const initialState: IUsers = {
@@ -37,12 +38,18 @@ const initialState: IUsers = {
   hasEnteredPasswordCorrectly: false,
   isTableStyleActive: true,
   isGridStyleActive: false,
+  isOrderedAsc: false,
 };
 
 export const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+
+    setOrderedAsc: (state, {payload}:PayloadAction<boolean>) => {
+      state.isOrderedAsc = payload
+    },
+
     setIsLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.isLoading = payload;
     },
@@ -130,5 +137,6 @@ export const {
   setStatusFilter,
   setPaginationVisible,
   setHasEnteredPasswordCorrectly,
-  setTableView
+  setTableView,
+  setOrderedAsc,
 } = usersSlice.actions;

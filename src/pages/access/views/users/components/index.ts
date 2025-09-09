@@ -1,4 +1,5 @@
 export { CreateUserButton } from './CreateUserButton'
+export { FormEditUser } from './FormEditUser'
 export { ModalConfirmChangeStatusUser} from './ModalConfirmChangeStatusUser'
 export { ModalRequestPasswordAdmin } from './ModalRequestPasswordAdmin'
 export { PaginationUsers } from './PaginationUsers'

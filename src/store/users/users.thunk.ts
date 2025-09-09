@@ -15,7 +15,9 @@ import {
     type CheckAdminPassword, 
     type Roles, 
     type ChangeUserStatusResponse,
-    type UploadUserImage
+    type UploadUserImage,
+    type UpdateUser,
+    type UpdateUserResponse
 } from "../../interfaces/user.interface"
 import type { Dispatch } from "@reduxjs/toolkit"
 import type { Pagination } from "../../interfaces/pagination.interface"
@@ -216,6 +218,36 @@ export const startCreatingUser = (userData: CreateUser) => {
                     type: AlertType.error,
                 })
             );
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startUpdatingUser = (userId: string, userData: UpdateUser ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+
+            const url = `${urlUser}/${userId}`
+            const { data } = await puntocomApiPrivate.put<UpdateUserResponse>(url, userData)
+            const { message, user } = data
+
+            dispatch(updateUser({userId, user}))
+            dispatch(setUserSelected(user))
+            dispatch(showAlert({
+                title: `${user.name} ${user.lastname}`,
+                text: message,
+                type: AlertType.success
+            }))
+
+        } catch(error) {
+            const errorMessage = handleError(error)
+            dispatch(showAlert({
+                title: '⚠️ No se pudo actualizar el usuario',
+                text: errorMessage,
+                type: AlertType.error
+            }))
         } finally {
             dispatch(setIsLoading(false))
         }

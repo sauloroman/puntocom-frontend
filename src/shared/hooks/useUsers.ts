@@ -1,8 +1,28 @@
 import { useDispatch, useSelector } from "react-redux"
+import { 
+    startChangingUserStatus, 
+    startCheckingAdminPass, 
+    startCreatingUser, 
+    startFilteringUsersByRole, 
+    startFilteringUsersByStatus, 
+    startGettingUsers, 
+    startSearchingUsers, 
+    startUpdatingUser, 
+    startUploadingUserImage 
+} from "../../store/users/users.thunk"
+import { 
+    setHasEnteredPasswordCorrectly, 
+    setOrderedAsc, 
+    setPage, 
+    setPaginationVisible, 
+    setRoleFilter, 
+    setStatusFilter, 
+    setTableView, 
+    setUsers, 
+    setUserSelected 
+} from "../../store/users/users.slice"
 import type { RootState } from "../../store"
-import { startChangingUserStatus, startCheckingAdminPass, startCreatingUser, startFilteringUsersByRole, startFilteringUsersByStatus, startGettingUsers, startSearchingUsers, startUploadingUserImage } from "../../store/users/users.thunk"
-import { setHasEnteredPasswordCorrectly, setPage, setPaginationVisible, setRoleFilter, setStatusFilter, setTableView, setUserSelected } from "../../store/users/users.slice"
-import type { CheckAdminPassword, CreateUser, Roles } from "../../interfaces/user.interface"
+import type { CheckAdminPassword, CreateUser, Roles, UpdateUser } from "../../interfaces/user.interface"
 
 export const useUsers = () => {
 
@@ -16,7 +36,8 @@ export const useUsers = () => {
         filter,
         isLoading,
         isTableStyleActive,
-        userSelected
+        userSelected,
+        isOrderedAsc
     } = useSelector((state: RootState) => state.users )
 
     const getUsers = () => {
@@ -105,6 +126,30 @@ export const useUsers = () => {
         dispatch(startUploadingUserImage(userId, files))
     }
 
+    const onOrderAlpha = ( ordered: boolean ) => {
+        dispatch(setOrderedAsc(ordered))
+        sortUsers()
+    }    
+
+    const sortUsers = () => {
+        const usersSorted = [...users!].sort((a, b) => {
+            const fullNameA = `${a.name} ${a.lastname}`.toLowerCase();
+            const fullNameB = `${b.name} ${b.lastname}`.toLowerCase();
+
+            if (isOrderedAsc) {
+                return fullNameA.localeCompare(fullNameB);
+            } else {
+                return fullNameB.localeCompare(fullNameA);
+            }
+        });
+
+        dispatch(setUsers(usersSorted ?? []))
+    }
+
+    const updateUser = ( userId: string, userData: UpdateUser ) => {
+        dispatch(startUpdatingUser(userId, userData))
+    }
+
     return {
         filter,
         hasEnteredPasswordCorrectly,
@@ -114,6 +159,7 @@ export const useUsers = () => {
         pagination,
         users,
         userSelected,
+        isOrderedAsc,
 
         checkAdminPassword,
         createUser,
@@ -129,7 +175,10 @@ export const useUsers = () => {
         resetConfirmAdminPasswordStatus,
         setTableStyle,
         onChangeUserStatus,
-        uploadUserImage
+        uploadUserImage,
+        onOrderAlpha,
+        sortUsers,
+        updateUser
     }
 
 }

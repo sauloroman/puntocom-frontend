@@ -4,13 +4,13 @@ import { CreateUserButton, ModalConfirmChangeStatusUser, ModalRequestPasswordAdm
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { ModalCreateUser } from './components/ModalCreateUser'
 import { ModalEmailSentToUser } from './components/ModalEmailSentToUser'
-import { ToggleGridTableView } from '../../../../shared/components/button'
+import { SortElementsAlpha, ToggleGridTableView } from '../../../../shared/components/button'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 
 export const AccessUsers: React.FC = () => {
 
     const { modalIsOpen, modalName } = useModal()
-    const { users, getUsers, setTableStyle, isTableStyleActive } = useUsers()
+    const { users, getUsers, setTableStyle, isTableStyleActive, onOrderAlpha, isOrderedAsc } = useUsers()
     const { rightDrawerIsOpen, drawelName } = useDrawer()
 
     useEffect(() => {
@@ -25,6 +25,7 @@ export const AccessUsers: React.FC = () => {
                     <div className='flex items-center gap-5'>
                         <div className="flex items-center gap-4">
                             <ToggleGridTableView onToggle={setTableStyle} status={isTableStyleActive} />
+                            <SortElementsAlpha onToggle={onOrderAlpha} desc={isOrderedAsc} />
                             <SelectUsersByStatus />
                             <SelectUsersByRole />
                         </div>

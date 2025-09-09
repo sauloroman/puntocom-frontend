@@ -50,6 +50,18 @@ export interface CreateUserResponse {
   user: User,
 }
 
+export interface UpdateUser {
+  name?: string,
+  lastname?: string,
+  role?: Roles
+}
+
+export interface UpdateUserResponse {
+  ok: boolean,
+  message: string,
+  user: User
+}
+
 export interface User {
   id: string,
   name: string,
