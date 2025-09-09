@@ -75,7 +75,7 @@ export const UploadImage: React.FC<UploadImageProps> = ({ onUpload }) => {
             </div>
           </div>
           <div className="flex justify-end w-full">
-            <div className="w-50" onClick={handleUpload} >
+            <div className="w-fit" onClick={handleUpload} >
               <UploadButton text="Subir Imagen" />
             </div>
           </div>

@@ -1,8 +1,23 @@
 import { useDispatch, useSelector } from "react-redux"
-import { startChangingSupplierStatus, startCreatingReport, startCreatingSupplier, startFilteringSuppliersByCompany, startFilteringSuppliersByStatus, startGettingSuppliers, startSearchingSuppliers, startUpdatingSupplier } from "../../store/suppliers/supplier.thunk"
+import { 
+    startChangingSupplierStatus, 
+    startCreatingSupplier, 
+    startFilteringSuppliersByCompany, 
+    startFilteringSuppliersByStatus, 
+    startGettingSuppliers, 
+    startSearchingSuppliers, 
+    startUpdatingSupplier 
+} from "../../store/suppliers/supplier.thunk"
+import { 
+    setCompanyFilter, 
+    setPage, 
+    setPaginationVisible, 
+    setStatusFilter, 
+    setSupplierSelected, 
+    setTableView
+} from "../../store/suppliers/supplier.slice"
 import type { CreateSupplier, UpdateSupplier } from "../../interfaces/supplier.interface"
 import type { RootState } from "../../store"
-import { setCompanyFilter, setPage, setPaginationVisible, setStatusFilter, setSupplierSelected } from "../../store/suppliers/supplier.slice"
 
 export const useSuppliers = () => {
     const dispatch = useDispatch<any>()
@@ -14,12 +29,9 @@ export const useSuppliers = () => {
         pagination,
         filter,
         isPaginationVisible,
-        report
+        isTableStyleActive,
+        isGridStyleActive
     } = useSelector((state: RootState) => state.suppliers)
-
-    const generateReport = () => {
-        dispatch(startCreatingReport())
-    }
 
     const getSuppliers = () => {
         dispatch(startGettingSuppliers({ page: 1, limit: pagination.itemsPerPage }))
@@ -80,6 +92,10 @@ export const useSuppliers = () => {
         dispatch(setPaginationVisible(isVisible))
     }
 
+    const setTableStyle = ( status: boolean ) => {
+        dispatch( setTableView(status) )
+    }
+
     return {
         companies,
         supplierSelected,
@@ -88,10 +104,10 @@ export const useSuppliers = () => {
         pagination,
         filter,
         isPaginationVisible,
-        report,
+        isTableStyleActive,
+        isGridStyleActive,
 
         getSuppliers,
-        generateReport,
         onSelectSupplier,
         createSupplier,
         updateSupplier,
@@ -102,6 +118,7 @@ export const useSuppliers = () => {
         onSetFilterCompanies,
         onSetFilterStatus,
         onSearchSupplier,
-        onChangePaginationVisibility
+        onChangePaginationVisibility,
+        setTableStyle
     }
 }

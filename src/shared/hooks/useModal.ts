@@ -6,7 +6,7 @@ import { closeModal, openModal } from "../../store/modal/modal.slice"
 export const useModal = () => {
 
     const dispatch = useDispatch<any>()
-    const { isOpen, name } = useSelector( (state: RootState) => state.modal )
+    const { isOpen, name, message } = useSelector( (state: RootState) => state.modal )
 
     const onOpenModal = ( name: ModalNames ) => {
         dispatch( openModal(name) )
@@ -19,6 +19,7 @@ export const useModal = () => {
     return {
         modalIsOpen: isOpen,
         modalName: name,
+        modalMessage: message,
 
         onOpenModal,
         onCloseModal

@@ -25,7 +25,7 @@ export const AlertContainer: React.FC = () => {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -20, scale: 0.95 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="fixed top-5 right-5 z-50 max-w-sm w-full"
+          className="fixed top-5 right-5 z-100 max-w-sm w-full"
         >
           <div className="relative">
             <Alert

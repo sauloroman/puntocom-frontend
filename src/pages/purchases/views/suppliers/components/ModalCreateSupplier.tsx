@@ -136,7 +136,7 @@ export const ModalCreateSupplier: React.FC = () => {
 
                 <div className='flex items-center gap-5 justify-end mt-6'>
                     <div>
-                        <SaveButton text='Guardar Proveedor' />
+                        <SaveButton submit text='Guardar Proveedor' />
                     </div>
                     <div onClick={ onCloseModal }>
                         <CancelButton text='Cancelar' />

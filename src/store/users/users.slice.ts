@@ -13,7 +13,7 @@ interface IUsers {
   };
   pagination: MetaPagination & { itemsPerPage: number };
   isPaginationVisible: boolean;
-  report: string;
+  hasEnteredPasswordCorrectly: boolean,
 }
 
 const initialState: IUsers = {
@@ -32,7 +32,7 @@ const initialState: IUsers = {
     itemsPerPage: 10,
   },
   isPaginationVisible: true,
-  report: "",
+  hasEnteredPasswordCorrectly: false,
 };
 
 export const usersSlice = createSlice({
@@ -82,10 +82,6 @@ export const usersSlice = createSlice({
       state.pagination.page = payload;
     },
 
-    setReport: (state, { payload }: PayloadAction<string>) => {
-      state.report = payload;
-    },
-
     setRoleFilter: (
       state,
       { payload }: PayloadAction<{ role: Roles | null; isVisible: boolean }>
@@ -105,6 +101,10 @@ export const usersSlice = createSlice({
     setPaginationVisible: (state, { payload }: PayloadAction<boolean>) => {
       state.isPaginationVisible = payload;
     },
+
+    setHasEnteredPasswordCorrectly: ( state, {payload}: PayloadAction<boolean> ) => {
+      state.hasEnteredPasswordCorrectly = payload
+    }
   },
 });
 
@@ -117,8 +117,8 @@ export const {
   resetUsers,
   setUsersMetaPagination,
   setPage,
-  setReport,
   setRoleFilter,
   setStatusFilter,
   setPaginationVisible,
+  setHasEnteredPasswordCorrectly,
 } = usersSlice.actions;

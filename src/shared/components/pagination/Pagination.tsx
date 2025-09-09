@@ -16,9 +16,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   itemsPerPage,
   onPageChange,
 }) => {
-
-  console.log(itemsPerPage)
-    
+  
   const handlePrev = () => {
     if (page > 1) onPageChange(page - 1);
   };

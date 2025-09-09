@@ -1,6 +1,14 @@
+import type { MetaPagination } from "./pagination.interface"
+
 export interface UserRequest {
   email: string,
   password: string
+}
+
+export interface GetUsersResponse {
+  ok: boolean,
+  meta: MetaPagination,
+  users: User[]
 }
 
 export interface UserResponse {
@@ -16,6 +24,20 @@ export interface UserRenewAuth {
   token: string
 }
 
+export interface CreateUser {
+  name: string,
+  lastname: string,
+  email: string,
+  password: string,
+  role: Roles
+}
+
+export interface CreateUserResponse {
+  ok: boolean,
+  message: string,
+  user: User,
+}
+
 export interface User {
   id: string,
   name: string,
@@ -27,6 +49,11 @@ export interface User {
   isValidated: boolean
   createdAt: string,
   updatedAt: string
+}
+
+export interface CheckAdminPassword {
+  id: string,
+  adminPassword: string
 }
 
 export type Roles = 'Administrador' | 'Supervisor' | 'Vendedor';

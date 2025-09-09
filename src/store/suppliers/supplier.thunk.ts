@@ -1,20 +1,27 @@
-import type { Dispatch } from "@reduxjs/toolkit"
-import { addSupplier, setCompanies, setIsLoading, setReport, setSuppliers, setSupplierSelected, setSuppliersMetaPagination, updateSupplier } from "./supplier.slice"
-import type { Pagination } from "../../interfaces/pagination.interface"
+import { 
+    addSupplier, 
+    setCompanies, 
+    setIsLoading, 
+    setSuppliers, 
+    setSupplierSelected, 
+    setSuppliersMetaPagination, 
+    updateSupplier 
+} from "./supplier.slice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
+import { showAlert } from "../alert/alert.slice"
+import { AlertType } from "../../interfaces/ui/alert.interface"
+import { handleError } from "../../config/api/handle-error"
+import type { Dispatch } from "@reduxjs/toolkit"
+import type { Pagination } from "../../interfaces/pagination.interface"
 import { 
     type CreateSupplierResponse, 
     type CreateSupplier, 
     type GetSuppliersResponse, 
     type GetUniqueCompaniesSupplier,
     type ChangeSupplierStatusResponse,
-    type CreateSuppliersReportResponse,
     type UpdateSupplier,
     type UpdateSupplierResponse
 } from "../../interfaces/supplier.interface"
-import { showAlert } from "../alert/alert.slice"
-import { AlertType } from "../../interfaces/ui/alert.interface"
-import { handleError } from "../../config/api/handle-error"
 
 const urlSuppliers = '/api/supplier'
 
@@ -160,31 +167,6 @@ export const startChangingSupplierStatus = ( supplierId: string, status: boolean
             );
         } finally {
             dispatch(setIsLoading( false ))
-        }
-    }
-}
-
-export const startCreatingReport = () => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch( setIsLoading( true ))
-        try {
-            const { data } = await puntocomApiPrivate.get<CreateSuppliersReportResponse>(`${urlSuppliers}/report/generate`)
-            const { message, url } = data
-            dispatch( setReport( url ) )
-            dispatch(showAlert({
-                title: 'Reporte generado',
-                text: message,
-                type: AlertType.success
-            }))
-        } catch( error ){
-            console.log(error)
-            dispatch(showAlert({
-                title: 'Error Reporte',
-                text: 'No se pudo generar el reporte',
-                type: AlertType.error
-            }))
-        } finally {
-            dispatch( setIsLoading( false ))
         }
     }
 }

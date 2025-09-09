@@ -5,17 +5,18 @@ import { Select } from '../../../../../shared/components'
 export const SelectSupplierByCompany: React.FC = () => {
 
     const {
+        filter: { isVisible },
         filterSuppliersByCompany,
-        onChangePaginationVisibility, 
+        onChangePaginationVisibility,
         onSetFilterCompanies,
         getSuppliers,
-        companies 
+        companies
     } = useSuppliers()
 
-    const onChange = ( value: string ) => {
-        onChangePaginationVisibility( true )
+    const onChange = (value: string) => {
+        onChangePaginationVisibility(true)
 
-        if ( value === 'Empresas' ) {
+        if (value === 'Empresas') {
             getSuppliers()
             onSetFilterCompanies(null, true)
             return
@@ -25,12 +26,14 @@ export const SelectSupplierByCompany: React.FC = () => {
     }
 
     return (
-        <div>
-            <Select 
-                onChange={onChange}
-                placeholder='Empresas'
-                options={companies ?? []}
-            />
-        </div>
+        <>
+            {
+                isVisible && <Select
+                    onChange={onChange}
+                    placeholder='Empresas'
+                    options={companies ?? []}
+                />
+            }
+        </>        
     )
 }

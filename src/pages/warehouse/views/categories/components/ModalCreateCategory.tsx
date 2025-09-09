@@ -62,7 +62,7 @@ export const ModalCreateCategory: React.FC = () => {
                 </div>
                 <div className='flex items-center gap-5 justify-end mt-5'>
                     <div>
-                        <SaveButton text='Guardar Categoría' />
+                        <SaveButton submit text='Guardar Categoría' />
                     </div>
                     <div onClick={ onCloseModal }>
                         <CancelButton text='Cancelar' />

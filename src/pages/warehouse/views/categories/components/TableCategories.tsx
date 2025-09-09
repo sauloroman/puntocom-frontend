@@ -46,6 +46,7 @@ export const TableCategories: React.FC<TableCategoriesProps> = ({ data }) => {
                                             width='w-6' 
                                             text='Categoría sin ícono' 
                                             icon={cat.icon} 
+                                            initial={cat.name[0]}
                                         /> 
                                         {cat.name}
                                     </td>

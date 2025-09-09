@@ -14,7 +14,8 @@ interface ISuppliers {
     },
     pagination: MetaPagination & {itemsPerPage: number},
     isPaginationVisible: boolean,
-    report: string,
+    isTableStyleActive: boolean,
+    isGridStyleActive: boolean,
 }
 
 const initialState: ISuppliers = {
@@ -34,7 +35,8 @@ const initialState: ISuppliers = {
         itemsPerPage: 10
     },
     isPaginationVisible: true,
-    report: ''
+    isTableStyleActive: true,
+    isGridStyleActive: false
 }
 
 export const suppliersSlice = createSlice({
@@ -57,10 +59,6 @@ export const suppliersSlice = createSlice({
 
         addCompanySupplier: (state, {payload}: PayloadAction<string>) => {
             state.companies?.push(payload)
-        },
-
-        setReport: (state, {payload}: PayloadAction<string>) => {
-            state.report = payload
         },
 
         updateSupplier:  ( state, {payload}: PayloadAction<{supplierId: string, supplier: Supplier}>) => {
@@ -106,7 +104,12 @@ export const suppliersSlice = createSlice({
 
         setPaginationVisible: ( state, {payload}: PayloadAction<boolean>) => {
             state.isPaginationVisible = payload
-        }
+        },
+
+        setTableView: (state, {payload}: PayloadAction<boolean>) => {
+            state.isTableStyleActive = payload
+            state.isGridStyleActive = !payload
+        },
 
     }
 })
@@ -121,8 +124,8 @@ export const {
     resetSuppliers,
     setSuppliersMetaPagination,
     setPage,
-    setReport,
     setStatusFilter,
     setCompanyFilter,
     setPaginationVisible,
+    setTableView
 } = suppliersSlice.actions

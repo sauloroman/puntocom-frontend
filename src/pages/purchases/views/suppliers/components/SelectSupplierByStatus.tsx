@@ -23,7 +23,7 @@ export const SelectSupplierByStatus: React.FC = () => {
   }
 
   return (
-    <div>
+    <>
       {
         isVisible && <Select 
           onChange={ onChange }
@@ -31,6 +31,6 @@ export const SelectSupplierByStatus: React.FC = () => {
           options={['Activo', 'Inactivo']}
         /> 
       }
-    </div>
+    </>
   )
 }

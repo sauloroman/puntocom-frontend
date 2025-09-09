@@ -8,6 +8,7 @@ import { categoriesSlice } from "./categories/categories.slice";
 import { modalSlice } from "./modal/modal.slice";
 import { drawerSlice } from "./drawer/drawer.slice";
 import { suppliersSlice } from "./suppliers/supplier.slice";
+import { usersSlice } from "./users/users.slice";
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
         modal: modalSlice.reducer,
         drawer: drawerSlice.reducer,
 
+        users: usersSlice.reducer,
         categories: categoriesSlice.reducer,
         suppliers: suppliersSlice.reducer
     }

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { CreateButton } from '../../../../shared/components'
 import { 
-  ButtonSuppliersReport,
   ModalConfirmChangeStatusSupplier,
   ModalConfirmCreateSupplierReport,
   ModalCreateSupplier, 
@@ -11,16 +10,18 @@ import {
   SelectSupplierByCompany, 
   SelectSupplierByStatus, 
   SupplierEditDrawer, 
+  SupplierGrid, 
   SupplierInfoDrawer, 
   TableSuppliers } from './components'
 import { useDrawer, useModal, useSuppliers } from '../../../../shared/hooks'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
+import { ToggleGridTableView } from '../../../../shared/components/button'
 
 export const PurchasesSuppliers: React.FC = () => {
 
   const { modalIsOpen, modalName, onOpenModal } = useModal()
-  const { suppliers, getSuppliers } = useSuppliers()
+  const { suppliers, getSuppliers, setTableStyle, isTableStyleActive } = useSuppliers()
   const { rightDrawerIsOpen, drawelName } = useDrawer()
 
   useEffect(() => {
@@ -33,19 +34,27 @@ export const PurchasesSuppliers: React.FC = () => {
         <div className="flex items-center justify-between mb-7">
           <SearchSupplier />
           <div className="flex items-center justify-end gap-4 w-full">
+
             <div className="flex items-center gap-4">
+              <ToggleGridTableView onToggle={setTableStyle} status={isTableStyleActive} />
               <SelectSupplierByCompany />
               <SelectSupplierByStatus />
             </div>
 
             <div className="flex items-center gap-3">
-              <ButtonSuppliersReport />
-              <div onClick={() => onOpenModal(ModalNames.createSupplier)}><CreateButton text="Crear proveedor" /></div>
+              <div onClick={() => onOpenModal(ModalNames.createSupplier)}>
+                <CreateButton text="Crear proveedor" />
+              </div>
             </div>
+            
           </div>
         </div>
         <div>
-          <TableSuppliers data={suppliers ?? []} />
+          {
+            isTableStyleActive
+            ? (<TableSuppliers data={suppliers ?? []} />)
+            : (<SupplierGrid data={suppliers ?? []} />)
+          }
           <PaginationSuppliers />
         </div>
       </section>

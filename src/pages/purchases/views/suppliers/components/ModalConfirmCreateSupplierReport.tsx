@@ -1,25 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ModalLayout } from "../../../../../layouts/ModalLayout";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { CancelButton, CreateButton, SpinnerContainer } from "../../../../../shared/components";
 import { useModal, useSuppliers } from "../../../../../shared/hooks";
-import { ModalNames } from "../../../../../interfaces/ui/modal.interface";
 
 export const ModalConfirmCreateSupplierReport: React.FC = ({
 }) => {
 
   const { onCloseModal, onOpenModal } = useModal()
-  const { generateReport, isLoading, report } = useSuppliers()
+  const { isLoading } = useSuppliers()
 
-  const onGenerateReport = () => {
-    generateReport()
-  }
-
-  useEffect(() => {
-    if ( report !== '' ) {
-        onOpenModal( ModalNames.reportSuppliers )
-    }
-  }, [report])
 
   return (
     <ModalLayout width="w-xl">
@@ -41,7 +31,7 @@ export const ModalConfirmCreateSupplierReport: React.FC = ({
                     </p>
 
                     <div className="flex gap-4">
-                    <div onClick={onGenerateReport}><CreateButton text="Sí, generar"/></div>
+                    <div onClick={() => {}}><CreateButton text="Sí, generar"/></div>
                     <div onClick={onCloseModal}><CancelButton text="No generar" /></div>
                     </div>
                 </>

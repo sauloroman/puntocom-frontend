@@ -3,12 +3,14 @@ import { ModalNames } from "../../interfaces/ui/modal.interface";
 
 interface IModal {
     isOpen: boolean,
-    name: ModalNames | null
+    name: ModalNames | null,
+    message?: string
 }
 
 const initialState: IModal = {
     isOpen: false,
-    name: null
+    name: null,
+    message: ''
 }
 
 export const modalSlice = createSlice({
@@ -24,6 +26,11 @@ export const modalSlice = createSlice({
         closeModal: (state) => {
             state.isOpen = false
             state.name = null
+            state.message = ''
+        },
+
+        setModalMessage: (state, {payload}: PayloadAction<string>) => {
+            state.message = payload
         }
 
     }
@@ -31,5 +38,6 @@ export const modalSlice = createSlice({
 
 export const {
     openModal,
-    closeModal
+    closeModal,
+    setModalMessage
 } = modalSlice.actions
