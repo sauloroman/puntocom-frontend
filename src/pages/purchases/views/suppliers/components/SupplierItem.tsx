@@ -40,7 +40,7 @@ interface SupplierItemProps {
 
 export const SupplierItem: React.FC<SupplierItemProps> = ({ supplier }) => {
   return (
-    <div className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white shadow-md hover:shadow-lg transition-shadow p-5">
+    <div className="w-full rounded-2xl border border-gray-200 bg-white shadow-md hover:shadow-lg transition-shadow p-5">
       
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-gray-800">

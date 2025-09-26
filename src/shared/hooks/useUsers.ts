@@ -11,7 +11,7 @@ import {
     startUploadingUserImage 
 } from "../../store/users/users.thunk"
 import { 
-    setHasEnteredPasswordCorrectly, 
+    setHasEnteredPasswordCorrectly,
     setOrderedAsc, 
     setPage, 
     setPaginationVisible, 
@@ -37,7 +37,7 @@ export const useUsers = () => {
         isLoading,
         isTableStyleActive,
         userSelected,
-        isOrderedAsc
+        isOrderedAsc,
     } = useSelector((state: RootState) => state.users )
 
     const getUsers = () => {
@@ -94,15 +94,18 @@ export const useUsers = () => {
     } 
 
     const checkAdminPassword = ( data: CheckAdminPassword ) => {
-        dispatch( startCheckingAdminPass( data ) )
+        dispatch(startCheckingAdminPass({
+            id: data.id,
+            adminPassword: data.adminPassword
+        } ))
+    }
+
+    const resetEnteredAdminPassword = () => {
+        dispatch(setHasEnteredPasswordCorrectly(false))
     }
 
     const onChangePaginationVisibility = (isVisible: boolean) => {
         dispatch(setPaginationVisible(isVisible))
-    }
-
-    const resetConfirmAdminPasswordStatus = () => {
-        dispatch( setHasEnteredPasswordCorrectly( false ))
     }
 
     const onSearchUser = ( userSearched: string ) => {
@@ -154,12 +157,12 @@ export const useUsers = () => {
         filter,
         hasEnteredPasswordCorrectly,
         isLoading,
+        isOrderedAsc,
         isPaginationVisible,
         isTableStyleActive,
         pagination,
         users,
         userSelected,
-        isOrderedAsc,
 
         checkAdminPassword,
         createUser,
@@ -167,18 +170,18 @@ export const useUsers = () => {
         filterUsersByStatus,
         getUsers,
         onChangePaginationVisibility,
+        onChangeUserStatus,
+        onOrderAlpha,
         onSearchUser,
+        onSelectUser,
         onSetFilterRole,
         onSetFilterStatus,
         onSetPage,
-        onSelectUser,
-        resetConfirmAdminPasswordStatus,
         setTableStyle,
-        onChangeUserStatus,
-        uploadUserImage,
-        onOrderAlpha,
         sortUsers,
-        updateUser
+        updateUser,
+        uploadUserImage,
+        resetEnteredAdminPassword,
     }
 
 }

@@ -3,12 +3,15 @@ import { Button } from './Button'
 import { IoDocumentTextOutline } from "react-icons/io5";
 
 interface GenerateReportButtonProps {
-  text: string
+  text: string,
+  onClick?: () => void
 }
 
-export const GenerateReportButton: React.FC<GenerateReportButtonProps> = ({ text }) => {
+export const GenerateReportButton: React.FC<GenerateReportButtonProps> = ({ text, onClick }) => {
   return (
     <Button
+      type='button'
+      onClick={ onClick }
       className="
         text-sm
         cursor-pointer

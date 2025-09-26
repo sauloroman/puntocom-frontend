@@ -19,6 +19,8 @@ export const SearchCategory: React.FC = () => {
     }
         
     return (
-        <div className='w-full'><Search onChange={onChange} placeholder='Buscar categoría por nombre' /></div>
+        <div className='w-full'>
+            <Search onChange={onChange} placeholder='Buscar categoría por nombre' />
+        </div>
     )
 }

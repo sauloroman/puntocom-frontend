@@ -17,6 +17,11 @@ export interface CreateCategoryResponse {
     category: Category
 }
 
+export interface GetAllCategoriesResponse {
+    ok: boolean,
+    categories: Category[]
+}
+
 export interface UpdateCategory {
     name?: string,
     description?: string,

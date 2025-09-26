@@ -1,6 +1,6 @@
 import React from 'react'
 import { RightDrawerLayout } from '../../../../../layouts/RightDrawerLayout'
-import { useModal, useSuppliers, useUsers } from '../../../../../shared/hooks'
+import { useModal, useSuppliers } from '../../../../../shared/hooks'
 import { SpinnerContainer } from '../../../../../shared/components'
 import { FormEditSupplier } from './FormEditSupplier'
 import { DrawerInfoStatus } from '../../../../../shared/components/drawer/DrawerInfoStatus'

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useModal, useSuppliers } from '../../../../../shared/hooks'
+import { useAlert, useModal, useSuppliers } from '../../../../../shared/hooks'
 import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { Input, Label } from '../../../../../shared/components'
 import { LuAsterisk } from "react-icons/lu";
@@ -8,8 +8,13 @@ import { SaveButton } from '../../../../../shared/components/button/SaveButton'
 import { CancelButton } from '../../../../../shared/components/button/CancelButton'
 import type { CreateSupplier } from '../../../../../interfaces/supplier.interface'
 import { EmailRegEx, phoneRegEx } from '../../../../../shared/utils/regexp'
+import { SmallButton } from '../../../../../shared/components/button'
+import { AlertType } from '../../../../../interfaces/ui/alert.interface'
 
 export const ModalCreateSupplier: React.FC = () => {
+
+    const [createNewCompany, setCreateNewCompany] = useState<boolean>(false)
+    const [newCompany, setNewCompany] = useState<string>('')
 
     const {
         handleSubmit,
@@ -17,12 +22,27 @@ export const ModalCreateSupplier: React.FC = () => {
         formState: {errors}        
     } = useForm<CreateSupplier>()
     const { onCloseModal } = useModal()
-    const { createSupplier } = useSuppliers()
+    const { activateAlert } = useAlert()
+    const { createSupplier, getUniqueCompanies, companies } = useSuppliers()
 
     const onCreateSupplier = ( data: CreateSupplier ) => {
+
+        if ( newCompany && companies?.includes(newCompany) ) {
+            activateAlert({
+                title: 'Empresa Existente',
+                text: 'La empresa que intentas crear ya está entre las opciones',
+                type: AlertType.warning
+            })
+            return
+        }
+
         createSupplier(data)
         onCloseModal()
     }
+
+    useEffect(() => {
+        getUniqueCompanies()
+    }, [])
 
     return (
         <ModalLayout width={'w-2xl'}>
@@ -116,23 +136,59 @@ export const ModalCreateSupplier: React.FC = () => {
                     </div>
                 </div>
 
-                <div className='w-full'>
-                        <Label htmlFor='supplierCompany' className='mb-3 flex items-center justify-between gap-2'>
-                            Empresa
-                            <LuAsterisk size={15} className='text-indigo-600' />
-                        </Label>
-                        <Input 
-                            id='supplierCompany'
-                            type='text'
-                            placeholder='RomanCode'
-                            {
-                                ...register('company', {
-                                    required: 'La empresa es obligatoria'
-                                })
-                            }
-                        />
-                        { errors.company && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.company.message}</p>)}
+                {
+                    createNewCompany
+                    ? (
+                        <div className='w-full'>
+                            <Label htmlFor='supplierCompany' className='mb-3 flex items-center justify-between gap-2'>
+                                Nueva Empresa
+                                <LuAsterisk size={15} className='text-indigo-600' />
+                            </Label>
+                            <Input 
+                                id='supplierCompany'
+                                type='text'
+                                placeholder='RomanCode'
+                                name='newCompany'
+                                value={newCompany}
+                                onChange={ e => setNewCompany(e.target.value)}
+                            />
+                        </div>
+                    )
+                    : (
+                        <div className='w-full'>
+                            <Label htmlFor='supplierCompany' className='mb-3 flex items-center justify-between gap-2'>
+                                Empresa
+                                <LuAsterisk size={15} className='text-indigo-600' />
+                            </Label>
+                            <select
+                                className=' text-sm
+                                appearance-none w-full px-4 py-2 pr-10 rounded-lg
+                                bg-white text-gray-600
+                                border border-gray-300
+                                focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-200
+                                transition-all cursor-pointer' 
+                                id="selectSupplierCompany"
+                                {
+                                    ...register('company', {
+                                        required: 'La empresa es obligatoria'
+                                    })
+                                }
+                            >
+                                {
+                                    companies?.map( com => (
+                                        <option key={com} value={com}>{com}</option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                    )
+                }
+                { errors.company && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.company.message}</p>)}
+
+                <div className='w-fit' onClick={() => setCreateNewCompany(!createNewCompany)}>
+                    <SmallButton text={ !createNewCompany ? 'Crear Nueva Empresa' : 'Seleccionar Empresa' } />
                 </div>
+
 
                 <div className='flex items-center gap-5 justify-end mt-6'>
                     <div>

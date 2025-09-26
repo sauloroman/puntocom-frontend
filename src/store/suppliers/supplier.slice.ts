@@ -5,6 +5,7 @@ import type { MetaPagination } from "../../interfaces/pagination.interface";
 interface ISuppliers {
     isLoading: boolean,
     suppliers: Supplier[] | null,
+    allSuppliers: Supplier[] | null,
     companies: string[] | null,
     supplierSelected: Supplier | null,
     filter: {
@@ -16,11 +17,13 @@ interface ISuppliers {
     isPaginationVisible: boolean,
     isTableStyleActive: boolean,
     isGridStyleActive: boolean,
+    isOrderedAsc: boolean,
 }
 
 const initialState: ISuppliers = {
     isLoading: false,
     suppliers: null,
+    allSuppliers: null,
     companies: null,
     supplierSelected: null,
     filter: { 
@@ -36,13 +39,22 @@ const initialState: ISuppliers = {
     },
     isPaginationVisible: true,
     isTableStyleActive: true,
-    isGridStyleActive: false
+    isGridStyleActive: false,
+    isOrderedAsc: false,
 }
 
 export const suppliersSlice = createSlice({
     name: 'suppliers',
     initialState: initialState,
     reducers: {
+
+        setOrderedAsc: (state, {payload}:PayloadAction<boolean>) => {
+            state.isOrderedAsc = payload
+        },
+
+        setAllSuppliers: (state, {payload}: PayloadAction<Supplier[]>) => {
+            state.allSuppliers = payload
+        },
 
         setCompanies: (state, {payload}: PayloadAction<string[]>) => {
             state.companies = payload
@@ -120,6 +132,7 @@ export const {
     updateSupplier,
     setIsLoading,
     setSuppliers,
+    setAllSuppliers,
     setSupplierSelected,
     resetSuppliers,
     setSuppliersMetaPagination,
@@ -127,5 +140,6 @@ export const {
     setStatusFilter,
     setCompanyFilter,
     setPaginationVisible,
-    setTableView
+    setTableView,
+    setOrderedAsc
 } = suppliersSlice.actions

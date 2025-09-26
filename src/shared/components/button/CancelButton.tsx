@@ -13,7 +13,7 @@ export const CancelButton: React.FC<ButtonProps> = ({ text }) => (
     transition-colors duration-300
     shadow-none
     rounded-full
-  ">
+  " type="button">
     <IoIosCloseCircleOutline size={18} className="text-red-500" />
     <p className="text-red-500">{text}</p>
   </Button>

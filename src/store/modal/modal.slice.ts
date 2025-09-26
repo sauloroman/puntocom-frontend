@@ -4,13 +4,19 @@ import { ModalNames } from "../../interfaces/ui/modal.interface";
 interface IModal {
     isOpen: boolean,
     name: ModalNames | null,
-    message?: string
+    message?: string,
+    confirmPasswordModal: {
+        nextModal: ModalNames | null,
+    }
 }
 
 const initialState: IModal = {
     isOpen: false,
     name: null,
-    message: ''
+    message: '',
+    confirmPasswordModal: {
+        nextModal: null
+    }
 }
 
 export const modalSlice = createSlice({
@@ -21,6 +27,18 @@ export const modalSlice = createSlice({
         openModal: (state, {payload}: PayloadAction<ModalNames>) => {
             state.isOpen = true
             state.name = payload
+        },
+
+        setConfirmModal: (state, {payload}: PayloadAction<ModalNames | null >) => {
+            state.isOpen = true
+            state.name = ModalNames.confirmAdminPassword
+            state.confirmPasswordModal.nextModal = payload
+        },
+
+        resetConfirmModal: (state) => {
+            state.isOpen = false
+            state.name = null,
+            state.confirmPasswordModal.nextModal = null
         },
 
         closeModal: (state) => {
@@ -39,5 +57,7 @@ export const modalSlice = createSlice({
 export const {
     openModal,
     closeModal,
-    setModalMessage
+    setModalMessage,
+    setConfirmModal,
+    resetConfirmModal
 } = modalSlice.actions

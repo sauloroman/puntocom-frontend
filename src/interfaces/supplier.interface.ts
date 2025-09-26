@@ -11,6 +11,11 @@ export interface GetUniqueCompaniesSupplier {
     companies: string[]
 }
 
+export interface GetAllSuppliers {
+    ok: boolean,
+    suppliers: Supplier[]
+}
+
 export interface CreateSupplier {
     name: string,
     lastname: string,

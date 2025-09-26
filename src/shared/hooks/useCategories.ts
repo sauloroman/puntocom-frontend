@@ -1,31 +1,45 @@
 import { useDispatch, useSelector } from "react-redux"
-import type { RootState } from "../../store"
 import { 
     startChangingCategoryStatus, 
     startCreatingCategory, 
     startFilteringCategoriesByStatus, 
+    startGettingAllCategories, 
     startGettingCategories, 
     startSearchingCategories, 
     startUpdatingCategory, 
     startUploadingCategoryImage 
 } from "../../store/categories/categories.thunk"
+import { 
+    setCategories, 
+    setCategorySelected, 
+    setOrderedAsc, 
+    setPage, 
+    setPaginationVisible, 
+    setStatusFilter 
+} from "../../store/categories/categories.slice"
+import type { RootState } from "../../store"
 import type { CreateCategory, UpdateCategory } from "../../interfaces/category.interface"
-import { setCategorySelected, setPage, setPaginationVisible, setStatusFilter } from "../../store/categories/categories.slice"
 
 export const useCategories = () => {
 
     const dispatch = useDispatch<any>() 
     const { 
         categories, 
+        allCategories,
         categorySelected, 
         isLoading, 
         pagination,
         filter,
-        isPaginationVisible
+        isPaginationVisible,
+        isOrderedAsc,
     } = useSelector( (state: RootState) => state.categories )
 
     const getCategories = () => {
         dispatch( startGettingCategories({ page: 1, limit: pagination.itemsPerPage }) )
+    }
+
+    const getAllCategories = () => {
+        dispatch(startGettingAllCategories())
     }
 
     const filterCategoriesByStatus = ( status: boolean ) => {
@@ -76,16 +90,39 @@ export const useCategories = () => {
         dispatch( setPaginationVisible(isVisible) )
     }
 
+    const onOrderAlpha = ( ordered: boolean ) => {
+        dispatch(setOrderedAsc(ordered))
+        sortCategories()
+    }
+
+    const sortCategories = () => {
+        const categoriesSorted = [...categories!].sort((a, b) => {
+            const categoryA = a.name.toLowerCase()
+            const categoryB = b.name.toLowerCase()
+            
+            if ( isOrderedAsc ) {
+                return categoryA.localeCompare(categoryB)
+            } else {
+                return categoryB.localeCompare(categoryA)
+            }
+        })
+
+        dispatch(setCategories( categoriesSorted ?? [] ))
+    }
+
     return {
         categorySelected,
         categories,
+        allCategories,
         isLoading,
         pagination,
         filter,
         isPaginationVisible,
+        isOrderedAsc,
 
         onSelectCategory,
         getCategories,
+        getAllCategories,
         createCategory,
         updateCategory,
         uploadCategoryIcon,
@@ -94,6 +131,7 @@ export const useCategories = () => {
         onSetPage,
         onSetFilterStatus,
         onSearchCategory,
-        onChangePaginationVisibility
+        onChangePaginationVisibility,
+        onOrderAlpha
     }
 }

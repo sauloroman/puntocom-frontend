@@ -1,5 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit"
-import { addCategory, setCategories, setCategoriesMetaPagination, setCategorySelected, setIsLoading, updateCategory } from "./categories.slice"
+import { addCategory, setAllCategories, setCategories, setCategoriesMetaPagination, setCategorySelected, setIsLoading, updateCategory } from "./categories.slice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 import type { Pagination } from "../../interfaces/pagination.interface"
 import { 
@@ -9,7 +9,8 @@ import {
     type CreateCategoryResponse, 
     type UpdateCategory, 
     type UpdateCategoryResponse, 
-    type UploadCategoryImage 
+    type UploadCategoryImage, 
+    type GetAllCategoriesResponse
 } from "../../interfaces/category.interface"
 import { showAlert } from "../alert/alert.slice"
 import { handleError } from "../../config/api/handle-error"
@@ -27,6 +28,21 @@ export const startGettingCategories = (pagination: Pagination) => {
             const { categories, meta } = data
             dispatch( setCategories(categories) )
             dispatch( setCategoriesMetaPagination({...meta, itemsPerPage: 10}) )
+        } catch(error) {
+            console.log(error)
+        } finally {
+            dispatch( setIsLoading( false ) )
+        }
+    }
+}
+
+export const startGettingAllCategories = () => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            const { data } = await puntocomApiPrivate.get<GetAllCategoriesResponse>(`${urlCategories}/all`)
+            const { categories } = data
+            dispatch(setAllCategories(categories))
         } catch(error) {
             console.log(error)
         } finally {

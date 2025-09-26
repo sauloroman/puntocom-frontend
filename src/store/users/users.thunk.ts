@@ -17,7 +17,7 @@ import {
     type ChangeUserStatusResponse,
     type UploadUserImage,
     type UpdateUser,
-    type UpdateUserResponse
+    type UpdateUserResponse,
 } from "../../interfaces/user.interface"
 import type { Dispatch } from "@reduxjs/toolkit"
 import type { Pagination } from "../../interfaces/pagination.interface"
@@ -30,7 +30,7 @@ import { ModalNames } from "../../interfaces/ui/modal.interface"
 
 const urlUser = '/api/user'
 
-export const startCheckingAdminPass = (dataAdminPassword: CheckAdminPassword) => {
+export const startCheckingAdminPass = (dataAdminPassword: CheckAdminPassword ) => {
     return async (dispatch: Dispatch) => {
         dispatch(setIsLoading(true))
         try {

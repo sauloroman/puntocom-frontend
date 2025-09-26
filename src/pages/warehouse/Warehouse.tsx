@@ -4,6 +4,7 @@ import { TabsLayout } from '../../layouts'
 import { useTabs } from '../../shared/hooks/useTabs'
 import { WindowsTab } from '../../interfaces/ui/tabs.interface'
 import { WarehouseCategories } from './views/categories/WarehouseCategories'
+import { WarehouseProducts } from './views/products/WarehouseProducts'
 
 const tabs = ["Categorías", "Productos", "Bajo Stock", "Ajustes de Almacén"]
 
@@ -16,7 +17,7 @@ export const Warehouse: React.FC = () => {
       case "Categorías":
         return <WarehouseCategories />
       case "Productos":
-        return <div>Listado de productos aquí</div>
+        return <WarehouseProducts />
       case "Bajo Stock":
         return <div>Productos con bajo inventario aquí</div>
       case "Ajustes de Almacén":

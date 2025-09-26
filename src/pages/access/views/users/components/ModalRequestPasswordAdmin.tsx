@@ -7,16 +7,15 @@ import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { ConfirmButton, Input, Label } from '../../../../../shared/components'
 import { useAuth, useModal, useUsers } from '../../../../../shared/hooks';
 import type { CheckAdminPassword } from '../../../../../interfaces/user.interface';
-import { ModalNames } from '../../../../../interfaces/ui/modal.interface';
 
 export const ModalRequestPasswordAdmin: React.FC = () => {
 
     const [showPassword, setShowPassword] = useState(false)
 
+    const { confirmPasswordModal, onOpenModal } = useModal()
     const { user } = useAuth()
     const { checkAdminPassword, hasEnteredPasswordCorrectly } = useUsers()
     const { handleSubmit, register, formState: { errors } } = useForm<CheckAdminPassword>()
-    const { onOpenModal } = useModal()
 
     const onCheckAdminCredentials = ( data: CheckAdminPassword ) => {
         checkAdminPassword({ 
@@ -27,7 +26,7 @@ export const ModalRequestPasswordAdmin: React.FC = () => {
 
     useEffect(() => {
         if ( hasEnteredPasswordCorrectly ) {
-            onOpenModal(ModalNames.createUser)
+            onOpenModal( confirmPasswordModal.nextModal! )
         }
     }, [hasEnteredPasswordCorrectly])
 

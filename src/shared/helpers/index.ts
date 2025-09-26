@@ -1,2 +1,3 @@
 export { getEnvVariables } from './get-env-variables'
-export { downloadPdf } from './download-pdf'
+export { handleDownloadPdf } from './handleDownloadPdf'
+export { formatPrices } from './format-prices'

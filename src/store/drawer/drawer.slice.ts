@@ -3,12 +3,14 @@ import type { DrawelNames } from "../../interfaces/ui/drawel.interface";
 
 interface IDrawel {
     drawelName: DrawelNames | null,
-    rightIsOpen: boolean
+    rightIsOpen: boolean,
+    leftIsOpen: boolean
 }
 
 const initialState: IDrawel = {
     drawelName: null,
-    rightIsOpen: false
+    rightIsOpen: false,
+    leftIsOpen: false,
 }
 
 export const drawerSlice = createSlice({
@@ -21,9 +23,15 @@ export const drawerSlice = createSlice({
             state.rightIsOpen = true
         },
 
+        openLeftDrawel: (state, {payload}: PayloadAction<DrawelNames>) => {
+            state.drawelName = payload
+            state.leftIsOpen = true
+        },
+
         closeDrawels: (state) => {
             state.drawelName = null
             state.rightIsOpen = false
+            state.leftIsOpen = false
         }
 
     }
@@ -31,5 +39,6 @@ export const drawerSlice = createSlice({
 
 export const {
     openRightDrawel,
+    openLeftDrawel,
     closeDrawels
 } = drawerSlice.actions

@@ -32,7 +32,7 @@ const initialState: IUsers = {
     page: 1,
     total: 1,
     totalPages: 1,
-    itemsPerPage: 10,
+    itemsPerPage: 12,
   },
   isPaginationVisible: true,
   hasEnteredPasswordCorrectly: false,

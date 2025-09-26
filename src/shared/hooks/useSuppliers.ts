@@ -4,15 +4,19 @@ import {
     startCreatingSupplier, 
     startFilteringSuppliersByCompany, 
     startFilteringSuppliersByStatus, 
+    startGettingAllSuppliers, 
     startGettingSuppliers, 
+    startGettingUniqueCompanies, 
     startSearchingSuppliers, 
     startUpdatingSupplier 
 } from "../../store/suppliers/supplier.thunk"
 import { 
     setCompanyFilter, 
+    setOrderedAsc, 
     setPage, 
     setPaginationVisible, 
     setStatusFilter, 
+    setSuppliers, 
     setSupplierSelected, 
     setTableView
 } from "../../store/suppliers/supplier.slice"
@@ -24,17 +28,23 @@ export const useSuppliers = () => {
     const { 
         companies,
         suppliers,
+        allSuppliers,
         supplierSelected,
         isLoading,
         pagination,
         filter,
         isPaginationVisible,
         isTableStyleActive,
-        isGridStyleActive
+        isGridStyleActive,
+        isOrderedAsc
     } = useSelector((state: RootState) => state.suppliers)
 
     const getSuppliers = () => {
         dispatch(startGettingSuppliers({ page: 1, limit: pagination.itemsPerPage }))
+    }
+
+    const getAllSuppliers = () => {
+        dispatch(startGettingAllSuppliers())
     }
 
     const filterSuppliersByStatus = (status: boolean) => {
@@ -96,6 +106,29 @@ export const useSuppliers = () => {
         dispatch( setTableView(status) )
     }
 
+    const onOrderAlpha = (ordered: boolean) => {
+        dispatch(setOrderedAsc(ordered))
+        sortSuppliers()
+    }
+
+    const sortSuppliers = () => {
+        const sortedSuppiers = [...suppliers!].sort((a, b) => {
+            const supplierA = `${a.name} ${a.lastname}`.toLowerCase()
+            const supplierB = `${b.name} ${b.lastname}`.toLowerCase()
+
+            if (isOrderedAsc) {
+                return supplierA.localeCompare(supplierB)
+            } else {
+                return supplierB.localeCompare(supplierA)
+            }
+        })
+        dispatch(setSuppliers( sortedSuppiers ))
+    }
+
+    const getUniqueCompanies = () => {
+        dispatch(startGettingUniqueCompanies())
+    }
+
     return {
         companies,
         filter,
@@ -105,8 +138,12 @@ export const useSuppliers = () => {
         isTableStyleActive,
         pagination,
         suppliers,
+        allSuppliers,
         supplierSelected,
+        isOrderedAsc,
 
+        getAllSuppliers,
+        getUniqueCompanies,
         changeSupplierStatus,
         createSupplier,
         filterSuppliersByCompany,
@@ -120,5 +157,6 @@ export const useSuppliers = () => {
         onSetPage,
         setTableStyle,
         updateSupplier,
+        onOrderAlpha,
     }
 }

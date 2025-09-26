@@ -13,15 +13,17 @@ import {
   SelectCategoriesByStatus, 
   TableCategories 
 } from './components'
+import { SortElementsAlpha } from '../../../../shared/components/button'
 
 export const WarehouseCategories: React.FC = () => {
 
-  const { getCategories, categories } = useCategories()
+  const { getCategories, categories, onOrderAlpha, isOrderedAsc, allCategories, getAllCategories } = useCategories()
   const { modalIsOpen, modalName, onOpenModal } = useModal()
   const { rightDrawerIsOpen, drawelName } = useDrawer()
 
   useEffect(() => {
     if ( !categories ) getCategories()
+    if ( !allCategories ) getAllCategories()
   }, [])
 
   return (
@@ -30,7 +32,10 @@ export const WarehouseCategories: React.FC = () => {
         <div className="flex items-center justify-between mb-7">
           <SearchCategory />
           <div className='flex items-center gap-5'>
-            <SelectCategoriesByStatus />
+            <SortElementsAlpha onToggle={onOrderAlpha} desc={isOrderedAsc} />
+            <div className='w-50'>
+              <SelectCategoriesByStatus />
+            </div>
             <div className='w-40' onClick={() => onOpenModal( ModalNames.createCategory )}>
               <CreateButton text='Crear categoría' />
             </div>

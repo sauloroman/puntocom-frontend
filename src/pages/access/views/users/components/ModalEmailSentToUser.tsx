@@ -1,10 +1,16 @@
 import React from 'react'
 import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { ConfirmButton } from '../../../../../shared/components'
-import { useModal } from '../../../../../shared/hooks'
+import { useModal, useUsers } from '../../../../../shared/hooks'
 
 export const ModalEmailSentToUser: React.FC = () => {
-  const { modalMessage } = useModal()
+  const { modalMessage, onCloseConfirmAdminPassword } = useModal()
+  const { resetEnteredAdminPassword } = useUsers()
+
+  const onClose = () => {
+    onCloseConfirmAdminPassword()
+    resetEnteredAdminPassword()
+  }
 
   return (
     <ModalLayout width="w-lg">
@@ -19,7 +25,7 @@ export const ModalEmailSentToUser: React.FC = () => {
           Sigue los pasos para validar tu cuenta
         </p>
 
-        <ConfirmButton text="Aceptar" />
+        <div onClick={onClose}><ConfirmButton text="Aceptar" /></div>
       </div>
     </ModalLayout>
   )

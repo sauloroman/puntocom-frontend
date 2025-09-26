@@ -4,16 +4,19 @@ import type { MetaPagination } from "../../interfaces/pagination.interface";
 
 interface ICategories {
     isLoading: boolean,
-    categories: Category[] | null
+    categories: Category[] | null,
+    allCategories: Category[] | null,
     categorySelected: Category | null,
     filter: { status: boolean | null, isVisible: boolean },
     pagination: MetaPagination & { itemsPerPage: number },
-    isPaginationVisible: boolean
+    isPaginationVisible: boolean,
+    isOrderedAsc: boolean,
 }
 
 const initialState: ICategories = {
     isLoading: false,
     categories: null,
+    allCategories: null,
     categorySelected: null,
     filter: { 
         status: null,
@@ -26,12 +29,17 @@ const initialState: ICategories = {
         itemsPerPage: 10,
     },
     isPaginationVisible: true,
+    isOrderedAsc: false,
 }
 
 export const categoriesSlice = createSlice({
     name: 'categories',
     initialState: initialState,
     reducers: {
+
+        setOrderedAsc: (state, {payload}:PayloadAction<boolean>) => {
+            state.isOrderedAsc = payload
+        },
 
         setIsLoading: (state, {payload}: PayloadAction<boolean>) => {
             state.isLoading = payload
@@ -53,6 +61,10 @@ export const categoriesSlice = createSlice({
 
         setCategories: ( state, {payload}: PayloadAction<Category[]>) => {
             state.categories = payload
+        },
+
+        setAllCategories: ( state, {payload}: PayloadAction<Category[]>) => {
+            state.allCategories = payload
         },
 
         setCategorySelected: (state, {payload}: PayloadAction<Category>) => {
@@ -90,10 +102,12 @@ export const {
     updateCategory,
     setIsLoading,
     setCategories,
+    setAllCategories,
     setCategorySelected,
     resetCategories,
     setCategoriesMetaPagination,
     setPage,
     setStatusFilter,
     setPaginationVisible,
+    setOrderedAsc,
 } = categoriesSlice.actions

@@ -1,5 +1,6 @@
 import { 
     addSupplier, 
+    setAllSuppliers, 
     setCompanies, 
     setIsLoading, 
     setSuppliers, 
@@ -20,7 +21,8 @@ import {
     type GetUniqueCompaniesSupplier,
     type ChangeSupplierStatusResponse,
     type UpdateSupplier,
-    type UpdateSupplierResponse
+    type UpdateSupplierResponse,
+    type GetAllSuppliers
 } from "../../interfaces/supplier.interface"
 
 const urlSuppliers = '/api/supplier'
@@ -42,6 +44,36 @@ export const startGettingSuppliers = ( pagination: Pagination ) => {
             dispatch(setCompanies(companies))
             dispatch(setSuppliersMetaPagination({...meta, itemsPerPage: 10}))
 
+        } catch(error) {
+            console.log(error)
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startGettingUniqueCompanies = () => {
+    return async ( dispatch: Dispatch ) => {
+         dispatch(setIsLoading(true))
+        try {
+            const { data: {companies}} = await puntocomApiPrivate.get<GetUniqueCompaniesSupplier>(`${urlSuppliers}/companies`)
+            dispatch(setCompanies(companies))
+        } catch(error) {
+            console.log(error)
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startGettingAllSuppliers = () => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            
+            const {data} = await puntocomApiPrivate.get<GetAllSuppliers>(`${urlSuppliers}/all`)
+            const { suppliers } = data
+            dispatch(setAllSuppliers(suppliers))
 
         } catch(error) {
             console.log(error)
@@ -127,6 +159,7 @@ export const startCreatingSupplier = ( createSupplierData: CreateSupplier ) => {
             }))
 
         } catch( error ) {
+            console.log(error)
             dispatch(
                 showAlert({
                     title: "⚠️ Error proveedor",
@@ -135,7 +168,7 @@ export const startCreatingSupplier = ( createSupplierData: CreateSupplier ) => {
                 })
             );
         } finally {
-            dispatch(setIsLoading(true))
+            dispatch(setIsLoading(false))
         }
     }
 }

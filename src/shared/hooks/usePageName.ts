@@ -19,6 +19,8 @@ export const usePageName = () => {
                 return ['Registro de Compras', location + ' - ' + 'Compras']
             case 'access':
                 return ['Control de Acceso', location + ' - ' + 'Acceso']
+            case 'reports':
+                return ['Reportes generados', location + ' - ' + 'Reportes']
             case 'settings':
                 return ['Ajustes del sistema', location + ' - ' + 'Ajustes']
             default: 
