@@ -11,10 +11,10 @@ export const SearchProduct: React.FC = () => {
 
         if ( productSearched === '' ) {
             onSetFilterStatus(null, true)
-            onSetFilterCategory(null, true)
+            onSetFilterCategory(null, null, true)
         } else {
             onSetFilterStatus(null, false)
-            onSetFilterCategory(null, false)
+            onSetFilterCategory(null, null, false)
         }
     }
 

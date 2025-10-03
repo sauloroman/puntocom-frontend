@@ -86,7 +86,7 @@ export const useProducts = () => {
         dispatch(setStatusFilter({ status, isVisible }))
     }
 
-    const onSetFilterCategory = (id: string, name: string, isVisible: boolean) => {
+    const onSetFilterCategory = (id: string | null, name: string | null, isVisible: boolean) => {
         dispatch(setCategoryFilter({ id, name, isVisible }))
     }
 

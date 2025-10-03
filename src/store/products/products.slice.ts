@@ -85,7 +85,7 @@ export const productsSlice = createSlice({
             state.filter.isVisible = payload.isVisible
         },
 
-        setCategoryFilter: ( state, {payload}: PayloadAction<{ id: string, name: string, isVisible: boolean}>) => {
+        setCategoryFilter: ( state, {payload}: PayloadAction<{ id: string | null, name: string | null, isVisible: boolean}>) => {
             state.filter.category.id = payload.id
             state.filter.category.name = payload.name
             state.filter.isVisible = payload.isVisible

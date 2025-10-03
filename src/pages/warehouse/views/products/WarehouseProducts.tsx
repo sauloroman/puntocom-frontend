@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { CreateButton } from '../../../../shared/components'
+import { CreateButton, SpinnerContainer } from '../../../../shared/components'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { useCategories, useDrawer, useModal, useSuppliers } from '../../../../shared/hooks'
 import { 
@@ -23,7 +23,7 @@ import { GenerateReport, SortElementsAlpha } from '../../../../shared/components
 export const WarehouseProducts: React.FC = () => {
   
   const { rightDrawerIsOpen, leftDrawerIsOpen, drawelName } = useDrawer()
-  const { products, getProducts, onOrderAlpha, isOrderedAsc } = useProducts()
+  const { products, getProducts, onOrderAlpha, isOrderedAsc, isLoading, filter: { category } } = useProducts()
   const { categories, getCategories, getAllCategories } = useCategories()
   const { suppliers, getSuppliers, getAllSuppliers } = useSuppliers()
   const { onOpenModal, modalIsOpen, modalName, onOpenConfirmAdminPassword } = useModal()
@@ -58,14 +58,18 @@ export const WarehouseProducts: React.FC = () => {
           <div className='flex items-center gap-5'>
             <SelectFilterCategory />
             <SortElementsAlpha onToggle={ onOrderAlpha } desc={isOrderedAsc} />
-            <div className="w-50"><SelectProductsByStatus /></div>
+            <div className='w-full'><SelectProductsByStatus /></div>
             <GenerateReport onConfirm={() => onOpenConfirmAdminPassword(ModalNames.confirmCreateProductsReport)} />
-            <div className='w-40' onClick={openCreateProductModal}><CreateButton text='Crear producto' /></div>
+            <div className='w-md' onClick={openCreateProductModal}><CreateButton text='Crear producto' /></div>
           </div>
 
         </div>
-        <div>
-          <ProductsGrid />
+        <div className='min-h-20'>
+          {
+            isLoading
+            ? (<SpinnerContainer size='lg' color='bg-white' />)
+            : (<ProductsGrid />)
+          }
           <PaginationProducts />
         </div>
       </section>

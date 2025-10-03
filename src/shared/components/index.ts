@@ -1,4 +1,4 @@
-export { Button, CancelButton, CreateButton, ImageButton, SaveButton, UploadButton, ConfirmButton } from './button'
+export { Button, CancelButton, CreateButton, ImageButton, SaveButton, UploadButton, ConfirmButton, SmallButton} from './button'
 export { Input } from './input/Input'
 export { Search } from './search/Search'
 export { Label } from './label/Label'

@@ -36,7 +36,15 @@ export const ModalCreateSupplier: React.FC = () => {
             return
         }
 
-        createSupplier(data)
+        if ( newCompany ) {
+            createSupplier({
+                ...data,
+                company: newCompany
+            })
+        } else {
+            createSupplier(data)
+        }
+
         onCloseModal()
     }
 
