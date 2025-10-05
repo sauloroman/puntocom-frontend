@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useAlert, useCategories, useProducts, useSuppliers } from '../../../../../shared/hooks'
+import { useAlert, useCategories, useDrawer, useProducts, useSuppliers } from '../../../../../shared/hooks'
 import { type EditProduct } from '../../../../../interfaces/product.interface'
 import { CancelButton, Input, Label, SaveButton, Textarea } from '../../../../../shared/components'
 import { AlertType } from '../../../../../interfaces/ui/alert.interface'
@@ -11,6 +11,7 @@ export const FormEditProduct: React.FC = () => {
   const { allCategories } = useCategories()
   const { suppliers } = useSuppliers()
   const { productSelected, onUpdateProduct } = useProducts()
+  const { onCloseDrawers } = useDrawer()
 
   const {
     handleSubmit,
@@ -181,7 +182,7 @@ export const FormEditProduct: React.FC = () => {
 
       <div className='flex items-center justify-end gap-5'>
         <SaveButton submit text='Guardar cambios' />
-        <CancelButton text='Cancelar' />
+        <div onClick={onCloseDrawers}><CancelButton text='Cancelar' /></div>
       </div>
     </form>
   )

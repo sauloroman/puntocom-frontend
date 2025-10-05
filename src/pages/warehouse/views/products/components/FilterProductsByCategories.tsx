@@ -8,9 +8,9 @@ export const FilterProductsByCategories: React.FC = () => {
     const { onOpenLeftDrawer } = useDrawer()
 
     return (
-        <OutlineButton onClick={() => onOpenLeftDrawer(DrawelNames.filterProductsByCategory)}>
+        <OutlineButton onClick={() => onOpenLeftDrawer(DrawelNames.filterProductsCategories)}>
             <CiFilter size={20} />
-            Filtrar
+            Categorías
         </OutlineButton>
     )
 }

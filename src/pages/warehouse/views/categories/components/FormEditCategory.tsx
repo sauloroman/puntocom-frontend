@@ -96,7 +96,7 @@ export const FormEditCategory: React.FC = () => {
             </div>
             <div className='flex items-center gap-5 justify-end mt-8'>
                 <div>
-                    <SaveButton text='Editar Categoría' />
+                    <SaveButton submit text='Editar Categoría' />
                 </div>
                 <div onClick={onCloseDrawers}>
                     <CancelButton text='Cancelar' />

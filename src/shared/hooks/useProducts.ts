@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import type { CreateProduct, EditProduct } from "../../interfaces/product.interface"
-import { startChangingProductStatus, startCreatingProduct, startFilteringProductsByCategory, startFilteringProductsByStatus, startGettingProducts, startSearchingProducts, startUpdatingProduct, startUploadingProductImage } from "../../store/products/products.thunk"
-import { setCategoryFilter, setOrderedAsc, setPage, setPaginationVisible, setProducts, setSelectedProduct, setStatusFilter } from "../../store/products/products.slice"
+import { startChangingProductStatus, startCreatingProduct, startFilteringProductsByCategory, startFilteringProductsByStatus, startFilteringProductsBySupplier, startGettingProducts, startSearchingProducts, startUpdatingProduct, startUploadingProductImage } from "../../store/products/products.thunk"
+import { setCategoryFilter, setOrderedAsc, setPage, setPaginationVisible, setProducts, setSelectedProduct, setStatusFilter, setSupplierFilter } from "../../store/products/products.slice"
 
 export const useProducts = () => {
 
@@ -30,7 +30,15 @@ export const useProducts = () => {
         dispatch(startFilteringProductsByCategory({
             page: 1,
             limit: pagination.itemsPerPage
-        }, categoryId))
+        }, categoryId ))
+    }
+
+    const filterProductsBySupplier = (supplierId: string, supplierName: string) => {
+        dispatch(setSupplierFilter({ id: supplierId, name: supplierName, isVisible: true }))
+        dispatch(startFilteringProductsBySupplier({
+                page: 1, 
+                limit: pagination.itemsPerPage
+            }, supplierId ))
     }
 
     const onSetPage = ( page: number ) => {
@@ -41,11 +49,16 @@ export const useProducts = () => {
                 page: 1,
                 limit: pagination.itemsPerPage
             }, filter.status))
-        } else if ( filter.category.id !== null ) {
+        } else if ( filter.category.id ) {
             dispatch(startFilteringProductsByCategory({
                 page: 1,
                 limit: pagination.itemsPerPage,
             }, filter.category.id ))
+        } else if ( filter.supplier.id ) {
+            dispatch(startFilteringProductsBySupplier({
+                page: 1, 
+                limit: pagination.itemsPerPage
+            }, filter.supplier.id ))
         } else {
             dispatch(startGettingProducts({
                 page,
@@ -88,6 +101,10 @@ export const useProducts = () => {
 
     const onSetFilterCategory = (id: string | null, name: string | null, isVisible: boolean) => {
         dispatch(setCategoryFilter({ id, name, isVisible }))
+    }
+
+    const onSetFilterSupplier = (id: string | null, name: string | null, isVisible: boolean) => {
+        dispatch(setSupplierFilter({ id, name, isVisible }))
     }
 
     const onChangePaginationVisibility = (isVisible: boolean) => {
@@ -136,9 +153,11 @@ export const useProducts = () => {
         onSearchProduct,
         onSetFilterStatus,
         onSetFilterCategory,
+        onSetFilterSupplier,
         onChangePaginationVisibility,
         filterProductsByStatus,
         filterProductsByCategory,
+        filterProductsBySupplier,
         onOrderAlpha,
     }
 

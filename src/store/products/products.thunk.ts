@@ -74,7 +74,28 @@ export const startFilteringProductsByCategory = (pagination: Pagination, categor
             dispatch(setProductsMetaPagination({...meta, itemsPerPage: 20}))
 
         } catch(error) {
-            console.log(error)
+            console.log(error)  
+        } finally {   
+            dispatch( setIsLoading( false ) )
+        }
+    }
+}
+
+export const startFilteringProductsBySupplier = (pagination: Pagination, supplierId: string) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch( setIsLoading( true ) )
+        try {
+            const { limit, page } = pagination
+            
+            const { data } = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}?page=${page}&limit=${limit}&sort=productCreatedAt:asc&filter={"productSupplier": "${supplierId}"}`)
+
+            const { meta, products } = data
+
+            dispatch(setProducts(products))
+            dispatch(setProductsMetaPagination({...meta, itemsPerPage: 20}))
+
+        } catch(error) {
+            console.log(error)  
         } finally {   
             dispatch( setIsLoading( false ) )
         }
@@ -97,9 +118,10 @@ export const startCreatingProduct = (productData: CreateProduct) => {
             }))
 
         } catch (error) {
+            const errorMessage = handleError(error)
             dispatch(showAlert({
                 title: "⚠️ Error producto",
-                text: 'No se pudo crear el producto',
+                text: errorMessage,
                 type: AlertType.error,
             }))
         } finally {
@@ -174,14 +196,10 @@ export const startSearchingProducts = ( productSearched: string ) => {
     return async ( dispatch: Dispatch ) => {
         dispatch(setIsLoading(true))
         try {
-            const {data} = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}/search?sort=productCreatedAt:desc&filter={"productName": "${productSearched}"}`, {
-                params: {
-                    page: 1,
-                    limit: productSearched.trim() === '' && 20
-                }
-            })
-            const { products } = data
+            const {data} = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}/search?page=1&limit=20&sort=productCreatedAt:desc&filter={"productName": "${productSearched}"}`)
+            const { meta, products } = data
             dispatch( setProducts(products) )
+            dispatch(setProductsMetaPagination({...meta, itemsPerPage: 20}))
         } catch(error) {
             console.log(error)
         } finally {

@@ -1,14 +1,17 @@
 import React from 'react'
 import { RightDrawerLayout } from '../../../../../layouts/RightDrawerLayout'
-import { useProducts } from '../../../../../shared/hooks'
+import { useModal, useProducts } from '../../../../../shared/hooks'
 import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
 import { AvatarImage, StatusBadge } from '../../../../../shared/components'
 import { AvatarInitialSquare } from '../../../../../shared/components/avatar/AvatarInitialSquare'
 import { formatPrices } from '../../../../../shared/helpers'
+import { FaExpand } from "react-icons/fa";
+import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
 
 export const ProductInfoDrawer: React.FC = () => {
 
     const { productSelected: product } = useProducts()
+    const { onOpenModal } = useModal()
 
     if (!product) return null
 
@@ -20,12 +23,19 @@ export const ProductInfoDrawer: React.FC = () => {
             <div className="flex flex-col gap-6 p-4">
                 <div className="flex items-center justify-between w-full">
                     <section className="flex items-center justify-between gap-5 w-full">
-                        <div className='w-[50%] h-[40%]'>
+                        <div className='w-[50%] h-[40%] relative'>
                             <img
                                 src={product.image === 'Producto sin imagen' ? placeholderProduct : product.image }
                                 alt={product.name}
                                 className={`${product.image === 'Producto sin imagen' ? 'w-36 h-30' : 'w-full h-full'} object-cover rounded-md border border-gray-300 p-3`}
                             />  
+                            {
+                                product.image !== 'Producto sin imagen' && <div 
+                                    onClick={() => onOpenModal(ModalNames.seeProductImage)}
+                                    className='absolute bg-black rounded-full p-2 bottom-2 right-3 hover:bg-black/50 transition-colors cursor-pointer'>
+                                    <FaExpand color='white' width={20} />
+                                </div>
+                            }
                         </div>
                         <div className='w-full'>
                             <h2 className="text-xl font-semibold mb-2">{product.name}</h2>

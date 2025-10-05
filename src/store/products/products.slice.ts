@@ -12,6 +12,10 @@ interface ProductState {
             id: string | null,
             name: string | null
         },
+        supplier: {
+            id: string | null,
+            name: string | null
+        }
         isVisible: boolean
     },
     pagination: MetaPagination & { itemsPerPage: number },
@@ -20,12 +24,16 @@ interface ProductState {
 }
 
 const initialState: ProductState = {
-    isLoading: false,
+    isLoading: true,
     products: null,
     productSelected: null,
     filter: {
         status: null,
         category: {
+            id: null,
+            name: null
+        },
+        supplier: {
             id: null,
             name: null
         },
@@ -91,6 +99,12 @@ export const productsSlice = createSlice({
             state.filter.isVisible = payload.isVisible
         },
 
+        setSupplierFilter: ( state, {payload}: PayloadAction<{ id: string | null, name: string | null, isVisible: boolean }>) => {
+            state.filter.supplier.id = payload.id
+            state.filter.supplier.name = payload.name
+            state.filter.isVisible = payload.isVisible
+        },
+
         setPaginationVisible: ( state, {payload}: PayloadAction<boolean>) => {
             state.isPaginationVisible = payload
         },
@@ -112,5 +126,6 @@ export const {
     setStatusFilter,
     setCategoryFilter,
     setPaginationVisible,
-    setOrderedAsc
+    setOrderedAsc,
+    setSupplierFilter,
 } = productsSlice.actions
