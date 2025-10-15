@@ -33,7 +33,9 @@ export const PurchasesSuppliers: React.FC = () => {
     <>
       <section>
         <div className="flex items-center justify-between mb-7">
-          <SearchSupplier />
+          <div className="w-96">
+            <SearchSupplier />
+          </div>
           <div className="flex items-center justify-end gap-4 w-full">
 
             <div className="flex items-center gap-4">
@@ -49,7 +51,7 @@ export const PurchasesSuppliers: React.FC = () => {
 
             <div className="flex items-center gap-3">
               <GenerateReport onConfirm={() => onOpenConfirmAdminPassword(ModalNames.confirmCreateSupplierReport)}/>
-              <div className='w-40' onClick={() => onOpenModal(ModalNames.createSupplier)}><CreateButton text="Crear proveedor" /></div>
+              <CreateButton className='w-40 p-2' onClick={() => onOpenModal(ModalNames.createSupplier)} text="Crear proveedor" />
             </div>
             
           </div>

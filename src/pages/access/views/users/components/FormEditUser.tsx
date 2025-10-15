@@ -28,7 +28,7 @@ export const FormEditUser: React.FC = () => {
     const onEditUser = (data: UpdateUser) => {
         if (!userSelected) return
 
-        if ( data.name === userSelected.name &&
+        if (data.name === userSelected.name &&
             data.lastname === userSelected.lastname &&
             data.role === userSelected.role
         ) {
@@ -44,7 +44,7 @@ export const FormEditUser: React.FC = () => {
     }
 
     useEffect(() => {
-        if ( userSelected ) {
+        if (userSelected) {
             reset({
                 name: userSelected.name,
                 lastname: userSelected.lastname,
@@ -121,12 +121,8 @@ export const FormEditUser: React.FC = () => {
                     {errors.role && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.role.message}</p>)}
                 </div>
                 <div className='flex items-center gap-5 justify-end mt-6 w-full'>
-                    <div>
-                        <SaveButton submit text='Editar Usuario' />
-                    </div>
-                    <div onClick={onCloseDrawers}>
-                        <CancelButton text='Cancelar' />
-                    </div>
+                    <SaveButton className='w-52 p-2' submit text='Editar Usuario' />
+                    <CancelButton onClick={onCloseDrawers} className='w-48 p-2' text='Cancelar' />
                 </div>
             </div>
         </form>

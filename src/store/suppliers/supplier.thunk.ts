@@ -148,9 +148,10 @@ export const startCreatingSupplier = ( createSupplierData: CreateSupplier ) => {
         dispatch(setIsLoading(true))
         try {
 
-            const { data } = await puntocomApiPrivate.post<CreateSupplierResponse>(urlSuppliers, createSupplierData)
-            const { supplier } = data
-
+            const { data: {supplier}} = await puntocomApiPrivate.post<CreateSupplierResponse>(urlSuppliers, createSupplierData)
+            const { data: {companies}} = await puntocomApiPrivate.get<GetUniqueCompaniesSupplier>(`${urlSuppliers}/companies`)
+            
+            dispatch(setCompanies(companies))
             dispatch(addSupplier(supplier))
             dispatch(showAlert({
                 title: 'Creación de Proveedor',

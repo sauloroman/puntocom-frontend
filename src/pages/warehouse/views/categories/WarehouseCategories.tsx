@@ -30,15 +30,15 @@ export const WarehouseCategories: React.FC = () => {
     <>
       <section>
         <div className="flex items-center justify-between mb-7">
-          <SearchCategory />
+          <div className="w-96">
+            <SearchCategory />
+          </div>
           <div className='flex items-center gap-5'>
             <SortElementsAlpha onToggle={onOrderAlpha} desc={isOrderedAsc} />
             <div className='w-50'>
               <SelectCategoriesByStatus />
             </div>
-            <div className='w-40' onClick={() => onOpenModal( ModalNames.createCategory )}>
-              <CreateButton text='Crear categoría' />
-            </div>
+            <CreateButton className='w-40 p-2' onClick={() => onOpenModal( ModalNames.createCategory )} text='Crear categoría' />
           </div>
         </div>
         <div>

@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { Reports } from "../../interfaces/report.interface";
 
 interface ReportsStateI {
     isLoading: boolean,
@@ -10,7 +11,8 @@ interface ReportsStateI {
     },
     products: {
         listReport: string,
-    }
+    },
+    allReports: Reports | null,
 }
 
 const initialState: ReportsStateI = {
@@ -23,7 +25,8 @@ const initialState: ReportsStateI = {
     },
     products: {
         listReport: ''
-    }
+    },
+    allReports: null,
 }
 
 export const reportsSlice = createSlice({
@@ -37,7 +40,11 @@ export const reportsSlice = createSlice({
 
         setIsLoading: ( state, { payload }: PayloadAction<boolean>) => {
             state.isLoading = payload
-        }        
+        },
+        
+        setAllReports: ( state, { payload }: PayloadAction<Reports>) => {
+            state.allReports = payload
+        }
 
     }
 })
@@ -45,4 +52,5 @@ export const reportsSlice = createSlice({
 export const {
     setListReport,
     setIsLoading,
+    setAllReports,
 } = reportsSlice.actions 

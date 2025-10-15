@@ -3,3 +3,20 @@ export interface GenerateReportResponse {
   message: string,
   url: string
 }
+
+export interface GetAllReports {
+  ok: boolean,
+  reports: Reports
+}
+
+export interface Reports {
+  users: ReportItem[],
+  products: ReportItem[],
+  suppliers: ReportItem[],
+  purchases: ReportItem[]
+}
+
+export interface ReportItem {
+  id: string,
+  date: string
+}

@@ -12,11 +12,10 @@ export const CreateUserButton: React.FC = () => {
     }
 
     return (
-        <div
-            className='w-40'
-            onClick={ onConfirmPasswordModal }
-        >
-            <CreateButton text='Crear Usuario' />
-        </div>
+        <CreateButton 
+            onClick={ onConfirmPasswordModal } 
+            className='p-2 w-40' 
+            text='Crear Usuario' 
+        />
     )
 }

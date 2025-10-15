@@ -57,9 +57,7 @@ export const ModalRequestPasswordAdmin: React.FC = () => {
                             />
                             { errors.adminPassword && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.adminPassword.message}</p>)}
                         </div>
-                        <div className='w-full flex justify-end items-center'>
-                            <ConfirmButton text='Ingresar contraseña' />
-                        </div>
+                        <ConfirmButton className='w-full p-2' text='Ingresar contraseña' />
                     </form>
 
                 </div>

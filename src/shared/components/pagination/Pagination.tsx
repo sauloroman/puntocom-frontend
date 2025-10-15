@@ -7,6 +7,7 @@ interface PaginationProps {
   page: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  className?: string,
 }
 
 export const Pagination: React.FC<PaginationProps> = ({
@@ -15,6 +16,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   itemsPerPage,
   onPageChange,
+  className = ''
 }) => {
   
   const handlePrev = () => {
@@ -26,7 +28,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="w-full flex items-center justify-between border-t border-gray-200 py-3">
+    <div className={`w-full flex items-center justify-between border-t border-gray-200 py-3 ${className}`}>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <p className="text-sm text-gray-700">
           Mostrando <span className="font-medium">{(page - 1) * itemsPerPage + 1}</span> a{" "}

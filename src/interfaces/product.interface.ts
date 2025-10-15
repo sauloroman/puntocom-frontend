@@ -48,6 +48,12 @@ export interface UploadProductImageResponse {
     product: Product
 }
 
+export interface ProductInCart {
+    product: Product,
+    quantity: number,
+    discount: number
+}
+
 export interface Product {
     id: string,
     name: string,

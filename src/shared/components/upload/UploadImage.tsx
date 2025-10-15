@@ -58,8 +58,8 @@ export const UploadImage: React.FC<UploadImageProps> = ({ onUpload }) => {
 
       {preview && (
         <>
-          <div className="flex justify-center w-full h-46 bg-gray-100 p-6 rounded-md">
-            <div className="relative w-32 h-32 rounded-xl overflow-hidden shadow-md border border-gray-200">
+          <div className="flex justify-center w-full h-80 bg-gray-100 p-6 rounded-md">
+            <div className="relative w-64 h-64 rounded-xl overflow-hidden shadow-md border border-gray-200">
               <img
                 src={preview}
                 alt="Preview"

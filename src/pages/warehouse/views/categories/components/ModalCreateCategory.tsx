@@ -61,12 +61,8 @@ export const ModalCreateCategory: React.FC = () => {
                     { errors.description && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.description.message}</p>)}
                 </div>
                 <div className='flex items-center gap-5 justify-end mt-5'>
-                    <div>
-                        <SaveButton submit text='Guardar Categoría' />
-                    </div>
-                    <div onClick={ onCloseModal }>
-                        <CancelButton text='Cancelar' />
-                    </div>
+                    <SaveButton className='p-2' submit text='Guardar Categoría' />
+                    <CancelButton onClick={ onCloseModal } className='p-2' text='Cancelar' />
                 </div>
             </form>
         </ModalLayout>

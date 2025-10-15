@@ -33,13 +33,18 @@ export const ModalConfirmChangeStatusCategory: React.FC = () => {
           <span className="font-medium text-gray-800">{categoryName}</span>?
         </p>
 
-        <div className="flex items-center gap-4 pt-4">
-          <div onClick={onChangeCategoryStatus}>
-            <ConfirmButton text={isActive ? 'Sí, desactivar' : 'Sí, activar'} />
-          </div>
-          <div onClick={onCloseModal}>
-            <CancelButton text="Cancelar" />
-          </div>
+        <div className="w-full flex items-center gap-4 pt-4">
+          <ConfirmButton 
+            className='p-2 flex-1'
+            onClick={onChangeCategoryStatus} 
+            text={isActive ? 'Sí, desactivar' : 'Sí, activar'} 
+          />
+          <CancelButton 
+            className='p-2 flex-1'
+            onClick={onCloseModal} 
+            text="Cancelar" 
+          />
+          
         </div>
       </div>
     </ModalLayout>

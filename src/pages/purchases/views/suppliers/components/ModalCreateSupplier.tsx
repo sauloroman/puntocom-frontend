@@ -199,12 +199,8 @@ export const ModalCreateSupplier: React.FC = () => {
 
 
                 <div className='flex items-center gap-5 justify-end mt-6'>
-                    <div>
-                        <SaveButton submit text='Guardar Proveedor' />
-                    </div>
-                    <div onClick={ onCloseModal }>
-                        <CancelButton text='Cancelar' />
-                    </div>
+                    <SaveButton className='p-2 w-52' submit text='Guardar Proveedor' />
+                    <CancelButton onClick={ onCloseModal } className='p-2 w-48' text='Cancelar' />
                 </div>
             </form>
         </ModalLayout>

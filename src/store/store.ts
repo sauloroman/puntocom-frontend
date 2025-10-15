@@ -11,6 +11,8 @@ import { suppliersSlice } from "./suppliers/supplier.slice";
 import { usersSlice } from "./users/users.slice";
 import { productsSlice } from "./products/products.slice";
 import { reportsSlice } from "./reports/reports.sllice";
+import { posSlice } from "./pos/pos.slice";
+import { saleSlice } from "./sale/sale.slice";
 
 export const store = configureStore({
     reducer: {
@@ -22,6 +24,8 @@ export const store = configureStore({
         modal: modalSlice.reducer,
         drawer: drawerSlice.reducer,
         reports: reportsSlice.reducer,
+        pos: posSlice.reducer,
+        sale: saleSlice.reducer,
 
         users: usersSlice.reducer,
         categories: categoriesSlice.reducer,

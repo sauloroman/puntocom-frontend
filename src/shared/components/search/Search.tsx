@@ -1,4 +1,4 @@
-import React, { useState, type FormEvent } from "react";
+import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 
 interface SearchProps {
@@ -16,7 +16,7 @@ export const Search: React.FC<SearchProps> = ({ placeholder, onChange }) => {
   }
 
   return (
-    <form onSubmit={ handleSubmit } className="relative w-full max-w-sm">
+    <form onSubmit={ handleSubmit } className="relative w-full">
       <input
         type="text"
         placeholder={placeholder}

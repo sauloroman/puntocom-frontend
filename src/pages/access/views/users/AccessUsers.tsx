@@ -21,7 +21,7 @@ export const AccessUsers: React.FC = () => {
         <>
             <section>
                 <div className="flex items-center justify-between mb-7">
-                    <SearchUsers />
+                    <div className="w-96"><SearchUsers /></div>
                     <div className='flex items-center gap-5'>
                         <div className="flex items-center gap-4">
                             <ToggleGridTableView onToggle={setTableStyle} status={isTableStyleActive} />

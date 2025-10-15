@@ -33,9 +33,9 @@ export const ModalConfirmGenerateUsersReport: React.FC = () => {
                                 ¿Deseas continuar?
                                 </p>
             
-                                <div className="flex gap-4">
-                                <div onClick={onGenerateUserReport}><CreateButton text="Sí, generar"/></div>
-                                <div onClick={onCloseModal}><CancelButton text="No generar" /></div>
+                                <div className="flex gap-4 w-full">
+                                    <CreateButton onClick={onGenerateUserReport} className='p-2 flex-1' text="Sí, generar"/>
+                                    <CancelButton onClick={onCloseModal} text="No generar" className='p-2 flex-1' />
                                 </div>
                             </>
                         )

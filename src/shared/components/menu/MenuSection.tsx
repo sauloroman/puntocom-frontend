@@ -15,6 +15,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ collapsed, title, item
           {title}
         </p>
       )}
+
       <ul className='space-y-2'>
         {items.map((item, i) => (
           <MenuItem key={i} {...item} collapsed={collapsed} />

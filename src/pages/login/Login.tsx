@@ -88,6 +88,7 @@ export const Login: React.FC = () => {
             shadow-[0_0_20px_#eee]
             rounded-lg
             w-full
+            p-2
           ' type='submit'>
             { isLoading ? <SpinnerContainer size='md' color='border-white' /> : 'Iniciar sesión'}
           </Button>

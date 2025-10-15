@@ -135,13 +135,9 @@ export const ModalCreateUser: React.FC = () => {
                     {errors.password && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.password.message}</p>)}
                 </div>
                 
-                <div className='flex items-center gap-5 justify-end mt-6'>
-                    <div>
-                        <SaveButton submit text='Guardar Usuario' />
-                    </div>
-                    <div onClick={onCloseModal}>
-                        <CancelButton text='Cancelar' />
-                    </div>
+                <div className='flex items-center gap-5 justify-end mt-6 w-full'>
+                    <SaveButton className='p-2 flex-1' submit text='Guardar Usuario' />
+                    <CancelButton className='p-2 flex-1' onClick={onCloseModal} text='Cancelar' />
                 </div>
             </form>
         </ModalLayout>

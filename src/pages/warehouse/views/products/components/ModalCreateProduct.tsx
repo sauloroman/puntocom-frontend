@@ -202,8 +202,8 @@ export const ModalCreateProduct: React.FC = () => {
                     {errors.description && <p className='text-red-600 mt-1 text-right text-xs'>{errors.description.message}</p>}
                 </div>
                 <div className='flex gap-7 w-full justify-end'>
-                    <SaveButton text='Guardar Producto' submit />
-                    <div onClick={onCloseModal}><CancelButton text='Cancelar' /></div>
+                    <SaveButton className='p-2 w-54' text='Guardar Producto' submit />
+                    <CancelButton className='p-2' onClick={onCloseModal} text='Cancelar' />
                 </div>
 
             </form>

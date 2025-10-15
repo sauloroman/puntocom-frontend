@@ -181,8 +181,8 @@ export const FormEditProduct: React.FC = () => {
       </div>
 
       <div className='flex items-center justify-end gap-5'>
-        <SaveButton submit text='Guardar cambios' />
-        <div onClick={onCloseDrawers}><CancelButton text='Cancelar' /></div>
+        <SaveButton className='p-2 w-48' submit text='Editar Producto' />
+        <CancelButton onClick={onCloseDrawers} text='Cancelar' className='p-2 w-32' />
       </div>
     </form>
   )

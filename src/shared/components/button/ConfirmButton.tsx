@@ -3,13 +3,16 @@ import { Button } from './Button'
 import { FaCheck } from 'react-icons/fa'
 
 interface ConfirmButtonProps {
-  text: string
+  text: string,
+  onClick?: () => void,
+  className?: string,
 }
 
-export const ConfirmButton: React.FC<ConfirmButtonProps> = ({ text }) => {
+export const ConfirmButton: React.FC<ConfirmButtonProps> = ({ className, onClick, text }) => {
   return (
     <Button
-      className="
+      onClick={onClick}
+      className={`
         w-full
         text-sm flex items-center gap-2 justify-center cursor-pointer 
         bg-[linear-gradient(to_right,#6a11cb_0%,#2575fc_51%,#6a11cb_100%)]
@@ -18,7 +21,8 @@ export const ConfirmButton: React.FC<ConfirmButtonProps> = ({ text }) => {
         transition-all duration-1000
         text-white
         rounded-full
-      "
+        ${className}
+      `}
     >
       <FaCheck />
       {text}

@@ -33,6 +33,7 @@ export const WarehouseProducts: React.FC = () => {
   const { onOpenModal, modalIsOpen, modalName, onOpenConfirmAdminPassword } = useModal()
 
   useEffect(() => {
+    
     if (!categories) {
       getCategories()
     }
@@ -44,6 +45,7 @@ export const WarehouseProducts: React.FC = () => {
     if (!products) {
       getProducts()
     }
+
   }, [])
 
   const openCreateProductModal = () => {
@@ -56,18 +58,15 @@ export const WarehouseProducts: React.FC = () => {
     <>
       <section>
         <div className="flex items-center justify-between mb-7">
-
-          <SearchProduct />
-
+          <div className="w-96"><SearchProduct /></div>
           <div className='flex items-center gap-3 justify-end'>
             <SortElementsAlpha onToggle={onOrderAlpha} desc={isOrderedAsc} />
             { filter.supplier.id === null && (<FilterProductsByCategories />) }
             { filter.category.id === null && (<FilterProductsBySupplier />) }
             <div className='w-48'><SelectProductsByStatus /></div>
             <GenerateReport onConfirm={() => onOpenConfirmAdminPassword(ModalNames.confirmCreateProductsReport)} />
-            <div className='w-40' onClick={openCreateProductModal}><CreateButton text='Crear Producto' /></div>
+            <CreateButton className='w-40 p-2' onClick={openCreateProductModal} text='Crear Producto' />
           </div>
-
         </div>
 
         <FilterTags />

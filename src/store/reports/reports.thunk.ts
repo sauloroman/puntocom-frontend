@@ -1,7 +1,7 @@
 import type { Dispatch } from "@reduxjs/toolkit"
-import { setIsLoading, setListReport } from "./reports.sllice"
+import { setAllReports, setIsLoading, setListReport } from "./reports.sllice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
-import { type GenerateReportResponse } from "../../interfaces/report.interface"
+import type { GetAllReports, GenerateReportResponse } from "../../interfaces/report.interface"
 import { extractIdFromPath } from "../../shared/helpers/get-pdf-id"
 import { showAlert } from "../alert/alert.slice"
 import { AlertType } from "../../interfaces/ui/alert.interface"
@@ -31,7 +31,7 @@ export const startGeneratingReport = (type: 'users' | 'suppliers' | 'products') 
             dispatch(
                 showAlert({
                     title: "Reporte",
-                    text: 'El reporte de usuarios ha sido generado',
+                    text: 'El reporte ha sido generado',
                     type: AlertType.success,
                 })
             );
@@ -40,7 +40,31 @@ export const startGeneratingReport = (type: 'users' | 'suppliers' | 'products') 
             dispatch(
                 showAlert({
                     title: "⚠️ Error Reporte",
-                    text: 'No se pudo crear el reporte de usuarios',
+                    text: 'No se pudo crear el reporte',
+                    type: AlertType.error,
+                })
+            );
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startGettingAllReports = () => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+
+            const {data} = await puntocomApiPrivate.get<GetAllReports>(`${url}/all`)
+            const { reports } = data
+            dispatch(setAllReports(reports))
+
+        } catch(error) {
+            console.log(error)
+            dispatch(
+                showAlert({
+                    title: "⚠️ Error Reportes",
+                    text: 'No se pudieron obteners los reportes',
                     type: AlertType.error,
                 })
             );

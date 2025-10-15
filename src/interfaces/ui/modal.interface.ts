@@ -1,4 +1,4 @@
-export type ModalNames = 'emailSentToUser' | 'createCategory' | 'createSupplier' | 'confirmCreateSupplierReport' | 'reportSuppliers' | 'confirmChangeStatusSupplier' | 'confirmChangeStatusCategory' | 'createUser' | 'confirmAdminPassword' | 'confirmChangeStatusUser' | 'createProduct' | 'confirmChangeStatusProduct' | 'createUsersReport' | 'confirmCreateProductsReport' | 'seeProductImage'
+export type ModalNames = 'emailSentToUser' | 'createCategory' | 'createSupplier' | 'confirmCreateSupplierReport' | 'reportSuppliers' | 'confirmChangeStatusSupplier' | 'confirmChangeStatusCategory' | 'createUser' | 'confirmAdminPassword' | 'confirmChangeStatusUser' | 'createProduct' | 'confirmChangeStatusProduct' | 'createUsersReport' | 'confirmCreateProductsReport' | 'seeProductImage' | 'addProduct' | 'saveSale'
 
 export const ModalNames = {
     confirmAdminPassword: 'confirmAdminPassword' as ModalNames,
@@ -16,4 +16,6 @@ export const ModalNames = {
     emailSentToUser: 'emailSentToUser' as ModalNames,
     reportSuppliers: 'reportSuppliers' as ModalNames,
     seeProductImage: 'seeProductImage' as ModalNames,
+    addProduct: 'addProduct' as ModalNames,
+    saveSale: 'saveSale' as ModalNames
 }

@@ -6,19 +6,20 @@ import { IoCloseOutline } from "react-icons/io5";
 interface ModalProps {
     width: string,
     children: React.ReactNode;
+    className?: string,
 }
 
-export const ModalLayout: React.FC<ModalProps> = ({ width, children }) => {
+export const ModalLayout: React.FC<ModalProps> = ({ width, children, className = '' }) => {
 
     const { onCloseModal } = useModal()
 
     return createPortal(
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/40 backdrop-blur-sm"
+            className={`fixed inset-0 z-50 flex items-center justify-center bg-gray-800/40 backdrop-blur-sm`}
             onClick={onCloseModal}
         >
             <div
-                className={`bg-white rounded-md shadow-xl p-6 ${width} mx-4 relative z-60`}
+                className={`bg-white rounded-md shadow-xl p-6 ${width} mx-4 relative z-60 ${className}`}
                 onClick={(e) => e.stopPropagation()}
             >
                 <header className='flex items-center justify-between mb-5'>
