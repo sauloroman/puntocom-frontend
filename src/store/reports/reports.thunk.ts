@@ -1,5 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit"
-import { setAllReports, setIsLoading, setListReport } from "./reports.sllice"
+import { setAllReports, setIsLoading, setListReport, setReportIdSelected, setUrlReportSelected, type ReportEntities } from "./reports.slice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 import type { GetAllReports, GenerateReportResponse } from "../../interfaces/report.interface"
 import { extractIdFromPath } from "../../shared/helpers/get-pdf-id"
@@ -28,6 +28,9 @@ export const startGeneratingReport = (type: 'users' | 'suppliers' | 'products') 
             const fileURL = URL.createObjectURL(file)
             window.open(fileURL, '_blank')
 
+            const {data: {reports}} = await puntocomApiPrivate.get<GetAllReports>(`${url}/all`)
+            dispatch(setAllReports(reports))
+
             dispatch(
                 showAlert({
                     title: "Reporte",
@@ -41,6 +44,38 @@ export const startGeneratingReport = (type: 'users' | 'suppliers' | 'products') 
                 showAlert({
                     title: "⚠️ Error Reporte",
                     text: 'No se pudo crear el reporte',
+                    type: AlertType.error,
+                })
+            );
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startGettingReportById = ( type: ReportEntities, reportId: string ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+
+            const { data: dataPdf } = await puntocomApiPrivate.get(
+                `${url}/${type}/${reportId}?download="true"`, 
+                {
+                responseType: "blob",
+            })
+
+            const file = new Blob([dataPdf], { type: "application/pdf" })
+            const fileURL = URL.createObjectURL(file)
+
+            dispatch(setUrlReportSelected(fileURL));
+            window.open(fileURL, '_blank')
+
+        } catch(error) {
+            console.log(error)
+            dispatch(
+                showAlert({
+                    title: "⚠️ Error Reportes",
+                    text: 'No se pudieron obtener el reporte por id',
                     type: AlertType.error,
                 })
             );
@@ -64,10 +99,42 @@ export const startGettingAllReports = () => {
             dispatch(
                 showAlert({
                     title: "⚠️ Error Reportes",
-                    text: 'No se pudieron obteners los reportes',
+                    text: 'No se pudieron obtener los reportes',
                     type: AlertType.error,
                 })
             );
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startDeletingReport = ( entity: ReportEntities, reportId: string ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            
+            const { data: { message } } = await puntocomApiPrivate.delete(`${url}/${entity}/${reportId}`);
+            
+            dispatch(
+                showAlert({
+                    title: "Reporte Eliminado",
+                    text: message,
+                    type: AlertType.success,
+                })
+            );
+
+            dispatch(setReportIdSelected(''))
+
+        } catch( error ) {
+            console.log(error)   
+            dispatch(
+                showAlert({
+                    title: "⚠️ Error Reportes",
+                    text: 'No se pudo borrar el reporte',
+                    type: AlertType.error,
+                })
+            )
         } finally {
             dispatch(setIsLoading(false))
         }

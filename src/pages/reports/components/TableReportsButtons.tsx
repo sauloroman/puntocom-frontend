@@ -1,0 +1,49 @@
+import React from 'react'
+import { LuFileText } from 'react-icons/lu'
+import { RiDeleteBin6Line } from 'react-icons/ri'
+import { AiOutlineMail } from "react-icons/ai";
+import { useModal, useReports } from '../../../shared/hooks';
+import { ModalNames } from '../../../interfaces/ui/modal.interface';
+
+interface Props {
+    reportId: string
+}
+
+export const TableReportsButtons: React.FC<Props> = ({ reportId }) => {
+    
+    const { getReportById, selectReportId } = useReports()
+    const { onOpenModal } = useModal()
+
+    const onDeleteReport = () => {
+        selectReportId( reportId )
+        onOpenModal( ModalNames.confirmDeleteReport )
+    }
+
+    const onViewReport = () => {
+        getReportById( reportId )
+        selectReportId( reportId )
+    }
+    
+    return (
+        <>
+            <button
+                onClick={onViewReport}
+                className="cursor-pointer w-fit text-center px-4 py-2 text-sm text-gray-600 hover:bg-red-50 flex items-center gap-2"
+            >
+                <LuFileText />
+            </button>
+            <button
+                onClick={onViewReport}
+                className="cursor-pointer w-fit text-center px-4 py-2 text-sm text-gray-600 hover:bg-red-50 flex items-center gap-2"
+            >
+                <AiOutlineMail />
+            </button>
+            <button
+                onClick={onDeleteReport}
+                className="cursor-pointer w-fit text-center px-4 py-2 text-sm text-red-600 hover:bg-gray-50 flex items-center gap-2"
+            >
+                <RiDeleteBin6Line />
+            </button>
+        </>
+    )
+}

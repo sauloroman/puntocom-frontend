@@ -1,2 +1,6 @@
 export { ReportsFolder } from './ReportsFolder'
 export { EntityReportList } from './EntityReportList'
+export { TableReports } from './TableReports'
+export { TableReportsButtons } from './TableReportsButtons'
+export { ViewReport } from './ViewReport'
+export { ModalConfirmDeleteReport } from './ModalConfirmDeleteReport'

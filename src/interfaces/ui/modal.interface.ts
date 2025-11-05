@@ -1,4 +1,22 @@
-export type ModalNames = 'emailSentToUser' | 'createCategory' | 'createSupplier' | 'confirmCreateSupplierReport' | 'reportSuppliers' | 'confirmChangeStatusSupplier' | 'confirmChangeStatusCategory' | 'createUser' | 'confirmAdminPassword' | 'confirmChangeStatusUser' | 'createProduct' | 'confirmChangeStatusProduct' | 'createUsersReport' | 'confirmCreateProductsReport' | 'seeProductImage' | 'addProduct' | 'saveSale'
+export type ModalNames = 
+'emailSentToUser' | 
+'createCategory' | 
+'createSupplier' | 
+'confirmCreateSupplierReport' | 
+'reportSuppliers' | 
+'confirmChangeStatusSupplier' | 
+'confirmChangeStatusCategory' | 
+'createUser' | 
+'confirmAdminPassword' | 
+'confirmChangeStatusUser' | 
+'createProduct' | 
+'confirmChangeStatusProduct' | 
+'createUsersReport' | 
+'confirmCreateProductsReport' | 
+'seeProductImage' | 
+'addProduct' | 
+'saveSale' | 
+'confirmDeleteReport'
 
 export const ModalNames = {
     confirmAdminPassword: 'confirmAdminPassword' as ModalNames,
@@ -8,6 +26,7 @@ export const ModalNames = {
     confirmChangeStatusUser: 'confirmChangeStatusUser' as ModalNames,
     confirmCreateProductsReport: 'confirmCreateProductsReport' as ModalNames, 
     confirmCreateSupplierReport: 'confirmCreateSupplierReport' as ModalNames,
+    confirmDeleteReport: 'confirmDeleteReport' as ModalNames,
     createCategory: 'createCategory' as ModalNames,
     createProdut: 'createProduct' as ModalNames,
     createSupplier: 'createSupplier' as ModalNames,

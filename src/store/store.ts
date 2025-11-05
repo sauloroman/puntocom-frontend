@@ -10,7 +10,7 @@ import { drawerSlice } from "./drawer/drawer.slice";
 import { suppliersSlice } from "./suppliers/supplier.slice";
 import { usersSlice } from "./users/users.slice";
 import { productsSlice } from "./products/products.slice";
-import { reportsSlice } from "./reports/reports.sllice";
+import { reportsSlice } from "./reports/reports.slice";
 import { posSlice } from "./pos/pos.slice";
 import { saleSlice } from "./sale/sale.slice";
 
