@@ -60,7 +60,29 @@ export interface GetAllSalesResponse {
     sales: SaleResponse[]
 }
 
+export interface GetFilteredSalesResponse {
+    ok: boolean,
+    meta: MetaPagination & { 
+        filter: {
+            prices: {
+                priceMin: number,
+                priceMax: number
+            },
+            dates: {
+                dateFrom: string,
+                dateTo: string
+            }
+        }
+    },
+    sales: SaleResponse[]
+}
+
 export interface PriceRange {
     minPrice: number
     maxPrice: number
+}
+
+export interface DateRange {
+    dateFrom: string,
+    dateTo: string
 }

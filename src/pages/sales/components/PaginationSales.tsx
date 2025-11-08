@@ -8,7 +8,6 @@ export const PaginationSales: React.FC = () => {
     const { page, total, totalPages, itemsPerPage } = pagination
 
     const onPageChange = ( page: number ) => {
-        console.log({page})
         onSetPage( page )
     }   
 

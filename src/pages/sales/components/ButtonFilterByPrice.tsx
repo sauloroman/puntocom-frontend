@@ -4,7 +4,7 @@ import { CiFilter } from 'react-icons/ci'
 import { useModal } from '../../../shared/hooks'
 import { ModalNames } from '../../../interfaces/ui/modal.interface'
 
-export const FilterSalesByPrice: React.FC = () => {
+export const ButtonFilterByPrice: React.FC = () => {
     const { onOpenModal } = useModal() 
 
     return (

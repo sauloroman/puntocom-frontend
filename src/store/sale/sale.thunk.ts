@@ -7,7 +7,9 @@ import type {
     SaveSaleResponse, 
     SaveSale, 
     GetAllSalesResponse, 
-    PriceRange 
+    PriceRange, 
+    DateRange,
+    GetFilteredSalesResponse
 } from "../../interfaces/sale.interface";
 import type { Dispatch } from "@reduxjs/toolkit";
 import { showAlert } from "../alert/alert.slice";
@@ -65,33 +67,6 @@ export const startGettingSalesByUser = ( userId: string, pagination: Pagination 
     }
 }
 
-export const startFilteringSalesByRangePrice = ( ranges: PriceRange, pagination: Pagination ) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch( setIsLoading( true ) )
-        try {
-            const { page, limit } = pagination
-            const { maxPrice, minPrice } = ranges
-
-            const { data } = await puntocomApiPrivate.get<GetAllSalesResponse>(
-                `${urlSale}/price?page=${page}&limit=${limit}&priceMin=${minPrice}&priceMax=${maxPrice}`
-            )
-            const { sales, meta } = data
-
-            dispatch(setSales(sales))
-            dispatch(setSalesMetaPagination({...meta, itemsPerPage: pagination.limit }))
-
-        } catch(error) {
-            dispatch(showAlert({
-                title: 'Error Ventas 🗒️',
-                text: 'No se pudieron obtener las ventas por precio',
-                type: AlertType.error
-            }))
-        } finally {
-            dispatch( setIsLoading( false ) )
-        }
-    }
-}
-
 export const startGettingAllSales = ( pagination: Pagination ) => {
     return async ( dispatch: Dispatch ) => {
         dispatch( setIsLoading( true ) )
@@ -106,6 +81,85 @@ export const startGettingAllSales = ( pagination: Pagination ) => {
             dispatch(showAlert({
                 title: 'Error Ventas 🗒️',
                 text: 'No se pudieron obtener las ventas',
+                type: AlertType.error
+            }))
+        } finally {
+            dispatch( setIsLoading( false ) )
+        }
+    }
+}
+
+export const startGettingFilteredSales = ( prices?: PriceRange, dates?: DateRange, pagination?: Pagination ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch( setIsLoading( true ) )
+        try {
+            const params: any = {
+                page: pagination?.page.toString() ?? '1',
+                limit: pagination?.limit.toString() ?? '10',
+                sort: 'saleDate:desc'
+            }
+
+            if ( prices?.minPrice !== undefined && prices?.maxPrice !== undefined ) {
+                params['priceMin'] = prices?.minPrice.toString() 
+                params['priceMax'] = prices?.maxPrice.toString() 
+            }
+
+            if ( dates?.dateFrom && dates?.dateTo ) {
+                params['dateFrom'] = dates.dateFrom
+                params['dateTo'] = dates.dateTo
+            }
+
+            const { data } = await puntocomApiPrivate.get<GetFilteredSalesResponse>(`${urlSale}/filter`, { params })
+            const { sales, meta } = data
+            const { filter, ...restMetaPagination } = meta
+
+            dispatch(setSales(sales))
+            dispatch(setSalesMetaPagination({ ...restMetaPagination, itemsPerPage: pagination?.limit ?? 15 }))
+
+        } catch( error ) {
+            dispatch(showAlert({
+                title: 'Error Ventas 🗒️',
+                text: 'No se pudieron filtrar las ventas',
+                type: AlertType.error
+            }))
+        } finally {
+            dispatch( setIsLoading( false ) )
+        }
+    }
+}
+
+export const startGettingFilteredSalesByUser = ( userId: string, prices?: PriceRange, dates?: DateRange, pagination?: Pagination ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch( setIsLoading( true ) )
+        try {
+
+            const params: any = {
+                page: pagination?.page.toString() ?? '1',
+                limit: pagination?.limit.toString() ?? '10',
+                sort: 'saleDate:desc'
+            }
+
+            if ( prices?.minPrice !== undefined && prices?.maxPrice !== undefined ) {
+                params['priceMin'] = prices?.minPrice.toString() 
+                params['priceMax'] = prices?.maxPrice.toString() 
+            }
+
+            if ( dates?.dateFrom && dates?.dateTo ) {
+                params['dateFrom'] = dates.dateFrom
+                params['dateTo'] = dates.dateTo
+            }
+
+            const { data } = await puntocomApiPrivate.get<GetFilteredSalesResponse>(`${urlSale}/filter/user/${userId}`, { params })
+            const { sales, meta } = data
+            const { filter, ...restMetaPagination } = meta
+
+            dispatch(setSales(sales))
+            dispatch(setSalesMetaPagination({ ...restMetaPagination, itemsPerPage: pagination?.limit ?? 15 }))
+
+        } catch( error ) {
+            dispatch(showAlert({
+                title: 'Error Ventas 🗒️',
+                text: 'No se pudieron filtrar las ventas',
                 type: AlertType.error
             }))
         } finally {

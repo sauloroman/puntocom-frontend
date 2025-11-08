@@ -18,7 +18,8 @@ export type ModalNames =
 'saveSale' | 
 'confirmDeleteReport' |
 'sendMessageToSupplier' |
-'rangePrices'
+'rangePrices' |
+'rangeDates'
 
 export const ModalNames = {
     confirmAdminPassword: 'confirmAdminPassword' as ModalNames,
@@ -41,4 +42,5 @@ export const ModalNames = {
     saveSale: 'saveSale' as ModalNames,
     sendMessageToSupplier: 'sendMessageToSupplier' as ModalNames,
     rangePrices: 'rangePrices' as ModalNames,
+    rangeDates: 'rangeDates' as ModalNames,
 }

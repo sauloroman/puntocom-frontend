@@ -7,38 +7,33 @@ const DEFAULT_VALUE = 'Usuarios'
 export const SelectUsers: React.FC = () => {
 
     const { users } = useUsers()
-    const { 
-        filter: {isVisible}, 
-        onChangePaginationVisibility,
-        onSetFilterUser,
-        onSetFilterPrices,
-        filterSalesByUser,
+    
+    const {
         getAllSales,
+        onSetFilterUser,
+        onResetFilters
     } = useSale()
-    const userNames = users?.map( user => `${user.name} ${user.lastname}`) ?? []
+
+    const userNames = users?.map(user => `${user.name} ${user.lastname}`) ?? []
 
     const onChange = (value: string) => {
-        onSetFilterPrices(null, null, true)
-        onChangePaginationVisibility(true)
-        if ( value === DEFAULT_VALUE ) {
+        if (value === DEFAULT_VALUE) {
             getAllSales()
-            onSetFilterUser(null, null, true)
+            onResetFilters()
             return
         }
-        const user = users?.find( user => `${user.name} ${user.lastname}` === value )
-        if ( !user ) return
-        filterSalesByUser(user?.id, user?.name)
+
+        const user = users?.find(user => `${user.name} ${user.lastname}` === value)        
+        if (!user) return
+
+        onSetFilterUser(user.id, value)
     }
 
     return (
-        <>
-            {
-                isVisible && <Select 
-                    onChange={onChange}
-                    placeholder={DEFAULT_VALUE}
-                    options={userNames}
-                />
-            }   
-        </>
+        <Select
+            onChange={onChange}
+            placeholder={DEFAULT_VALUE}
+            options={userNames}
+        />
     )
 }

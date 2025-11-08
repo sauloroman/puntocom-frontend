@@ -1,20 +1,19 @@
 import React from 'react'
-import type { PriceRange } from '../../../interfaces/sale.interface'
+import { useSale } from '../../../shared/hooks'
 
-interface Props {
-    prices: PriceRange
-}
+export const FilterPriceTag: React.FC = () => {
+    const { filter } = useSale()
 
-export const FilterPriceTag: React.FC<Props> = ({ prices }) => {
-    if (!prices || (prices.minPrice === 0 && prices.maxPrice === 0)) {
+    if (filter.prices.priceMin === null || filter.prices.priceMax === null) {
         return null
     }
+
     return (
-        <div className='inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-50 border border-yellow-200 rounded-lg text-sm'>
+        <div className='inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-200 rounded-lg text-sm'>
             <div className='flex items-center gap-2'>
-                <span className='text-yellow-900 font-medium'>Precio de venta:</span>
-                <span className='text-yellow-700'>
-                    ${prices.minPrice?.toFixed(2)} - ${prices.maxPrice?.toFixed(2)}
+                <span className='text-indigo-900 font-medium'>Precio:</span>
+                <span className='text-indigo-700'>
+                    ${filter.prices.priceMin.toFixed(2)} - ${filter.prices.priceMax.toFixed(2)}
                 </span>
             </div>
         </div>

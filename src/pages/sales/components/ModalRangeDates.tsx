@@ -3,13 +3,17 @@ import { ModalLayout } from '../../../layouts/ModalLayout'
 import { useForm } from 'react-hook-form'
 import { CancelButton, Input, Label, SaveButton } from '../../../shared/components'
 import { LuAsterisk } from 'react-icons/lu'
-import { useModal, useSale } from '../../../shared/hooks'
-import type { PriceRange } from '../../../interfaces/sale.interface'
+import { useAlert, useModal, useSale } from '../../../shared/hooks'
+import { AlertType } from '../../../interfaces/ui/alert.interface'
+import type { DateRange } from '../../../interfaces/sale.interface'
 
-export const ModalRangePrices: React.FC = () => {
+const today = new Date().toISOString().split('T')[0]
 
-    const { onSetFilterPrices } = useSale()
+export const ModalRangeDates: React.FC = () => {
+
+    const { onSetFilterDates } = useSale()
     const { onCloseModal } = useModal()
+    const { activateAlert } = useAlert()
 
     const {
         handleSubmit,
@@ -17,13 +21,25 @@ export const ModalRangePrices: React.FC = () => {
         formState: { errors },
         reset,
         watch
-    } = useForm<PriceRange>()
+    } = useForm<DateRange>()
 
-    const minPrice = watch('minPrice')
+    const dateFrom = watch('dateFrom')
 
-    const onApplyFilter = (data: PriceRange) => {
-        const { minPrice, maxPrice } = data
-        onSetFilterPrices(Number(minPrice), Number(maxPrice))
+    const onApplyFilter = (data: DateRange) => {
+        const { dateFrom, dateTo } = data
+
+        const fromDate = new Date(dateFrom)
+        const toDate = new Date(dateTo)
+
+        if (toDate < fromDate) {
+            return activateAlert({ 
+                title: 'Fechas no válidas',
+                text: 'La fecha final debe ser mayor o igual a la inicial',
+                type: AlertType.warning
+            })
+        }
+
+        onSetFilterDates(fromDate.toISOString(), toDate.toISOString())
         handleCancel()
     }   
 
@@ -39,60 +55,50 @@ export const ModalRangePrices: React.FC = () => {
                     
                     <div className='flex-1'>
                         <Label
-                            htmlFor='minPrice'
+                            htmlFor='dateFrom'
                             className='mb-3 flex items-center justify-between gap-2'
                         >
-                            Precio Mínimo $
+                            Fecha Desde
                             <LuAsterisk size={15} className='text-indigo-600' />
                         </Label>
                         <Input
-                            id='minPrice'
-                            placeholder='$0.00'
-                            type='number'
-                            step='0.01'
-                            min={0}
+                            id='dateFrom'
+                            type='date'
+                            max={today}
                             {
-                                ...register('minPrice', {
-                                    required: 'El precio mínimo es obligatorio',
-                                    min: { value: 0, message: 'El precio no puede ser negativo' }
+                                ...register('dateFrom', {
+                                    required: 'La fecha inicial es obligatoria'
                                 })
                             }
                         />
-                        {errors.minPrice && <p className='text-red-600 mt-1 text-right text-xs'>{errors.minPrice.message}</p>}
+                        {errors.dateFrom && <p className='text-red-600 mt-1 text-right text-xs'>{errors.dateFrom.message}</p>}
                     </div>
 
                     <div className='flex-1'>
                         <Label
-                            htmlFor='maxPrice'
+                            htmlFor='dateTo'
                             className='mb-3 flex items-center justify-between gap-2'
                         >
-                            Precio Máximo $
+                            Fecha Hasta
                             <LuAsterisk size={15} className='text-indigo-600' />
                         </Label>
                         <Input
-                            id='maxPrice'
-                            placeholder='$0.00'
-                            type='number'
-                            step='0.01'
-                            min={0}
+                            id='dateTo'
+                            type='date'
+                            max={today}
                             {
-                                ...register('maxPrice', {
-                                    required: 'El precio máximo es obligatorio',
-                                    min: { value: 0, message: 'El precio no puede ser negativo' },
+                                ...register('dateTo', {
+                                    required: 'La fecha final es obligatoria',
                                     validate: {
-                                        greaterThanMin: (value) => {
-                                            const min = Number(minPrice)
-                                            const max = Number(value)
-                                            if (!isNaN(min) && !isNaN(max)) {
-                                                return max >= min || 'El precio máximo debe ser mayor o igual al mínimo'
-                                            }
-                                            return true
+                                        greaterThanFrom: (value) => {
+                                            if (!dateFrom) return true
+                                            return value >= dateFrom || 'La fecha final debe ser mayor o igual a la inicial'
                                         }
                                     }
                                 })
                             }
                         />
-                        {errors.maxPrice && <p className='text-red-600 mt-1 text-right text-xs'>{errors.maxPrice.message}</p>}
+                        {errors.dateTo && <p className='text-red-600 mt-1 text-right text-xs'>{errors.dateTo.message}</p>}
                     </div>
                 </div>
 

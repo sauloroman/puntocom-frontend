@@ -18,7 +18,10 @@ interface SliceState {
             priceMin: number | null,
             priceMax: number | null,
         },
-        isVisible: boolean
+        dates: {
+            dateFrom: string | null,
+            dateTo: string | null
+        }
     }
 }
 
@@ -43,7 +46,10 @@ const initialState: SliceState = {
             priceMax: null,
             priceMin: null
         },
-        isVisible: true
+        dates: {
+            dateFrom: null,
+            dateTo: null
+        }
     }
 }
 
@@ -72,10 +78,19 @@ export const saleSlice = createSlice({
             state.pagination = payload
         },
 
-        setUserFilter: ( state, {payload}: PayloadAction<{id: string | null, name: string | null, isVisible: boolean }>) => {
+        setUserFilter: ( state, {payload}: PayloadAction<{id: string | null, name: string | null }>) => {
             state.filter.user.id = payload.id
             state.filter.user.name = payload.name
-            state.filter.isVisible = payload.isVisible
+        },
+
+        setPricesFilter: ( state, {payload}: PayloadAction<{priceMax: number | null, priceMin: number | null }>) => {
+            state.filter.prices.priceMin = payload.priceMin
+            state.filter.prices.priceMax = payload.priceMax
+        },
+
+        setDatesFilter: ( state, {payload}: PayloadAction<{dateFrom: string | null, dateTo: string | null}>) => {
+            state.filter.dates.dateFrom = payload.dateFrom
+            state.filter.dates.dateTo = payload.dateTo
         },
 
         setPaginationVisible: ( state, {payload}: PayloadAction<boolean>) => {
@@ -89,25 +104,20 @@ export const saleSlice = createSlice({
         setPage: ( state, {payload}: PayloadAction<number>) => {
             state.pagination.page = payload
         },
-
-        setPricesFilter: ( state, {payload}: PayloadAction<{priceMax: number | null, priceMin: number | null, isVisible: boolean }>) => {
-            state.filter.prices.priceMin = payload.priceMin
-            state.filter.prices.priceMax = payload.priceMax
-            state.filter.isVisible = payload.isVisible
-        }
-
+        
     }
 })
 
 export const {
     addSale,
+    setDatesFilter,
     setIsLoading,
     setPage,
     setPaginationVisible,
+    setPricesFilter,
     setSaleCreated,
     setSales,
     setSalesMetaPagination,
     setSelectedSale,
     setUserFilter,
-    setPricesFilter,
 } = saleSlice.actions

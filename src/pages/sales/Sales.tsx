@@ -1,15 +1,24 @@
 import React, { useEffect } from 'react'
 import { PuntoComLayout } from '../../layouts/PuntoComLayout'
 import { useDrawer, useModal, useSale, useUsers } from '../../shared/hooks'
-import { FilterSalesByPrice, ModalRangePrices, PaginationSales, SaleInfoDrawer, SelectUsers, TableSales } from './components'
+import { 
+  ButtonFilterByDate, 
+  AppliedFilters, 
+  ButtonFilterByPrice, 
+  ModalRangeDates, 
+  ModalRangePrices, 
+  PaginationSales, 
+  SaleInfoDrawer, 
+  SelectUsers, 
+  TableSales 
+} from './components'
 import { SpinnerContainer } from '../../shared/components'
 import { DrawelNames } from '../../interfaces/ui/drawel.interface'
 import { ModalNames } from '../../interfaces/ui/modal.interface'
-import { FilterTags } from './components/FilterTags'
 
 export const Sales: React.FC = () => {
 
-  const { sales, getAllSales, isLoading, filter } = useSale()
+  const { sales, getAllSales, isLoading } = useSale()
   const { users, getUsers } = useUsers()
   const { rightDrawerIsOpen, drawelName } = useDrawer()
   const { modalIsOpen, modalName } = useModal()
@@ -21,13 +30,14 @@ export const Sales: React.FC = () => {
 
   return (
     <PuntoComLayout>
-      <section className='px-4'>
+      <section className='p-4 py-0'>
         <div className="flex items-center justify-between my-7">
           <div className='flex items-center gap-3'>  
             <div className="w-64"><SelectUsers /></div>
-            <FilterSalesByPrice />
+            <ButtonFilterByPrice />
+            <ButtonFilterByDate />
           </div>
-          <FilterTags />
+          <AppliedFilters />
         </div>
         {
           isLoading
@@ -42,6 +52,7 @@ export const Sales: React.FC = () => {
       </section>
       { rightDrawerIsOpen && drawelName === DrawelNames.infoSale && <SaleInfoDrawer />}
       { modalIsOpen && modalName === ModalNames.rangePrices && <ModalRangePrices />}
+      { modalIsOpen && modalName === ModalNames.rangeDates && <ModalRangeDates />}
     </PuntoComLayout>
   )
 }
