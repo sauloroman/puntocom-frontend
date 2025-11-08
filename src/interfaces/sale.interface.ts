@@ -1,3 +1,4 @@
+import type { MetaPagination } from "./pagination.interface";
 import type { Product } from "./product.interface";
 
 export interface SaveSale {
@@ -7,13 +8,14 @@ export interface SaveSale {
 
 export interface SaleResponse {
     id: string
-    date: Date,
+    date: Date | string,
     total: number,
     code: string,
     User?: {
         id: string,
         name: string,
-        role: string
+        role: string,
+        image: string,
     },
     details: SaleProductDetailResponse[]
 }
@@ -32,6 +34,11 @@ export interface SaleProductDetailResponse {
     saleDiscount: number,
     productId: string,
     saleId: string,
+    Product?: {
+        id: string,
+        name: string,
+        code: string
+    }
 }
 
 export interface SaveSaleResponse {
@@ -47,3 +54,13 @@ export interface SaveSaleDetail {
     discount: number
 }
 
+export interface GetAllSalesResponse {
+    ok: boolean,
+    meta: MetaPagination,
+    sales: SaleResponse[]
+}
+
+export interface PriceRange {
+    minPrice: number
+    maxPrice: number
+}

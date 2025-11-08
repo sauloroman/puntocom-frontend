@@ -1,8 +1,28 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
-import type { CreateProduct, EditProduct } from "../../interfaces/product.interface"
-import { startChangingProductStatus, startCreatingProduct, startFilteringProductsByCategory, startFilteringProductsByStatus, startFilteringProductsBySupplier, startGettingProducts, startSearchingProducts, startUpdatingProduct, startUploadingProductImage } from "../../store/products/products.thunk"
-import { setCategoryFilter, setOrderedAsc, setPage, setPaginationVisible, setProducts, setSelectedProduct, setStatusFilter, setSupplierFilter } from "../../store/products/products.slice"
+import type { CreateProduct, EditProduct, Product } from "../../interfaces/product.interface"
+import { 
+    startChangingProductStatus, 
+    startCreatingProduct, 
+    startFilteringProductsByCategory, 
+    startFilteringProductsByStatus, 
+    startFilteringProductsBySupplier, 
+    startGettingProducts, 
+    startGettingProductsByStock, 
+    startSearchingProducts, 
+    startUpdatingProduct, 
+    startUploadingProductImage 
+} from "../../store/products/products.thunk"
+import { 
+    setCategoryFilter, 
+    setOrderedAsc, 
+    setPage, 
+    setPaginationVisible, 
+    setProducts, 
+    setSelectedProduct, 
+    setStatusFilter, 
+    setSupplierFilter 
+} from "../../store/products/products.slice"
 
 export const useProducts = () => {
 
@@ -14,7 +34,10 @@ export const useProducts = () => {
         products, 
         pagination, 
         productSelected, 
-        filter 
+        filter,
+        productNormalStock,
+        productWarningStock,
+        productsLowStock
     } = useSelector( (state: RootState) => state.products )
 
     const filterProductsByStatus = (status: boolean) => {
@@ -26,7 +49,7 @@ export const useProducts = () => {
     }
 
     const filterProductsByCategory = (categoryId: string, categoryName: string) => {
-         dispatch(setCategoryFilter({id: categoryId, name: categoryName, isVisible: true}))
+        dispatch(setCategoryFilter({id: categoryId, name: categoryName, isVisible: true}))
         dispatch(startFilteringProductsByCategory({
             page: 1,
             limit: pagination.itemsPerPage
@@ -134,6 +157,17 @@ export const useProducts = () => {
         dispatch(setProducts(sortedProducts))
     }
 
+    const onGetProductsByStock = () => {
+        dispatch(startGettingProductsByStock())
+    }
+
+    const getProductById = ( productId: string ): Product | null => {
+        if ( !products?.length ) return null
+        const product = products.find( pro => pro.id === productId )
+        if ( !product ) return null
+        return product
+    }
+
     return {
         isLoading,
         isPaginationVisible,
@@ -142,9 +176,13 @@ export const useProducts = () => {
         productSelected,
         filter,
         isOrderedAsc,
+        productNormalStock,
+        productWarningStock,
+        productsLowStock,
 
         onSetPage,
         getProducts,
+        getProductById,
         onSelectProduct,
         onCreateProduct,
         onUpdateProduct,
@@ -159,6 +197,7 @@ export const useProducts = () => {
         filterProductsByCategory,
         filterProductsBySupplier,
         onOrderAlpha,
+        onGetProductsByStock
     }
 
 }

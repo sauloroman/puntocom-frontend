@@ -3,7 +3,7 @@ import { OrderList } from './OrderList'
 import { FaRegListAlt } from "react-icons/fa";
 import { OrderSummary } from './OrderSummary';
 import { SaveButton } from '../../../shared/components';
-import { useSale, useCart } from '../../../shared/hooks';
+import { useSale, useCart, useProducts } from '../../../shared/hooks';
 
 export const OrderPanel: React.FC = () => {
 

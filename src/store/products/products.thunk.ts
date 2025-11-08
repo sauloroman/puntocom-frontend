@@ -6,9 +6,10 @@ import {
     type ChangeProductStatusResponse, 
     type UploadProductImageResponse, 
     type EditProduct,
-    type EditProductResponse
+    type EditProductResponse,
+    type ProductsByStock
 } from "../../interfaces/product.interface"
-import { addProducts, setIsLoading, setProducts, setProductsMetaPagination, setSelectedProduct, updateProduct } from "./products.slice"
+import { addProducts, setIsLoading, setProducts, setProductsLowStock, setProductsMetaPagination, setProductsNormalStock, setProductsWarningStock, setSelectedProduct, updateProduct } from "./products.slice"
 import { showAlert } from "../alert/alert.slice"
 import { AlertType } from "../../interfaces/ui/alert.interface"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
@@ -34,6 +35,38 @@ export const startGettingProducts = ( pagination: Pagination ) => {
         } catch(error) {
             console.log(error)
         } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startGettingProductsByStock = () => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+
+            const [ {data: dataLowProducts}, {data: dataWarningProducts}, {data: dataNormalProducts} ] = await Promise.all([
+                await puntocomApiPrivate.get(`${urlProducts}/stock/low`),
+                await puntocomApiPrivate.get(`${urlProducts}/stock/warning`),
+                await puntocomApiPrivate.get(`${urlProducts}/stock/normal`)
+            ])
+
+            const { products: productsLowStock } = dataLowProducts as ProductsByStock
+            const { products: productsWarningStock } = dataWarningProducts as ProductsByStock
+            const { products: productsNormalStock } = dataNormalProducts as ProductsByStock
+
+            dispatch(setProductsLowStock(productsLowStock))
+            dispatch(setProductsWarningStock(productsWarningStock))
+            dispatch(setProductsNormalStock(productsNormalStock))
+
+        } catch( error ) {
+            const errorMessage = handleError(error)
+            dispatch(showAlert({
+                title: "⚠️ Error productos",
+                text: errorMessage,
+                type: AlertType.error,
+            }))
+        } finally {   
             dispatch(setIsLoading(false))
         }
     }

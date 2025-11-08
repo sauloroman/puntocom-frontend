@@ -5,6 +5,9 @@ import type { MetaPagination } from "../../interfaces/pagination.interface";
 interface ProductState {
     isLoading: boolean,
     products: Product[] | null,
+    productsLowStock: Product[],
+    productWarningStock: Product[],
+    productNormalStock: Product[],
     productSelected: Product | null,
     filter: { 
         status: boolean | null,
@@ -27,6 +30,9 @@ const initialState: ProductState = {
     isLoading: true,
     products: null,
     productSelected: null,
+    productNormalStock: [],
+    productsLowStock: [],
+    productWarningStock: [],
     filter: {
         status: null,
         category: {
@@ -70,6 +76,18 @@ export const productsSlice = createSlice({
 
         setProducts: ( state, { payload }: PayloadAction<Product[]>) => {
             state.products = payload
+        },
+
+        setProductsLowStock: (state, {payload}: PayloadAction<Product[]>) => {
+            state.productsLowStock = payload
+        },
+
+        setProductsWarningStock: (state, {payload}: PayloadAction<Product[]>) => {
+            state.productWarningStock = payload
+        },
+
+        setProductsNormalStock: (state, {payload}: PayloadAction<Product[]>) => {
+            state.productNormalStock = payload
         },
 
         setSelectedProduct: (state, { payload }: PayloadAction<Product>) => {
@@ -128,4 +146,7 @@ export const {
     setPaginationVisible,
     setOrderedAsc,
     setSupplierFilter,
+    setProductsNormalStock,
+    setProductsLowStock,
+    setProductsWarningStock,
 } = productsSlice.actions

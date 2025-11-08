@@ -1,5 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit"
-import { setAllReports, setIsLoading, setListReport, setReportIdSelected, setUrlReportSelected, type ReportEntities } from "./reports.slice"
+import { deleteReport, setAllReports, setIsLoading, setListReport, setReportIdSelected, setUrlReportSelected, type ReportEntities } from "./reports.slice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 import type { GetAllReports, GenerateReportResponse } from "../../interfaces/report.interface"
 import { extractIdFromPath } from "../../shared/helpers/get-pdf-id"
@@ -124,6 +124,7 @@ export const startDeletingReport = ( entity: ReportEntities, reportId: string ) 
                 })
             );
 
+            dispatch(deleteReport({type: entity, reportId}))
             dispatch(setReportIdSelected(''))
 
         } catch( error ) {

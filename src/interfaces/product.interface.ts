@@ -48,6 +48,12 @@ export interface UploadProductImageResponse {
     product: Product
 }
 
+export interface ProductsByStock {
+    ok: boolean,
+    filterStock: StockCriteria,
+    products: Product[]
+}   
+
 export interface ProductInCart {
     product: Product,
     quantity: number,
@@ -86,4 +92,12 @@ export interface Product {
         address: string,
         isActive: boolean,
     }
+}
+
+
+export type StockCriteria = 'low' | 'warning' | 'normal'
+export const StockCriteria = {
+    low: 'low' as StockCriteria,
+    warning: 'warning' as StockCriteria,
+    normal: 'normal' as StockCriteria,
 }

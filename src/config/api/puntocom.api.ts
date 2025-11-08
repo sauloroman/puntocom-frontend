@@ -5,12 +5,12 @@ const { VITE_BACKEND_URL, VITE_TOKEN_NAME } = getEnvVariables()
 
 export const puntocomApiPublic = axios.create({
     baseURL: VITE_BACKEND_URL,
-    timeout: 10000
+    timeout: 20000
 })
 
 export const puntocomApiPrivate = axios.create({
     baseURL: VITE_BACKEND_URL,
-    timeout: 10000
+    timeout: 20000
 })
 
 puntocomApiPrivate.interceptors.request.use( (config) => {
