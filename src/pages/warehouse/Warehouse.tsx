@@ -6,6 +6,7 @@ import { WindowsTab } from '../../interfaces/ui/tabs.interface'
 import { WarehouseCategories } from './views/categories/WarehouseCategories'
 import { WarehouseProducts } from './views/products/WarehouseProducts'
 import { WarehouseLowStock } from './views/low-stock/WarehouseLowStock'
+import { WarehouseAdjustment } from './views/adjustment/WarehouseAdjustment'
 
 const tabs = ["Categorías", "Productos", "Control de Stock", "Ajustes de Almacén"]
 
@@ -22,7 +23,7 @@ export const Warehouse: React.FC = () => {
       case "Control de Stock":
         return <WarehouseLowStock />
       case "Ajustes de Almacén":
-        return <div>Configuraciones y ajustes de almacén aquí</div>
+        return <WarehouseAdjustment />
       default:
         return <div>Seleccione una pestaña</div>
     }

@@ -168,7 +168,7 @@ export const useSale = () => {
         dispatch(setPricesFilter({ priceMax: null, priceMin: null }))
         dispatch(setDatesFilter({ dateFrom: null, dateTo: null }))
         dispatch(setPage(1))
-        dispatch(getAllSales())
+        getAllSales()
     }
 
     const onSetSelectedSale = ( saleId: string ) => {

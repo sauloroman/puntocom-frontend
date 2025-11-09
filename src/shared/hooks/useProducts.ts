@@ -101,10 +101,16 @@ export const useProducts = () => {
         dispatch( startCreatingProduct(data) )
     }
 
-    const onSelectProduct = ( id: string ) => {
-        const product = products?.find( product => product.id === id )
-        if ( product) dispatch( setSelectedProduct(product) )
-    } 
+    const onSelectProduct = (id: string) => {
+        const product =
+            products?.find(p => p.id === id) ||
+            productsLowStock.find(p => p.id === id) ||
+            productWarningStock.find(p => p.id === id) ||
+            productNormalStock.find(p => p.id === id)
+
+        if (!product) return
+        dispatch(setSelectedProduct(product))
+    }
 
     const onChangeProductStatus = (productId: string, status: boolean) => {
         dispatch(startChangingProductStatus(productId, status))

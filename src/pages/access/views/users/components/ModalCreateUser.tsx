@@ -83,10 +83,7 @@ export const ModalCreateUser: React.FC = () => {
                         }
                     >
                         <option value="" defaultValue={"Selecciona un rol"}>Selecciona un rol</option>
-                        <option value={Roles.ADMINISTRADOR}>
-                            
-                            Administrador
-                        </option>
+                        <option value={Roles.ADMINISTRADOR}>Administrador</option>
                         <option value={Roles.SUPERVISOR}>Supervisor</option>
                         <option value={Roles.VENDEDOR}>Vendedor</option>
                     </select>

@@ -5,10 +5,11 @@ import { ProductItem } from './'
 interface Props {
     title: string,
     products: Product[],
-    variant?: 'danger' | 'warning' | 'success'
+    onSelectProduct: (id: string) => void,
+    variant?: 'danger' | 'warning' | 'success',
 }
 
-export const ProductStack: React.FC<Props> = ({ products, title, variant = 'success' }) => {
+export const ProductStack: React.FC<Props> = ({ products, title, onSelectProduct, variant = 'success' }) => {
     
     const variantStyles = {
         danger: {
@@ -73,6 +74,7 @@ export const ProductStack: React.FC<Props> = ({ products, title, variant = 'succ
                                 stock={product.stock}
                                 stockMin={product.stockMin}
                                 badge={styles.badge}
+                                onSelectProduct={onSelectProduct}
                             />
                         ))}
                     </ul>

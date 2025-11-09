@@ -8,8 +8,9 @@ import { CancelButton } from '../../../../../shared/components'
 import { WhatsAppButton } from '../../../../../shared/components/button/WhatsAppButton'
 
 export const ModalSendMessageToSupplier: React.FC = () => {
-    const { productSelected } = useProducts()
+    
     const [message, setMessage] = useState('')
+    const { productSelected } = useProducts()
     const { onCloseModal } = useModal()
 
     if (!productSelected) return null

@@ -11,22 +11,22 @@ interface Props {
     stock: number,
     stockMin: number,
     badge: string,
+    onSelectProduct: ( id: string ) => void
 }
 
-export const ProductItem: React.FC<Props> = ({ id, image, name, stock, stockMin, badge }) => {
-    const { onOpenModal } = useModal()
-    const { onSelectProduct } = useProducts()
+export const ProductItem: React.FC<Props> = ({ id, image, name, stock, stockMin, badge, onSelectProduct }) => {
 
-    const onOpenModalToSendMessage = () => {
-        onSelectProduct( id )
+    const { onOpenModal } = useModal()
+
+    const handleOpen = () => {
+        onSelectProduct(id)
         onOpenModal(ModalNames.sendMessageToSupplier)
     }
     
     return (
-        <li
-            onClick={ onOpenModalToSendMessage }
-            key={id}
-            className='py-3 px-5 hover:bg-gray-100 transition-all cursor-pointer group hover:translate-y-1.5'
+        <div
+            onClick={ handleOpen }
+            className='w-full py-3 px-5 hover:bg-gray-100 transition-all cursor-pointer group hover:translate-y-1.5'
         >
             <div className='flex items-center'>
                 <img
@@ -58,6 +58,6 @@ export const ProductItem: React.FC<Props> = ({ id, image, name, stock, stockMin,
                     </div>
                 </div>
             )}
-        </li>
+        </div>
     )
 }

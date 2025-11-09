@@ -23,7 +23,6 @@ export const WarehouseLowStock: React.FC = () => {
         : <ProductsGrid />
       }
       { modalIsOpen && modalName === ModalNames.sendMessageToSupplier && <ModalSendMessageToSupplier />}
-      
     </>
   )
 }
