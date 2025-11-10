@@ -7,6 +7,7 @@ import {
     startFilteringProductsByCategory, 
     startFilteringProductsByStatus, 
     startFilteringProductsBySupplier, 
+    startGettingAllProducts, 
     startGettingProducts, 
     startGettingProductsByStock, 
     startSearchingProducts, 
@@ -32,6 +33,7 @@ export const useProducts = () => {
         isLoading, 
         isPaginationVisible,
         products, 
+        productsMinimal,
         pagination, 
         productSelected, 
         filter,
@@ -95,6 +97,10 @@ export const useProducts = () => {
             page: 1,
             limit: pagination.itemsPerPage
         }))        
+    }
+
+    const getMinimalProducts = () => {
+        dispatch(startGettingAllProducts())
     }
 
     const onCreateProduct = ( data: CreateProduct ) => {
@@ -178,6 +184,7 @@ export const useProducts = () => {
         isLoading,
         isPaginationVisible,
         products,
+        productsMinimal,
         pagination,
         productSelected,
         filter,
@@ -189,6 +196,7 @@ export const useProducts = () => {
         onSetPage,
         getProducts,
         getProductById,
+        getMinimalProducts,
         onSelectProduct,
         onCreateProduct,
         onUpdateProduct,

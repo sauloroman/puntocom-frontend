@@ -1,15 +1,16 @@
 import type { Dispatch } from "@reduxjs/toolkit"
-import { 
-    type CreateProductResponse, 
-    type CreateProduct, 
-    type GetProductsResponse, 
-    type ChangeProductStatusResponse, 
-    type UploadProductImageResponse, 
-    type EditProduct,
-    type EditProductResponse,
-    type ProductsByStock
+import type { 
+    CreateProductResponse, 
+    CreateProduct, 
+    GetProductsResponse, 
+    ChangeProductStatusResponse, 
+    UploadProductImageResponse, 
+    EditProduct,
+    EditProductResponse,
+    ProductsByStock,
+    GetProductsMinimal
 } from "../../interfaces/product.interface"
-import { addProducts, setIsLoading, setProducts, setProductsLowStock, setProductsMetaPagination, setProductsNormalStock, setProductsWarningStock, setSelectedProduct, updateProduct } from "./products.slice"
+import { addProducts, setIsLoading, setProducts, setProductsLowStock, setProductsMetaPagination, setProductsMinimal, setProductsNormalStock, setProductsWarningStock, setSelectedProduct, updateProduct } from "./products.slice"
 import { showAlert } from "../alert/alert.slice"
 import { AlertType } from "../../interfaces/ui/alert.interface"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
@@ -32,6 +33,23 @@ export const startGettingProducts = ( pagination: Pagination ) => {
             dispatch(setProducts(products))
             dispatch(setProductsMetaPagination({...meta, itemsPerPage: 20 }))
 
+        } catch(error) {
+            console.log(error)
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startGettingAllProducts = () => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+
+            const { data } = await puntocomApiPrivate.get<GetProductsMinimal>(`${urlProducts}/all-minimal`)
+            const { products } = data
+
+            dispatch(setProductsMinimal(products))
         } catch(error) {
             console.log(error)
         } finally {

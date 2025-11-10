@@ -1,10 +1,11 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Product } from "../../interfaces/product.interface";
+import type { Product, ProductMinimal } from "../../interfaces/product.interface";
 import type { MetaPagination } from "../../interfaces/pagination.interface";
 
 interface ProductState {
     isLoading: boolean,
     products: Product[] | null,
+    productsMinimal: ProductMinimal[] | null,
     productsLowStock: Product[],
     productWarningStock: Product[],
     productNormalStock: Product[],
@@ -28,6 +29,7 @@ interface ProductState {
 
 const initialState: ProductState = {
     isLoading: true,
+    productsMinimal: null,
     products: null,
     productSelected: null,
     productNormalStock: [],
@@ -72,6 +74,10 @@ export const productsSlice = createSlice({
                 }
                 return product
             })
+        },
+
+        setProductsMinimal: ( state, { payload }: PayloadAction<ProductMinimal[]>) => {
+            state.productsMinimal = payload
         },
 
         setProducts: ( state, { payload }: PayloadAction<Product[]>) => {
@@ -135,18 +141,19 @@ export const productsSlice = createSlice({
 
 export const {
     addProducts,
-    setProducts,
-    setSelectedProduct,
-    setIsLoading,
-    setPage,
-    setProductsMetaPagination,
-    updateProduct,
-    setStatusFilter,
     setCategoryFilter,
-    setPaginationVisible,
+    setIsLoading,
     setOrderedAsc,
-    setSupplierFilter,
-    setProductsNormalStock,
+    setPage,
+    setPaginationVisible,
+    setProducts,
     setProductsLowStock,
+    setProductsMetaPagination,
+    setProductsMinimal,
+    setProductsNormalStock,
     setProductsWarningStock,
+    setSelectedProduct,
+    setStatusFilter,
+    setSupplierFilter,
+    updateProduct,
 } = productsSlice.actions

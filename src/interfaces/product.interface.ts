@@ -36,6 +36,11 @@ export interface GetProductsResponse {
     products: Product[]
 }
 
+export interface GetProductsMinimal {
+    ok: boolean,
+    products: ProductMinimal[],
+}
+
 export interface ChangeProductStatusResponse {
     ok: boolean,
     message: string,
@@ -92,6 +97,12 @@ export interface Product {
         address: string,
         isActive: boolean,
     }
+}
+
+export interface ProductMinimal {
+    productId: string,
+    productName: string,
+    productStock: number
 }
 
 

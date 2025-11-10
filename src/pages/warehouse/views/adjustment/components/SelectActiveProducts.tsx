@@ -1,16 +1,12 @@
 import type { UseFormRegister } from "react-hook-form";
-import { useProducts } from "../../../../../shared/hooks";
+import type { ProductMinimal } from "../../../../../interfaces/product.interface";
 
 interface SelectActiveProductsProps {
+    products: ProductMinimal[],
     register: UseFormRegister<any>
 } 
 
-export const SelectActiveProducts: React.FC<SelectActiveProductsProps> = ({ register }) => {
-
-    const { products } = useProducts()
-    if ( !products ) return null;
-    const activeProducts = products?.filter(product => product.isActive)
-
+export const SelectActiveProducts: React.FC<SelectActiveProductsProps> = ({ register, products }) => {
     return (
         <select
             id="productId"
@@ -21,11 +17,11 @@ export const SelectActiveProducts: React.FC<SelectActiveProductsProps> = ({ regi
                 })
             }
         >
-            {activeProducts.map((product, i) => (
+            {products.map((product, i) => (
                 <option 
-                    key={product.id + i}
-                    value={product.id}
-                >{product.name} - Stock {product.stock}</option>
+                    key={product.productId + i}
+                    value={product.productId}
+                >{product.productName} - Stock {product.productStock}</option>
             ))}
         </select>
     )

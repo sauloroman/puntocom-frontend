@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { useForm } from 'react-hook-form'
 import { type SaveInventoryAdjustment } from '../../../../../interfaces/inventory-adjustment.interface'
 import { CancelButton, ErrorMessageForm, Input, Label, SaveButton, Textarea } from '../../../../../shared/components'
 import { SelectActiveProducts, SelectAdjustmentType } from './'
-import { useAuth, useInventoryAdjustment, useModal } from '../../../../../shared/hooks'
+import { useAuth, useInventoryAdjustment, useModal, useProducts } from '../../../../../shared/hooks'
 
 export const ModalCreateInventoryAdjustment: React.FC = () => {
+
+    const { getMinimalProducts, productsMinimal } = useProducts()
 
     const {
         handleSubmit,
@@ -34,13 +36,17 @@ export const ModalCreateInventoryAdjustment: React.FC = () => {
         reset();
     }
 
+    useEffect(() => {
+        if ( !productsMinimal ) getMinimalProducts()
+    }, [])
+
     return (
         <ModalLayout width='w-xl'>
             <form onSubmit={handleSubmit(onSaveInventoryAdjustment)} className="flex-2 space-y-6 mb-4">
 
                 <div className="flex-1">
                     <Label htmlFor='productId'>Producto a realizar ajuste</Label>
-                    <SelectActiveProducts register={register} />
+                    <SelectActiveProducts products={productsMinimal ?? []} register={register} />
                     {errors.productId && <ErrorMessageForm message={errors.productId.message} />}
                 </div>
 

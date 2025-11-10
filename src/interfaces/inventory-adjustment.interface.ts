@@ -1,3 +1,5 @@
+import type { MetaPagination } from "./pagination.interface"
+
 export type AdjustmentEnum = 'entrada' | 'salida'
 export const AdjustmentEnum = {
   entrada: 'entrada' as AdjustmentEnum,
@@ -12,9 +14,10 @@ export interface SaveInventoryAdjustment {
     adjustmentReason: string,
 }
 
-export interface SaveInventoryAdjustmentResponse {
+export interface InventoryAdjustmentResponse {
     adjustmentId: string,
     adjustmentType: AdjustmentEnum,
+    adjustmentPrevQuantity: number,
     adjustmentQuantity: number,
     adjustmentReason: string,
     adjustmentDate: string  
@@ -34,4 +37,16 @@ export interface SaveInventoryAdjustmentResponse {
         code: string,
         isActive: boolean,
     }
+}
+
+export interface GetInventoryAdjustments {
+    ok: boolean,
+    meta: MetaPagination,
+    adjustments: InventoryAdjustmentResponse[]
+}
+
+export interface SaveInventoryAdjustmentResponse {
+    ok: boolean,
+    message: string,
+    adjustmentSaved: InventoryAdjustmentResponse
 }
