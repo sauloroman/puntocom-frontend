@@ -61,14 +61,31 @@ export const startGettingInventoryAdjustments = ( pagination: Pagination ) => {
     }
 }
 
-export const startFilteringInventoryAdjustmentsByType = ( adjustmentType: string,  pagination: Pagination ) => {
+export const startFilteringInventoryAdjustments = ( 
+    pagination: Pagination, 
+    userId?: string, 
+    adjustmentType?: string 
+) => {
     return async ( dispatch: Dispatch ) => {
         dispatch(setIsLoading(true))
         try {
-
             const { page, limit } = pagination
 
-            const url = `${urlInventoryAdjustment}?page=${page}&limit=${limit}&sort=inventoryAdjustmentDate:desc&filter={"inventoryAdjustmentType":"${adjustmentType}"}` 
+            const filterObject: Record<string, string> = {}
+            
+            if (adjustmentType) {
+                filterObject.inventoryAdjustmentType = adjustmentType
+            }
+            
+            if (userId) {
+                filterObject.inventoryAdjustmentUser = userId
+            }
+
+            const filterParam = Object.keys(filterObject).length > 0 
+                ? `&filter=${JSON.stringify(filterObject)}`
+                : ''
+
+            const url = `${urlInventoryAdjustment}?page=${page}&limit=${limit}&sort=inventoryAdjustmentDate:desc${filterParam}`
 
             const { data } = await puntocomApiPrivate.get<GetInventoryAdjustments>(url)
 
@@ -77,14 +94,14 @@ export const startFilteringInventoryAdjustmentsByType = ( adjustmentType: string
             dispatch(setInventoryAdjustments(adjustments))
             dispatch(setAdjustmentsMetaPagination({...meta, itemsPerPage: limit}))
         } catch(error) {
-            const erorrMessage = handleError(error)
-            console.log(erorrMessage)
+            const errorMessage = handleError(error)
+            console.log(errorMessage)
             dispatch(showAlert({
                 title: 'Ajuste de inventario',
-                text: 'No se pudo filtrar por tipo',
+                text: 'No se pudo filtrar los ajustes de almacén',
                 type: AlertType.error
             }))
-        }  finally {
+        } finally {
             dispatch(setIsLoading(false))
         }
     }

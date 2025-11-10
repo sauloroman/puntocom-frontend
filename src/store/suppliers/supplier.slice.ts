@@ -35,7 +35,7 @@ const initialState: ISuppliers = {
         page: 1,
         total: 1,
         totalPages: 1,
-        itemsPerPage: 10
+        itemsPerPage: 8
     },
     isPaginationVisible: true,
     isTableStyleActive: true,

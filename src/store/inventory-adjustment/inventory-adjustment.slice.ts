@@ -9,7 +9,10 @@ interface InventorySliceState {
     pagination: MetaPagination & { itemsPerPage: number },
     filter: {
         adjustmentType: AdjustmentEnum | null,
-    }
+        adjustmentUserId: string | null,
+    },
+    isTableStyleActive: boolean,
+    isGridStyleActive: boolean,
 }
 
 const initialState: InventorySliceState = {
@@ -20,11 +23,14 @@ const initialState: InventorySliceState = {
         page: 1,
         total: 0,
         totalPages: 0,
-        itemsPerPage: 15
+        itemsPerPage: 10
     },
     filter: {
-        adjustmentType: null
-    }
+        adjustmentType: null,
+        adjustmentUserId: null,
+    },
+    isTableStyleActive: true,
+    isGridStyleActive: false
 } 
 
 export const inventorySlice = createSlice({
@@ -54,16 +60,31 @@ export const inventorySlice = createSlice({
 
         setAdjustmentTypeFilter: ( state, {payload}: PayloadAction<AdjustmentEnum | null>) => {
             state.filter.adjustmentType = payload
-        }
+        },
 
+        setAdjustmentUserFilter: ( state, {payload}: PayloadAction<string | null>) => {
+            state.filter.adjustmentUserId = payload
+        },
+
+        setPage: ( state, {payload}: PayloadAction<number> ) => {
+            state.pagination.page = payload
+        },
+
+        setTableView: (state, {payload}: PayloadAction<boolean>) => {
+            state.isTableStyleActive = payload
+            state.isGridStyleActive = !payload
+        },
     }
 })
 
 export const {
-    setIsLoading,
-    setInventoryAdjustments,
-    setAdjustmentsMetaPagination,
     addInventoryAdjustment,
+    setAdjustmentsMetaPagination,
     setAdjustmentTypeFilter,
+    setAdjustmentUserFilter,
+    setInventoryAdjustments,
     setInventoryAdjustmentSelected,
+    setIsLoading,
+    setPage,
+    setTableView,
 } = inventorySlice.actions

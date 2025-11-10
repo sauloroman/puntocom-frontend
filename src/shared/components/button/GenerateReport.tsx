@@ -16,7 +16,7 @@ export const GenerateReport: React.FC<Props> = ({ onConfirm }) => {
     }
 
     return (
-        <div className='w-30'>
+        <div className='w-fit'>
             {
                 isLoading
                 ? (<SpinnerContainer color='bg-white' size='sm' />)

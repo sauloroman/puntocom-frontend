@@ -1,22 +1,24 @@
 import React from 'react'
 import { Select } from '../../../../../shared/components'
 import { useInventoryAdjustment } from '../../../../../shared/hooks'
+import type { AdjustmentEnum } from '../../../../../interfaces/inventory-adjustment.interface'
 
 const placeholder = 'Tipo de ajuste'
 const options = ['Entradas', 'Salidas']
 
 export const FilterSelectAdjustmentType: React.FC = () => {
 
-  const { getInventoryAdjustments, filterInventoryAdjustmentsByType } = useInventoryAdjustment()
+  const { getInventoryAdjustments, onSetFilterAdjustmentType } = useInventoryAdjustment()
 
   const onSelectFilter = ( value: string ) => {
     if ( value.trim() === placeholder ) {
       getInventoryAdjustments();
+      onSetFilterAdjustmentType(null)
       return
     }
 
     const formattedValue = value.trim().toLowerCase().slice(0, -1)
-    filterInventoryAdjustmentsByType(formattedValue)
+    onSetFilterAdjustmentType(formattedValue as AdjustmentEnum)
   }
 
   return (

@@ -1,41 +1,63 @@
 import React, { useEffect } from 'react'
-import { useDrawer, useInventoryAdjustment, useModal } from '../../../../shared/hooks'
+import { useDrawer, useInventoryAdjustment, useModal, useReports } from '../../../../shared/hooks'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { 
-  TableAdjustments, 
+  AdjustmentGrid,
+  AdjustmentInfoLeftDrawer,
   ButtonOpenModalCreateInventory, 
   FilterSelectAdjustmentType, 
+  FilterSelectAdjustmentUser,
   ModalCreateInventoryAdjustment, 
-  SearchAdjustmentByProduct, 
-  AdjustmentInfoLeftDrawer
+  PaginationAdjustments, 
+  TableAdjustments, 
 } from './components'
 import { SpinnerContainer } from '../../../../shared/components'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
+import { GenerateReport, ToggleGridTableView } from '../../../../shared/components/button'
 
 export const WarehouseAdjustment: React.FC = () => {
   
   const { drawelName, leftDrawerIsOpen } = useDrawer()
   const { modalIsOpen, modalName } = useModal()
-  const { adjustments, isLoading, getInventoryAdjustments } = useInventoryAdjustment()
+  const { adjustments, isLoading, getInventoryAdjustments, filter, filterInventoryAdjustments, isTableStyleActive, setTableStyle } = useInventoryAdjustment()
+  const { isLoading: isReportsLoading } = useReports()
 
   useEffect(() => {
     if ( !adjustments ) getInventoryAdjustments()
   }, [])
 
+  useEffect(() => {
+    filterInventoryAdjustments(1)
+  }, [filter])
+
   return (
     <>
       <section>
         <div className="flex items-center justify-between mb-7">
-          <div className='w-80'><SearchAdjustmentByProduct /></div>
-          <div className='flex gap-4 items-center'>
+          <div className="flex gap-4 items-center">
+            <div className="w-60"><FilterSelectAdjustmentUser /></div>
             <div className="w-60"><FilterSelectAdjustmentType /></div>
+          </div>
+          <div className='flex gap-4 items-center'>
+            <ToggleGridTableView status={isTableStyleActive} onToggle={setTableStyle} /> 
+            <div className="w-fit"><GenerateReport onConfirm={() => {}} /></div>
             <div className="w-fit"><ButtonOpenModalCreateInventory /></div>
           </div>
         </div>
         {
-          isLoading
-          ? (<div className='my-24'><SpinnerContainer size='lg' color='bg-white' /></div>)
-          : (<TableAdjustments data={adjustments ?? []} />)
+          (isLoading || isReportsLoading)
+          ? (
+            <div className='my-24'><SpinnerContainer size='lg' color='bg-white' /></div>
+          )
+          : (
+            <>
+              { isTableStyleActive 
+                ? <TableAdjustments data={adjustments ?? []} /> 
+                : <AdjustmentGrid data={adjustments ?? []} />
+              }
+              <PaginationAdjustments />
+            </>
+          )
         }
       </section>
       { modalIsOpen && modalName === ModalNames.createInventoryAdjustment && <ModalCreateInventoryAdjustment />}

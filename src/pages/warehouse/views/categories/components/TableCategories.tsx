@@ -79,8 +79,8 @@ export const TableCategories: React.FC<TableCategoriesProps> = ({ data }) => {
                                     </td>
                                     <td className="px-6 py-4 text-gray-600">{cat.description}</td>
                                     <td className="px-6 py-4"><StatusBadge status={cat.isActive} /></td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">{cat.createdAt}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">{cat.updatedAt}</td>
+                                    <td className="px-6 py-4 text-gray-700">{cat.createdAt}</td>
+                                    <td className="px-6 py-4 text-gray-700">{cat.updatedAt}</td>
                                     <td className="px-6 py-4 text-center relative">
                                         <TableActions
                                             onView={ () => onSelecteCategory(cat.id ) }
