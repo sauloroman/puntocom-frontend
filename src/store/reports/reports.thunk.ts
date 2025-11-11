@@ -8,7 +8,7 @@ import { AlertType } from "../../interfaces/ui/alert.interface"
 
 const url = '/api/report'
 
-export const startGeneratingReport = (type: 'users' | 'suppliers' | 'products') => {
+export const startGeneratingReport = (type: 'users' | 'suppliers' | 'products' | 'inventoryAdjustments') => {
     return async (dispatch: Dispatch) => {
         dispatch(setIsLoading(true))
         try {

@@ -17,7 +17,7 @@ export const useReports = () => {
         urlReportSelected 
     } = useSelector( (state: RootState) => state.reports )
 
-    const createPdfList = (type: 'users' | 'suppliers' | 'products') => {
+    const createPdfList = (type: 'users' | 'suppliers' | 'products' | 'inventoryAdjustments') => {
         dispatch(startGeneratingReport(type))
     }
 

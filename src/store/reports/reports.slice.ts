@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Reports } from "../../interfaces/report.interface";
 
-export type ReportEntities = 'users' | 'suppliers' | 'products' | 'purchases'
+export type ReportEntities = 'users' | 'suppliers' | 'products' | 'purchases' | 'inventoryAdjustments'
 
 interface ReportsStateI {
     isLoading: boolean,
@@ -15,6 +15,9 @@ interface ReportsStateI {
         listReport: string,
     },
     purchases: {    
+        listReport: string,
+    },
+    inventoryAdjustments: {
         listReport: string,
     },
     allReports: Reports | null,
@@ -35,6 +38,9 @@ const initialState: ReportsStateI = {
         listReport: ''
     },
     purchases: {
+        listReport: '',
+    },
+    inventoryAdjustments: {
         listReport: '',
     },
     allReports: null,

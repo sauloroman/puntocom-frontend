@@ -8,7 +8,7 @@ interface Props {
 
 export const AdjustmentGrid: React.FC<Props> = ({ data }) => {
      return (
-        <ul className='grid grid-cols-3 gap-5 py-2 pb-10'>
+        <ul className='grid grid-cols-4 gap-5 py-2 pb-10'>
             {
                 data.map(adjustment => (
                     <AdjustmentCard 

@@ -13,7 +13,8 @@ export interface Reports {
   users: ReportItem[],
   products: ReportItem[],
   suppliers: ReportItem[],
-  purchases: ReportItem[]
+  purchases: ReportItem[],
+  inventoryAdjustments: ReportItem[]
 }
 
 export interface ReportItem {

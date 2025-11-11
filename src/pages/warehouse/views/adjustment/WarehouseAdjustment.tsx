@@ -7,6 +7,7 @@ import {
   ButtonOpenModalCreateInventory, 
   FilterSelectAdjustmentType, 
   FilterSelectAdjustmentUser,
+  ModalConfirmCreateAdjustmentsReport,
   ModalCreateInventoryAdjustment, 
   PaginationAdjustments, 
   TableAdjustments, 
@@ -14,11 +15,12 @@ import {
 import { SpinnerContainer } from '../../../../shared/components'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 import { GenerateReport, ToggleGridTableView } from '../../../../shared/components/button'
+import { ModalRequestPasswordAdmin } from '../../../access/views/users/components'
 
 export const WarehouseAdjustment: React.FC = () => {
   
   const { drawelName, leftDrawerIsOpen } = useDrawer()
-  const { modalIsOpen, modalName } = useModal()
+  const { modalIsOpen, modalName, onOpenConfirmAdminPassword } = useModal()
   const { adjustments, isLoading, getInventoryAdjustments, filter, filterInventoryAdjustments, isTableStyleActive, setTableStyle } = useInventoryAdjustment()
   const { isLoading: isReportsLoading } = useReports()
 
@@ -40,7 +42,7 @@ export const WarehouseAdjustment: React.FC = () => {
           </div>
           <div className='flex gap-4 items-center'>
             <ToggleGridTableView status={isTableStyleActive} onToggle={setTableStyle} /> 
-            <div className="w-fit"><GenerateReport onConfirm={() => {}} /></div>
+            <div className="w-fit"><GenerateReport onConfirm={() => onOpenConfirmAdminPassword(ModalNames.confirmCreateInventoryAdjustmentsReport)} /></div>
             <div className="w-fit"><ButtonOpenModalCreateInventory /></div>
           </div>
         </div>
@@ -60,7 +62,10 @@ export const WarehouseAdjustment: React.FC = () => {
           )
         }
       </section>
+
+      { modalIsOpen && modalName === ModalNames.confirmAdminPassword && <ModalRequestPasswordAdmin />}
       { modalIsOpen && modalName === ModalNames.createInventoryAdjustment && <ModalCreateInventoryAdjustment />}
+      { modalIsOpen && modalName === ModalNames.confirmCreateInventoryAdjustmentsReport && <ModalConfirmCreateAdjustmentsReport />}
       { leftDrawerIsOpen && drawelName === DrawelNames.infoAdjustment && <AdjustmentInfoLeftDrawer />}
     </>
   )
