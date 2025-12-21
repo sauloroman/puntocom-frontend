@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useAlert, useModal, useSuppliers } from '../../../../../shared/hooks'
+import { useAlert, useModal, useSuppliers, useTheme } from '../../../../../shared/hooks'
 import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { Input, Label } from '../../../../../shared/components'
 import { LuAsterisk } from "react-icons/lu";
@@ -19,15 +19,17 @@ export const ModalCreateSupplier: React.FC = () => {
     const {
         handleSubmit,
         register,
-        formState: {errors}        
+        formState: { errors }
     } = useForm<CreateSupplier>()
+
     const { onCloseModal } = useModal()
     const { activateAlert } = useAlert()
     const { createSupplier, getUniqueCompanies, companies } = useSuppliers()
+    const { theme } = useTheme()
 
-    const onCreateSupplier = ( data: CreateSupplier ) => {
+    const onCreateSupplier = (data: CreateSupplier) => {
 
-        if ( newCompany && companies?.includes(newCompany) ) {
+        if (newCompany && companies?.includes(newCompany)) {
             activateAlert({
                 title: 'Empresa Existente',
                 text: 'La empresa que intentas crear ya está entre las opciones',
@@ -36,7 +38,7 @@ export const ModalCreateSupplier: React.FC = () => {
             return
         }
 
-        if ( newCompany ) {
+        if (newCompany) {
             createSupplier({
                 ...data,
                 company: newCompany
@@ -62,7 +64,7 @@ export const ModalCreateSupplier: React.FC = () => {
                             Nombre del proveedor
                             <LuAsterisk size={15} className='text-indigo-600' />
                         </Label>
-                        <Input  
+                        <Input
                             autoComplete='off'
                             id='supplierName'
                             type='text'
@@ -75,14 +77,14 @@ export const ModalCreateSupplier: React.FC = () => {
                                 })
                             }
                         />
-                        { errors.name && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.name.message}</p>)}
+                        {errors.name && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.name.message}</p>)}
                     </div>
                     <div className='flex-1'>
                         <Label htmlFor='supplierLastname' className='mb-3 flex items-center justify-between gap-2'>
                             Apellido del proveedor
                             <LuAsterisk size={15} className='text-indigo-600' />
                         </Label>
-                        <Input  
+                        <Input
                             autoComplete='off'
                             id='supplierLastname'
                             type='text'
@@ -95,21 +97,21 @@ export const ModalCreateSupplier: React.FC = () => {
                                 })
                             }
                         />
-                        { errors.lastname && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.lastname.message}</p>)}
+                        {errors.lastname && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.lastname.message}</p>)}
                     </div>
                 </div>
-                
+
                 <div className="flex items-center gap-5 w-full">
                     <div className='w-80'>
                         <Label htmlFor='supplierPhone' className='mb-3 flex items-center justify-between gap-2'>
                             Teléfono
                             <LuAsterisk size={15} className='text-indigo-600' />
                         </Label>
-                        <Input 
+                        <Input
                             id='supplierPhone'
                             type='tel'
                             placeholder='449-654-80-73'
-                             {
+                            {
                                 ...register('phone', {
                                     required: 'El teléfono es obligatorio',
                                     pattern: {
@@ -119,14 +121,14 @@ export const ModalCreateSupplier: React.FC = () => {
                                 })
                             }
                         />
-                        { errors.phone && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.phone.message}</p>)}
+                        {errors.phone && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.phone.message}</p>)}
                     </div>
                     <div className='w-full'>
                         <Label htmlFor='supplierEmail' className='mb-3 flex items-center justify-between gap-2'>
                             Email
                             <LuAsterisk size={15} className='text-indigo-600' />
                         </Label>
-                        <Input 
+                        <Input
                             id='supplierEmail'
                             type='email'
                             placeholder='correo@correo.com'
@@ -140,67 +142,74 @@ export const ModalCreateSupplier: React.FC = () => {
                                 })
                             }
                         />
-                        { errors.email && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.email.message}</p>)}
+                        {errors.email && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.email.message}</p>)}
                     </div>
                 </div>
 
                 {
                     createNewCompany
-                    ? (
-                        <div className='w-full'>
-                            <Label htmlFor='supplierCompany' className='mb-3 flex items-center justify-between gap-2'>
-                                Nueva Empresa
-                                <LuAsterisk size={15} className='text-indigo-600' />
-                            </Label>
-                            <Input 
-                                id='supplierCompany'
-                                type='text'
-                                placeholder='RomanCode'
-                                name='newCompany'
-                                value={newCompany}
-                                onChange={ e => setNewCompany(e.target.value)}
-                            />
-                        </div>
-                    )
-                    : (
-                        <div className='w-full'>
-                            <Label htmlFor='supplierCompany' className='mb-3 flex items-center justify-between gap-2'>
-                                Empresa
-                                <LuAsterisk size={15} className='text-indigo-600' />
-                            </Label>
-                            <select
-                                className=' text-sm
-                                appearance-none w-full px-4 py-2 pr-10 rounded-lg
-                                bg-white text-gray-600
-                                border border-gray-300
-                                focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-200
-                                transition-all cursor-pointer' 
-                                id="selectSupplierCompany"
-                                {
-                                    ...register('company', {
-                                        required: 'La empresa es obligatoria'
-                                    })
-                                }
-                            >
-                                {
-                                    companies?.map( com => (
-                                        <option key={com} value={com}>{com}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-                    )
+                        ? (
+                            <div className='w-full'>
+                                <Label htmlFor='supplierCompany' className='mb-3 flex items-center justify-between gap-2'>
+                                    Nueva Empresa
+                                    <LuAsterisk size={15} className='text-indigo-600' />
+                                </Label>
+                                <Input
+                                    id='supplierCompany'
+                                    type='text'
+                                    placeholder='RomanCode'
+                                    name='newCompany'
+                                    value={newCompany}
+                                    onChange={e => setNewCompany(e.target.value)}
+                                />
+                            </div>
+                        )
+                        : (
+                            <div className='w-full'>
+                                <Label htmlFor='supplierCompany' className='mb-3 flex items-center justify-between gap-2'>
+                                    Empresa
+                                    <LuAsterisk size={15} className='text-indigo-600' />
+                                </Label>
+                                <select
+                                    className={`
+                                        text-sm appearance-none w-full px-4 py-2 pr-10 rounded-lg
+                                        border focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-200
+                                        transition-all cursor-pointer
+                                        ${theme === 'light'
+                                            ? 'bg-white text-gray-600 border-gray-300'
+                                            : 'bg-gray-800 text-gray-200 border-gray-700'}
+                                    `}
+                                    id="selectSupplierCompany"
+                                    {
+                                        ...register('company', {
+                                            required: 'La empresa es obligatoria'
+                                        })
+                                    }
+                                >
+                                    {
+                                        companies?.map(com => (
+                                            <option
+                                                key={com}
+                                                value={com}
+                                                className={theme === 'light' ? 'bg-white text-gray-700' : 'bg-gray-800 text-gray-100'}
+                                            >
+                                                {com}
+                                            </option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        )
                 }
-                { errors.company && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.company.message}</p>)}
+                {errors.company && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.company.message}</p>)}
 
                 <div className='w-fit' onClick={() => setCreateNewCompany(!createNewCompany)}>
-                    <SmallButton text={ !createNewCompany ? 'Crear Nueva Empresa' : 'Seleccionar Empresa' } />
+                    <SmallButton text={!createNewCompany ? 'Crear Nueva Empresa' : 'Seleccionar Empresa'} />
                 </div>
-
 
                 <div className='flex items-center gap-5 justify-end mt-6'>
                     <SaveButton className='p-2 w-52' submit text='Guardar Proveedor' />
-                    <CancelButton onClick={ onCloseModal } className='p-2 w-48' text='Cancelar' />
+                    <CancelButton onClick={onCloseModal} className='p-2 w-48' text='Cancelar' />
                 </div>
             </form>
         </ModalLayout>

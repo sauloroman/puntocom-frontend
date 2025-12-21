@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react'
 import { PuntoComLayout } from '../../layouts/PuntoComLayout'
 import { ModalConfirmDeleteReport, ReportsFolder, TableReports, ViewReport } from './components'
-import { useModal, useReports } from '../../shared/hooks'
+import { useModal, useReports, useTheme } from '../../shared/hooks'
 import { ModalNames } from '../../interfaces/ui/modal.interface'
 
 export const Reports: React.FC = () => {
+  const { theme } = useTheme()
+  const isDark = theme === "dark"
 
   const { allReports, getAllReports } = useReports()
   const { modalName, modalIsOpen } = useModal()
 
   useEffect(() => {
-    if ( !allReports ) {
+    if (!allReports) {
       getAllReports()
     }
   }, [])
@@ -23,11 +25,16 @@ export const Reports: React.FC = () => {
           <TableReports />
         </div>
         <div className='col-span-2'>
-          <h2 className='font-bold text-md uppercase'>Reporte Seleccionado</h2>
+          <h2 className={`
+            font-bold text-md uppercase transition-colors
+            ${isDark ? 'text-gray-200' : 'text-gray-900'}
+          `}>
+            Reporte Seleccionado
+          </h2>
           <ViewReport />
         </div>
       </div>
-      { modalIsOpen && modalName === ModalNames.confirmDeleteReport && <ModalConfirmDeleteReport />}
+      {modalIsOpen && modalName === ModalNames.confirmDeleteReport && <ModalConfirmDeleteReport />}
     </PuntoComLayout>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { MdOutlineCategory } from "react-icons/md";
-import { useDrawer, useProducts } from '../../../../../shared/hooks';
+import { useDrawer, useProducts, useTheme } from '../../../../../shared/hooks';
 
 interface Props {
     categoryId: string,
@@ -10,28 +10,49 @@ interface Props {
 
 export const CategoryItemFilter: React.FC<Props> = ({ categoryId, categoryIcon, categoryName }) => {
     
-    const { filter: {category}, filterProductsByCategory } = useProducts()
+    const { filter: { category }, filterProductsByCategory } = useProducts()
     const { onCloseDrawers } = useDrawer()
+    const { theme } = useTheme()
+    const isDark = theme === 'dark'
 
     const onSelectCategory = () => {
         filterProductsByCategory(categoryId, categoryName)
         onCloseDrawers()
     }
 
+    const isActive = categoryName === category.name
+
     return (
         <button 
-            onClick={onSelectCategory} 
-            className={`border border-gray-300 px-4 py-2 rounded-4xl hover:bg-indigo-400 cursor-pointer hover:text-white w-full 
-            ${categoryName === category.name && 'bg-indigo-400 text-white'}`}
-        >
-            <div className="flex items-center gap-2 w-64">
-                {
-                    categoryIcon === 'Categoría sin ícono'
-                    ? (<MdOutlineCategory size={20} />)
-                    : (<img className='w-6' src={categoryIcon} alt={categoryName}/>)
+            onClick={onSelectCategory}
+            className={`
+                w-full rounded-4xl px-4 py-2 border transition-all duration-200
+                flex items-center gap-2
+                ${isDark 
+                    ? `
+                        border-gray-700 text-gray-300 hover:bg-indigo-600/30 hover:text-indigo-200
+                        ${isActive ? 'bg-indigo-600/40 border-indigo-500 text-indigo-100' : ''}
+                    `
+                    : `
+                        border-gray-300 text-gray-700 hover:bg-indigo-100 hover:text-indigo-700
+                        ${isActive ? 'bg-indigo-500 text-white border-indigo-500' : ''}
+                    `
                 }
-                <p>{categoryName}</p>
-            </div>
+            `}
+        >
+            {
+                categoryIcon === 'Categoría sin ícono'
+                ? (<MdOutlineCategory 
+                      size={20} 
+                      className={`${isDark ? 'text-gray-300' : 'text-gray-700'}`} 
+                   />)
+                : (<img 
+                      className="w-6 h-6 object-contain" 
+                      src={categoryIcon} 
+                      alt={categoryName} 
+                   />)
+            }
+            <p className="truncate text-sm font-medium">{categoryName}</p>
         </button>
     )
 }

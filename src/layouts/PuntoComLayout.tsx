@@ -1,55 +1,75 @@
 import React from 'react'
-import { FaAngleDoubleLeft } from "react-icons/fa";
-import { LocationTab, Menu } from '../shared/components';
-import { useMenu } from '../shared/hooks';
+import { FaAngleDoubleLeft } from "react-icons/fa"
+import { LocationTab, Menu } from '../shared/components'
+import { useMenu, useTheme } from '../shared/hooks'
 
 interface PuntoComLayoutProps {
   children: React.ReactNode
 }
 
 export const PuntoComLayout: React.FC<PuntoComLayoutProps> = ({ children }) => {
-  
+
   const { collapsed, closeMenu, openMenu } = useMenu()
+  const { theme } = useTheme()
+  const isDark = theme === "dark"
+
   const toggleMenu = () => collapsed ? closeMenu() : openMenu()
 
   return (
-    <div className="min-h-screen bg-white">
-      
-      {/* Menú lateral fijo */}
+    <div className={`min-h-screen transition-colors duration-200 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+
       <aside
         className={`
           fixed top-0 left-0 h-screen z-20
-          bg-gray-50 border-r border-gray-200 shadow-sm flex flex-col
+          border-r shadow-sm flex flex-col
           transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'}
+          ${isDark
+            ? 'bg-gray-800 border-gray-700'
+            : 'bg-gray-50 border-gray-200'
+          }
         `}
       >
         <div
-          className={`h-14 flex items-center justify-between px-3 border-b border-gray-200 
-          ${collapsed && 'text-xl justify-center'}`}
+          className={`
+            h-14 flex items-center justify-between px-3 border-b
+            ${collapsed && 'text-xl justify-center'}
+            ${isDark ? 'border-gray-700' : 'border-gray-200'}
+          `}
         >
           {!collapsed && (
-            <div className="bg-gray-50 inline-block">
+            <div className={`inline-block ${isDark ? 'bg-gray-800' : 'bg-gray-50'}`}>
               <img
-                className="w-25 mix-blend-multiply"
-                src="https://res.cloudinary.com/dlamufioy/image/upload/v1755733945/puntocom/3_paawzo.png"
+                className="w-24 object-contain"
+                src={`${
+                  !isDark 
+                  ? "https://res.cloudinary.com/dlamufioy/image/upload/v1755733945/puntocom/3_paawzo.png"
+                  : "https://res.cloudinary.com/dlamufioy/image/upload/v1762972429/puntocom/PUNTOCAF%C3%89_3_njxbc4.png"
+                }`}
                 alt="Logo PuntoCom"
               />
             </div>
           )}
           <div
-            className='cursor-pointer p-1 hover:bg-gray-200 rounded-md transition-colors'
+            className={`
+              cursor-pointer p-1 rounded-md transition-colors
+              ${isDark
+                ? 'hover:bg-gray-700 text-gray-300'
+                : 'hover:bg-gray-200 text-gray-700'
+              }
+            `}
             onClick={toggleMenu}
           >
-            <FaAngleDoubleLeft className={`transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`} />
+            <FaAngleDoubleLeft
+              className={`transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`}
+            />
           </div>
         </div>
 
-        <div className="flex-1 p-4">
+        <div className="flex-1 p-4 overflow-y-auto">
           <Menu collapsed={collapsed} />
         </div>
       </aside>
 
-      {/* Contenido principal con margen dinámico */}
       <main
         className={`
           p-6 md:p-4 transition-all duration-300

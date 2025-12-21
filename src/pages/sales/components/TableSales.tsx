@@ -3,54 +3,94 @@ import type { SaleResponse } from "../../../interfaces/sale.interface";
 import { TableImage } from "../../../shared/components/table";
 import { BsCalendar3, BsPerson, BsCode, BsCashStack } from "react-icons/bs";
 import { TableSalesActions } from "./TableSalesActions";
+import { useTheme } from "../../../shared/hooks";
 
 interface TableSalesProps {
     data: SaleResponse[];
 }
 
 export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
+
     return (
-        <div className="border border-gray-200 rounded-2xl overflow-hidden mb-5 shadow-sm">
+        <div className={`
+            border rounded-2xl overflow-hidden mb-5 shadow-sm transition-colors
+            ${isDark 
+                ? 'border-gray-700 bg-gray-800' 
+                : 'border-gray-200 bg-white'
+            }
+        `}>
             <div className="max-h-[550px] overflow-y-auto custom-scrollbar">
-                <table className="min-w-full bg-white">
-                    <thead className="bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 text-xs uppercase tracking-wide sticky top-0 z-10 shadow-sm">
+                <table className="min-w-full">
+                    <thead className={`
+                        text-xs uppercase tracking-wide sticky top-0 z-10 shadow-sm transition-colors
+                        ${isDark 
+                            ? 'bg-gradient-to-r from-gray-800 to-gray-700 text-indigo-400' 
+                            : 'bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700'
+                        }
+                    `}>
                         <tr>
                             <th className="px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
-                                    <BsCalendar3 className="text-indigo-600" size={16} />
+                                    <BsCalendar3 
+                                        className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
+                                        size={16} 
+                                    />
                                     Fecha
                                 </div>
                             </th>
                             <th className="px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
-                                    <BsPerson className="text-indigo-600" size={18} />
+                                    <BsPerson 
+                                        className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
+                                        size={18} 
+                                    />
                                     Usuario
                                 </div>
                             </th>
                             <th className="px-6 py-4 text-center font-bold">
                                 <div className="flex items-center justify-center gap-2">
-                                    <BsCode className="text-indigo-600" size={16} />
+                                    <BsCode 
+                                        className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
+                                        size={16} 
+                                    />
                                     Código
                                 </div>
                             </th>
                             <th className="px-6 py-4 text-right font-bold">
                                 <div className="flex items-center justify-end gap-2">
-                                    <BsCashStack className="text-indigo-600" size={16} />
+                                    <BsCashStack 
+                                        className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
+                                        size={16} 
+                                    />
                                     Total
                                 </div>
                             </th>
                             <th className="px-6 py-4 text-center font-bold">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody className={`
+                        divide-y transition-colors
+                        ${isDark ? 'divide-gray-700' : 'divide-gray-100'}
+                    `}>
                         {data.length > 0 ? (
                             data.map((sale) => (
                                 <tr
                                     key={sale.id}
-                                    className="hover:bg-gradient-to-r hover:from-indigo-50/50 hover:to-purple-50/50 transition-all duration-200 group"
+                                    className={`
+                                        transition-all duration-200 group
+                                        ${isDark 
+                                            ? 'hover:bg-gray-700/50' 
+                                            : 'hover:bg-gradient-to-r hover:from-indigo-50/50 hover:to-purple-50/50'
+                                        }
+                                    `}
                                 >
                                     <td className="px-6 py-4">
-                                        <p className="text-sm font-semibold text-gray-900">
+                                        <p className={`
+                                            text-sm font-semibold transition-colors
+                                            ${isDark ? 'text-gray-200' : 'text-gray-900'}
+                                        `}>
                                             {sale.date.toString()}
                                         </p>
                                     </td>
@@ -66,10 +106,16 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                                 />
                                             </div>
                                             <div>
-                                                <p className="text-sm font-medium text-gray-900">
+                                                <p className={`
+                                                    text-sm font-medium transition-colors
+                                                    ${isDark ? 'text-gray-200' : 'text-gray-900'}
+                                                `}>
                                                     {sale.User?.name}
                                                 </p>
-                                                <p className="text-xs text-gray-500 capitalize">
+                                                <p className={`
+                                                    text-xs capitalize transition-colors
+                                                    ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                                                `}>
                                                     {sale.User?.role}
                                                 </p>
                                             </div>
@@ -77,7 +123,14 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                     </td>
 
                                     <td className="px-6 py-4 text-center">
-                                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 rounded-lg font-mono font-bold text-xs tracking-wider border border-indigo-200">
+                                        <span className={`
+                                            inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg 
+                                            font-mono font-bold text-xs tracking-wider border transition-colors
+                                            ${isDark 
+                                                ? 'bg-gradient-to-r from-indigo-900/50 to-purple-900/50 text-indigo-300 border-indigo-700' 
+                                                : 'bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 border-indigo-200'
+                                            }
+                                        `}>
                                             {sale.code}
                                         </span>
                                     </td>
@@ -85,10 +138,19 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                     <td className="px-6 py-4 text-right">
                                         <div className="inline-flex items-center gap-2">
                                             <div className="flex flex-col items-end">
-                                                <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                                                <span className={`
+                                                    text-2xl font-bold bg-clip-text text-transparent transition-colors
+                                                    ${isDark 
+                                                        ? 'bg-gradient-to-r from-indigo-400 to-purple-400' 
+                                                        : 'bg-gradient-to-r from-indigo-600 to-purple-600'
+                                                    }
+                                                `}>
                                                     ${sale.total.toFixed(2)}
                                                 </span>
-                                                <span className="text-xs text-gray-400 font-medium">
+                                                <span className={`
+                                                    text-xs font-medium transition-colors
+                                                    ${isDark ? 'text-gray-500' : 'text-gray-400'}
+                                                `}>
                                                     MXN
                                                 </span>
                                             </div>
@@ -107,13 +169,25 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                     className="px-6 py-16 text-center"
                                 >
                                     <div className="flex flex-col items-center justify-center">
-                                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                                            <BsCashStack className="text-gray-400" size={32} />
+                                        <div className={`
+                                            w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-colors
+                                            ${isDark ? 'bg-gray-700' : 'bg-gray-100'}
+                                        `}>
+                                            <BsCashStack 
+                                                className={isDark ? 'text-gray-500' : 'text-gray-400'} 
+                                                size={32} 
+                                            />
                                         </div>
-                                        <p className="text-gray-400 text-sm font-medium">
+                                        <p className={`
+                                            text-sm font-medium transition-colors
+                                            ${isDark ? 'text-gray-500' : 'text-gray-400'}
+                                        `}>
                                             No hay ventas registradas
                                         </p>
-                                        <p className="text-gray-400 text-xs mt-1">
+                                        <p className={`
+                                            text-xs mt-1 transition-colors
+                                            ${isDark ? 'text-gray-600' : 'text-gray-400'}
+                                        `}>
                                             Las ventas aparecerán aquí una vez que se registren
                                         </p>
                                     </div>

@@ -1,14 +1,16 @@
 import React from 'react'
 import { RightDrawerLayout } from '../../../../../layouts/RightDrawerLayout'
-import { useModal, useProducts } from '../../../../../shared/hooks'
+import { useModal, useProducts, useTheme } from '../../../../../shared/hooks'
 import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
 import { AvatarImage, StatusBadge } from '../../../../../shared/components'
 import { AvatarInitialSquare } from '../../../../../shared/components/avatar/AvatarInitialSquare'
 import { formatPrices } from '../../../../../shared/helpers'
-import { FaExpand } from "react-icons/fa";
+import { FaExpand } from "react-icons/fa"
 import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
 
 export const ProductInfoDrawer: React.FC = () => {
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
 
     const { productSelected: product } = useProducts()
     const { onOpenModal } = useModal()
@@ -27,7 +29,11 @@ export const ProductInfoDrawer: React.FC = () => {
                             <img
                                 src={product.image === 'Producto sin imagen' ? placeholderProduct : product.image }
                                 alt={product.name}
-                                className={`${product.image === 'Producto sin imagen' ? 'w-36 h-30' : 'w-full h-full'} object-cover rounded-md border border-gray-300 p-3`}
+                                className={`
+                                    ${product.image === 'Producto sin imagen' ? 'w-36 h-30' : 'w-full h-full'} 
+                                    object-cover rounded-md border p-3 transition-colors duration-200
+                                    ${isDark ? 'border-gray-600' : 'border-gray-300'}
+                                `}
                             />  
                             {
                                 product.image !== 'Producto sin imagen' && <div 
@@ -38,15 +44,27 @@ export const ProductInfoDrawer: React.FC = () => {
                             }
                         </div>
                         <div className='w-full'>
-                            <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-                            <p className="text-gray-600 text-sm">{product.description}</p>
+                            <h2 className={`
+                                text-xl font-semibold mb-2 transition-colors duration-200
+                                ${isDark ? 'text-gray-100' : 'text-gray-900'}
+                            `}>{product.name}</h2>
+                            <p className={`
+                                text-sm transition-colors duration-200
+                                ${isDark ? 'text-gray-300' : 'text-gray-600'}
+                            `}>{product.description}</p>
                         </div>
                     </section>
                     <div className="flex flex-col gap-2 items-end w-80 text-right">
-                        <div className="text-sm text-gray-500">
+                        <div className={`
+                            text-sm transition-colors duration-200
+                            ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                        `}>
                             Creado: {new Date(product.createdAt).toLocaleDateString()}
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className={`
+                            text-sm transition-colors duration-200
+                            ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                        `}>
                             Actualizado: {new Date(product.updatedAt).toLocaleDateString()}
                         </div>
                         <StatusBadge status={product.isActive} />
@@ -54,29 +72,53 @@ export const ProductInfoDrawer: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                    <div className="p-3 border border-gray-300 rounded-lg">
-                        <p className="text-sm text-gray-500">Código</p>
-                        <p className="font-medium">{product.code}</p>
+                    <div className={`
+                        p-3 border rounded-lg transition-colors duration-200
+                        ${isDark ? 'border-gray-600 bg-gray-700/50' : 'border-gray-300 bg-white'}
+                    `}>
+                        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Código</p>
+                        <p className={`font-medium ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>{product.code}</p>
                     </div>
-                    <div className="p-3 border border-gray-300 rounded-lg">
-                        <p className="text-sm text-gray-500">Precio</p>
-                        <p className="font-black text-indigo-500 text-2xl">{formatPrices(product.sellingPrice)}</p>
+                    <div className={`
+                        p-3 border rounded-lg transition-colors duration-200
+                        ${isDark ? 'border-gray-600 bg-gray-700/50' : 'border-gray-300 bg-white'}
+                    `}>
+                        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Precio</p>
+                        <p className={`
+                            font-black text-2xl
+                            ${isDark ? 'text-indigo-400' : 'text-indigo-500'}
+                        `}>{formatPrices(product.sellingPrice)}</p>
                     </div>
-                    <div className="p-3 border border-gray-300 rounded-lg">
-                        <p className="text-sm text-gray-500">Stock actual</p>
-                        <p className="font-medium text-2xl">{product.stock}</p>
+                    <div className={`
+                        p-3 border rounded-lg transition-colors duration-200
+                        ${isDark ? 'border-gray-600 bg-gray-700/50' : 'border-gray-300 bg-white'}
+                    `}>
+                        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Stock actual</p>
+                        <p className={`font-medium text-2xl ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>{product.stock}</p>
                     </div>
-                    <div className="p-3 border border-gray-300 rounded-lg">
-                        <p className="text-sm text-gray-500">Stock mínimo</p>
-                        <p className="font-medium text-2xl">{product.stockMin}</p>
+                    <div className={`
+                        p-3 border rounded-lg transition-colors duration-200
+                        ${isDark ? 'border-gray-600 bg-gray-700/50' : 'border-gray-300 bg-white'}
+                    `}>
+                        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Stock mínimo</p>
+                        <p className={`font-medium text-2xl ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>{product.stockMin}</p>
                     </div>
                 </div>
 
                 <div className='flex justify-between items-center gap-5'>
                     {product.Category && (
-                        <div className="flex-1 p-3 border border-gray-300 rounded-lg">
-                            <h3 className="font-semibold mb-2">Categoría</h3>
-                            <div className="flex items-center gap-4 text-gray-700">
+                        <div className={`
+                            flex-1 p-3 border rounded-lg transition-colors duration-200
+                            ${isDark ? 'border-gray-600 bg-gray-700/50' : 'border-gray-300 bg-white'}
+                        `}>
+                            <h3 className={`
+                                font-semibold mb-2
+                                ${isDark ? 'text-gray-100' : 'text-gray-900'}
+                            `}>Categoría</h3>
+                            <div className={`
+                                flex items-center gap-4
+                                ${isDark ? 'text-gray-200' : 'text-gray-700'}
+                            `}>
                                 <div className='w-20'>
                                     {
                                         product.Category.icon !== 'Categoría sin ícono' 
@@ -86,27 +128,36 @@ export const ProductInfoDrawer: React.FC = () => {
                                 </div>
                                 <div className='w-full'>
                                     {product.Category.name}
-                                    <p className="text-sm text-gray-500">{product.Category.description}</p>
+                                    <p className={`
+                                        text-sm
+                                        ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                                    `}>{product.Category.description}</p>
                                 </div>
                             </div>
                         </div>
                     )}
                     {product.Supplier && (
-                        <div className="flex-1 p-3 border border-gray-300 rounded-lg">
-                            <h3 className="font-semibold mb-2">Proveedor</h3>
-                            <p className="text-gray-700">
+                        <div className={`
+                            flex-1 p-3 border rounded-lg transition-colors duration-200
+                            ${isDark ? 'border-gray-600 bg-gray-700/50' : 'border-gray-300 bg-white'}
+                        `}>
+                            <h3 className={`
+                                font-semibold mb-2
+                                ${isDark ? 'text-gray-100' : 'text-gray-900'}
+                            `}>Proveedor</h3>
+                            <p className={isDark ? 'text-gray-200' : 'text-gray-700'}>
                                 {product.Supplier.name} {product.Supplier.lastname} — {product.Supplier.company}
                             </p>
-                            <p className="text-sm text-gray-500">Tel: {product.Supplier.phone}</p>
-                            <p className="text-sm text-gray-500">Email: {product.Supplier.email}</p>
-                            <p className="text-sm text-gray-500">Dirección: {product.Supplier.address}</p>
+                            <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Tel: {product.Supplier.phone}</p>
+                            <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Email: {product.Supplier.email}</p>
+                            <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Dirección: {product.Supplier.address}</p>
                         </div>
                     )}
                 </div>
 
                 <div className='mt-5 flex justify-end items-center'>
                     <img
-                        className='w-70' 
+                        className={`w-70 ${isDark ? 'brightness-0 invert' : ''}`}
                         src={product.imageCode} 
                         alt={`Codigo de barras de ${product.name}`} 
                     />

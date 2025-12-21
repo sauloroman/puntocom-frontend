@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaRegEye } from 'react-icons/fa'
-import { useDrawer, useInventoryAdjustment } from '../../../../../shared/hooks'
+import { useDrawer, useInventoryAdjustment, useTheme } from '../../../../../shared/hooks'
 import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
 
 interface Props {
@@ -11,6 +11,8 @@ export const TableAdjustmentsActions: React.FC<Props> = ({ adjustmentId }) => {
     
     const { selectInventoryAdjustment } = useInventoryAdjustment()
     const { onOpenLeftDrawer } = useDrawer()
+    const { theme } = useTheme()
+    const isDark = theme === 'dark'
 
     const onSelectAdjustment = () => {
         selectInventoryAdjustment(adjustmentId)
@@ -19,7 +21,7 @@ export const TableAdjustmentsActions: React.FC<Props> = ({ adjustmentId }) => {
 
     return (
         <div className='flex gap-2 items-center justify-center'>
-            <button onClick={ onSelectAdjustment } className='cursor-pointer w-fit text-center px-4 py-2 text-sm text-gray-600 hover:bg-red-50 flex items-center gap-2'><FaRegEye size={15} /></button>
+            <button onClick={ onSelectAdjustment } className={`transition-colors rounded-md cursor-pointer w-fit text-center px-4 py-2 text-sm text-gray-600 ${isDark ? 'hover:bg-gray-800 hover:text-gray-200' : 'hover:bg-red-50'}  flex items-center gap-2`}><FaRegEye size={15} /></button>
         </div>
     )
 }

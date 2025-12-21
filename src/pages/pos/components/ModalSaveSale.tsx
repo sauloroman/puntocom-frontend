@@ -1,15 +1,18 @@
 import React from 'react'
 import { ModalLayout } from '../../../layouts/ModalLayout'
-import { useModal, usePos, useSale } from '../../../shared/hooks'
-import { FaRegCheckCircle } from "react-icons/fa";
-import { OutlineButton } from '../../../shared/components/button/OutlineButton';
-import { generarTicketPDF } from '../../../shared/helpers';
+import { useModal, usePos, useSale, useTheme } from '../../../shared/hooks'
+import { FaRegCheckCircle } from "react-icons/fa"
+import { OutlineButton } from '../../../shared/components/button/OutlineButton'
+import { generarTicketPDF } from '../../../shared/helpers'
 
 export const ModalSaveSale: React.FC = () => {
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
 
     const { getProductByIdFromPos } = usePos()
     const { saleCreated } = useSale()
     const { onCloseModal } = useModal()
+    
     if (!saleCreated) return null
 
     const products = saleCreated.details.map(detail => {
@@ -34,33 +37,71 @@ export const ModalSaveSale: React.FC = () => {
 
                 <FaRegCheckCircle className='w-16 h-16 text-green-500 mb-3' />
 
-                <h2 className='font-semibold text-2xl text-gray-800'>
+                <h2 className={`
+                    font-semibold text-2xl transition-colors
+                    ${isDark ? 'text-gray-100' : 'text-gray-800'}
+                `}>
                     ¡Venta registrada con éxito!
                 </h2>
 
-                <p className='text-gray-500 mt-1 text-sm'>
+                <p className={`
+                    mt-1 text-sm transition-colors
+                    ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                `}>
                     Los datos de la venta fueron guardados correctamente.
                 </p>
 
-                <div className='w-full bg-gray-50 rounded-xl shadow-sm mt-6 p-5'>
+                <div className={`
+                    w-full rounded-xl shadow-sm mt-6 p-5 transition-colors
+                    ${isDark ? 'bg-gray-800' : 'bg-gray-50'}
+                `}>
                     <div className='grid grid-cols-2 gap-y-3 text-sm'>
-                        <p className='text-gray-600 font-medium'>Folio:</p>
+                        <p className={`
+                            font-medium transition-colors
+                            ${isDark ? 'text-gray-400' : 'text-gray-600'}
+                        `}>
+                            Folio:
+                        </p>
                         <p className='font-bold text-red-600'>{saleCreated.code}</p>
 
-                        <p className='text-gray-600 font-medium'>Total:</p>
-                        <p className='text-gray-800 text-4xl font-bold'>
+                        <p className={`
+                            font-medium transition-colors
+                            ${isDark ? 'text-gray-400' : 'text-gray-600'}
+                        `}>
+                            Total:
+                        </p>
+                        <p className={`
+                            text-4xl font-bold transition-colors
+                            ${isDark ? 'text-gray-100' : 'text-gray-800'}
+                        `}>
                             ${saleCreated.total.toFixed(2)}
                         </p>
 
-                        <p className='text-gray-600 font-medium'>Fecha:</p>
-                        <p className='text-gray-800'>
+                        <p className={`
+                            font-medium transition-colors
+                            ${isDark ? 'text-gray-400' : 'text-gray-600'}
+                        `}>
+                            Fecha:
+                        </p>
+                        <p className={`
+                            transition-colors
+                            ${isDark ? 'text-gray-200' : 'text-gray-800'}
+                        `}>
                             {new Date(saleCreated.date).toLocaleString()}
                         </p>
 
                         {saleCreated.User && (
                             <>
-                                <p className='text-gray-600 font-medium'>Usuario:</p>
-                                <p className='text-gray-800'>
+                                <p className={`
+                                    font-medium transition-colors
+                                    ${isDark ? 'text-gray-400' : 'text-gray-600'}
+                                `}>
+                                    Usuario:
+                                </p>
+                                <p className={`
+                                    transition-colors
+                                    ${isDark ? 'text-gray-200' : 'text-gray-800'}
+                                `}>
                                     {saleCreated.User.name} ({saleCreated.User.role})
                                 </p>
                             </>
@@ -70,11 +111,20 @@ export const ModalSaveSale: React.FC = () => {
 
                 {saleCreated.details?.length > 0 && (
                     <div className='w-full mt-5'>
-                        <p className='text-gray-700 font-medium mb-2 text-sm'>
+                        <p className={`
+                            font-medium mb-2 text-sm transition-colors
+                            ${isDark ? 'text-gray-300' : 'text-gray-700'}
+                        `}>
                             Productos vendidos:
                         </p>
 
-                        <div className="grid grid-cols-8 bg-gray-100 px-4 py-2 rounded-t-lg text-sm font-semibold text-gray-700 border border-gray-200">
+                        <div className={`
+                            grid grid-cols-8 px-4 py-2 rounded-t-lg text-sm font-semibold border transition-colors
+                            ${isDark 
+                                ? 'bg-gray-800 text-gray-300 border-gray-700' 
+                                : 'bg-gray-100 text-gray-700 border-gray-200'
+                            }
+                        `}>
                             <span className="text-left col-span-4">Producto</span>
                             <span className="text-center">Precio U.</span>
                             <span className="text-right">Cantidad</span>
@@ -82,25 +132,46 @@ export const ModalSaveSale: React.FC = () => {
                             <span className="text-right">Subtotal</span>
                         </div>
 
-                       <ul className="max-h-48 overflow-y-auto divide-y divide-gray-200 bg-white rounded-b-lg border border-gray-200">
+                        <ul className={`
+                            max-h-48 overflow-y-auto divide-y rounded-b-lg border transition-colors
+                            ${isDark 
+                                ? 'divide-gray-700 bg-gray-800 border-gray-700' 
+                                : 'divide-gray-200 bg-white border-gray-200'
+                            }
+                        `}>
                             {products.map(({ product, quantity, discount, unitPrice }) => (
                                 <li
                                     key={product?.id}
                                     className="grid grid-cols-8 items-center px-4 py-2 text-sm"
                                 >
-                                    <span className="text-gray-800 font-medium text-left truncate col-span-4">
+                                    <span className={`
+                                        font-medium text-left truncate col-span-4 transition-colors
+                                        ${isDark ? 'text-gray-200' : 'text-gray-800'}
+                                    `}>
                                         {product?.name}
                                     </span>
-                                    <span className="text-gray-600 text-center">
+                                    <span className={`
+                                        text-center transition-colors
+                                        ${isDark ? 'text-gray-400' : 'text-gray-600'}
+                                    `}>
                                         ${unitPrice.toFixed(2)}
                                     </span>
-                                    <span className="text-gray-500 text-right">
+                                    <span className={`
+                                        text-right transition-colors
+                                        ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                                    `}>
                                         x{quantity}
                                     </span>
-                                    <span className="text-gray-600 text-center">
+                                    <span className={`
+                                        text-center transition-colors
+                                        ${isDark ? 'text-gray-400' : 'text-gray-600'}
+                                    `}>
                                         ${discount.toFixed(2)}
                                     </span>
-                                    <span className="text-gray-500 text-right">
+                                    <span className={`
+                                        text-right transition-colors
+                                        ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                                    `}>
                                         ${((quantity * unitPrice) - discount).toFixed(2)}
                                     </span>
                                 </li>
@@ -109,17 +180,20 @@ export const ModalSaveSale: React.FC = () => {
                     </div>
                 )}
 
-
                 <div className='w-full flex gap-5 justify-end mt-6'>
                     <OutlineButton 
                         className='border-2 w-full border-green-600 text-green-600' 
                         onClick={onPrintSaleTicket}
-                    >Imprimir Ticket</OutlineButton>
+                    >
+                        Imprimir Ticket
+                    </OutlineButton>
                     
                     <OutlineButton 
                         className='border-2 w-full border-red-600 text-red-600' 
                         onClick={onCloseModal}
-                    >Aceptar</OutlineButton>
+                    >
+                        Aceptar
+                    </OutlineButton>
                 </div>
             </div>
         </ModalLayout>

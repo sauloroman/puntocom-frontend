@@ -34,7 +34,7 @@ export const Menu: React.FC<MenuProps> = ({ collapsed }) => {
   ]
 
   return (
-    <div className="flex flex-col h-full space-y-8">
+    <div className={`flex flex-col h-full space-y-8 ${theme === 'dark' && 'bg-gray-800'}`}>
       <MenuSection title="Menú General" collapsed={collapsed} items={generalItems}/>
       <MenuSection title="Sistema" collapsed={collapsed} items={systemItems}/>
 
@@ -49,5 +49,4 @@ export const Menu: React.FC<MenuProps> = ({ collapsed }) => {
       </ul>
     </div>
   )
-
 }

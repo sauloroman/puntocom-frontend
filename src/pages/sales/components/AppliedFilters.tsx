@@ -2,9 +2,12 @@ import React from 'react'
 import { FilterPriceTag } from './FilterPriceTag'
 import { FilterDateTag } from './FilterDateTag'
 import { FilterUserTag } from './FilterUserTag'
-import { useSale } from '../../../shared/hooks'
+import { useSale, useTheme } from '../../../shared/hooks'
 
 export const AppliedFilters: React.FC = () => {
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
+
     const { filter, onResetFilters } = useSale()
 
     const hasFilters = 
@@ -22,7 +25,12 @@ export const AppliedFilters: React.FC = () => {
 
     return (
         <div className='flex items-center gap-3 flex-wrap'>
-            <span className='text-sm text-gray-600 font-medium'>Filtros aplicados:</span>
+            <span className={`
+                text-sm font-medium transition-colors
+                ${isDark ? 'text-gray-300' : 'text-gray-600'}
+            `}>
+                Filtros aplicados:
+            </span>
             <FilterUserTag />
             <FilterPriceTag />
             <FilterDateTag />
@@ -30,7 +38,13 @@ export const AppliedFilters: React.FC = () => {
             {hasFilters && (
                 <button
                     onClick={handleClearAll}
-                    className='text-sm text-indigo-600 hover:text-indigo-800 font-medium underline'
+                    className={`
+                        text-sm font-medium underline cursor-pointer transition-colors
+                        ${isDark 
+                            ? 'text-indigo-400 hover:text-indigo-300' 
+                            : 'text-indigo-600 hover:text-indigo-800'
+                        }
+                    `}
                 >
                     Limpiar todos
                 </button>

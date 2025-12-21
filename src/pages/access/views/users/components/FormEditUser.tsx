@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useAlert, useDrawer, useUsers } from '../../../../../shared/hooks'
+import { useAlert, useDrawer, useUsers, useTheme } from '../../../../../shared/hooks'
 import { useForm } from 'react-hook-form'
 import { Roles, type UpdateUser } from '../../../../../interfaces/user.interface'
 import { CancelButton, Input, Label, SaveButton } from '../../../../../shared/components'
@@ -11,6 +11,8 @@ export const FormEditUser: React.FC = () => {
     const { userSelected, updateUser } = useUsers()
     const { onCloseDrawers } = useDrawer()
     const { activateAlert } = useAlert()
+    const { theme } = useTheme()
+    const isDark = theme === 'dark'
 
     const {
         register,
@@ -59,7 +61,7 @@ export const FormEditUser: React.FC = () => {
                 <div className="flex-1 w-full">
                     <Label htmlFor='userName' className='mb-3 flex items-center justify-between gap-2'>
                         Nombre del usuario
-                        <LuAsterisk size={15} className='text-indigo-600' />
+                        <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
                     </Label>
                     <Input
                         autoComplete='off'
@@ -74,12 +76,12 @@ export const FormEditUser: React.FC = () => {
                         })
                         }
                     />
-                    {errors.name && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.name.message}</p>)}
+                    {errors.name && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.name.message}</p>)}
                 </div>
                 <div className="flex-1 w-full">
                     <Label htmlFor='userLastname' className='mb-3 flex items-center justify-between gap-2'>
                         Apellido del usuario
-                        <LuAsterisk size={15} className='text-indigo-600' />
+                        <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
                     </Label>
                     <Input
                         autoComplete='off'
@@ -94,15 +96,22 @@ export const FormEditUser: React.FC = () => {
                         })
                         }
                     />
-                    {errors.lastname && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.lastname.message}</p>)}
+                    {errors.lastname && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.lastname.message}</p>)}
                 </div>
                 <div className="flex-1 w-full">
-                    <Label htmlFor='userLastname' className='mb-3 flex items-center justify-between gap-2'>
+                    <Label htmlFor='userRole' className='mb-3 flex items-center justify-between gap-2'>
                         Rol del usuario
-                        <LuAsterisk size={15} className='text-indigo-600' />
+                        <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
                     </Label>
                     <select
-                        className='w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                        className={`
+                            w-full px-3 py-2 border rounded-lg text-sm 
+                            focus:outline-none focus:ring-2 transition-colors
+                            ${isDark 
+                                ? 'bg-gray-700 border-gray-600 text-gray-200 focus:ring-indigo-500 focus:border-indigo-500' 
+                                : 'bg-white border-gray-300 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500'
+                            }
+                        `}
                         id='userRole'
                         {
                         ...register('role', {
@@ -110,15 +119,20 @@ export const FormEditUser: React.FC = () => {
                         })
                         }
                     >
-                        <option value="" defaultValue={"Selecciona un rol"}>Selecciona un rol</option>
-                        <option value={Roles.ADMINISTRADOR}>
-
+                        <option value="" className={isDark ? 'bg-gray-700' : 'bg-white'}>
+                            Selecciona un rol
+                        </option>
+                        <option value={Roles.ADMINISTRADOR} className={isDark ? 'bg-gray-700' : 'bg-white'}>
                             Administrador
                         </option>
-                        <option value={Roles.SUPERVISOR}>Supervisor</option>
-                        <option value={Roles.VENDEDOR}>Vendedor</option>
+                        <option value={Roles.SUPERVISOR} className={isDark ? 'bg-gray-700' : 'bg-white'}>
+                            Supervisor
+                        </option>
+                        <option value={Roles.VENDEDOR} className={isDark ? 'bg-gray-700' : 'bg-white'}>
+                            Vendedor
+                        </option>
                     </select>
-                    {errors.role && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.role.message}</p>)}
+                    {errors.role && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.role.message}</p>)}
                 </div>
                 <div className='flex items-center gap-5 justify-end mt-6 w-full'>
                     <SaveButton className='w-52 p-2' submit text='Editar Usuario' />

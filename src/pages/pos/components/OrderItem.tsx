@@ -1,6 +1,7 @@
 import React from 'react'
 import { FiMinus, FiPlus, FiTrash2 } from 'react-icons/fi'
 import { usePos } from '../../../shared/hooks/usePos'
+import { useTheme } from '../../../shared/hooks'
 
 interface Props {
     id: string,
@@ -19,6 +20,8 @@ export const OrderItem: React.FC<Props> = ({
     quantity, 
     sellingPrice 
 }) => {
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
 
     const { onDeleteProductFromCart, onIncreaseQuantity, onDecreaseQuantity } = usePos()
 
@@ -27,10 +30,22 @@ export const OrderItem: React.FC<Props> = ({
     return (
         <li
             key={id}
-            className="flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors rounded-xl p-3"
+            className={`
+                flex justify-between items-center rounded-xl p-3 transition-colors
+                ${isDark 
+                    ? 'bg-gray-700 hover:bg-gray-600' 
+                    : 'bg-gray-50 hover:bg-gray-100'
+                }
+            `}
         >
             <div className="flex items-center gap-5 mr-2">
-                <div className="w-24 h-24 rounded-xl overflow-hidden bg-white border border-gray-200">
+                <div className={`
+                    w-24 h-24 rounded-xl overflow-hidden border transition-colors
+                    ${isDark 
+                        ? 'bg-gray-800 border-gray-600' 
+                        : 'bg-white border-gray-200'
+                    }
+                `}>
                     <img
                         src={image}
                         alt={name}
@@ -39,22 +54,62 @@ export const OrderItem: React.FC<Props> = ({
                 </div>
 
                 <div className="flex flex-col">
-                    <p className="font-medium text-gray-800">{name}</p>
-                    <p className="text-sm text-gray-500">
+                    <p className={`
+                        font-medium transition-colors
+                        ${isDark ? 'text-gray-200' : 'text-gray-800'}
+                    `}>
+                        {name}
+                    </p>
+                    <p className={`
+                        text-sm transition-colors
+                        ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                    `}>
                         ${sellingPrice.toFixed(2)} × {quantity}
                     </p>
 
                     <div className="flex items-center gap-2 mt-1">
-                        <button onClick={() => onDecreaseQuantity(id)} className="w-6 h-6 cursor-pointer flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-200 transition">
+                        <button 
+                            onClick={() => onDecreaseQuantity(id)} 
+                            className={`
+                                w-6 h-6 cursor-pointer flex items-center justify-center 
+                                rounded-full border transition-colors
+                                ${isDark 
+                                    ? 'border-gray-600 text-gray-300 hover:bg-gray-600' 
+                                    : 'border-gray-300 text-gray-600 hover:bg-gray-200'
+                                }
+                            `}
+                        >
                             <FiMinus size={14} />
                         </button>
-                        <span className="text-sm font-semibold text-gray-700 w-4 text-center">
+                        <span className={`
+                            text-sm font-semibold w-4 text-center transition-colors
+                            ${isDark ? 'text-gray-200' : 'text-gray-700'}
+                        `}>
                             {quantity}
                         </span>
-                        <button onClick={() => onIncreaseQuantity(id)} className="w-6 h-6 cursor-pointer flex items-center justify-center rounded-full bg-black text-white hover:bg-gray-800 transition">
+                        <button 
+                            onClick={() => onIncreaseQuantity(id)} 
+                            className={`
+                                w-6 h-6 cursor-pointer flex items-center justify-center 
+                                rounded-full text-white transition-colors
+                                ${isDark 
+                                    ? 'bg-gray-300 hover:bg-gray-200 text-gray-900' 
+                                    : 'bg-black hover:bg-gray-800'
+                                }
+                            `}
+                        >
                             <FiPlus size={14} />
                         </button>
-                        <button onClick={() => onDeleteProductFromCart(id)} className="ml-2 text-red-500 hover:text-red-600 transition">
+                        <button 
+                            onClick={() => onDeleteProductFromCart(id)} 
+                            className={`
+                                ml-2 transition-colors
+                                ${isDark 
+                                    ? 'text-red-400 hover:text-red-300' 
+                                    : 'text-red-500 hover:text-red-600'
+                                }
+                            `}
+                        >
                             <FiTrash2 size={16} />
                         </button>
                     </div>
@@ -62,8 +117,20 @@ export const OrderItem: React.FC<Props> = ({
             </div>
 
             <div className='flex flex-col gap-2'>
-                <p className="font-semibold text-lg text-gray-800">${total.toFixed(2)}</p>
-                {discount > 0 && <p className='text-green-600 font-semibold'>-${discount.toFixed(2)}</p>}
+                <p className={`
+                    font-semibold text-lg transition-colors
+                    ${isDark ? 'text-gray-200' : 'text-gray-800'}
+                `}>
+                    ${total.toFixed(2)}
+                </p>
+                {discount > 0 && (
+                    <p className={`
+                        font-semibold transition-colors
+                        ${isDark ? 'text-green-400' : 'text-green-600'}
+                    `}>
+                        -${discount.toFixed(2)}
+                    </p>
+                )}
             </div>
         </li>
     )

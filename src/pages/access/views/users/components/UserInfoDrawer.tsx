@@ -1,8 +1,8 @@
 import React from 'react'
 import { RightDrawerLayout } from '../../../../../layouts/RightDrawerLayout'
-import { useUsers } from '../../../../../shared/hooks'
+import { useUsers, useTheme } from '../../../../../shared/hooks'
 import { AvatarInitialSquare } from '../../../../../shared/components/avatar/AvatarInitialSquare'
-import type { User } from '../../../../../interfaces/user.interface'
+import type { Roles, User } from '../../../../../interfaces/user.interface'
 import { StatusBadge } from '../../../../../shared/components/badgets/StatusBadge'
 import { UserRoleTag, UserValidateTag } from './'
 import { AvatarImage } from '../../../../../shared/components'
@@ -10,6 +10,9 @@ import { AvatarImage } from '../../../../../shared/components'
 export const UserInfoDrawer: React.FC = () => {
 
   const { userSelected } = useUsers()
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
+  
   const { name, lastname, isActive, role, isValidated, id, email, createdAt, updatedAt, image } = userSelected as User
 
   return (
@@ -23,10 +26,12 @@ export const UserInfoDrawer: React.FC = () => {
               : <AvatarImage image={image} alt={name} />
           }
           <div>
-            <h3 className='font-semibold text-xl mb-2'>{name} {lastname}</h3>
+            <h3 className={`font-semibold text-xl mb-2 ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>
+              {name} {lastname}
+            </h3>
             <div className='flex gap-3'>
               <StatusBadge status={isActive} />
-              <UserRoleTag role={role} />
+              <UserRoleTag role={role as Roles} />
               <UserValidateTag isValidated={isValidated} />
             </div>
           </div>
@@ -34,12 +39,27 @@ export const UserInfoDrawer: React.FC = () => {
 
       </div>
 
-      <div className="px-4 space-y-3 text-sm text-gray-600 mb-10">
-        <p><span className="font-medium text-gray-800">#Id: </span>{id}</p>
-        <p><span className="font-medium text-gray-800">Nombre: </span>{name} {lastname}</p>
-        <p><span className="font-medium text-gray-800">Email: </span>{email}</p>
-        <p><span className="font-medium text-gray-800">Fecha de creación: </span>{createdAt}</p>
-        <p><span className="font-medium text-gray-800">Última actualización: </span>{updatedAt}</p>
+      <div className={`px-4 space-y-3 text-sm mb-10 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+        <p>
+          <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>#Id: </span>
+          {id}
+        </p>
+        <p>
+          <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Nombre: </span>
+          {name} {lastname}
+        </p>
+        <p>
+          <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Email: </span>
+          {email}
+        </p>
+        <p>
+          <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Fecha de creación: </span>
+          {createdAt}
+        </p>
+        <p>
+          <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Última actualización: </span>
+          {updatedAt}
+        </p>
       </div>
     </RightDrawerLayout>
   )

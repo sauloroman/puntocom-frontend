@@ -1,12 +1,14 @@
 import React from 'react'
 import { RightDrawerLayout } from '../../../layouts/RightDrawerLayout'
-import { useSale } from '../../../shared/hooks'
+import { useSale, useTheme } from '../../../shared/hooks'
 import { SpinnerContainer } from '../../../shared/components'
 import { FiCalendar, FiPackage, FiTag } from 'react-icons/fi'
 import { SaleDetailItem } from './SaleDetailItem'
 import { SaleDetailUser } from './SaleDetailUser'
 
 export const SaleInfoDrawer: React.FC = () => {
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
 
     const { selectedSale, isLoading } = useSale()
 
@@ -14,32 +16,61 @@ export const SaleInfoDrawer: React.FC = () => {
         return (
             <RightDrawerLayout width='w-2xl' title='Detalle de venta'>
                 <div className="flex items-center justify-center h-full">
-                    <SpinnerContainer color='bg-white' size='lg' />
+                    <SpinnerContainer 
+                        color={isDark ? 'border-indigo-400' : 'border-indigo-700'} 
+                        size='lg' 
+                    />
                 </div>
             </RightDrawerLayout>
         )
     }
 
-    if ( !selectedSale ) return null
+    if (!selectedSale) return null
         
-     return (
+    return (
         <RightDrawerLayout width='w-2xl' title='Detalle de venta'>
-            <div className="flex flex-col h-full bg-gray-50">
+            <div className={`
+                flex flex-col h-full transition-colors
+                ${isDark ? 'bg-gray-900' : 'bg-gray-50'}
+            `}>
                 
-                <header className="bg-white border-b border-gray-200 p-6">
+                <header className={`
+                    border-b p-6 transition-colors
+                    ${isDark 
+                        ? 'bg-gray-800 border-gray-700' 
+                        : 'bg-white border-gray-200'
+                    }
+                `}>
                     <div className="flex items-center justify-between mb-4">
                         <div>
-                            <div className="text-sm text-gray-500 mb-1 flex items-center gap-2">
+                            <div className={`
+                                text-sm mb-1 flex items-center gap-2 transition-colors
+                                ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                            `}>
                                 <FiTag className="w-4 h-4" />
                                 Código de venta
                             </div>
-                            <div className="text-2xl font-semibold text-gray-900">{selectedSale.code}</div>
+                            <div className={`
+                                text-2xl font-semibold transition-colors
+                                ${isDark ? 'text-gray-100' : 'text-gray-900'}
+                            `}>
+                                {selectedSale.code}
+                            </div>
                         </div>
-                        <div className="px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg font-medium">
+                        <div className={`
+                            px-4 py-2 rounded-lg font-medium transition-colors
+                            ${isDark 
+                                ? 'bg-indigo-900/50 text-indigo-300' 
+                                : 'bg-indigo-50 text-indigo-700'
+                            }
+                        `}>
                             ${selectedSale.total.toFixed(2)}
                         </div>
                     </div>
-                    <div className="text-sm text-gray-600 flex items-center gap-2">
+                    <div className={`
+                        text-sm flex items-center gap-2 transition-colors
+                        ${isDark ? 'text-gray-400' : 'text-gray-600'}
+                    `}>
                         <FiCalendar className="w-4 h-4" />
                         {selectedSale.date.toString()}
                     </div>
@@ -52,22 +83,49 @@ export const SaleInfoDrawer: React.FC = () => {
                 />}
 
                 <div className="flex-1 overflow-y-auto p-6">
-                    <div className="text-sm font-medium text-gray-500 mb-4 flex items-center gap-2">
+                    <div className={`
+                        text-sm font-medium mb-4 flex items-center gap-2 transition-colors
+                        ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                    `}>
                         <FiPackage className="w-4 h-4" />
                         Productos ({selectedSale.details.length})
                     </div>
-                    { selectedSale.details.map( detail => ( <SaleDetailItem key={detail.id} detail={detail}/>)) }
+                    <ul className='space-y-4'>
+                        {selectedSale.details.map(detail => (
+                            <SaleDetailItem key={detail.id} detail={detail}/>
+                        ))}
+                    </ul>
                 </div>
 
-                <div className="bg-white border-t border-gray-200 p-6">
+                <div className={`
+                    border-t p-6 transition-colors
+                    ${isDark 
+                        ? 'bg-gray-800 border-gray-700' 
+                        : 'bg-white border-gray-200'
+                    }
+                `}>
                     <div className="space-y-2">
-                        <div className="flex justify-between text-sm text-gray-600">
+                        <div className={`
+                            flex justify-between text-sm transition-colors
+                            ${isDark ? 'text-gray-400' : 'text-gray-600'}
+                        `}>
                             <span>Subtotal</span>
                             <span>${selectedSale.total.toFixed(2)}</span>
                         </div>
-                        <div className="flex justify-between text-lg font-semibold text-gray-900 pt-2 border-t border-gray-200">
+                        <div className={`
+                            flex justify-between text-lg font-semibold pt-2 border-t transition-colors
+                            ${isDark 
+                                ? 'text-gray-100 border-gray-700' 
+                                : 'text-gray-900 border-gray-200'
+                            }
+                        `}>
                             <span>Total</span>
-                            <span className="text-indigo-600">${selectedSale.total.toFixed(2)}</span>
+                            <span className={`
+                                transition-colors
+                                ${isDark ? 'text-indigo-400' : 'text-indigo-600'}
+                            `}>
+                                ${selectedSale.total.toFixed(2)}
+                            </span>
                         </div>
                     </div>
                 </div>

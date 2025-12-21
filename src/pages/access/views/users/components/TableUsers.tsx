@@ -3,7 +3,7 @@ import type { Roles, User } from '../../../../../interfaces/user.interface'
 import { TableActions, TableImage } from '../../../../../shared/components/table';
 import { UserRoleTag } from './UserRoleTag';
 import { UserValidateTag } from './UserValidateTag';
-import { useDrawer, useUsers } from '../../../../../shared/hooks';
+import { useDrawer, useTheme, useUsers } from '../../../../../shared/hooks';
 import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface';
 import { StatusBadge } from '../../../../../shared/components';
 import { BsPerson, BsEnvelope, BsShield, BsToggleOn, BsCalendar3, BsClock, BsCheckCircle } from 'react-icons/bs';
@@ -13,6 +13,9 @@ interface TableUsersProps {
 }
 
 export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
+
+    const { theme } = useTheme()
+    const isDark = theme === 'dark'
 
     const { onOpenRightDrawer } = useDrawer()
     const { onSelectUser } = useUsers()
@@ -28,106 +31,151 @@ export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
     }
 
     return (
-          <div className="border border-gray-200 rounded-2xl overflow-hidden mb-5 shadow-sm">
-              <div className="max-h-[650px] overflow-y-auto custom-scrollbar">
-                  <table className="min-w-full bg-white">
-                      <thead className="bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 text-xs uppercase tracking-wide sticky top-0 z-10 shadow-sm">
-                          <tr>
-                              <th className="px-6 py-4 text-left font-bold">
-                                  <div className="flex items-center gap-2">
-                                      <BsPerson className="text-indigo-600" size={18} />
-                                      Nombre Completo
-                                  </div>
-                              </th>
-                              <th className="px-6 py-4 text-left font-bold">
-                                  <div className="flex items-center gap-2">
-                                      <BsEnvelope className="text-indigo-600" size={16} />
-                                      Correo electrónico
-                                  </div>
-                              </th>
-                              <th className="px-6 py-4 text-left font-bold">
-                                  <div className="flex items-center gap-2">
-                                      <BsShield className="text-indigo-600" size={16} />
-                                      Rol
-                                  </div>
-                              </th>
-                              <th className="px-6 py-4 text-left font-bold">
-                                  <div className="flex items-center gap-2">
-                                      <BsToggleOn className="text-indigo-600" size={18} />
-                                      Estado
-                                  </div>
-                              </th>
-                              <th className="px-6 py-4 text-left font-bold">
-                                  <div className="flex items-center gap-2">
-                                      <BsCalendar3 className="text-indigo-600" size={16} />
-                                      Creado
-                                  </div>
-                              </th>
-                              <th className="px-6 py-4 text-left font-bold">
-                                  <div className="flex items-center gap-2">
-                                      <BsClock className="text-indigo-600" size={16} />
-                                      Actualizado
-                                  </div>
-                              </th>
-                              <th className="px-6 py-4 text-left font-bold">
-                                  <div className="flex items-center gap-2">
-                                      <BsCheckCircle className="text-indigo-600" size={16} />
-                                      Validado
-                                  </div>
-                              </th>
-                              <th className="px-6 py-4 text-right font-bold">Acciones</th>
-                          </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-100">
-                          {data.length > 0 ? (
-                              data.map((user) => (
-                                  <tr key={user.id} className="hover:bg-gradient-to-r hover:from-indigo-50/50 hover:to-purple-50/50 transition-all duration-200">
-                                      <td className="px-6 py-4 font-medium text-gray-900 flex items-center gap-2">
-                                          <TableImage 
-                                              width='w-6' 
-                                              text='Usuario sin imagen' 
-                                              icon={user.image} 
-                                              initial={user.name[0]}
-                                          /> 
-                                          {user.name} {user.lastname}
-                                      </td>
-                                      <td className="px-6 py-4 text-gray-600">{user.email}</td>
-                                      <td className="px-6 py-4 text-gray-600"><UserRoleTag role={user.role as Roles} /></td>
-                                      <td className="px-6 py-4"><StatusBadge status={user.isActive} /></td>
-                                      <td className="px-6 py-4 text-sm text-gray-700">{user.createdAt}</td>
-                                      <td className="px-6 py-4 text-sm text-gray-700">{user.updatedAt}</td>
-                                      <td className='px-6 py-4'><UserValidateTag isValidated={user.isValidated} /></td>
-                                      <td className="px-6 py-4 text-center relative">
-                                          <TableActions
-                                              onView={() => onSelectUserAc(user.id)}
-                                              onEdit={() => onEditUser(user.id)}
-                                          />
-                                      </td>
-                                  </tr>
-                              ))
-                          ) : (
-                              <tr>
-                                  <td
-                                      colSpan={8}
-                                      className="px-6 py-16 text-center"
-                                  >
-                                      <div className="flex flex-col items-center justify-center">
-                                          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                                              <BsPerson className="text-gray-400" size={32} />
-                                          </div>
-                                          <p className="text-gray-400 text-sm font-medium">
-                                              No hay usuarios registrados
-                                          </p>
-                                          <p className="text-gray-400 text-xs mt-1">
-                                              Los usuarios aparecerán aquí una vez que se registren
-                                          </p>
-                                      </div>
-                                  </td>
-                              </tr>
-                          )}
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-      );
+        <div
+            className={`
+                border rounded-2xl overflow-hidden mb-5 shadow-sm transition-colors
+                ${isDark ? "border-gray-700 bg-gray-800" : "border-gray-200 bg-white"}
+            `}
+        >
+            <div className="max-h-[650px] overflow-y-auto custom-scrollbar">
+                <table className="min-w-full">
+                    <thead
+                        className={`
+                            text-xs uppercase tracking-wide sticky top-0 z-10 shadow-sm
+                            ${isDark
+                                ? "bg-gray-700 text-gray-300"
+                                : "bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700"
+                            }
+                        `}
+                    >
+                        <tr>
+                            <th className="px-6 py-4 text-left font-bold">
+                                <div className="flex items-center gap-2">
+                                    <BsPerson className={isDark ? "text-gray-300" : "text-indigo-600"} size={18} />
+                                    Nombre Completo
+                                </div>
+                            </th>
+                            <th className="px-6 py-4 text-left font-bold">
+                                <div className="flex items-center gap-2">
+                                    <BsEnvelope className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
+                                    Correo electrónico
+                                </div>
+                            </th>
+                            <th className="px-6 py-4 text-left font-bold">
+                                <div className="flex items-center gap-2">
+                                    <BsShield className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
+                                    Rol
+                                </div>
+                            </th>
+                            <th className="px-6 py-4 text-left font-bold">
+                                <div className="flex items-center gap-2">
+                                    <BsToggleOn className={isDark ? "text-gray-300" : "text-indigo-600"} size={18} />
+                                    Estado
+                                </div>
+                            </th>
+                            <th className="px-6 py-4 text-left font-bold">
+                                <div className="flex items-center gap-2">
+                                    <BsCalendar3 className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
+                                    Creado
+                                </div>
+                            </th>
+                            <th className="px-6 py-4 text-left font-bold">
+                                <div className="flex items-center gap-2">
+                                    <BsClock className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
+                                    Actualizado
+                                </div>
+                            </th>
+                            <th className="px-6 py-4 text-left font-bold">
+                                <div className="flex items-center gap-2">
+                                    <BsCheckCircle className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
+                                    Validado
+                                </div>
+                            </th>
+                            <th className="px-6 py-4 text-right font-bold">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody
+                        className={`
+                            divide-y
+                            ${isDark ? "divide-gray-700" : "divide-gray-100"}
+                        `}
+                    >
+                        {data.length > 0 ? (
+                            data.map((user) => (
+                                <tr
+                                    key={user.id}
+                                    className={`
+                                        transition-all duration-200
+                                        ${
+                                            isDark
+                                                ? "hover:bg-gray-700/40 text-gray-300"
+                                                : "hover:bg-gradient-to-r hover:from-indigo-50/50 hover:to-purple-50/50 text-gray-900"
+                                        }
+                                    `}
+                                >
+                                    <td className="px-6 py-4 font-medium flex items-center gap-2">
+                                        <TableImage 
+                                            width='w-6' 
+                                            text='Usuario sin imagen' 
+                                            icon={user.image} 
+                                            initial={user.name[0]}
+                                        /> 
+                                        {user.name} {user.lastname}
+                                    </td>
+                                    <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+                                        {user.email}
+                                    </td>
+                                    <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+                                        <UserRoleTag role={user.role as Roles} />
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <StatusBadge status={user.isActive} />
+                                    </td>
+                                    <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-700"}`}>
+                                        {user.createdAt}
+                                    </td>
+                                    <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-700"}`}>
+                                        {user.updatedAt}
+                                    </td>
+                                    <td className='px-6 py-4'>
+                                        <UserValidateTag isValidated={user.isValidated} />
+                                    </td>
+                                    <td className="px-6 py-4 text-center relative">
+                                        <TableActions
+                                            onView={() => onSelectUserAc(user.id)}
+                                            onEdit={() => onEditUser(user.id)}
+                                        />
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td
+                                    colSpan={8}
+                                    className="px-6 py-16 text-center"
+                                >
+                                    <div className="flex flex-col items-center justify-center">
+                                        <div
+                                            className={`
+                                                w-16 h-16 rounded-full flex items-center justify-center mb-4
+                                                ${isDark ? "bg-gray-700" : "bg-gray-100"}
+                                            `}
+                                        >
+                                            <BsPerson className="text-gray-400" size={32} />
+                                        </div>
+                                        <p className="text-gray-400 text-sm font-medium">
+                                            No hay usuarios registrados
+                                        </p>
+                                        <p className="text-gray-400 text-xs mt-1">
+                                            Los usuarios aparecerán aquí una vez que se registren
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
 }

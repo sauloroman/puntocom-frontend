@@ -1,65 +1,129 @@
 import React from 'react'
 import { BsCalendar3, BsType, BsBox, BsPerson, BsTag } from 'react-icons/bs'
-import { AiOutlineProduct } from "react-icons/ai";
+import { AiOutlineProduct } from "react-icons/ai"
 import { TableImage } from '../../../../../shared/components/table'
-import { TypeBadgeAdjustmentType, TableAdjustmentsActions } from './';
+import { TypeBadgeAdjustmentType, TableAdjustmentsActions } from './'
 import type { InventoryAdjustmentResponse } from '../../../../../interfaces/inventory-adjustment.interface'
+import { useTheme } from '../../../../../shared/hooks'
 
 interface Props {
     data: InventoryAdjustmentResponse[]
 }
 
 export const TableAdjustments: React.FC<Props> = ({ data }) => {
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
+
     return (
-        <div className="border border-gray-200 rounded-2xl overflow-hidden mb-5 shadow-sm">
+        <div className={`
+            border rounded-2xl overflow-hidden mb-5 shadow-sm transition-colors
+            ${isDark ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'}
+        `}>
             <div className="max-h-[650px] overflow-y-auto custom-scrollbar">
-                <table className="min-w-full bg-white">
-                    <thead className="bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 text-xs uppercase tracking-wide sticky top-0 z-10 shadow-sm">
+                <table className="min-w-full">
+                    <thead className={`
+                        text-xs uppercase tracking-wide sticky top-0 z-10 shadow-sm
+                        ${isDark
+                            ? 'bg-gray-700 text-gray-300'
+                            : 'bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700'
+                        }
+                    `}>
                         <tr>
                             <th className="px-6 py-4 text-left font-bold">
-                                <div className="flex items-center gap-2"><BsCalendar3 className="text-indigo-600" size={16} />Fecha</div>
+                                <div className="flex items-center gap-2">
+                                    <BsCalendar3 className={isDark ? 'text-gray-300' : 'text-indigo-600'} size={16} />
+                                    Fecha
+                                </div>
                             </th>
 
                             <th className="px-6 py-4 text-left font-bold">
-                                <div className="flex items-center gap-2"><BsType className="text-indigo-600" size={16} />Tipo</div>
+                                <div className="flex items-center gap-2">
+                                    <BsType className={isDark ? 'text-gray-300' : 'text-indigo-600'} size={16} />
+                                    Tipo
+                                </div>
                             </th>
 
                             <th className="px-6 py-4 text-center font-bold">
-                                <div className="flex items-center justify-center gap-2"><BsBox className="text-indigo-600" size={18} />Cantidad Previa</div>
+                                <div className="flex items-center justify-center gap-2">
+                                    <BsBox className={isDark ? 'text-gray-300' : 'text-indigo-600'} size={18} />
+                                    Previo
+                                </div>
                             </th>
                             
                             <th className="px-6 py-4 text-center font-bold">
-                                <div className="flex items-center justify-center gap-2"><BsBox className="text-indigo-600" size={18} />Cantidad Nueva</div>
+                                <div className="flex items-center justify-center gap-2">
+                                    <BsBox className={isDark ? 'text-gray-300' : 'text-indigo-600'} size={18} />
+                                    Nuevo
+                                </div>
                             </th>
 
                             <th className="px-6 py-4 text-left font-bold">
-                                <div className="flex items-center gap-2"><BsPerson className="text-indigo-600" size={16} />Usuario</div>
+                                <div className="flex items-center gap-2">
+                                    <BsPerson className={isDark ? 'text-gray-300' : 'text-indigo-600'} size={16} />
+                                    Usuario
+                                </div>
                             </th>
 
                             <th className="px-6 py-4 text-left font-bold">
-                                <div className="flex items-center gap-2"><AiOutlineProduct className="text-indigo-600" size={16} />Producto</div>
+                                <div className="flex items-center gap-2">
+                                    <AiOutlineProduct className={isDark ? 'text-gray-300' : 'text-indigo-600'} size={16} />
+                                    Producto
+                                </div>
                             </th>
 
                             <th className="px-6 py-4 text-center font-bold">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody className={`
+                        divide-y
+                        ${isDark ? 'divide-gray-700' : 'divide-gray-100'}
+                    `}>
                         {data.length > 0 ? (
                             data.map((adj) => (
                                 <tr
                                     key={adj.adjustmentId}
-                                    className="hover:bg-gradient-to-r hover:from-indigo-50/50 hover:to-purple-50/50 transition-all duration-200 group"
+                                    className={`
+                                        transition-all duration-200
+                                        ${isDark
+                                            ? 'hover:bg-gray-700/40 text-gray-300'
+                                            : 'hover:bg-gradient-to-r hover:from-indigo-50/50 hover:to-purple-50/50 text-gray-900'
+                                        }
+                                    `}
                                 >
+                                    <td className="px-6 py-4 font-medium">
+                                        {new Date(adj?.adjustmentDate ?? Date.now()).toLocaleString()}
+                                    </td>
+                                    
                                     <td className="px-6 py-4">
-                                        <p className="text-sm font-semibold text-gray-900">{new Date(adj?.adjustmentDate ?? Date.now()).toLocaleString()}</p>
+                                        <TypeBadgeAdjustmentType type={adj.adjustmentType} />
                                     </td>
-                                    <td className="px-6 py-4"><TypeBadgeAdjustmentType type={adj.adjustmentType} /></td>
+                                    
                                     <td className="px-6 py-4 text-center">
-                                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 rounded-lg font-mono font-bold text-xs tracking-wider border border-indigo-200">{adj.adjustmentPrevQuantity}</span>
+                                        <span className={`
+                                            inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg 
+                                            font-mono font-bold text-xs tracking-wider border transition-colors duration-200
+                                            ${isDark
+                                                ? 'bg-gray-700 text-indigo-300 border-gray-600'
+                                                : 'bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 border-indigo-200'
+                                            }
+                                        `}>
+                                            {adj.adjustmentPrevQuantity}
+                                        </span>
                                     </td>
+                                    
                                     <td className="px-6 py-4 text-center">
-                                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 rounded-lg font-mono font-bold text-xs tracking-wider border border-indigo-200">{adj.adjustmentQuantity}</span>
+                                        <span className={`
+                                            inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg 
+                                            font-mono font-bold text-xs tracking-wider border transition-colors duration-200
+                                            ${isDark
+                                                ? 'bg-gray-700 text-indigo-300 border-gray-600'
+                                                : 'bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 border-indigo-200'
+                                            }
+                                        `}>
+                                            {adj.adjustmentQuantity}
+                                        </span>
                                     </td>
+                                    
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
                                             <div className="w-9 h-9 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
@@ -71,18 +135,22 @@ export const TableAdjustments: React.FC<Props> = ({ data }) => {
                                                 />
                                             </div>
                                             <div>
-                                                <p className="text-sm font-medium text-gray-900">
+                                                <p className="font-medium">
                                                     {adj.User?.name ?? "N/A"}
                                                 </p>
-                                                <p className="text-xs text-gray-500 capitalize">
+                                                <p className={`text-xs capitalize ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                                                     {adj.User?.role ?? "Sin rol"}
                                                 </p>
                                             </div>
                                         </div>
                                     </td>
+                                    
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-9 h-9 bg-gray-100 rounded-md flex items-center justify-center overflow-hidden">
+                                            <div className={`
+                                                w-9 h-9 rounded-md flex items-center justify-center overflow-hidden
+                                                ${isDark ? 'bg-gray-700' : 'bg-gray-100'}
+                                            `}>
                                                 <TableImage
                                                     width="w-6"
                                                     text="Producto sin imagen"
@@ -91,23 +159,29 @@ export const TableAdjustments: React.FC<Props> = ({ data }) => {
                                                 />
                                             </div>
                                             <div>
-                                                <p className="text-sm font-medium text-gray-900">
+                                                <p className="font-medium">
                                                     {adj.Product?.name ?? "Producto no encontrado"}
                                                 </p>
-                                                <p className="text-xs text-gray-500 font-mono">
+                                                <p className={`text-xs font-mono ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                                                     {adj.Product?.code ?? ""}
                                                 </p>
                                             </div>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 text-center"><TableAdjustmentsActions adjustmentId={adj.adjustmentId} /></td>
+                                    
+                                    <td className="px-6 py-4 text-center">
+                                        <TableAdjustmentsActions adjustmentId={adj.adjustmentId} />
+                                    </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={6} className="px-6 py-16 text-center">
+                                <td colSpan={7} className="px-6 py-16 text-center">
                                     <div className="flex flex-col items-center justify-center">
-                                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                                        <div className={`
+                                            w-16 h-16 rounded-full flex items-center justify-center mb-4
+                                            ${isDark ? 'bg-gray-700' : 'bg-gray-100'}
+                                        `}>
                                             <BsTag className="text-gray-400" size={32} />
                                         </div>
                                         <p className="text-gray-400 text-sm font-medium">

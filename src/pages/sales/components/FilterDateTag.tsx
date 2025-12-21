@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSale } from '../../../shared/hooks'
+import { useSale, useTheme } from '../../../shared/hooks'
 import { LuCalendar } from 'react-icons/lu'
 
 const formatDate = (date: Date) => {
@@ -11,6 +11,9 @@ const formatDate = (date: Date) => {
 }
 
 export const FilterDateTag: React.FC = () => {
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
+
     const { filter } = useSale()
 
     if (!filter.dates.dateFrom || !filter.dates.dateTo) {
@@ -18,11 +21,28 @@ export const FilterDateTag: React.FC = () => {
     }
 
     return (
-        <div className='inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-200 rounded-lg text-sm'>
-            <LuCalendar size={14} className='text-indigo-600' />
+        <div className={`
+            inline-flex items-center gap-2 px-3 py-1.5 border rounded-lg text-sm transition-colors
+            ${isDark 
+                ? 'bg-indigo-900/30 border-indigo-700' 
+                : 'bg-indigo-50 border-indigo-200'
+            }
+        `}>
+            <LuCalendar 
+                size={14} 
+                className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
+            />
             <div className='flex items-center gap-2'>
-                <span className='text-indigo-900 font-medium'>Periodo:</span>
-                <span className='text-indigo-700'>
+                <span className={`
+                    font-medium transition-colors
+                    ${isDark ? 'text-indigo-300' : 'text-indigo-900'}
+                `}>
+                    Periodo:
+                </span>
+                <span className={`
+                    transition-colors
+                    ${isDark ? 'text-indigo-400' : 'text-indigo-700'}
+                `}>
                     {formatDate(new Date(filter.dates.dateFrom))} - {formatDate(new Date(filter.dates.dateTo))}
                 </span>
             </div>

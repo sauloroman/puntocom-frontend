@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useAlert, useDrawer, useSuppliers } from '../../../../../shared/hooks'
+import { useAlert, useDrawer, useSuppliers, useTheme } from '../../../../../shared/hooks'
 import { useForm } from 'react-hook-form'
 import { type UpdateSupplier } from '../../../../../interfaces/supplier.interface'
 import { CancelButton, Input, Label, SaveButton, SmallButton } from '../../../../../shared/components'
@@ -8,6 +8,8 @@ import { EmailRegEx, phoneRegEx } from '../../../../../shared/utils/regexp'
 import { AlertType } from '../../../../../interfaces/ui/alert.interface'
 
 export const FormEditSupplier: React.FC = () => {
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
 
     const { supplierSelected, updateSupplier, companies } = useSuppliers()
     const { onCloseDrawers } = useDrawer()
@@ -87,7 +89,7 @@ export const FormEditSupplier: React.FC = () => {
                 <div className='flex-1'>
                     <Label htmlFor='supplierName' className='mb-3 flex items-center justify-between gap-2'>
                         Nombre del proveedor
-                        <LuAsterisk size={15} className='text-indigo-600' />
+                        <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
                     </Label>
                     <Input
                         autoComplete='off'
@@ -100,12 +102,12 @@ export const FormEditSupplier: React.FC = () => {
                             maxLength: { value: 100, message: 'Máximo 100 caracteres' }
                         })}
                     />
-                    {errors.name && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.name.message}</p>)}
+                    {errors.name && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.name.message}</p>)}
                 </div>
                 <div className='flex-1'>
                     <Label htmlFor='supplierLastname' className='mb-3 flex items-center justify-between gap-2'>
                         Apellido del proveedor
-                        <LuAsterisk size={15} className='text-indigo-600' />
+                        <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
                     </Label>
                     <Input
                         autoComplete='off'
@@ -118,7 +120,7 @@ export const FormEditSupplier: React.FC = () => {
                             maxLength: { value: 100, message: 'Máximo 100 caracteres' }
                         })}
                     />
-                    {errors.lastname && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.lastname.message}</p>)}
+                    {errors.lastname && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.lastname.message}</p>)}
                 </div>
             </div>
 
@@ -126,7 +128,7 @@ export const FormEditSupplier: React.FC = () => {
                 <div className='w-full'>
                     <Label htmlFor='supplierPhone' className='mb-3 flex items-center justify-between gap-2'>
                         Teléfono
-                        <LuAsterisk size={15} className='text-indigo-600' />
+                        <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
                     </Label>
                     <Input
                         id='supplierPhone'
@@ -140,12 +142,12 @@ export const FormEditSupplier: React.FC = () => {
                             }
                         })}
                     />
-                    {errors.phone && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.phone.message}</p>)}
+                    {errors.phone && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.phone.message}</p>)}
                 </div>
                 <div className='w-full'>
                     <Label htmlFor='supplierEmail' className='mb-3 flex items-center justify-between gap-2'>
                         Email
-                        <LuAsterisk size={15} className='text-indigo-600' />
+                        <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
                     </Label>
                     <Input
                         id='supplierEmail'
@@ -159,7 +161,7 @@ export const FormEditSupplier: React.FC = () => {
                             }
                         })}
                     />
-                    {errors.email && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.email.message}</p>)}
+                    {errors.email && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.email.message}</p>)}
                 </div>
             </div>
 
@@ -168,7 +170,7 @@ export const FormEditSupplier: React.FC = () => {
                     <div className='w-full'>
                         <Label htmlFor='supplierCompany' className='mb-3 flex items-center justify-between gap-2'>
                             Nueva Empresa
-                            <LuAsterisk size={15} className='text-indigo-600' />
+                            <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
                         </Label>
                         <Input
                             id='supplierCompany'
@@ -182,13 +184,18 @@ export const FormEditSupplier: React.FC = () => {
                     <div className='w-full'>
                         <Label htmlFor='supplierCompany' className='mb-3 flex items-center justify-between gap-2'>
                             Empresa
-                            <LuAsterisk size={15} className='text-indigo-600' />
+                            <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
                         </Label>
                         <select
-                            className='text-sm appearance-none w-full px-4 py-2 pr-10 rounded-lg
-                            bg-white text-gray-600 border border-gray-300
-                            focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-200
-                            transition-all cursor-pointer'
+                            className={`
+                                text-sm appearance-none w-full px-4 py-2 pr-10 rounded-lg
+                                border transition-all cursor-pointer
+                                focus:outline-none focus:ring-2
+                                ${isDark 
+                                    ? 'bg-gray-800 text-gray-200 border-gray-600 focus:ring-indigo-500 focus:border-indigo-500' 
+                                    : 'bg-white text-gray-600 border-gray-300 focus:ring-indigo-200 focus:border-indigo-200'
+                                }
+                            `}
                             id="selectSupplierCompany"
                             {...register('company', { required: 'La empresa es obligatoria' })}
                             defaultValue={supplierSelected?.company}
@@ -200,7 +207,7 @@ export const FormEditSupplier: React.FC = () => {
                     </div>
                 )
             }
-            {errors.company && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.company.message}</p>)}
+            {errors.company && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.company.message}</p>)}
 
             <div className='w-fit' onClick={() => {
                 setCreateNewCompany(!createNewCompany)
@@ -212,7 +219,7 @@ export const FormEditSupplier: React.FC = () => {
             <div className='w-full'>
                 <Label htmlFor='supplierAddress' className='mb-3 flex items-center justify-between gap-2'>
                     Dirección
-                    <LuAsterisk size={15} className='text-indigo-600' />
+                    <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
                 </Label>
                 <Input
                     id='supplierAddress'
@@ -222,7 +229,7 @@ export const FormEditSupplier: React.FC = () => {
                         maxLength: { value: 200, message: 'La dirección no puede ser mayor a 200 caracteres' }
                     })}
                 />
-                {errors.address && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.address.message}</p>)}
+                {errors.address && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.address.message}</p>)}
             </div>
 
             <div className='flex items-center gap-5 justify-end mt-8'>

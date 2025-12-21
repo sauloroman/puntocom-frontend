@@ -1,38 +1,53 @@
 import React from 'react'
-import { IoIosFolderOpen } from "react-icons/io";
-import { useReports } from '../../../shared/hooks';
-import type { ReportEntities } from '../../../store/reports/reports.slice';
+import { IoIosFolderOpen } from "react-icons/io"
+import { useReports, useTheme } from '../../../shared/hooks'
+import type { ReportEntities } from '../../../store/reports/reports.slice'
 
 const entitiesTitle: string[] = ["users", "products", "suppliers", "inventoryAdjustments", "purchases"]
 
-const getSpanishNameEntity = ( entity: string ) => {
-    switch( entity ) {
-        case 'users':
-            return 'usuarios'
-        case 'products':
-            return 'productos'
-        case 'suppliers':
-            return 'proveedores'
-        case 'purchases':
-            return 'compras'
-        case 'inventoryAdjustments':
-            return 'ajustes'
-    } 
+const getSpanishNameEntity = (entity: string) => {
+  switch (entity) {
+    case 'users':
+      return 'usuarios'
+    case 'products':
+      return 'productos'
+    case 'suppliers':
+      return 'proveedores'
+    case 'purchases':
+      return 'compras'
+    case 'inventoryAdjustments':
+      return 'ajustes'
+  }
 }
 
 export const EntityReportList: React.FC = () => {
-    const { onSelectedReports } = useReports()
+  const { theme } = useTheme()
+  const isDark = theme === "dark"
 
-    return (
-        <div className='grid grid-cols-5 gap-5 w-full'>
-            {
-                entitiesTitle.map( entity => (
-                    <div onClick={ () => onSelectedReports(entity as ReportEntities)} key={entity} className='flex flex-col items-center gap-1 cursor-pointer transition hover:scale-110'>
-                        <IoIosFolderOpen size={40} color='#e5e5e5' />
-                        <p className='uppercase text-sm font-semibold text-gray-600 '>{getSpanishNameEntity(entity)}</p>
-                    </div>
-                ))
-            }
-        </div>
-    )
+  const { onSelectedReports } = useReports()
+
+  return (
+    <div className='grid grid-cols-5 gap-5 w-full'>
+      {
+        entitiesTitle.map(entity => (
+          <div 
+            onClick={() => onSelectedReports(entity as ReportEntities)} 
+            key={entity} 
+            className='flex flex-col items-center gap-1 cursor-pointer transition hover:scale-110'
+          >
+            <IoIosFolderOpen 
+              size={40} 
+              color={isDark ? '#6b7280' : '#e5e5e5'} 
+            />
+            <p className={`
+              uppercase text-sm font-semibold transition-colors
+              ${isDark ? 'text-gray-300' : 'text-gray-600'}
+            `}>
+              {getSpanishNameEntity(entity)}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  )
 }

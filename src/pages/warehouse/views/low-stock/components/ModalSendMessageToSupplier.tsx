@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ModalLayout } from '../../../../../layouts/ModalLayout'
-import { useModal, useProducts } from '../../../../../shared/hooks'
+import { useModal, useProducts, useTheme } from '../../../../../shared/hooks'
 import { ProductInfo } from './ProductInfo'
 import { SupplierInfo } from './SupplierInfo'
 import { SupplierMessage } from './SupplierMessage'
@@ -8,6 +8,8 @@ import { CancelButton } from '../../../../../shared/components'
 import { WhatsAppButton } from '../../../../../shared/components/button/WhatsAppButton'
 
 export const ModalSendMessageToSupplier: React.FC = () => {
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
     
     const [message, setMessage] = useState('')
     const { productSelected } = useProducts()
@@ -40,10 +42,16 @@ export const ModalSendMessageToSupplier: React.FC = () => {
         <ModalLayout width='w-[900px]'>
             <div className='p-2'>          
                 <div className='mb-6'>
-                    <h2 className='text-2xl font-bold text-gray-800 mb-2'>
+                    <h2 className={`
+                        text-2xl font-bold mb-2 transition-colors duration-200
+                        ${isDark ? 'text-gray-100' : 'text-gray-800'}
+                    `}>
                         Contactar Proveedor
                     </h2>
-                    <p className='text-sm text-gray-500'>
+                    <p className={`
+                        text-sm transition-colors duration-200
+                        ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                    `}>
                         Envía un mensaje por WhatsApp para solicitar más unidades
                     </p>
                 </div>
@@ -63,7 +71,10 @@ export const ModalSendMessageToSupplier: React.FC = () => {
                     </div>
                 </div>
 
-                <div className='flex gap-3 justify-end mt-6 pt-6 border-t border-gray-200'>
+                <div className={`
+                    flex gap-3 justify-end mt-6 pt-6 border-t transition-colors duration-200
+                    ${isDark ? 'border-gray-700' : 'border-gray-200'}
+                `}>
                     <CancelButton 
                         text="Cancelar"
                         onClick={onCloseModal}

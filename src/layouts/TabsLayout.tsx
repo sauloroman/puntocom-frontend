@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTheme } from '../shared/hooks'
 
 interface TabsLayoutProps {
   children: React.ReactNode
@@ -13,10 +14,16 @@ export const TabsLayout: React.FC<TabsLayoutProps> = ({
   activeTab,
   onTabChange
 }) => {
+  const { theme } = useTheme()
+  const isDark = theme === "dark"
+
   return (
     <div className="w-full h-full flex flex-col">
 
-      <nav className="flex gap-3 border-b border-gray-200">
+      <nav className={`
+        flex gap-3 border-b transition-colors
+        ${isDark ? 'border-gray-700' : 'border-gray-200'}
+      `}>
         {tabs.map((tab) => {
           const isActive = activeTab === tab
           
@@ -27,8 +34,13 @@ export const TabsLayout: React.FC<TabsLayoutProps> = ({
               className={`
                 relative px-4 py-2 text-sm rounded-t-lg transition-colors cursor-pointer
                 ${isActive 
-                  ? "text-pink-600 bg-pink-50 border-b-2 border-pink-600" 
-                  : "text-gray-500 hover:text-pink-600 hover:bg-pink-50"}
+                  ? isDark
+                    ? "text-indigo-400 bg-indigo-950/30 border-b-2 border-indigo-400" 
+                    : "text-indigo-600 bg-indigo-50 border-b-2 border-indigo-600"
+                  : isDark
+                    ? "text-gray-400 hover:text-indigo-400 hover:bg-indigo-950/20"
+                    : "text-gray-500 hover:text-indigo-600 hover:bg-indigo-50"
+                }
               `}
               aria-selected={isActive}
             >
@@ -38,7 +50,10 @@ export const TabsLayout: React.FC<TabsLayoutProps> = ({
         })}
       </nav>
 
-      <div className="flex-1 p-4 py-6 bg-white">
+      <div className={`
+        flex-1 p-4 py-6 transition-colors
+        ${isDark ? 'bg-gray-900' : 'bg-white'}
+      `}>
         {children}
       </div>
     </div>

@@ -2,9 +2,11 @@ import React from 'react'
 import { ModalLayout } from '../../../layouts/ModalLayout'
 import { FaExclamationTriangle } from 'react-icons/fa'
 import { CancelButton, ConfirmButton } from '../../../shared/components'
-import { useModal, useReports } from '../../../shared/hooks'
+import { useModal, useReports, useTheme } from '../../../shared/hooks'
 
 export const ModalConfirmDeleteReport: React.FC = () => {
+  const { theme } = useTheme()
+  const isDark = theme === "dark"
 
   const { onCloseModal } = useModal()
   const { deleteReportById, reportIdSelected } = useReports()
@@ -18,15 +20,27 @@ export const ModalConfirmDeleteReport: React.FC = () => {
   return (
     <ModalLayout width='w-xl'>
       <div className="flex flex-col items-center justify-center text-center space-y-4 p-6">
-        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-red-100 text-red-600">
+        <div className={`
+          flex items-center justify-center w-16 h-16 rounded-full transition-colors
+          ${isDark 
+            ? 'bg-red-900/30 text-red-400' 
+            : 'bg-red-100 text-red-600'
+          }
+        `}>
           <FaExclamationTriangle size={32} />
         </div>
 
-        <h2 className="text-xl font-semibold text-gray-800">
+        <h2 className={`
+          text-xl font-semibold transition-colors
+          ${isDark ? 'text-gray-100' : 'text-gray-800'}
+        `}>
           Eliminar reporte
         </h2>
 
-        <p className="text-gray-600">
+        <p className={`
+          transition-colors
+          ${isDark ? 'text-gray-400' : 'text-gray-600'}
+        `}>
           ¿Estás seguro de que deseas eliminar el reporte? <br /> Esta acción no se puede deshacer.
         </p>
 

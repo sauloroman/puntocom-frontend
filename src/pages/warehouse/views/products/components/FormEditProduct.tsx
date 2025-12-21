@@ -1,11 +1,13 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useAlert, useCategories, useDrawer, useProducts, useSuppliers } from '../../../../../shared/hooks'
+import { useAlert, useCategories, useDrawer, useProducts, useSuppliers, useTheme } from '../../../../../shared/hooks'
 import { type EditProduct } from '../../../../../interfaces/product.interface'
 import { CancelButton, Input, Label, SaveButton, Textarea } from '../../../../../shared/components'
 import { AlertType } from '../../../../../interfaces/ui/alert.interface'
 
 export const FormEditProduct: React.FC = () => {
+  const { theme } = useTheme()
+  const isDark = theme === "dark"
 
   const { activateAlert } = useAlert()
   const { allCategories } = useCategories()
@@ -70,6 +72,14 @@ export const FormEditProduct: React.FC = () => {
     reset()
   }
 
+  const selectClassName = `
+    text-sm appearance-none w-full px-4 py-2 pr-10 rounded-lg
+    border focus:outline-none focus:ring-2 transition-all cursor-pointer duration-200
+    ${isDark
+      ? 'bg-gray-800 text-gray-100 border-gray-600 focus:ring-indigo-500/50 focus:border-indigo-500'
+      : 'bg-white text-gray-600 border-gray-300 focus:ring-indigo-200 focus:border-indigo-200'
+    }
+  `
 
   return (
     <form onSubmit={handleSubmit(onUpdateProductAc)} className='space-y-7'>
@@ -119,23 +129,26 @@ export const FormEditProduct: React.FC = () => {
         <div className='w-full'>
           <Label className='mb-3 flex items-center justify-between gap-2'>Categoría del producto</Label>
           <select
-            id="productSupplier"
+            id="productCategory"
             {
             ...register('categoryId', {
               required: { value: true, message: 'La categoría es obligatorio' }
             })
             }
-            className="
-              text-sm
-              appearance-none w-full px-4 py-2 pr-10 rounded-lg
-              bg-white text-gray-600
-              border border-gray-300
-              focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-200
-              transition-all cursor-pointer
-            "
+            className={selectClassName}
           >
-            <option value="">Seleccione una categoría</option>
-            {allCategories?.map(cat => (<option value={cat.id} key={cat.id}>{cat.name}</option>))}
+            <option value="" className={isDark ? 'bg-gray-800 text-gray-400' : ''}>
+              Seleccione una categoría
+            </option>
+            {allCategories?.map(cat => (
+              <option 
+                value={cat.id} 
+                key={cat.id}
+                className={isDark ? 'bg-gray-800 text-gray-100' : ''}
+              >
+                {cat.name}
+              </option>
+            ))}
           </select>
           {errors.categoryId && <p className='text-red-600 mt-1 text-right text-xs'>{errors.categoryId.message}</p>}
         </div>
@@ -149,17 +162,20 @@ export const FormEditProduct: React.FC = () => {
               required: { value: true, message: 'El proveedor es obligatorio' }
             })
             }
-            className="
-              text-sm
-              appearance-none w-full px-4 py-2 pr-10 rounded-lg
-              bg-white text-gray-600
-              border border-gray-300
-              focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-200
-              transition-all cursor-pointer
-            "
+            className={selectClassName}
           >
-            <option value="">Seleccione un proveedor</option>
-            {suppliers?.map(supp => (<option value={supp.id} key={supp.id}>{supp.name} {supp.lastname}</option>))}
+            <option value="" className={isDark ? 'bg-gray-800 text-gray-400' : ''}>
+              Seleccione un proveedor
+            </option>
+            {suppliers?.map(supp => (
+              <option 
+                value={supp.id} 
+                key={supp.id}
+                className={isDark ? 'bg-gray-800 text-gray-100' : ''}
+              >
+                {supp.name} {supp.lastname}
+              </option>
+            ))}
           </select>
           {errors.supplierId && <p className='text-red-600 mt-1 text-right text-xs'>{errors.supplierId.message}</p>}
         </div>

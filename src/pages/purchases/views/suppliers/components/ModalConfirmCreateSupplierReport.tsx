@@ -1,48 +1,68 @@
-import React from "react";
-import { ModalLayout } from "../../../../../layouts/ModalLayout";
-import { FaRegCheckCircle } from "react-icons/fa";
-import { CancelButton, CreateButton, SpinnerContainer } from "../../../../../shared/components";
-import { useModal, useReports, useSuppliers } from "../../../../../shared/hooks";
+import React from 'react'
+import { ModalLayout } from '../../../../../layouts/ModalLayout'
+import { CancelButton, CreateButton, SpinnerContainer } from '../../../../../shared/components'
+import { FaRegCheckCircle } from 'react-icons/fa'
+import { useModal, useReports, useSuppliers, useTheme } from '../../../../../shared/hooks'
 
-export const ModalConfirmCreateSupplierReport: React.FC = ({
-}) => {
+export const ModalConfirmCreateSupplierReport: React.FC = () => {
 
-  const { onCloseModal } = useModal()
-  const { isLoading } = useSuppliers()
-  const { createPdfList } = useReports()
+    const { onCloseModal } = useModal()
+    const { isLoading } = useSuppliers()
+    const { createPdfList } = useReports()
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
 
-  const onGenerateSuppliersListReport = () => {
-    createPdfList('suppliers')
-    onCloseModal()
-  }
+    const onGenerateSuppliersListReport = () => {
+        createPdfList('suppliers')
+        onCloseModal()
+    }
 
-  return (
-    <ModalLayout width="w-xl">
-      <div className="flex flex-col items-center text-center p-6">
-        {
-            isLoading
-            ? (<SpinnerContainer color="bg-white" size="lg" />)
-            : (
-                <>
-                    <FaRegCheckCircle className="text-indigo-600 text-5xl mb-4" />
+    return (
+        <ModalLayout width="w-xl">
+            <div
+                className={`
+                    flex flex-col items-center text-center p-6 rounded-md transition-colors duration-200
+                    ${isDark ? 'text-gray-100' : 'text-gray-800'}
+                `}
+            >
+                {
+                    isLoading ? (
+                        <SpinnerContainer color={isDark ? 'bg-gray-800' : 'bg-white'} size="lg" />
+                    ) : (
+                        <>
+                            <FaRegCheckCircle
+                                className={`text-5xl mb-4 ${isDark ? 'text-indigo-400' : 'text-indigo-600'}`}
+                            />
 
-                    <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                    ¿Generar reporte de proveedores?
-                    </h2>
+                            <h2
+                                className={`text-xl font-semibold mb-2 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
+                            >
+                                ¿Generar reporte de proveedores?
+                            </h2>
 
-                    <p className="text-gray-600 text-sm mb-6">
-                    Se generará un archivo PDF con la información más reciente de los proveedores. 
-                    ¿Deseas continuar?
-                    </p>
+                            <p
+                                className={`text-sm mb-6 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
+                            >
+                                Se generará un archivo PDF con la información más reciente de los proveedores.
+                                ¿Deseas continuar?
+                            </p>
 
-                    <div className="flex gap-4 w-full">
-                      <CreateButton className="p-2 flex-1" onClick={onGenerateSuppliersListReport} text="Sí, generar"/>
-                      <CancelButton className="p-2 flex-1" onClick={onCloseModal} text="No generar" />
-                    </div>
-                </>
-            )
-        }
-      </div>
-    </ModalLayout>
-  );
-};
+                            <div className="flex gap-4 w-full">
+                                <CreateButton
+                                    onClick={onGenerateSuppliersListReport}
+                                    className="p-2 flex-1"
+                                    text="Sí, generar"
+                                />
+                                <CancelButton
+                                    onClick={onCloseModal}
+                                    className="p-2 flex-1"
+                                    text="No generar"
+                                />
+                            </div>
+                        </>
+                    )
+                }
+            </div>
+        </ModalLayout>
+    )
+}

@@ -1,8 +1,7 @@
 import React from 'react'
 import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
-import { useModal, useProducts } from '../../../../../shared/hooks'
+import { useModal, useTheme } from '../../../../../shared/hooks'
 import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
-
 
 interface Props {
     id: string,
@@ -17,6 +16,8 @@ interface Props {
 export const ProductItem: React.FC<Props> = ({ id, image, name, stock, stockMin, badge, onSelectProduct }) => {
 
     const { onOpenModal } = useModal()
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
 
     const handleOpen = () => {
         onSelectProduct(id)
@@ -26,33 +27,54 @@ export const ProductItem: React.FC<Props> = ({ id, image, name, stock, stockMin,
     return (
         <div
             onClick={ handleOpen }
-            className='w-full py-3 px-5 hover:bg-gray-100 transition-all cursor-pointer group hover:translate-y-1.5'
+            className={`
+                w-full py-3 px-5 transition-all cursor-pointer group hover:translate-y-1
+                ${isDark ? "hover:bg-gray-800" : "hover:bg-gray-100"}
+            `}
         >
-            <div className='flex items-center'>
+            <div className='flex items-center gap-3'>
                 <img
                     src={image === 'Producto sin imagen' ? placeholderProduct : image}
                     alt={name}
                     className="w-12 h-12 object-contain"
                 />
-                <p className='text-gray-800 text-sm font-medium group-hover:text-gray-900 mb-2'>
+                <p 
+                    className={`
+                        text-sm font-medium transition-colors
+                        ${isDark 
+                            ? "text-gray-200 group-hover:text-white" 
+                            : "text-gray-800 group-hover:text-gray-900"
+                        }
+                    `}
+                >
                     {name}
                 </p>
             </div>
+
             {stock !== undefined && (
-                <div className='flex gap-3 items-center'>
+                <div className='flex gap-3 items-center mt-2'>
                     <div className='flex items-center gap-2'>
-                        <span className='text-xs text-gray-500'>
+                        <span className={`text-xs ${isDark ? "text-gray-400" : "text-gray-500"}`}>
                             Stock:
                         </span>
                         <span className={`text-sm font-bold ${badge} px-2.5 py-1 rounded-full`}>
                             {stock}
                         </span>
                     </div>
+
                     <div className='flex items-center gap-2'>
-                        <span className='text-xs text-gray-500'>
+                        <span className={`text-xs ${isDark ? "text-gray-400" : "text-gray-500"}`}>
                             Mínimo:
                         </span>
-                        <span className='text-sm font-semibold text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full'>
+                        <span
+                            className={`
+                                text-sm font-semibold px-2.5 py-1 rounded-full
+                                ${isDark 
+                                    ? "text-gray-300 bg-gray-800" 
+                                    : "text-gray-600 bg-gray-100"
+                                }
+                            `}
+                        >
                             {stockMin}
                         </span>
                     </div>
