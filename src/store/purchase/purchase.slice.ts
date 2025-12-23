@@ -41,6 +41,24 @@ export const purchaseSlice = createSlice({
             state.productsInPurchase = state.productsInPurchase?.filter( pro => pro.product.id !== payload )
         },
 
+        incrementProductQuantityInPurchase: ( state, { payload }: PayloadAction<string> ) => {
+            state.productsInPurchase = state.productsInPurchase?.map( pro => {
+                if ( pro.product.id === payload ) {
+                    pro.quantity++
+                }
+                return pro
+            }) 
+        },
+
+        decrementProductQuantityInPurchase: ( state, { payload }: PayloadAction<string> ) => {
+            state.productsInPurchase = state.productsInPurchase?.map( pro => {
+                if ( pro.product.id === payload && pro.quantity > 0 ) {
+                    pro.quantity--
+                }
+                return pro
+            }) 
+        },
+
         clearProductsInPurchase: ( state ) => {
             state.productsInPurchase = []
         }
@@ -55,4 +73,6 @@ export const {
     addProductInPurchase,
     removeProductInPurchase,
     clearProductsInPurchase,
+    incrementProductQuantityInPurchase,
+    decrementProductQuantityInPurchase
 } = purchaseSlice.actions

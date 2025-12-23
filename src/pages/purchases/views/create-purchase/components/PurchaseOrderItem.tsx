@@ -11,7 +11,7 @@ interface Props {
 export const PurchaseOrderItem: React.FC<Props> = ({ item, theme = 'light' }) => {
     const isDark = theme === 'dark'
     const total = item.quantity * item.unitPrice
-    const { onRemoveProductInPurchase } = usePurchase()
+    const { onRemoveProductInPurchase, incrementQuantityInPurchase, decrementQuantityInPurchase } = usePurchase()
 
     return (
         <div className={`
@@ -57,6 +57,7 @@ export const PurchaseOrderItem: React.FC<Props> = ({ item, theme = 'light' }) =>
             <div className="flex flex-col items-center gap-2">
                 <div className="flex items-center gap-2">
                     <button
+                        onClick={() => decrementQuantityInPurchase(item.product.id)}
                         type="button"
                         className={`
                             p-1 rounded-lg transition-all cursor-pointer
@@ -77,6 +78,7 @@ export const PurchaseOrderItem: React.FC<Props> = ({ item, theme = 'light' }) =>
                     </span>
                     
                     <button
+                        onClick={() => incrementQuantityInPurchase(item.product.id)}
                         type="button"
                         className={`
                             p-1 rounded-lg transition-all cursor-pointer
