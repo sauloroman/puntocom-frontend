@@ -6,6 +6,7 @@ interface ProductState {
     isLoading: boolean,
     products: Product[] | null,
     productsMinimal: ProductMinimal[] | null,
+    allProducts: Product[] | null,
     productsLowStock: Product[],
     productWarningStock: Product[],
     productNormalStock: Product[],
@@ -31,6 +32,7 @@ const initialState: ProductState = {
     isLoading: true,
     productsMinimal: null,
     products: null,
+    allProducts: null,
     productSelected: null,
     productNormalStock: [],
     productsLowStock: [],
@@ -82,6 +84,10 @@ export const productsSlice = createSlice({
 
         setProducts: ( state, { payload }: PayloadAction<Product[]>) => {
             state.products = payload
+        },
+
+        setAllProducts: ( state, {payload}: PayloadAction<Product[]>) => {
+            state.allProducts = payload
         },
 
         setProductsLowStock: (state, {payload}: PayloadAction<Product[]>) => {
@@ -147,6 +153,7 @@ export const {
     setPage,
     setPaginationVisible,
     setProducts,
+    setAllProducts,
     setProductsLowStock,
     setProductsMetaPagination,
     setProductsMinimal,

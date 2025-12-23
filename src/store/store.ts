@@ -14,6 +14,7 @@ import { reportsSlice } from "./reports/reports.slice";
 import { posSlice } from "./pos/pos.slice";
 import { saleSlice } from "./sale/sale.slice";
 import { inventorySlice } from "./inventory-adjustment/inventory-adjustment.slice";
+import { purchaseSlice } from "./purchase/purchase.slice";
 
 export const store = configureStore({
     reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
         pos: posSlice.reducer,
         sale: saleSlice.reducer,
         inventoryAdjustment: inventorySlice.reducer,
+        purchase: purchaseSlice.reducer,
 
         users: usersSlice.reducer,
         categories: categoriesSlice.reducer,

@@ -8,9 +8,21 @@ import type {
     EditProduct,
     EditProductResponse,
     ProductsByStock,
-    GetProductsMinimal
+    GetProductsMinimal,
+    GetAllProducts
 } from "../../interfaces/product.interface"
-import { addProducts, setIsLoading, setProducts, setProductsLowStock, setProductsMetaPagination, setProductsMinimal, setProductsNormalStock, setProductsWarningStock, setSelectedProduct, updateProduct } from "./products.slice"
+import { 
+    addProducts, 
+    setAllProducts, 
+    setIsLoading, 
+    setProducts, 
+    setProductsLowStock, 
+    setProductsMetaPagination, 
+    setProductsMinimal, 
+    setProductsNormalStock, 
+    setProductsWarningStock, 
+    setSelectedProduct, 
+    updateProduct } from "./products.slice"
 import { showAlert } from "../alert/alert.slice"
 import { AlertType } from "../../interfaces/ui/alert.interface"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
@@ -45,13 +57,33 @@ export const startGettingAllProducts = () => {
     return async ( dispatch: Dispatch ) => {
         dispatch(setIsLoading(true))
         try {
-
+            
             const { data } = await puntocomApiPrivate.get<GetProductsMinimal>(`${urlProducts}/all-minimal`)
             const { products } = data
 
             dispatch(setProductsMinimal(products))
         } catch(error) {
             console.log(error)
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startGettingAllProductsFull = () => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            const { data } = await puntocomApiPrivate.get<GetAllProducts>(`${urlProducts}/all`)
+            const { products } = data
+
+            dispatch(setAllProducts(products))
+        } catch(error) {
+             dispatch(showAlert({
+                title: "⚠️ Error productos",
+                text: 'No se pudieron obtener los productos',
+                type: AlertType.error,
+            }))
         } finally {
             dispatch(setIsLoading(false))
         }

@@ -8,6 +8,7 @@ import {
     startFilteringProductsByStatus, 
     startFilteringProductsBySupplier, 
     startGettingAllProducts, 
+    startGettingAllProductsFull, 
     startGettingProducts, 
     startGettingProductsByStock, 
     startSearchingProducts, 
@@ -39,7 +40,8 @@ export const useProducts = () => {
         filter,
         productNormalStock,
         productWarningStock,
-        productsLowStock
+        productsLowStock,
+        allProducts
     } = useSelector( (state: RootState) => state.products )
 
     const filterProductsByStatus = (status: boolean) => {
@@ -180,6 +182,10 @@ export const useProducts = () => {
         return product
     }
 
+    const getAllProducts = () => {
+        dispatch(startGettingAllProductsFull())
+    }
+
     return {
         isLoading,
         isPaginationVisible,
@@ -192,11 +198,13 @@ export const useProducts = () => {
         productNormalStock,
         productWarningStock,
         productsLowStock,
+        allProducts,
 
         onSetPage,
         getProducts,
         getProductById,
         getMinimalProducts,
+        getAllProducts,
         onSelectProduct,
         onCreateProduct,
         onUpdateProduct,

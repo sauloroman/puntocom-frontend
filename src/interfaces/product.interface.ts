@@ -41,6 +41,11 @@ export interface GetProductsMinimal {
     products: ProductMinimal[],
 }
 
+export interface GetAllProducts {
+    ok: boolean,
+    products: Product[]
+}
+
 export interface ChangeProductStatusResponse {
     ok: boolean,
     message: string,

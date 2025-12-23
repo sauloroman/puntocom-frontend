@@ -4,8 +4,9 @@ import { TabsLayout } from '../../layouts'
 import { useTabs } from '../../shared/hooks'
 import { WindowsTab } from '../../interfaces/ui/tabs.interface'
 import { PurchasesSuppliers } from './views/suppliers/PurchasesSuppliers'
+import { CreatePurchase } from './views/create-purchase/CreatePurchase'
 
-const tabs = ["Registro de compras", "Proveedores del sistema"]
+const tabs = ["Registrar Compra", "Registro de compras", "Proveedores del sistema"]
 
 export const Purchases: React.FC = () => {
   
@@ -17,6 +18,8 @@ export const Purchases: React.FC = () => {
         return <div>Registro de compras</div>
       case 'Proveedores del sistema':
         return <PurchasesSuppliers />
+      case 'Registrar Compra':
+        return <CreatePurchase />
     }
   }
 
