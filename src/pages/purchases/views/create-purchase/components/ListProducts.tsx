@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react'
-import { PaginationProducts, SearchProduct } from '../../../../warehouse/views/products/components'
+import { FilterProductsBySupplier, PaginationProducts } from '../../../../warehouse/views/products/components'
 import { useProducts, useTheme } from '../../../../../shared/hooks'
 import { ListProductItem } from './ListProductItem'
+import type { Product } from '../../../../../interfaces/product.interface'
 
-export const ListProducts: React.FC = () => {
+interface Props {
+    products: Product[]
+}
 
-    const { getProducts, products } = useProducts()
+export const ListProducts: React.FC<Props> = ({ products }) => {
+
+    const { getProducts } = useProducts()
     const { theme } = useTheme()
     const isDark = theme === 'dark'
 
@@ -27,7 +32,7 @@ export const ListProducts: React.FC = () => {
                 `}>
                     Lista de productos
                 </h2>
-                <SearchProduct />
+                <FilterProductsBySupplier />
             </div>
 
             <ul className="flex flex-col gap-3 overflow-y-scroll h-[70vh] p-4 no-scrollbar mb-12">

@@ -6,6 +6,7 @@ interface PurchasesState {
     purchases: PurchaseWithDetails[] | null,
     productSelectedToAdd: Product | null,
     productsInPurchase: ProductInPurchase[],
+    supplierSelected: string | null,
     isLoading: boolean
 }
 
@@ -13,6 +14,7 @@ const initialState: PurchasesState = {
     purchases: null,
     productSelectedToAdd: null,
     productsInPurchase: [],
+    supplierSelected: null,
     isLoading: false
 }
 
@@ -21,8 +23,16 @@ export const purchaseSlice = createSlice({
     initialState: initialState,
     reducers: {
 
+        setSupplierSelected: ( state, {payload}: PayloadAction<string> ) => {
+            state.supplierSelected = payload
+        },
+
         setPurchases: ( state, { payload }: PayloadAction<PurchaseWithDetails[]>) => {
             state.purchases = payload
+        },
+
+        addPurchase: ( state, {payload}: PayloadAction<PurchaseWithDetails>) => {
+            state.purchases?.unshift(payload)
         },
 
         setProductSelectedToAdd: ( state, { payload }: PayloadAction<Product | null>) => {
@@ -69,8 +79,10 @@ export const purchaseSlice = createSlice({
 export const {
     setPurchases,
     setProductSelectedToAdd,
+    setSupplierSelected,
     setIsLoading,
     addProductInPurchase,
+    addPurchase,
     removeProductInPurchase,
     clearProductsInPurchase,
     incrementProductQuantityInPurchase,

@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import type { Product } from "../../interfaces/product.interface"
 import { addProductInPurchase, decrementProductQuantityInPurchase, incrementProductQuantityInPurchase, removeProductInPurchase, setProductSelectedToAdd } from "../../store/purchase/purchase.slice"
-import type { ProductInPurchase } from "../../interfaces/purchase.interface"
+import type { ProductInPurchase, SavePurchase } from "../../interfaces/purchase.interface"
+import { startSavingPurchase } from "../../store/purchase/purchase.thunk"
 
 export const usePurchase = () => {
 
@@ -38,6 +39,10 @@ export const usePurchase = () => {
         dispatch(decrementProductQuantityInPurchase(productId))
     }
 
+    const savePurchase = ( savePurchase: SavePurchase ) => {
+        dispatch(startSavingPurchase(savePurchase))
+    }
+
     return {
         purchases,
         productSelectedToAdd,
@@ -48,6 +53,7 @@ export const usePurchase = () => {
         onAddProductInPurchase,
         onRemoveProductInPurchase,
         incrementQuantityInPurchase,
-        decrementQuantityInPurchase
+        decrementQuantityInPurchase,
+        savePurchase
     }
 }

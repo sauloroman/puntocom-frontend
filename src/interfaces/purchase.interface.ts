@@ -45,3 +45,21 @@ export interface ProductInPurchase {
     quantity: number,
     unitPrice: number
 }
+
+export interface SavePurchaseDetail {
+    productId: string,
+    quantity: number,
+    unitPrice: number
+}
+
+export interface SavePurchase {
+    total: number,
+    supplierId: string,
+    details: SavePurchaseDetail[]
+}
+
+export interface SavePurchaseResponse {
+    ok: boolean,
+    message: string,
+    purchase: PurchaseWithDetails
+}

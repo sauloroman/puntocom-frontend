@@ -27,12 +27,15 @@ import { GenerateReport, SortElementsAlpha } from '../../../../shared/components
 export const WarehouseProducts: React.FC = () => {
 
   const { rightDrawerIsOpen, leftDrawerIsOpen, drawelName } = useDrawer()
-  const { filter, products, getProducts, onOrderAlpha, isOrderedAsc, isLoading } = useProducts()
+  const { filter, getProducts, onOrderAlpha, isOrderedAsc, isLoading, products } = useProducts()
   const { categories, getCategories, getAllCategories } = useCategories()
   const { suppliers, getSuppliers, getAllSuppliers } = useSuppliers()
   const { onOpenModal, modalIsOpen, modalName, onOpenConfirmAdminPassword } = useModal()
 
   useEffect(() => {
+    if ( !products ){
+      getProducts()
+    }
     
     if (!categories) {
       getCategories()
@@ -41,11 +44,6 @@ export const WarehouseProducts: React.FC = () => {
     if (!suppliers) {
       getSuppliers()
     }
-
-    if (!products) {
-      getProducts()
-    }
-
   }, [])
 
   const openCreateProductModal = () => {

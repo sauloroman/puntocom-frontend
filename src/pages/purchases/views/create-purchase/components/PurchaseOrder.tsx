@@ -1,10 +1,11 @@
 import React from 'react'
 import { usePurchase, useTheme } from '../../../../../shared/hooks'
 import { PurchaseOrderItem } from './'
+import type { SavePurchase } from '../../../../../interfaces/purchase.interface'
 
 export const PurchaseOrder: React.FC = () => {
     const { theme } = useTheme()
-    const { productsInPurchase } = usePurchase()
+    const { productsInPurchase, savePurchase } = usePurchase()
     const isDark = theme === 'dark'
 
     const totalAmount = productsInPurchase.reduce((acc, item) => {
@@ -14,6 +15,20 @@ export const PurchaseOrder: React.FC = () => {
     const totalItems = productsInPurchase.reduce((acc, item) => {
         return acc + item.quantity
     }, 0)
+
+    const onSavePurchase = () => {
+        const purchase: SavePurchase = {
+            total: totalAmount,
+            supplierId: '',
+            details: productsInPurchase.map( pro => ({
+                productId: pro.product.id,
+                quantity: +pro.quantity,
+                unitPrice: +pro.unitPrice
+            }))
+        } 
+
+        savePurchase(purchase)
+    }
 
     return (
         <div className={`
@@ -96,6 +111,7 @@ export const PurchaseOrder: React.FC = () => {
                     </div>
 
                     <button
+                        onClick={onSavePurchase}
                         type="button"
                         className="mt-4 w-full py-3 rounded-lg font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-all"
                     >

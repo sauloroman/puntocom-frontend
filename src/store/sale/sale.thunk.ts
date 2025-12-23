@@ -38,7 +38,11 @@ export const startSavingSale = ( saveSale: SaveSale ) => {
             }
 
         } catch(error) {
-            console.log(error)
+            dispatch(showAlert({
+                title: 'Error Ventas 🗒️',
+                text: 'No se pudo guardar la venta',
+                type: AlertType.error
+            }))
         } finally {
             dispatch( setIsLoading( false ) )
         }
