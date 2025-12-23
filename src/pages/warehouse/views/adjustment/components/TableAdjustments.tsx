@@ -19,7 +19,7 @@ export const TableAdjustments: React.FC<Props> = ({ data }) => {
             border rounded-2xl overflow-hidden mb-5 shadow-sm transition-colors
             ${isDark ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'}
         `}>
-            <div className="max-h-[650px] overflow-y-auto custom-scrollbar">
+            <div className="max-h-[650px] overflow-y-auto custom-scrollbar no-scrollbar">
                 <table className="min-w-full">
                     <thead className={`
                         text-xs uppercase tracking-wide sticky top-0 z-10 shadow-sm

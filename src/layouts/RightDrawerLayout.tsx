@@ -68,7 +68,7 @@ export const RightDrawerLayout: React.FC<DrawerProps> = ({ title, width, childre
               </button>
             </div>
 
-            <div className="p-4 py-10 flex-1 overflow-y-auto">
+            <div className="p-4 py-5 flex-1 overflow-y-auto">
               {children}
             </div>
           </motion.div>

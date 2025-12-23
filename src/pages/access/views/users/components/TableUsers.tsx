@@ -6,7 +6,7 @@ import { UserValidateTag } from './UserValidateTag';
 import { useDrawer, useTheme, useUsers } from '../../../../../shared/hooks';
 import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface';
 import { StatusBadge } from '../../../../../shared/components';
-import { BsPerson, BsEnvelope, BsShield, BsToggleOn, BsCalendar3, BsClock, BsCheckCircle } from 'react-icons/bs';
+import { BsPerson, BsEnvelope, BsShield, BsToggleOn, BsCheckCircle, BsPhone } from 'react-icons/bs';
 
 interface TableUsersProps {
   data: User[]
@@ -37,7 +37,7 @@ export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
                 ${isDark ? "border-gray-700 bg-gray-800" : "border-gray-200 bg-white"}
             `}
         >
-            <div className="max-h-[650px] overflow-y-auto custom-scrollbar">
+            <div className="max-h-[650px] overflow-y-auto custom-scrollbar no-scrollbar">
                 <table className="min-w-full">
                     <thead
                         className={`
@@ -58,7 +58,13 @@ export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
                             <th className="px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsEnvelope className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
-                                    Correo electrónico
+                                    Correo  
+                                </div>
+                            </th>
+                            <th className="px-6 py-4 text-left font-bold">
+                                <div className="flex items-center gap-2">
+                                    <BsPhone className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
+                                    Teléfono
                                 </div>
                             </th>
                             <th className="px-6 py-4 text-left font-bold">
@@ -71,18 +77,6 @@ export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
                                 <div className="flex items-center gap-2">
                                     <BsToggleOn className={isDark ? "text-gray-300" : "text-indigo-600"} size={18} />
                                     Estado
-                                </div>
-                            </th>
-                            <th className="px-6 py-4 text-left font-bold">
-                                <div className="flex items-center gap-2">
-                                    <BsCalendar3 className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
-                                    Creado
-                                </div>
-                            </th>
-                            <th className="px-6 py-4 text-left font-bold">
-                                <div className="flex items-center gap-2">
-                                    <BsClock className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
-                                    Actualizado
                                 </div>
                             </th>
                             <th className="px-6 py-4 text-left font-bold">
@@ -126,16 +120,13 @@ export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
                                         {user.email}
                                     </td>
                                     <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+                                        {user.phone || 'Sin teléfono'}
+                                    </td>
+                                    <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
                                         <UserRoleTag role={user.role as Roles} />
                                     </td>
                                     <td className="px-6 py-4">
                                         <StatusBadge status={user.isActive} />
-                                    </td>
-                                    <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-700"}`}>
-                                        {user.createdAt}
-                                    </td>
-                                    <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-700"}`}>
-                                        {user.updatedAt}
                                     </td>
                                     <td className='px-6 py-4'>
                                         <UserValidateTag isValidated={user.isValidated} />

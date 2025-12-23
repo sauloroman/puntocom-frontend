@@ -41,7 +41,8 @@ export interface CreateUser {
   lastname: string,
   email: string,
   password: string,
-  role: Roles
+  role: Roles,
+  phone: string,
 }
 
 export interface CreateUserResponse {
@@ -54,6 +55,7 @@ export interface UpdateUser {
   name?: string,
   lastname?: string,
   role?: Roles
+  phone?: string,
 }
 
 export interface UpdateUserResponse {
@@ -69,6 +71,7 @@ export interface User {
   email: string,
   role: string,
   image: string,
+  phone: string,
   isActive: boolean,
   isValidated: boolean
   createdAt: string,

@@ -69,7 +69,7 @@ export const ProductStack: React.FC<Props> = ({ products, title, onSelectProduct
                     </p>
                 </div>
             ) : (
-                <div className='h-[500px] overflow-y-auto custom-scrollbar'>
+                <div className='h-[500px] overflow-y-auto custom-scrollbar no-scrollbar'>
                     <ul className={`divide-y ${isDark ? 'divide-gray-800' : 'divide-gray-100'}`}>    
                         {products.map(product => (
                             <ProductItem 

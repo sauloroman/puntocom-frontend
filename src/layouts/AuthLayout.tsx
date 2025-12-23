@@ -14,7 +14,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
       relative min-h-screen flex overflow-hidden transition-colors duration-200
       ${isDark ? 'bg-gray-900' : 'bg-white'}
     `}>
-      
+
       <div className={`
         absolute -top-20 -left-20 w-72 h-72 rounded-full blur-3xl animate-pulse
         ${isDark
@@ -39,17 +39,21 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
 
       <div className='relative flex flex-col justify-center w-full md:w-1/2 px-8 md:px-16 lg:px-20 z-10'>
         <div className='absolute right-[50%] top-5 translate-x-[50%]'>
-          <img 
-            className={`w-[150px] transition-all duration-200 ${isDark ? 'brightness-0 invert' : ''}`}
-            src="https://res.cloudinary.com/dlamufioy/image/upload/v1755733945/puntocom/3_paawzo.png" 
-            alt="PuntoCom Logo" 
+          <img
+            className={`w-[150px] transition-all duration-200 ${isDark ?? 'brightness-0 invert'}`}
+            src={`${
+                !isDark
+                ? "https://res.cloudinary.com/dlamufioy/image/upload/v1755733945/puntocom/3_paawzo.png"
+                : "https://res.cloudinary.com/dlamufioy/image/upload/v1762972429/puntocom/PUNTOCAF%C3%89_3_njxbc4.png"
+              }`}
+            alt="PuntoCom Logo"
           />
         </div>
-        { children }
+        {children}
       </div>
 
       <div className='hidden md:flex w-1/2 relative z-10'>
-        <img 
+        <img
           src="https://source.unsplash.com/800x600/?coffee,technology"
           alt="Imagen de login"
           className={`

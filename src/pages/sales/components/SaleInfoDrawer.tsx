@@ -5,6 +5,7 @@ import { SpinnerContainer } from '../../../shared/components'
 import { FiCalendar, FiPackage, FiTag } from 'react-icons/fi'
 import { SaleDetailItem } from './SaleDetailItem'
 import { SaleDetailUser } from './SaleDetailUser'
+import { PrintSale } from './PrintSale'
 
 export const SaleInfoDrawer: React.FC = () => {
     const { theme } = useTheme()
@@ -28,7 +29,7 @@ export const SaleInfoDrawer: React.FC = () => {
     if (!selectedSale) return null
         
     return (
-        <RightDrawerLayout width='w-2xl' title='Detalle de venta'>
+        <RightDrawerLayout width='w-4xl' title='Detalle de venta'>
             <div className={`
                 flex flex-col h-full transition-colors
                 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}
@@ -57,14 +58,17 @@ export const SaleInfoDrawer: React.FC = () => {
                                 {selectedSale.code}
                             </div>
                         </div>
-                        <div className={`
-                            px-4 py-2 rounded-lg font-medium transition-colors
-                            ${isDark 
-                                ? 'bg-indigo-900/50 text-indigo-300' 
-                                : 'bg-indigo-50 text-indigo-700'
-                            }
-                        `}>
-                            ${selectedSale.total.toFixed(2)}
+                        <div className="flex flex-col gap-4">
+                            <div className={`
+                                px-4 py-2 rounded-lg font-medium transition-colors
+                                ${isDark 
+                                    ? 'bg-indigo-900/50 text-indigo-300' 
+                                    : 'bg-indigo-50 text-indigo-700'
+                                }
+                            `}>
+                                ${selectedSale.total.toFixed(2)}
+                            </div>
+                            <PrintSale />
                         </div>
                     </div>
                     <div className={`

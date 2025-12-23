@@ -27,7 +27,7 @@ export const TableReports: React.FC = () => {
         : 'border-gray-200 bg-white'
       }
     `}>
-      <div className="h-[500px] overflow-y-auto custom-scrollbar">
+      <div className="h-[500px] overflow-y-auto custom-scrollbar no-scrollbar">
         <table className="min-w-full">
           <thead className={`
             text-xs uppercase tracking-wide sticky top-0 z-10 shadow-sm transition-colors

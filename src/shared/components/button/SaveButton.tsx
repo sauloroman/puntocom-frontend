@@ -6,6 +6,7 @@ interface ButtonProps {
   submit?: boolean;
   className?: string;
   onClick?: () => void;
+  disabled?: boolean,
   text: string;
 }
 
@@ -13,6 +14,7 @@ export const SaveButton: React.FC<ButtonProps> = ({
   text,
   onClick,
   submit = false,
+  disabled = false,
   className = "",
 }) => {
   const { theme } = useTheme();
@@ -20,6 +22,7 @@ export const SaveButton: React.FC<ButtonProps> = ({
 
   return (
     <Button
+      disabled={disabled}
       onClick={onClick}
       type={submit ? "submit" : "button"}
       className={`

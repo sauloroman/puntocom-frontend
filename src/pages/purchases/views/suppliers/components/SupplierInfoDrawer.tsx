@@ -1,13 +1,16 @@
 import React from "react"
-import { useSuppliers, useTheme } from "../../../../../shared/hooks"
+import { useModal, useSuppliers, useTheme } from "../../../../../shared/hooks"
 import { RightDrawerLayout } from "../../../../../layouts/RightDrawerLayout"
 import { SpinnerContainer } from "../../../../../shared/components"
 import type { Supplier } from "../../../../../interfaces/supplier.interface"
 import { AvatarInitialSquare } from "../../../../../shared/components/avatar/AvatarInitialSquare"
+import { WhatsAppButton } from "../../../../../shared/components/button/WhatsAppButton"
+import { ModalNames } from "../../../../../interfaces/ui/modal.interface"
 
 export const SupplierInfoDrawer: React.FC = () => {
 
   const { supplierSelected, isLoading } = useSuppliers()
+  const { onOpenModal } = useModal()
   const { theme } = useTheme()
   const isDark = theme === "dark"
 
@@ -38,7 +41,6 @@ export const SupplierInfoDrawer: React.FC = () => {
     <RightDrawerLayout width="w-xl" title="Información de proveedor">
       <div className="p-4 flex flex-col h-full">
 
-        {/* Header con avatar e información principal */}
         <div className="flex items-center gap-4 mb-6">
           <AvatarInitialSquare name={name} />
           <div>
@@ -62,7 +64,6 @@ export const SupplierInfoDrawer: React.FC = () => {
           </div>
         </div>
 
-        {/* Información detallada */}
         <div className={`px-1 space-y-3 text-sm mb-10 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
           <p>
             <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>#Id:</span> {id}
@@ -86,8 +87,7 @@ export const SupplierInfoDrawer: React.FC = () => {
             <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Última actualización:</span> {updatedAt}
           </p>
         </div>
-
-        {/* Spinner de carga */}
+        <WhatsAppButton className="w-full p-4" text="Enviar Mensaje" onClick={() => onOpenModal(ModalNames.sendMessageToSupplier)} />
         {isLoading && (
           <div className="flex justify-center mt-auto">
             <SpinnerContainer color={isDark ? "border-indigo-400" : "border-indigo-700"} size="lg" />

@@ -21,13 +21,22 @@ import {
 } from "../../store/sale/sale.slice"
 import type { Pagination } from "../../interfaces/pagination.interface"
 import type { ProductInCart } from "../../interfaces/product.interface"
-import type { DateRange, PriceRange, SaveSale } from "../../interfaces/sale.interface"
+import type { DateRange, GetSale, PriceRange, SaleResponse, SaveSale } from "../../interfaces/sale.interface"
 import type { RootState } from "../../store"
+import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 
 export const useSale = () => {
     
     const dispatch = useDispatch<any>()
-    const { sales, isLoading, saleCreated, pagination, filter, selectedSale, isPaginationVisible } = useSelector( (state: RootState) => state.sale )
+    const { 
+        sales, 
+        isLoading, 
+        saleCreated,
+        saleToPrint, 
+        pagination, 
+        filter, 
+        selectedSale, 
+        isPaginationVisible } = useSelector( (state: RootState) => state.sale )
 
     const filterSalesByUser = ( userId: string ) => {
         dispatch(startGettingSalesByUser( userId, { page: 1, limit: pagination.itemsPerPage }))
@@ -182,6 +191,14 @@ export const useSale = () => {
         filterSalesDependingActiveFilters(page, pagination.itemsPerPage)
     }
 
+    const onGetSaleById = async (): Promise<SaleResponse> => {
+        if (!selectedSale) throw new Error('Seleccione una venta para imprimir')
+        const saleId = selectedSale.id
+        const { data } = await puntocomApiPrivate.get<GetSale>(`/api/sale/${saleId}`)
+        const { sale } = data
+        return sale
+    }
+
     return {
         filter,
         filterSalesByUser,
@@ -193,6 +210,8 @@ export const useSale = () => {
         onSetPage,
         onSetSelectedSale,
         onSetFilterPrices,
+        onGetSaleById,
+
         pagination,
         saleCreated,
         sales,
@@ -201,6 +220,7 @@ export const useSale = () => {
         filterSales,
         onSetFilterDates,
         onResetFilters,
+        saleToPrint,
         filterSalesDependingActiveFilters,
     }
 

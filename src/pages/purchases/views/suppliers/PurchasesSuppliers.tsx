@@ -5,6 +5,7 @@ import {
   ModalConfirmCreateSupplierReport,
   ModalCreateSupplier, 
   ModalSupplierReport, 
+  ModalWhatsappMessage, 
   PaginationSuppliers, 
   SearchSupplier, 
   SelectSupplierByCompany, 
@@ -70,6 +71,7 @@ export const PurchasesSuppliers: React.FC = () => {
       {modalIsOpen && modalName === ModalNames.confirmCreateSupplierReport && <ModalConfirmCreateSupplierReport />}
       {modalIsOpen && modalName === ModalNames.reportSuppliers && <ModalSupplierReport />}
       {modalIsOpen && modalName === ModalNames.confirmChangeStatusSupplier && <ModalConfirmChangeStatusSupplier />}
+      {modalIsOpen && modalName === ModalNames.sendMessageToSupplier && <ModalWhatsappMessage />}
       {rightDrawerIsOpen && drawelName === DrawelNames.infoSupplier && <SupplierInfoDrawer />}
       {rightDrawerIsOpen && drawelName === DrawelNames.editSupplier && <SupplierEditDrawer />}
     </>

@@ -76,7 +76,7 @@ export const generarTicketPDF = async (saleCreated: any, products: any[]) => {
               fontSize: 8
             },
             {
-              text: `$${product?.sellingPrice.toFixed(2)}`,
+              text: `$${unitPrice.toFixed(2)}`,
               alignment: 'right',
               margin: [0, 2, 0, 0],
               fontSize: 8

@@ -42,8 +42,13 @@ export interface SaleProductDetailResponse {
 }
 
 export interface SaveSaleResponse {
-    ok: true,
+    ok: boolean,
     message: string,
+    sale: SaleResponse
+}
+
+export interface GetSale {
+    ok: boolean,
     sale: SaleResponse
 }
 

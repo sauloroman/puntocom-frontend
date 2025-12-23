@@ -33,7 +33,7 @@ export const TableCategories: React.FC<TableCategoriesProps> = ({ data }) => {
         ${isDark ? "border-gray-700 bg-gray-800" : "border-gray-200 bg-white"}
       `}
     >
-      <div className="max-h-[650px] overflow-y-auto custom-scrollbar">
+      <div className="max-h-[650px] overflow-y-auto custom-scrollbar no-scrollbar">
 
         <table className="min-w-full">
 

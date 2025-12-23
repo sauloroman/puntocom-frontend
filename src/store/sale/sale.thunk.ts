@@ -2,14 +2,15 @@ import { clearCart, updateProduct } from "../pos/pos.slice";
 import { ModalNames } from "../../interfaces/ui/modal.interface";
 import { openModal } from "../modal/modal.slice";
 import { puntocomApiPrivate } from "../../config/api/puntocom.api";
-import { addSale, setIsLoading, setSaleCreated, setSales, setSalesMetaPagination } from "./sale.slice";
+import { addSale, setIsLoading, setSaleCreated, setSales, setSalesMetaPagination, setSaleToPrint } from "./sale.slice";
 import type { 
     SaveSaleResponse, 
     SaveSale, 
     GetAllSalesResponse, 
     PriceRange, 
     DateRange,
-    GetFilteredSalesResponse
+    GetFilteredSalesResponse,
+    GetSale
 } from "../../interfaces/sale.interface";
 import type { Dispatch } from "@reduxjs/toolkit";
 import { showAlert } from "../alert/alert.slice";
@@ -164,6 +165,25 @@ export const startGettingFilteredSalesByUser = ( userId: string, prices?: PriceR
             }))
         } finally {
             dispatch( setIsLoading( false ) )
+        }
+    }
+}
+
+export const startGettingSaleById = ( saleId: string ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            const { data } = await puntocomApiPrivate.get<GetSale>(`${urlSale}/${saleId}`)
+            const { sale } = data
+            dispatch(setSaleToPrint(sale))
+        } catch( error ) {
+            dispatch(showAlert({
+                title: 'Error Ventas 🗒️',
+                text: 'No se pudo obtener la venta por id',
+                type: AlertType.error
+            }))
+        } finally {
+            dispatch(setIsLoading(false))
         }
     }
 }

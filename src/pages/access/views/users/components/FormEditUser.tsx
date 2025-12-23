@@ -24,6 +24,7 @@ export const FormEditUser: React.FC = () => {
             name: userSelected?.name,
             lastname: userSelected?.lastname,
             role: userSelected?.role as Roles,
+            phone: userSelected?.phone
         }
     })
 
@@ -32,7 +33,8 @@ export const FormEditUser: React.FC = () => {
 
         if (data.name === userSelected.name &&
             data.lastname === userSelected.lastname &&
-            data.role === userSelected.role
+            data.role === userSelected.role &&
+            data.phone === userSelected.phone
         ) {
             activateAlert({
                 title: 'No hay cambios',
@@ -97,6 +99,25 @@ export const FormEditUser: React.FC = () => {
                         }
                     />
                     {errors.lastname && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.lastname.message}</p>)}
+                </div>
+                <div className="flex-1 w-full">
+                    <Label htmlFor='userPhone' className='mb-3 flex items-center justify-between gap-2'>
+                        Número de teléfono
+                        <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
+                    </Label>
+                    <Input
+                        autoComplete='off'
+                        id='userPhone'
+                        type='text'
+                        placeholder='Teléfono de contacto'
+                        {
+                        ...register('phone', {
+                            required: 'El número es obligatorio',
+                            maxLength: { value: 12, message: 'Máximo 12 caracteres' }
+                        })
+                        }
+                    />
+                    {errors.phone && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.phone.message}</p>)}
                 </div>
                 <div className="flex-1 w-full">
                     <Label htmlFor='userRole' className='mb-3 flex items-center justify-between gap-2'>

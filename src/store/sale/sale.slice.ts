@@ -7,6 +7,7 @@ interface SliceState {
     saleCreated: SaleResponse | null,
     sales: SaleResponse[],
     selectedSale: SaleResponse | null,
+    saleToPrint: SaleResponse | null,
     pagination: MetaPagination & { itemsPerPage: number },
     isPaginationVisible: boolean,
     filter: {
@@ -29,6 +30,7 @@ const initialState: SliceState = {
     isLoading: false,
     saleCreated: null,
     selectedSale: null,
+    saleToPrint: null,
     sales: [],
     pagination: {
         page: 1,
@@ -101,6 +103,10 @@ export const saleSlice = createSlice({
             state.selectedSale = payload
         },
 
+        setSaleToPrint: ( state, {payload}: PayloadAction<SaleResponse>) => {
+            state.saleToPrint = payload
+        },
+
         setPage: ( state, {payload}: PayloadAction<number>) => {
             state.pagination.page = payload
         },
@@ -120,4 +126,5 @@ export const {
     setSalesMetaPagination,
     setSelectedSale,
     setUserFilter,
+    setSaleToPrint,
 } = saleSlice.actions
