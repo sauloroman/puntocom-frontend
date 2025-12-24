@@ -5,6 +5,7 @@ import { useTabs } from '../../shared/hooks'
 import { WindowsTab } from '../../interfaces/ui/tabs.interface'
 import { PurchasesSuppliers } from './views/suppliers/PurchasesSuppliers'
 import { CreatePurchase } from './views/create-purchase/CreatePurchase'
+import { PurchasesPage } from './views/purchases/PurchasesPage'
 
 const tabs = ["Registrar Compra", "Registro de compras", "Proveedores del sistema"]
 
@@ -15,7 +16,7 @@ export const Purchases: React.FC = () => {
   const renderContent = () => {
     switch(activeTab) {
       case 'Registro de compras':
-        return <div>Registro de compras</div>
+        return <PurchasesPage />
       case 'Proveedores del sistema':
         return <PurchasesSuppliers />
       case 'Registrar Compra':

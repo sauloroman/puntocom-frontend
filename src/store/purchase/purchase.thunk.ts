@@ -1,6 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import type { SavePurchase, SavePurchaseResponse } from "../../interfaces/purchase.interface";
-import { addPurchase, clearProductsInPurchase, setIsLoading, setProducts, setProductsMetaPagination } from "./purchase.slice";
+import { addPurchase, clearProductsInPurchase, setIsLoading, setProducts, setProductsMetaPagination, updateProduct } from "./purchase.slice";
 import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
 import { puntocomApiPrivate } from "../../config/api/puntocom.api";
@@ -18,6 +18,11 @@ export const startSavingPurchase = (savePurchase: SavePurchase) => {
             const { ok, purchase } = data
 
             if ( ok ) {
+
+                for ( const product of savePurchase.details ) {
+                    dispatch(updateProduct(product))
+                }
+
                 dispatch(addPurchase(purchase))
                 dispatch(clearProductsInPurchase())
                 dispatch(showAlert({

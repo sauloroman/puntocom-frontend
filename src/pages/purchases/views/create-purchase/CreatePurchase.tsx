@@ -4,10 +4,11 @@ import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { ModalAddProductPurchase, ListProducts, PurchaseOrder } from './components'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 import { FilterProductsBySuppliersDrawer } from '../../../warehouse/views/products/components'
+import { Spinner } from '../../../../shared/components'
 
 export const CreatePurchase: React.FC = () => {
 
-  const { products, getProductsToBeInPurchase } = usePurchase()
+  const { products, getProductsToBeInPurchase, isLoading } = usePurchase()
   const { modalIsOpen, modalName } = useModal()
   const { leftDrawerIsOpen, drawelName } = useDrawer()
 
@@ -16,6 +17,12 @@ export const CreatePurchase: React.FC = () => {
       getProductsToBeInPurchase()
     }
   }, [])
+
+  if ( isLoading ) {
+    return (
+      <div className='h-[80vh] flex justify-center items-center'><Spinner size='lg' /></div>
+    )
+  }
 
   return (
     <div className='grid grid-cols-2 gap-5'>

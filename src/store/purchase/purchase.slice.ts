@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { ProductInPurchase, PurchaseWithDetails } from "../../interfaces/purchase.interface";
+import type { ProductInPurchase, PurchaseWithDetails, SavePurchaseDetail } from "../../interfaces/purchase.interface";
 import type { Product } from "../../interfaces/product.interface";
 import type { MetaPagination } from "../../interfaces/pagination.interface";
 
@@ -57,6 +57,15 @@ export const purchaseSlice = createSlice({
             state.productSelectedToAdd = payload
         },
 
+        updateProduct: ( state, {payload}: PayloadAction<SavePurchaseDetail>) => {
+            state.products = state.products?.map( pro => {
+                if ( pro.id === payload.productId ) {
+                    pro.stock = pro.stock + payload.quantity
+                }             
+                return pro   
+            }) ?? []
+        },
+
         setIsLoading: ( state, {payload}: PayloadAction<boolean> ) => {
             state.isLoading = payload
         },
@@ -105,6 +114,7 @@ export const {
     setIsLoading,
     addProductInPurchase,
     addPurchase,
+    updateProduct,
     removeProductInPurchase,
     clearProductsInPurchase,
     incrementProductQuantityInPurchase,
