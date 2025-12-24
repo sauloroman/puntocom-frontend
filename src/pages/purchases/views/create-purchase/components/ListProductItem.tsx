@@ -1,7 +1,8 @@
 import React from 'react'
 import type { Product } from '../../../../../interfaces/product.interface'
-import { useModal, usePurchase, useTheme } from '../../../../../shared/hooks';
+import { useAlert, useModal, usePurchase, useTheme } from '../../../../../shared/hooks';
 import { ModalNames } from '../../../../../interfaces/ui/modal.interface';
+import { AlertType } from '../../../../../interfaces/ui/alert.interface';
 
 interface Props {
     product: Product
@@ -11,12 +12,28 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
 
     const { theme } = useTheme()
     const { onOpenModal } = useModal()
-    const { onSelectProductToAddPurchase } = usePurchase()
+    const { activateAlert } = useAlert()
+    const { onSelectProductToAddPurchase, productsInPurchase } = usePurchase()
 
     const isLowStock = product.stock <= product.stockMin;
     const isDark = theme === 'dark';
 
     const onSelectProduct = () => {
+        let existingProduct = false
+
+        productsInPurchase.forEach( prod => {
+            if ( prod.product.id === product.id ) {
+                activateAlert({
+                    title: 'Error en compra 🗒️',
+                    text: 'Ya existe el producto en la compra',
+                    type: AlertType.warning
+                })
+                existingProduct = true
+            }
+        })
+
+        if ( existingProduct ) return
+        
         onOpenModal(ModalNames.addProductPurchase)
         onSelectProductToAddPurchase(product)
     }

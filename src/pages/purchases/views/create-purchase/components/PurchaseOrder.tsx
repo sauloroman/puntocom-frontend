@@ -1,11 +1,14 @@
 import React from 'react'
-import { usePurchase, useTheme } from '../../../../../shared/hooks'
+import { useAlert, usePurchase, useTheme } from '../../../../../shared/hooks'
 import { PurchaseOrderItem } from './'
 import type { SavePurchase } from '../../../../../interfaces/purchase.interface'
+import { SaveButton } from '../../../../../shared/components'
+import { AlertType } from '../../../../../interfaces/ui/alert.interface'
 
 export const PurchaseOrder: React.FC = () => {
     const { theme } = useTheme()
-    const { productsInPurchase, savePurchase } = usePurchase()
+    const { productsInPurchase, savePurchase, supplierSelected } = usePurchase()
+    const { activateAlert } = useAlert()
     const isDark = theme === 'dark'
 
     const totalAmount = productsInPurchase.reduce((acc, item) => {
@@ -17,9 +20,18 @@ export const PurchaseOrder: React.FC = () => {
     }, 0)
 
     const onSavePurchase = () => {
+        if ( !supplierSelected ) {
+            activateAlert({
+                title: 'Error en compra 🗒️',
+                text: 'Seleccione un proveedor',
+                type: AlertType.warning
+            })
+            return
+        }
+
         const purchase: SavePurchase = {
             total: totalAmount,
-            supplierId: '',
+            supplierId: supplierSelected,
             details: productsInPurchase.map( pro => ({
                 productId: pro.product.id,
                 quantity: +pro.quantity,
@@ -110,13 +122,11 @@ export const PurchaseOrder: React.FC = () => {
                         </div>
                     </div>
 
-                    <button
+                    <SaveButton
                         onClick={onSavePurchase}
-                        type="button"
+                        text='Confirmar Compra'
                         className="mt-4 w-full py-3 rounded-lg font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-all"
-                    >
-                        Confirmar Compra
-                    </button>
+                    />
                 </>
             )}
         </div>

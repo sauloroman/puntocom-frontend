@@ -1,27 +1,45 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { ProductInPurchase, PurchaseWithDetails } from "../../interfaces/purchase.interface";
 import type { Product } from "../../interfaces/product.interface";
+import type { MetaPagination } from "../../interfaces/pagination.interface";
 
 interface PurchasesState {
+    products: Product[] | null,
     purchases: PurchaseWithDetails[] | null,
     productSelectedToAdd: Product | null,
     productsInPurchase: ProductInPurchase[],
     supplierSelected: string | null,
+    pagination: MetaPagination & { itemsPerPage: number },
     isLoading: boolean
 }
 
 const initialState: PurchasesState = {
+    products: null,
     purchases: null,
     productSelectedToAdd: null,
     productsInPurchase: [],
     supplierSelected: null,
-    isLoading: false
+    isLoading: false,
+    pagination: {
+        page: 1,
+        total: 1,
+        totalPages: 1,
+        itemsPerPage: 30
+    },
 }
 
 export const purchaseSlice = createSlice({
     name: 'purchases',
     initialState: initialState,
     reducers: {
+
+        setProducts: ( state, {payload}: PayloadAction<Product[]>) => {
+            state.products = payload
+        },
+
+        setProductsMetaPagination: (state, {payload}: PayloadAction<MetaPagination & {itemsPerPage: number}>) => {
+            state.pagination = payload
+        },
 
         setSupplierSelected: ( state, {payload}: PayloadAction<string> ) => {
             state.supplierSelected = payload
@@ -44,7 +62,9 @@ export const purchaseSlice = createSlice({
         },
 
         addProductInPurchase: ( state, { payload }: PayloadAction<ProductInPurchase> ) => {
-            state.productsInPurchase?.unshift(payload)
+            if ( !state.productsInPurchase.includes(payload) ) {
+                state.productsInPurchase?.unshift(payload)
+            }
         },
 
         removeProductInPurchase: ( state, { payload }: PayloadAction<string> ) => {
@@ -77,6 +97,8 @@ export const purchaseSlice = createSlice({
 })
 
 export const {
+    setProducts,
+    setProductsMetaPagination,
     setPurchases,
     setProductSelectedToAdd,
     setSupplierSelected,

@@ -25,7 +25,9 @@ export const WarehouseAdjustment: React.FC = () => {
   const { isLoading: isReportsLoading } = useReports()
 
   useEffect(() => {
-    if ( !adjustments ) getInventoryAdjustments()
+    if ( !adjustments ) {
+      getInventoryAdjustments()
+    }
   }, [])
 
   useEffect(() => {

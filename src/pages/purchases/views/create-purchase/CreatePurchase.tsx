@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDrawer, useModal, useProducts } from '../../../../shared/hooks'
+import { useDrawer, useModal, usePurchase } from '../../../../shared/hooks'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { ModalAddProductPurchase, ListProducts, PurchaseOrder } from './components'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
@@ -7,12 +7,14 @@ import { FilterProductsBySuppliersDrawer } from '../../../warehouse/views/produc
 
 export const CreatePurchase: React.FC = () => {
 
-  const { products, getProducts } = useProducts()
+  const { products, getProductsToBeInPurchase } = usePurchase()
   const { modalIsOpen, modalName } = useModal()
   const { leftDrawerIsOpen, drawelName } = useDrawer()
 
   useEffect(() => {
-    getProducts()
+    if ( !products ) {
+      getProductsToBeInPurchase()
+    }
   }, [])
 
   return (

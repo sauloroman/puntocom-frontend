@@ -1,17 +1,20 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import type { Product } from "../../interfaces/product.interface"
-import { addProductInPurchase, decrementProductQuantityInPurchase, incrementProductQuantityInPurchase, removeProductInPurchase, setProductSelectedToAdd } from "../../store/purchase/purchase.slice"
+import { addProductInPurchase, decrementProductQuantityInPurchase, incrementProductQuantityInPurchase, removeProductInPurchase, setProductSelectedToAdd, setSupplierSelected } from "../../store/purchase/purchase.slice"
 import type { ProductInPurchase, SavePurchase } from "../../interfaces/purchase.interface"
-import { startSavingPurchase } from "../../store/purchase/purchase.thunk"
+import { startGettingProductsToBeInPurchase, startSavingPurchase } from "../../store/purchase/purchase.thunk"
 
 export const usePurchase = () => {
 
     const dispatch = useDispatch<any>()
     const { 
+        products,
+        pagination,
         purchases, 
         productSelectedToAdd, 
         productsInPurchase,
+        supplierSelected,
         isLoading,
     } = useSelector( (state: RootState) => state.purchase )
 
@@ -39,21 +42,36 @@ export const usePurchase = () => {
         dispatch(decrementProductQuantityInPurchase(productId))
     }
 
+    const getProductsToBeInPurchase = () => {
+        dispatch(startGettingProductsToBeInPurchase({
+            page: 1,
+            limit: pagination.itemsPerPage
+        }))
+    }
+
     const savePurchase = ( savePurchase: SavePurchase ) => {
         dispatch(startSavingPurchase(savePurchase))
     }
 
+    const onSetSupplierSelected = ( supplierId: string ) => {
+        dispatch(setSupplierSelected(supplierId))
+    }
+
     return {
+        products,
         purchases,
         productSelectedToAdd,
         productsInPurchase,
+        supplierSelected,
         isLoading,
 
         onSelectProductToAddPurchase,
         onAddProductInPurchase,
         onRemoveProductInPurchase,
+        onSetSupplierSelected,
         incrementQuantityInPurchase,
         decrementQuantityInPurchase,
-        savePurchase
+        savePurchase,
+        getProductsToBeInPurchase
     }
 }
