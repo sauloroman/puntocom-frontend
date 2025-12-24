@@ -1,6 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { SavePurchase, SavePurchaseResponse } from "../../interfaces/purchase.interface";
-import { addPurchase, clearProductsInPurchase, setIsLoading, setProducts, setProductsMetaPagination, updateProduct } from "./purchase.slice";
+import type { GetAllPurchases, SavePurchase, SavePurchaseResponse } from "../../interfaces/purchase.interface";
+import { addPurchase, clearProductsInPurchase, setIsLoading, setProducts, setProductsMetaPagination, setPurchases, setPurchasesMetaPagination, updateProduct } from "./purchase.slice";
 import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
 import { puntocomApiPrivate } from "../../config/api/puntocom.api";
@@ -8,6 +8,29 @@ import type { Pagination } from "../../interfaces/pagination.interface";
 import type { GetProductsResponse } from "../../interfaces/product.interface";
 
 const urlPurchases = '/api/purchase'
+
+export const startGettingAllPurchases = ( pagination: Pagination ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            const { page, limit } = pagination
+            const url = `${urlPurchases}?page=${page}&limit=${limit}&sort=purchaseDate:desc`
+            const { data } = await puntocomApiPrivate.get<GetAllPurchases>(url)
+            const { purchases, meta } = data
+
+            dispatch(setPurchases(purchases))
+            dispatch(setPurchasesMetaPagination({ ...meta, itemsPerPage: limit }))
+        } catch(error) {
+            dispatch(showAlert({
+                title: 'Error Compras 🗒️',
+                text: 'No se pudo obtener la compras',
+                type: AlertType.error
+            }))
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
 
 export const startSavingPurchase = (savePurchase: SavePurchase) => {
     return async (dispatch: Dispatch) => {

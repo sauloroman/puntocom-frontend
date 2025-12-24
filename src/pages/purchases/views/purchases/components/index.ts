@@ -1,0 +1,8 @@
+export { TablePurchases } from './TablePurchases'
+export { TablePurchasesActions } from './TablePurchasesActions'
+export { PaginationPurchases } from './PaginationPurchases'
+export { PurchaseInfoDrawer } from './PurchaseInfoDrawer'
+export { PrintPurchase } from './PrintPurchase'
+export { PurchaseDetailItem } from './PurchaseDetailItem'
+export { PurchaseDetailSupplier } from './PurchaseDetailSupplier'
+export { PurchaseDetailUser } from './PurchaseDetailUser'

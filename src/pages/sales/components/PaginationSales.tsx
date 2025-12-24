@@ -7,17 +7,13 @@ export const PaginationSales: React.FC = () => {
     const { pagination, isPaginationVisible, onSetPage } = useSale()
     const { page, total, totalPages, itemsPerPage } = pagination
 
-    const onPageChange = ( page: number ) => {
-        onSetPage( page )
-    }   
-
     return (
         <div className='flex flex-end items-center'>
             {
                 isPaginationVisible && 
                 <Pagination 
                     itemsPerPage={itemsPerPage}
-                    onPageChange={onPageChange}
+                    onPageChange={page => onSetPage( page )}
                     page={page}
                     total={total}
                     totalPages={totalPages}

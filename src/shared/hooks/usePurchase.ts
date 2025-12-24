@@ -1,9 +1,19 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import type { Product } from "../../interfaces/product.interface"
-import { addProductInPurchase, decrementProductQuantityInPurchase, incrementProductQuantityInPurchase, removeProductInPurchase, setProductSelectedToAdd, setSupplierSelected } from "../../store/purchase/purchase.slice"
+import { 
+    addProductInPurchase, 
+    decrementProductQuantityInPurchase, 
+    incrementProductQuantityInPurchase, 
+    removeProductInPurchase, 
+    setPageProducts, 
+    setPagePurchases, 
+    setProductSelectedToAdd, 
+    setPurchaseSelected, 
+    setSupplierSelected 
+} from "../../store/purchase/purchase.slice"
 import type { ProductInPurchase, SavePurchase } from "../../interfaces/purchase.interface"
-import { startGettingProductsToBeInPurchase, startSavingPurchase } from "../../store/purchase/purchase.thunk"
+import { startGettingAllPurchases, startGettingProductsToBeInPurchase, startSavingPurchase } from "../../store/purchase/purchase.thunk"
 
 export const usePurchase = () => {
 
@@ -11,12 +21,30 @@ export const usePurchase = () => {
     const { 
         products,
         pagination,
+        isPaginationVisible,
+        purchasesPagination,
+        isPurchasesPaginationVisible,
         purchases, 
+        purchaseSelected,
         productSelectedToAdd, 
         productsInPurchase,
         supplierSelected,
         isLoading,
     } = useSelector( (state: RootState) => state.purchase )
+
+    const getPurchases = () => {
+        dispatch(startGettingAllPurchases({
+            page: 1,
+            limit: purchasesPagination.itemsPerPage
+        }))
+    }
+
+    const onSetSelectedPurchase = ( purchaseId: string ) => {
+        if ( !purchaseId ) throw new Error('El id de la compra es obligatorio')
+        const purchase = purchases?.find( purchase => purchase.purchase.purchaseId === purchaseId )
+        if ( !purchase ) throw new Error('La compra no está presente')
+        dispatch(setPurchaseSelected(purchase))
+    }
 
     const onSelectProductToAddPurchase = ( product: Product | null ) => {
         dispatch(setProductSelectedToAdd(product))
@@ -57,14 +85,37 @@ export const usePurchase = () => {
         dispatch(setSupplierSelected(supplierId))
     }
 
+    const onSetPagePagination = ( page: number ) => {
+        dispatch(setPageProducts(page))
+        dispatch(startGettingProductsToBeInPurchase({
+            page,
+            limit: pagination.itemsPerPage
+        }))
+    }
+
+    const onSetPagePurchasesPagination = ( page: number ) => {
+        dispatch(setPagePurchases(page))
+        dispatch(startGettingAllPurchases({
+            page,
+            limit: purchasesPagination.itemsPerPage
+        }))
+    }
+
     return {
         products,
         purchases,
+        purchaseSelected,
         productSelectedToAdd,
         productsInPurchase,
         supplierSelected,
         isLoading,
+        pagination,
+        isPaginationVisible,
+        purchasesPagination,
+        isPurchasesPaginationVisible,
 
+        getPurchases,
+        onSetSelectedPurchase,
         onSelectProductToAddPurchase,
         onAddProductInPurchase,
         onRemoveProductInPurchase,
@@ -72,6 +123,8 @@ export const usePurchase = () => {
         incrementQuantityInPurchase,
         decrementQuantityInPurchase,
         savePurchase,
-        getProductsToBeInPurchase
+        getProductsToBeInPurchase,
+        onSetPagePagination,
+        onSetPagePurchasesPagination,
     }
 }

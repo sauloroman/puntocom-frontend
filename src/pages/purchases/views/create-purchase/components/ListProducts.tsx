@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react'
-import { PaginationProducts } from '../../../../warehouse/views/products/components'
 import { useProducts, useTheme } from '../../../../../shared/hooks'
 import { ListProductItem } from './ListProductItem'
 import type { Product } from '../../../../../interfaces/product.interface'
 import { SelectSupplier } from './SelectSupplier'
+import { PaginationProductsPurchase } from './'
 
 interface Props {
     products: Product[]
 }
 
 export const ListProducts: React.FC<Props> = ({ products }) => {
-
     const { getProducts } = useProducts()
     const { theme } = useTheme()
     const isDark = theme === 'dark'
@@ -35,7 +34,6 @@ export const ListProducts: React.FC<Props> = ({ products }) => {
                 </h2>
                 <SelectSupplier />
             </div>
-
             <ul className="flex flex-col gap-3 overflow-y-scroll h-[70vh] p-4 no-scrollbar mb-12">
                 {
                     products?.map( product => (
@@ -46,8 +44,7 @@ export const ListProducts: React.FC<Props> = ({ products }) => {
                     ))
                 }
             </ul>
-
-            <PaginationProducts />
+            <PaginationProductsPurchase />
         </div>
     )
 }

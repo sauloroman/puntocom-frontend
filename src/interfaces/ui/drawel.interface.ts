@@ -1,4 +1,4 @@
-export type DrawelNames = 'infoCategory' | 'editCategory' | 'infoSupplier' | 'editSupplier' | 'infoUser' | 'editUser' | 'infoProduct' | 'editProduct' | 'filterProductsCategories' | 'filterProductsSuppliers' | 'infoSale' | 'infoAdjustment'
+export type DrawelNames = 'infoCategory' | 'editCategory' | 'infoSupplier' | 'editSupplier' | 'infoUser' | 'editUser' | 'infoProduct' | 'editProduct' | 'filterProductsCategories' | 'filterProductsSuppliers' | 'infoSale' | 'infoAdjustment' | 'infoPurchase'
 
 export const DrawelNames = {
     infoCategory: 'infoCategory' as DrawelNames,
@@ -12,5 +12,6 @@ export const DrawelNames = {
     filterProductsCategories: 'filterProductsCategories' as DrawelNames ,
     filterProductsSuppliers: 'filterProductsSuppliers' as DrawelNames,
     infoSale: 'infoSale' as DrawelNames,
-    infoAdjustment: 'infoAdjustment' as DrawelNames
+    infoAdjustment: 'infoAdjustment' as DrawelNames,
+    infoPurchase: 'infoPurchase' as DrawelNames
 }

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Purchases, Sales, Warehouse, Access, Reports, Settings, Pos, Dashboard } from '../pages'
-import { useCategories, useInventoryAdjustment, useProducts, useSale, useSuppliers, useUsers } from '../shared/hooks'
+import { useCategories, useInventoryAdjustment, useProducts, usePurchase, useSale, useSuppliers, useUsers } from '../shared/hooks'
 
 export const PrivateRoutes: React.FC = () => {
 
@@ -10,9 +10,11 @@ export const PrivateRoutes: React.FC = () => {
   const { sales, getAllSales } = useSale()
   const { products, getProducts } = useProducts()
   const { users, getUsers } = useUsers()
+  const { purchases, getPurchases } = usePurchase()
   const { adjustments, getInventoryAdjustments } = useInventoryAdjustment()
 
   useEffect(() => {
+    if ( !purchases ) getPurchases()
     if ( !categories ) getCategories()
     if ( !allCategories ) getAllCategories()
     if ( !suppliers ) getAllSuppliers()

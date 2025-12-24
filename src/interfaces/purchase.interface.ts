@@ -63,3 +63,13 @@ export interface SavePurchaseResponse {
     message: string,
     purchase: PurchaseWithDetails
 }
+
+export interface GetAllPurchases {
+    ok: boolean,
+    meta: { 
+        page: number,
+        total: number,
+        totalPages: number,
+    },
+    purchases: PurchaseWithDetails[]
+}
