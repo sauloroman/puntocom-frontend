@@ -8,12 +8,18 @@ interface FilterPurchases {
         dateStart: string | null,
         dateEnd: string | null
     },
-    quantity: {
-        quantityFrom: number | null,
-        quantityTo: number | null,
+    price: {
+        minPrice: number | null,
+        maxPrice: number | null,
     },
-    supplier: string | null,
-    user: string | null,
+    supplier: {
+        id: string | null,
+        name: string | null
+    },
+    user: {
+        id: string | null,
+        name: string | null
+    },
 }
 
 interface PurchasesState {
@@ -58,12 +64,18 @@ const initialState: PurchasesState = {
             dateStart: null,
             dateEnd: null,
         },
-        quantity: {
-            quantityFrom: null,
-            quantityTo: null,
+        price: {
+            minPrice: null,
+            maxPrice: null,
         },
-        supplier: null,
-        user: null
+        supplier: {
+            id: null,
+            name: null,
+        },
+        user: {
+            id: null,
+            name: null,
+        }
     }
 }
 
@@ -161,15 +173,47 @@ export const purchaseSlice = createSlice({
             state.productsInPurchase = []
         },
 
-        setFilter: (state, { payload }: PayloadAction<FilterPurchases> ) => {
-            state.filter = payload
+        setFilterUser: (state, { payload }: PayloadAction<{ id: string, name: string }> ) => {
+            state.filter = {
+                ...state.filter,
+                user: { ...payload }
+            }
+        },
+
+        setFilterSupplier: (state, { payload }: PayloadAction<{ id: string, name: string }> ) => {
+            state.filter = {
+                ...state.filter,
+                supplier: {...payload}
+            }
+        },
+
+        resetFilter: ( state ) => {
+            state.filter = {
+            dates: {
+                dateEnd: null,
+                dateStart: null
+            },
+            price: {
+                maxPrice: null,
+                minPrice: null,
+            },
+            supplier: {
+                id: null,
+                name: null
+            },
+            user: {
+                id: null,
+                name: null
+            }
+        }
         }
 
     }
 })
 
 export const {
-    setFilter,
+    setFilterUser,
+    setFilterSupplier,
     setProducts,
     setProductsMetaPagination,
     setPurchasesMetaPagination,
@@ -184,6 +228,7 @@ export const {
     addProductInPurchase,
     addPurchase,
     updateProduct,
+    resetFilter,
     removeProductInPurchase,
     clearProductsInPurchase,
     incrementProductQuantityInPurchase,

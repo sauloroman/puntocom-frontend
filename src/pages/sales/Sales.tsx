@@ -9,8 +9,8 @@ import {
   ModalRangePrices, 
   PaginationSales, 
   SaleInfoDrawer, 
-  SelectUsers, 
-  TableSales 
+  TableSales, 
+  FilterSalesByUser
 } from './components'
 import { SpinnerContainer } from '../../shared/components'
 import { DrawelNames } from '../../interfaces/ui/drawel.interface'
@@ -33,7 +33,7 @@ export const Sales: React.FC = () => {
       <section className='p-4 py-0'>
         <div className="flex items-center justify-between my-7">
           <div className='flex items-center gap-3'>  
-            <div className="w-64"><SelectUsers /></div>
+            <div className="w-64"><FilterSalesByUser /></div>
             <ButtonFilterByPrice />
             <ButtonFilterByDate />
           </div>

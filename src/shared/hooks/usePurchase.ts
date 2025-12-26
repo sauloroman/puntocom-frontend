@@ -6,6 +6,9 @@ import {
     decrementProductQuantityInPurchase, 
     incrementProductQuantityInPurchase, 
     removeProductInPurchase, 
+    resetFilter,  
+    setFilterSupplier,  
+    setFilterUser, 
     setPageProducts, 
     setPagePurchases, 
     setProductSelectedToAdd, 
@@ -19,6 +22,7 @@ export const usePurchase = () => {
 
     const dispatch = useDispatch<any>()
     const { 
+        filter,
         products,
         pagination,
         isPaginationVisible,
@@ -101,7 +105,26 @@ export const usePurchase = () => {
         }))
     }
 
+    const onSetFilterPurchasesByUser = ( userId: string, userName: string ) => {
+        dispatch(setFilterUser({ id: userId, name: userName }))
+        dispatch(setPagePurchases(1))
+        // TODO: filtrar comprar por usuario
+    }
+    
+    const onSetFilterPurchasesBySupplier = ( supplierId: string, supplierName: string ) => {
+        dispatch(setFilterSupplier({ id: supplierId, name: supplierName }))
+        dispatch(setPagePurchases(1))
+        // TODO: filtrar comprar por proveedor
+    }
+    
+    const onResetFilters = () => {
+        dispatch(resetFilter())
+        dispatch(setPagePurchases(1))
+        getPurchases()
+    }
+
     return {
+        filter,
         products,
         purchases,
         purchaseSelected,
@@ -120,6 +143,9 @@ export const usePurchase = () => {
         onAddProductInPurchase,
         onRemoveProductInPurchase,
         onSetSupplierSelected,
+        onResetFilters,
+        onSetFilterPurchasesByUser,
+        onSetFilterPurchasesBySupplier,
         incrementQuantityInPurchase,
         decrementQuantityInPurchase,
         savePurchase,
