@@ -114,6 +114,8 @@ export const startGettingFilteredSales = ( prices?: PriceRange, dates?: DateRang
                 params['dateTo'] = dates.dateTo
             }
 
+            console.log({ params })
+
             const { data } = await puntocomApiPrivate.get<GetFilteredSalesResponse>(`${urlSale}/filter`, { params })
             const { sales, meta } = data
             const { filter, ...restMetaPagination } = meta

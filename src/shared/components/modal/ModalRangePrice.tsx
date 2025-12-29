@@ -3,12 +3,15 @@ import { ModalLayout } from '../../../layouts/ModalLayout'
 import { useForm } from 'react-hook-form'
 import { CancelButton, Input, Label, SaveButton } from '../../../shared/components'
 import { LuAsterisk } from 'react-icons/lu'
-import { useModal, useSale } from '../../../shared/hooks'
+import { useModal } from '../../../shared/hooks'
 import type { PriceRange } from '../../../interfaces/sale.interface'
 
-export const ModalRangePrices: React.FC = () => {
+interface Props {
+    onSetFilterPrices: ( minPrice: number, maxPrice: number ) => void
+}
 
-    const { onSetFilterPrices } = useSale()
+export const ModalRangePrices: React.FC<Props> = ({ onSetFilterPrices }) => {
+
     const { onCloseModal } = useModal()
 
     const {
@@ -98,12 +101,12 @@ export const ModalRangePrices: React.FC = () => {
 
                 <div className='flex gap-7 w-full justify-end'>
                     <SaveButton
-                        className='p-2 w-54'
+                        className='p-2 flex-1'
                         text='Aplicar Filtro'
                         onClick={handleSubmit(onApplyFilter)}
                     />
                     <CancelButton
-                        className='p-2'
+                        className='p-2 flex-1'
                         onClick={handleCancel}
                         text='Cancelar'
                     />

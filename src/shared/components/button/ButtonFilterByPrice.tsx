@@ -4,11 +4,15 @@ import { CiFilter } from 'react-icons/ci'
 import { useModal } from '../../../shared/hooks'
 import { ModalNames } from '../../../interfaces/ui/modal.interface'
 
-export const ButtonFilterByPrice: React.FC = () => {
+interface Props {
+    modal: ModalNames
+}
+
+export const ButtonFilterByPrice: React.FC<Props> = ({ modal }) => {
     const { onOpenModal } = useModal() 
 
     return (
-        <OutlineButton onClick={() => onOpenModal(ModalNames.rangePrices)}>
+        <OutlineButton onClick={() => onOpenModal(modal)}>
             <CiFilter size={20} />
             Precio
         </OutlineButton>

@@ -3,15 +3,17 @@ import { ModalLayout } from '../../../layouts/ModalLayout'
 import { useForm } from 'react-hook-form'
 import { CancelButton, Input, Label, SaveButton } from '../../../shared/components'
 import { LuAsterisk } from 'react-icons/lu'
-import { useAlert, useModal, useSale } from '../../../shared/hooks'
+import { useAlert, useModal } from '../../../shared/hooks'
 import { AlertType } from '../../../interfaces/ui/alert.interface'
+import { today } from '../../../shared/helpers/format-dates'
 import type { DateRange } from '../../../interfaces/sale.interface'
 
-const today = new Date().toISOString().split('T')[0]
+interface Props {
+    onSetFilterDates: (dateFrom: string, dateTo: string) => void
+}
 
-export const ModalRangeDates: React.FC = () => {
+export const ModalRangeDates: React.FC<Props> = ({ onSetFilterDates }) => {
 
-    const { onSetFilterDates } = useSale()
     const { onCloseModal } = useModal()
     const { activateAlert } = useAlert()
 
@@ -64,6 +66,7 @@ export const ModalRangeDates: React.FC = () => {
                         <Input
                             id='dateFrom'
                             type='date'
+                            className='cursor-pointer'
                             max={today}
                             {
                                 ...register('dateFrom', {
@@ -85,6 +88,7 @@ export const ModalRangeDates: React.FC = () => {
                         <Input
                             id='dateTo'
                             type='date'
+                            className='cursor-pointer'
                             max={today}
                             {
                                 ...register('dateTo', {
@@ -104,12 +108,12 @@ export const ModalRangeDates: React.FC = () => {
 
                 <div className='flex gap-7 w-full justify-end'>
                     <SaveButton
-                        className='p-2 w-54'
+                        className='p-2 flex-1'
                         text='Aplicar Filtro'
                         onClick={handleSubmit(onApplyFilter)}
                     />
                     <CancelButton
-                        className='p-2'
+                        className='p-2 flex-1'
                         onClick={handleCancel}
                         text='Cancelar'
                     />

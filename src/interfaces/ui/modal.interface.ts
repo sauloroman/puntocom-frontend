@@ -19,8 +19,10 @@ export type ModalNames =
 'saveSale' | 
 'confirmDeleteReport' |
 'sendMessageToSupplier' |
-'rangePrices' |
-'rangeDates' |
+'rangeSalesPrices' |
+'rangePurchasesPrices' |
+'rangeSalesDates' |
+'rangePurchasesDates' |
 'createInventoryAdjustment' |
 'supplierSenMessageWhatsapp' |
 'addProductPurchase'
@@ -43,8 +45,10 @@ export const ModalNames = {
     createUser: 'createUser' as ModalNames,
     createUsersReport: 'createUsersReport' as ModalNames,
     emailSentToUser: 'emailSentToUser' as ModalNames,
-    rangeDates: 'rangeDates' as ModalNames,
-    rangePrices: 'rangePrices' as ModalNames,
+    rangeSalesDates: 'rangeSalesDates' as ModalNames,
+    rangeSalesPrices: 'rangeSalesPrices' as ModalNames,
+    rangePurchasesPrices: 'rangePurchasesPrices' as ModalNames,
+    rangePurchasesDates: 'rangePurchasesDates' as ModalNames,
     reportSuppliers: 'reportSuppliers' as ModalNames,
     saveSale: 'saveSale' as ModalNames,
     seeProductImage: 'seeProductImage' as ModalNames,
