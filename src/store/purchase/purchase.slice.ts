@@ -2,25 +2,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { ProductInPurchase, PurchaseWithDetails, SavePurchaseDetail } from "../../interfaces/purchase.interface";
 import type { Product } from "../../interfaces/product.interface";
 import type { MetaPagination } from "../../interfaces/pagination.interface";
-
-interface FilterPurchases {
-    dates: {
-        dateStart: string | null,
-        dateEnd: string | null
-    },
-    price: {
-        minPrice: number | null,
-        maxPrice: number | null,
-    },
-    supplier: {
-        id: string | null,
-        name: string | null
-    },
-    user: {
-        id: string | null,
-        name: string | null
-    },
-}
+import type { Filter } from "../../interfaces/ui/filter.interface";
 
 interface PurchasesState {
     products: Product[] | null,
@@ -34,7 +16,7 @@ interface PurchasesState {
     purchasesPagination: MetaPagination & { itemsPerPage: number },
     isPurchasesPaginationVisible: boolean,
     isLoading: boolean,
-    filter: FilterPurchases
+    filter: Filter
 }
 
 const initialState: PurchasesState = {
@@ -173,39 +155,45 @@ export const purchaseSlice = createSlice({
             state.productsInPurchase = []
         },
 
-        setFilterUser: (state, { payload }: PayloadAction<{ id: string, name: string }> ) => {
-            state.filter = {
-                ...state.filter,
-                user: { ...payload }
-            }
+        setFilterUser: (state, { payload }: PayloadAction<Pick<Filter, 'user'>> ) => {
+            state.filter.user.id = payload.user.id
+            state.filter.user.name = payload.user.name
+        },
+        
+        setFilterSupplier: (state, { payload }: PayloadAction<Pick<Filter, 'supplier'>> ) => {
+            state.filter.supplier.id = payload.supplier.id
+            state.filter.supplier.name = payload.supplier.name
         },
 
-        setFilterSupplier: (state, { payload }: PayloadAction<{ id: string, name: string }> ) => {
-            state.filter = {
-                ...state.filter,
-                supplier: {...payload}
-            }
+        setPricesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'price'>> ) => {
+            state.filter.price.minPrice = payload.price.minPrice
+            state.filter.price.maxPrice = payload.price.minPrice
+        },
+
+        setDatesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'dates'>>) => {
+            state.filter.dates.dateStart = payload.dates.dateStart
+            state.filter.dates.dateEnd = payload.dates.dateEnd
         },
 
         resetFilter: ( state ) => {
             state.filter = {
-            dates: {
-                dateEnd: null,
-                dateStart: null
-            },
-            price: {
-                maxPrice: null,
-                minPrice: null,
-            },
-            supplier: {
-                id: null,
-                name: null
-            },
-            user: {
-                id: null,
-                name: null
+                dates: {
+                    dateEnd: null,
+                    dateStart: null
+                },
+                price: {
+                    maxPrice: null,
+                    minPrice: null,
+                },
+                supplier: {
+                    id: null,
+                    name: null
+                },
+                user: {
+                    id: null,
+                    name: null
+                }
             }
-        }
         }
 
     }
@@ -214,6 +202,8 @@ export const purchaseSlice = createSlice({
 export const {
     setFilterUser,
     setFilterSupplier,
+    setPricesFilter,
+    setDatesFilter,
     setProducts,
     setProductsMetaPagination,
     setPurchasesMetaPagination,

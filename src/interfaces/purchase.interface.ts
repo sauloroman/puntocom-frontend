@@ -1,3 +1,4 @@
+import type { MetaPagination } from "./pagination.interface"
 import type { Product } from "./product.interface"
 
 export interface Purchase {
@@ -66,10 +67,12 @@ export interface SavePurchaseResponse {
 
 export interface GetAllPurchases {
     ok: boolean,
-    meta: { 
-        page: number,
-        total: number,
-        totalPages: number,
-    },
+    meta: MetaPagination,
+    purchases: PurchaseWithDetails[]
+}
+
+export interface GetFilteredPurchases {
+    ok: boolean,
+    meta: MetaPagination,
     purchases: PurchaseWithDetails[]
 }

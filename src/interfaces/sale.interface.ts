@@ -81,13 +81,3 @@ export interface GetFilteredSalesResponse {
     },
     sales: SaleResponse[]
 }
-
-export interface PriceRange {
-    minPrice: number
-    maxPrice: number
-}
-
-export interface DateRange {
-    dateFrom: string,
-    dateTo: string
-}

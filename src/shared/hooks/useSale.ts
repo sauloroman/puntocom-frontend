@@ -21,8 +21,9 @@ import {
 } from "../../store/sale/sale.slice"
 import type { Pagination } from "../../interfaces/pagination.interface"
 import type { ProductInCart } from "../../interfaces/product.interface"
-import type { DateRange, GetSale, PriceRange, SaleResponse, SaveSale } from "../../interfaces/sale.interface"
+import type { GetSale, SaleResponse, SaveSale } from "../../interfaces/sale.interface"
 import type { RootState } from "../../store"
+import type { DateRange, PriceRange } from "../../interfaces/ui/filter.interface"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 
 export const useSale = () => {
@@ -46,11 +47,11 @@ export const useSale = () => {
         dispatch(startGettingFilteredSales(prices, dates, pagination))
 
         if ( prices?.minPrice !== undefined && prices?.maxPrice !== undefined ) {
-            dispatch(setPricesFilter({ priceMin: prices.minPrice, priceMax: prices.maxPrice }))
+            dispatch(setPricesFilter({ price: { minPrice: prices.minPrice, maxPrice: prices.maxPrice }}))
         }
 
-        if ( dates?.dateFrom && dates?.dateTo ) {
-            dispatch(setDatesFilter({ dateFrom: dates?.dateFrom, dateTo: dates?.dateTo }))
+        if ( dates?.dateStart && dates?.dateEnd ) {
+            dispatch(setDatesFilter({ dates: { dateStart: dates?.dateStart, dateEnd: dates?.dateEnd }}))
         }
     }
 
@@ -93,31 +94,31 @@ export const useSale = () => {
         limit: number,
         filtersOverride?: {
             userId: string | null
-            dateFrom: string | null
-            dateTo: string | null
-            priceMin: number | null
-            priceMax: number | null
+            dateStart: string | null
+            dateEnd: string | null
+            minPrice: number | null
+            maxPrice: number | null
     }) => {
 
         const current = filter
         const applied = {
             userId: filtersOverride?.userId ?? current.user.id,
-            dateFrom: filtersOverride?.dateFrom ?? current.dates.dateFrom,
-            dateTo: filtersOverride?.dateTo ?? current.dates.dateTo,
-            priceMin: filtersOverride?.priceMin ?? current.prices.priceMin,
-            priceMax: filtersOverride?.priceMax ?? current.prices.priceMax,
+            dateStart: filtersOverride?.dateStart ?? current.dates.dateStart,
+            dateEnd: filtersOverride?.dateEnd ?? current.dates.dateEnd,
+            minPrice: filtersOverride?.minPrice ?? current.price.minPrice,
+            maxPrice: filtersOverride?.maxPrice ?? current.price.maxPrice,
         }
 
         const paginationParams = { page, limit }
 
         const priceFilter =
-            applied.priceMin !== null && applied.priceMax !== null
-                ? { minPrice: applied.priceMin, maxPrice: applied.priceMax }
+            applied.minPrice !== null && applied.maxPrice !== null
+                ? { minPrice: applied.minPrice, maxPrice: applied.maxPrice }
                 : undefined
 
         const dateFilter =
-            applied.dateFrom && applied.dateTo
-                ? { dateFrom: applied.dateFrom, dateTo: applied.dateTo }
+            applied.dateStart && applied.dateEnd
+                ? { dateStart: applied.dateStart, dateEnd: applied.dateEnd }
                 : undefined
 
         if (applied.userId) {
@@ -137,45 +138,45 @@ export const useSale = () => {
     }
 
     const onSetFilterUser = (userId: string | null, userName: string | null) => {
-        dispatch(setUserFilter({ id: userId, name: userName }))
+        dispatch(setUserFilter({ user: { id: userId, name: userName }}))
         dispatch(setPage(1))
         filterSalesDependingActiveFilters(1, pagination.itemsPerPage, {
             userId,
-            dateFrom: filter.dates.dateFrom,
-            dateTo: filter.dates.dateTo,
-            priceMin: filter.prices.priceMin,
-            priceMax: filter.prices.priceMax,
+            dateStart: filter.dates.dateStart,
+            dateEnd: filter.dates.dateEnd,
+            minPrice: filter.price.minPrice,
+            maxPrice: filter.price.maxPrice,
         })
     }
 
-    const onSetFilterPrices = (priceMin: number | null, priceMax: number | null) => {
-        dispatch(setPricesFilter({ priceMin, priceMax }))
+    const onSetFilterPrices = (minPrice: number | null, maxPrice: number | null) => {
+        dispatch(setPricesFilter({price: { minPrice, maxPrice }}))
         dispatch(setPage(1))
         filterSalesDependingActiveFilters(1, pagination.itemsPerPage, {
             userId: filter.user.id,
-            dateFrom: filter.dates.dateFrom,
-            dateTo: filter.dates.dateTo,
-            priceMin,
-            priceMax,
+            dateStart: filter.dates.dateStart,
+            dateEnd: filter.dates.dateEnd,
+            minPrice,
+            maxPrice,
         })
     }
 
-    const onSetFilterDates = (dateFrom: string | null, dateTo: string | null) => {
-        dispatch(setDatesFilter({ dateFrom, dateTo }))
+    const onSetFilterDates = (dateStart: string | null, dateEnd: string | null) => {
+        dispatch(setDatesFilter({ dates: { dateStart, dateEnd }}))
         dispatch(setPage(1))
         filterSalesDependingActiveFilters(1, pagination.itemsPerPage, {
             userId: filter.user.id,
-            priceMin: filter.prices.priceMin,
-            priceMax: filter.prices.priceMax,
-            dateFrom,
-            dateTo
+            minPrice: filter.price.minPrice,
+            maxPrice: filter.price.maxPrice,
+            dateStart,
+            dateEnd
         })
     }
 
     const onResetFilters = () => {
-        dispatch(setUserFilter({ id: null, name: null }))
-        dispatch(setPricesFilter({ priceMax: null, priceMin: null }))
-        dispatch(setDatesFilter({ dateFrom: null, dateTo: null }))
+        dispatch(setUserFilter({ user: { id: null, name: null }}))
+        dispatch(setPricesFilter({ price: { minPrice: null, maxPrice: null }}))
+        dispatch(setDatesFilter({ dates: { dateStart: null, dateEnd: null }}))
         dispatch(setPage(1))
         getAllSales()
     }

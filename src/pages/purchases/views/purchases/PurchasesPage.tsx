@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDrawer, useModal, usePurchase } from '../../../../shared/hooks'
 import type { Purchase } from '../../../../interfaces/purchase.interface'
 import { 
+  AppliedPurchasesFilters,
   FilterPurchasesBySupplier, 
   FilterPurchasesByUser, 
   ModalPurchasesRangeDates, 
@@ -45,7 +46,7 @@ export const PurchasesPage: React.FC = () => {
           <ButtonFilterByPrice modal={ModalNames.rangePurchasesPrices} /> 
           <ButtonFilterByDate modal={ModalNames.rangePurchasesDates} /> 
         </div>
-        {/* <AppliedFilters /> */}
+        <AppliedPurchasesFilters />
       </div>
 
       {

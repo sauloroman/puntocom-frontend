@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { PuntoComLayout } from '../../layouts/PuntoComLayout'
 import { useDrawer, useModal, useSale, useUsers } from '../../shared/hooks'
 import { 
-  AppliedFilters,  
+  AppliedSalesFilters,  
   PaginationSales, 
   SaleInfoDrawer, 
   TableSales, 
@@ -36,7 +36,7 @@ export const Sales: React.FC = () => {
             <ButtonFilterByPrice modal={ModalNames.rangeSalesPrices} />
             <ButtonFilterByDate modal={ModalNames.rangeSalesDates} />
           </div>
-          <AppliedFilters />
+          <AppliedSalesFilters />
         </div>
         {
           isLoading

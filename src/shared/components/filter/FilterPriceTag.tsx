@@ -1,14 +1,16 @@
 import React from 'react'
-import { useSale, useTheme } from '../../../shared/hooks'
-import { LuUser } from 'react-icons/lu'
+import { useTheme } from '../../hooks'
 
-export const FilterUserTag: React.FC = () => {
+interface Props {
+    minPrice: number | null,
+    maxPrice: number | null
+}
+
+export const FilterPriceTag: React.FC<Props> = ({ minPrice, maxPrice }) => {
     const { theme } = useTheme()
     const isDark = theme === "dark"
 
-    const { filter } = useSale()
-
-    if (!filter.user.id) {
+    if (minPrice === null || maxPrice === null) {
         return null
     }
 
@@ -20,22 +22,18 @@ export const FilterUserTag: React.FC = () => {
                 : 'bg-indigo-50 border-indigo-200'
             }
         `}>
-            <LuUser 
-                size={14} 
-                className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
-            />
             <div className='flex items-center gap-2'>
                 <span className={`
                     font-medium transition-colors
                     ${isDark ? 'text-indigo-300' : 'text-indigo-900'}
                 `}>
-                    Usuario:
+                    Precio:
                 </span>
                 <span className={`
                     transition-colors
                     ${isDark ? 'text-indigo-400' : 'text-indigo-700'}
                 `}>
-                    {filter.user.name}
+                    ${minPrice.toFixed(2)} - ${maxPrice.toFixed(2)}
                 </span>
             </div>
         </div>

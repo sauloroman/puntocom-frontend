@@ -1,22 +1,18 @@
 import React from 'react'
-import { useSale, useTheme } from '../../../shared/hooks'
+import { useTheme } from '../../hooks'
 import { LuCalendar } from 'react-icons/lu'
+import { formatDate } from '../../helpers/format-dates'
 
-const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString('es-MX', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric'
-    })
+interface Props {
+    dateStart: string | null,
+    dateEnd: string | null
 }
 
-export const FilterDateTag: React.FC = () => {
+export const FilterDateTag: React.FC<Props> = ({ dateEnd, dateStart }) => {
     const { theme } = useTheme()
     const isDark = theme === "dark"
 
-    const { filter } = useSale()
-
-    if (!filter.dates.dateFrom || !filter.dates.dateTo) {
+    if (!dateStart || !dateEnd) {
         return null
     }
 
@@ -43,7 +39,7 @@ export const FilterDateTag: React.FC = () => {
                     transition-colors
                     ${isDark ? 'text-indigo-400' : 'text-indigo-700'}
                 `}>
-                    {formatDate(new Date(filter.dates.dateFrom))} - {formatDate(new Date(filter.dates.dateTo))}
+                    {formatDate(new Date(dateStart))} - {formatDate(new Date(dateEnd))}
                 </span>
             </div>
         </div>

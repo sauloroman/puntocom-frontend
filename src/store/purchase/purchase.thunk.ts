@@ -1,11 +1,12 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { GetAllPurchases, SavePurchase, SavePurchaseResponse } from "../../interfaces/purchase.interface";
+import type { GetAllPurchases, GetFilteredPurchases, SavePurchase, SavePurchaseResponse } from "../../interfaces/purchase.interface";
 import { addPurchase, clearProductsInPurchase, setIsLoading, setProducts, setProductsMetaPagination, setPurchases, setPurchasesMetaPagination, updateProduct } from "./purchase.slice";
 import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
 import { puntocomApiPrivate } from "../../config/api/puntocom.api";
 import type { Pagination } from "../../interfaces/pagination.interface";
 import type { GetProductsResponse } from "../../interfaces/product.interface";
+import type { DateRange, PriceRange } from "../../interfaces/ui/filter.interface";
 
 const urlPurchases = '/api/purchase'
 
@@ -83,6 +84,61 @@ export const startGettingProductsToBeInPurchase = ( pagination: Pagination) => {
             console.log(error)
         } finally {   
             dispatch( setIsLoading( false ) )
+        }
+    }
+}
+
+export const startFilteringPurchases = ( 
+    userId?: string, 
+    supplierId?: string,
+    prices?: PriceRange,
+    dates?: DateRange,
+    pagination?: Pagination,
+) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {   
+            
+            const params: any = {
+                page: pagination?.page.toString() ?? '1',
+                limit: pagination?.limit.toString() ?? '10',
+                sort: 'purchaseDate:desc'
+            }
+
+            if ( prices?.minPrice !== undefined && prices?.maxPrice !== undefined ) {
+                params['minPrice'] = prices?.minPrice?.toString() 
+                params['maxPrice'] = prices?.maxPrice?.toString() 
+            }
+
+            if ( dates?.dateStart && dates?.dateEnd ) {
+                params['dateFrom'] = dates.dateStart
+                params['dateTo'] = dates.dateEnd
+            }
+
+            if ( userId ) {
+                params['user'] = userId
+            }
+
+            if ( supplierId ) {
+                params['supplier'] = supplierId
+            } 
+
+            const { data } = await puntocomApiPrivate.get<GetFilteredPurchases>(`${urlPurchases}/filter`, { params })
+            const { purchases, meta } = data
+
+            const { filter, ...restMetaPagination } = meta
+
+            dispatch(setPurchases(purchases))
+            dispatch(setPurchasesMetaPagination({ ...restMetaPagination, itemsPerPage: pagination?.limit ?? 10 }))
+            
+        } catch( error ) {
+            dispatch(showAlert({
+                title: 'Error Compras 🗒️',
+                text: 'No se pudieron filtrar las compras',
+                type: AlertType.error
+            }))
+        } finally {
+            dispatch(setIsLoading(false))
         }
     }
 }

@@ -1,3 +1,5 @@
+import type { Filter } from "./ui/filter.interface"
+
 export interface Pagination {
     page: number,
     limit: number
@@ -6,5 +8,6 @@ export interface Pagination {
 export interface MetaPagination {
     page: number,
     totalPages: number,
-    total: number
+    total: number,
+    filter?: Filter
 }

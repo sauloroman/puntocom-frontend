@@ -6,7 +6,7 @@ import { LuAsterisk } from 'react-icons/lu'
 import { useAlert, useModal } from '../../../shared/hooks'
 import { AlertType } from '../../../interfaces/ui/alert.interface'
 import { today } from '../../../shared/helpers/format-dates'
-import type { DateRange } from '../../../interfaces/sale.interface'
+import type { DateRange } from '../../../interfaces/ui/filter.interface'
 
 interface Props {
     onSetFilterDates: (dateFrom: string, dateTo: string) => void

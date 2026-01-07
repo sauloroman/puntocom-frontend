@@ -1,10 +1,8 @@
 import React from 'react'
-import { FilterPriceTag } from './FilterPriceTag'
-import { FilterDateTag } from './FilterDateTag'
-import { FilterUserTag } from './FilterUserTag'
 import { useSale, useTheme } from '../../../shared/hooks'
+import { FilterDateTag, FilterPriceTag, FilterUserTag } from '../../../shared/components/filter'
 
-export const AppliedFilters: React.FC = () => {
+export const AppliedSalesFilters: React.FC = () => {
     const { theme } = useTheme()
     const isDark = theme === "dark"
 
@@ -12,15 +10,11 @@ export const AppliedFilters: React.FC = () => {
 
     const hasFilters = 
         filter.user.id !== null ||
-        filter.prices.priceMin !== null ||
-        filter.dates.dateFrom !== null
+        filter.price.minPrice !== null ||
+        filter.dates.dateStart !== null
 
     if (!hasFilters) {
         return null
-    }
-
-    const handleClearAll = () => {
-        onResetFilters()
     }
 
     return (
@@ -31,13 +25,23 @@ export const AppliedFilters: React.FC = () => {
             `}>
                 Filtros aplicados:
             </span>
-            <FilterUserTag />
-            <FilterPriceTag />
-            <FilterDateTag />
+
+            <FilterUserTag 
+                userId={filter.user.id}
+                userName={filter.user.name}
+            />
+            <FilterPriceTag 
+                minPrice={filter.price.minPrice}
+                maxPrice={filter.price.maxPrice}
+            />
+            <FilterDateTag
+                dateStart={ filter.dates.dateStart }
+                dateEnd={ filter.dates.dateEnd }
+            />
             
             {hasFilters && (
                 <button
-                    onClick={handleClearAll}
+                    onClick={onResetFilters}
                     className={`
                         text-sm font-medium underline cursor-pointer transition-colors
                         ${isDark 

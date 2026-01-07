@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { SaleResponse } from "../../interfaces/sale.interface";
 import type { MetaPagination } from "../../interfaces/pagination.interface";
+import type { Filter } from "../../interfaces/ui/filter.interface";
 
 interface SliceState {
     isLoading: boolean,
@@ -10,20 +11,7 @@ interface SliceState {
     saleToPrint: SaleResponse | null,
     pagination: MetaPagination & { itemsPerPage: number },
     isPaginationVisible: boolean,
-    filter: {
-        user: {
-            id: string | null,
-            name: string | null
-        },
-        prices: {
-            priceMin: number | null,
-            priceMax: number | null,
-        },
-        dates: {
-            dateFrom: string | null,
-            dateTo: string | null
-        }
-    }
+    filter: Omit<Filter, 'supplier'>
 }
 
 const initialState: SliceState = {
@@ -44,13 +32,13 @@ const initialState: SliceState = {
             id: null,
             name: null
         },
-        prices: {
-            priceMax: null,
-            priceMin: null
+        price: {
+            minPrice: null,
+            maxPrice: null
         },
         dates: {
-            dateFrom: null,
-            dateTo: null
+            dateStart: null,
+            dateEnd: null
         }
     }
 }
@@ -80,19 +68,19 @@ export const saleSlice = createSlice({
             state.pagination = payload
         },
 
-        setUserFilter: ( state, {payload}: PayloadAction<{id: string | null, name: string | null }>) => {
-            state.filter.user.id = payload.id
-            state.filter.user.name = payload.name
+        setUserFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'user'>>) => {
+            state.filter.user.id = payload.user.id
+            state.filter.user.name = payload.user.name
         },
 
-        setPricesFilter: ( state, {payload}: PayloadAction<{priceMax: number | null, priceMin: number | null }>) => {
-            state.filter.prices.priceMin = payload.priceMin
-            state.filter.prices.priceMax = payload.priceMax
+        setPricesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'price'>> ) => {
+            state.filter.price.minPrice = payload.price.minPrice
+            state.filter.price.maxPrice = payload.price.minPrice
         },
 
-        setDatesFilter: ( state, {payload}: PayloadAction<{dateFrom: string | null, dateTo: string | null}>) => {
-            state.filter.dates.dateFrom = payload.dateFrom
-            state.filter.dates.dateTo = payload.dateTo
+        setDatesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'dates'>>) => {
+            state.filter.dates.dateStart = payload.dates.dateStart
+            state.filter.dates.dateEnd = payload.dates.dateEnd
         },
 
         setPaginationVisible: ( state, {payload}: PayloadAction<boolean>) => {
@@ -110,6 +98,23 @@ export const saleSlice = createSlice({
         setPage: ( state, {payload}: PayloadAction<number>) => {
             state.pagination.page = payload
         },
+
+        resetFilter: ( state ) => {
+            state.filter = {
+                dates: {
+                    dateEnd: null,
+                    dateStart: null
+                },
+                price: {
+                    maxPrice: null,
+                    minPrice: null,
+                },
+                user: {
+                    id: null,
+                    name: null
+                }
+            }
+        }
         
     }
 })
@@ -127,4 +132,5 @@ export const {
     setSelectedSale,
     setUserFilter,
     setSaleToPrint,
+    resetFilter,
 } = saleSlice.actions

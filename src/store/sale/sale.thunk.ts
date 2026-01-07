@@ -7,8 +7,6 @@ import type {
     SaveSaleResponse, 
     SaveSale, 
     GetAllSalesResponse, 
-    PriceRange, 
-    DateRange,
     GetFilteredSalesResponse,
     GetSale
 } from "../../interfaces/sale.interface";
@@ -16,6 +14,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
 import type { Pagination } from "../../interfaces/pagination.interface";
+import type { DateRange, PriceRange } from "../../interfaces/ui/filter.interface";
 
 const urlSale = '/api/sale'
 
@@ -105,16 +104,14 @@ export const startGettingFilteredSales = ( prices?: PriceRange, dates?: DateRang
             }
 
             if ( prices?.minPrice !== undefined && prices?.maxPrice !== undefined ) {
-                params['priceMin'] = prices?.minPrice.toString() 
-                params['priceMax'] = prices?.maxPrice.toString() 
+                params['priceMin'] = prices?.minPrice?.toString() 
+                params['priceMax'] = prices?.maxPrice?.toString() 
             }
 
-            if ( dates?.dateFrom && dates?.dateTo ) {
-                params['dateFrom'] = dates.dateFrom
-                params['dateTo'] = dates.dateTo
+            if ( dates?.dateStart && dates?.dateEnd ) {
+                params['dateFrom'] = dates.dateStart
+                params['dateTo'] = dates.dateEnd
             }
-
-            console.log({ params })
 
             const { data } = await puntocomApiPrivate.get<GetFilteredSalesResponse>(`${urlSale}/filter`, { params })
             const { sales, meta } = data
@@ -147,13 +144,13 @@ export const startGettingFilteredSalesByUser = ( userId: string, prices?: PriceR
             }
 
             if ( prices?.minPrice !== undefined && prices?.maxPrice !== undefined ) {
-                params['priceMin'] = prices?.minPrice.toString() 
-                params['priceMax'] = prices?.maxPrice.toString() 
+                params['priceMin'] = prices?.minPrice?.toString() 
+                params['priceMax'] = prices?.maxPrice?.toString() 
             }
 
-            if ( dates?.dateFrom && dates?.dateTo ) {
-                params['dateFrom'] = dates.dateFrom
-                params['dateTo'] = dates.dateTo
+            if ( dates?.dateStart && dates?.dateEnd ) {
+                params['dateStart'] = dates.dateStart
+                params['dateEnd'] = dates.dateEnd
             }
 
             const { data } = await puntocomApiPrivate.get<GetFilteredSalesResponse>(`${urlSale}/filter/user/${userId}`, { params })
