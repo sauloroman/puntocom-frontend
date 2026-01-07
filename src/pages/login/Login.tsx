@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { AuthLayout } from '../../layouts'
 import { useAuth, useTheme } from '../../shared/hooks'
 import { Input, Label } from '../../shared/components/form'
-import { SaveButton } from '../../shared/components/button'
+import { LoginButton } from '../../shared/components/button'
 import { ErrorMessageForm } from '../../shared/components/error-message'
 import { SpinnerContainer } from '../../shared/components/spinner'
 
@@ -110,7 +110,7 @@ export const Login: React.FC = () => {
           {
             isLoading
             ? <SpinnerContainer size='md' color='border-white' />
-            : <SaveButton text='Iniciar Sesión' /> 
+            : <LoginButton className='w-full p-4' submit text='Iniciar Sesión' /> 
           }
 
         </form>
