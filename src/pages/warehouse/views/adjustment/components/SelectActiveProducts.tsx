@@ -1,6 +1,6 @@
 import React from "react";
 import type { UseFormRegister } from "react-hook-form";
-import type { ProductMinimal } from "../../../../../interfaces/product.interface";
+import type { ProductMinimal } from "../../../../../interfaces/dto/product.interface";
 import { useTheme } from "../../../../../shared/hooks";
 
 interface SelectActiveProductsProps {

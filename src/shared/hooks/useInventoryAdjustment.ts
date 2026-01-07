@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
-import type { AdjustmentEnum, SaveInventoryAdjustment } from "../../interfaces/inventory-adjustment.interface"
+import type { AdjustmentEnum, SaveInventoryAdjustment } from "../../interfaces/dto/inventory-adjustment.interface"
 import { startFilteringInventoryAdjustments, startGettingInventoryAdjustments, startSavingInventoryAdjustment } from "../../store/inventory-adjustment/inventory-adjustment.thunk"
 import { setAdjustmentTypeFilter, setAdjustmentUserFilter, setInventoryAdjustmentSelected, setPage, setTableView } from "../../store/inventory-adjustment/inventory-adjustment.slice"
 

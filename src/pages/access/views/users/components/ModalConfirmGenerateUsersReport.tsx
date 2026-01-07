@@ -1,8 +1,9 @@
 import React from 'react'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { FaRegCheckCircle } from 'react-icons/fa'
+import { ModalLayout } from '../../../../../layouts'
 import { useModal, useReports, useTheme } from '../../../../../shared/hooks'
-import { CancelButton, CreateButton, SpinnerContainer } from '../../../../../shared/components'
+import { CancelButton, CreateButton } from '../../../../../shared/components/button'
+import { SpinnerContainer } from '../../../../../shared/components/spinner'
 
 export const ModalConfirmGenerateUsersReport: React.FC = () => {
 

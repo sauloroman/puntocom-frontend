@@ -1,8 +1,8 @@
-import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { IoCloseOutline } from "react-icons/io5";
-import { useDrawer, useTheme } from "../shared/hooks";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import { useDrawer, useTheme } from "../shared/hooks";
 
 interface DrawerProps {
     title: string,
@@ -19,7 +19,6 @@ export const LeftDrawerLayout: React.FC<DrawerProps> = ({ title, width, children
         <AnimatePresence>
             {leftDrawerIsOpen && (
                 <>
-                    {/* Backdrop */}
                     <motion.div
                         className={`fixed inset-0 z-40 ${isDark ? "bg-black/50" : "bg-gray-700/40"}`}
                         initial={{ opacity: 0 }}
@@ -27,8 +26,6 @@ export const LeftDrawerLayout: React.FC<DrawerProps> = ({ title, width, children
                         exit={{ opacity: 0 }}
                         onClick={onCloseDrawers}
                     />
-
-                    {/* Drawer */}
                     <motion.div
                         className={`
                             fixed top-0 left-0 h-full ${width} z-50 flex flex-col shadow-xl transition-colors
@@ -39,7 +36,6 @@ export const LeftDrawerLayout: React.FC<DrawerProps> = ({ title, width, children
                         exit={{ x: "-100%" }}
                         transition={{ type: "keyframes", duration: 0.2 }}
                     >
-                        {/* Header */}
                         <div className="flex items-center justify-between p-4">
                             <div className={`flex items-center gap-2 ${isDark ? "text-indigo-400" : "text-indigo-600"}`}>
                                 <IoIosInformationCircleOutline size={20} />

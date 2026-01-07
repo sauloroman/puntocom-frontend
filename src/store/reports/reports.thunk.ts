@@ -1,7 +1,7 @@
 import type { Dispatch } from "@reduxjs/toolkit"
 import { deleteReport, setAllReports, setIsLoading, setListReport, setReportIdSelected, setUrlReportSelected, type ReportEntities } from "./reports.slice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
-import type { GetAllReports, GenerateReportResponse } from "../../interfaces/report.interface"
+import type { GetAllReports, GenerateReportResponse } from "../../interfaces/dto/report.interface"
 import { extractIdFromPath } from "../../shared/helpers/get-pdf-id"
 import { showAlert } from "../alert/alert.slice"
 import { AlertType } from "../../interfaces/ui/alert.interface"

@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
-import { AsideMenu, Header, ModalAddProduct, ModalSaveSale, OrderPanel, PaginationPos, ProductsList } from './components'
-import { useCategories, useModal, useSale, useTheme } from '../../shared/hooks'
-import { usePos } from '../../shared/hooks/usePos'
 import { ModalNames } from '../../interfaces/ui/modal.interface'
-import { SpinnerContainer } from '../../shared/components'
+import { AsideMenu, Header, ModalAddProduct, ModalSaveSale, OrderPanel, PaginationPos, ProductsList } from './components'
+import { useCategories, useModal, useSale, useTheme, usePos } from '../../shared/hooks'
+import { SpinnerContainer } from '../../shared/components/spinner'
 
 export const Pos: React.FC = () => {
     const { theme } = useTheme()

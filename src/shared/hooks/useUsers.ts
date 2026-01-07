@@ -22,7 +22,7 @@ import {
     setUserSelected 
 } from "../../store/users/users.slice"
 import type { RootState } from "../../store"
-import type { CheckAdminPassword, CreateUser, Roles, UpdateUser } from "../../interfaces/user.interface"
+import type { CheckAdminPassword, CreateUser, Roles, UpdateUser } from "../../interfaces/dto/user.interface"
 
 export const useUsers = () => {
 

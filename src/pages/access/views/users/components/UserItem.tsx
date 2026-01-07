@@ -1,12 +1,11 @@
 import React from 'react'
-import type { Roles, User } from '../../../../../interfaces/user.interface'
-import { UserRoleTag } from './UserRoleTag'
-import { UserValidateTag } from './UserValidateTag'
-import { AvatarInitial } from '../../../../../shared/components'
-import { useDrawer, useUsers, useTheme } from '../../../../../shared/hooks'
-import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
 import { CgDetailsMore } from 'react-icons/cg'
 import { CiEdit } from 'react-icons/ci'
+import type { Roles, User } from '../../../../../interfaces/dto/user.interface'
+import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
+import { useDrawer, useUsers, useTheme } from '../../../../../shared/hooks'
+import { AvatarInitial } from '../../../../../shared/components/avatar'
+import { UserRoleTag, UserValidateTag } from './'
 
 interface UserItemButtonsProps {
   userId: string

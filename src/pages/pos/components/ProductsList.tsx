@@ -1,7 +1,7 @@
 import React from 'react'
-import { ProductItem } from './ProductItem'
-import type { Product } from '../../../interfaces/product.interface'
-import { usePos } from '../../../shared/hooks/usePos'
+import type { Product } from '../../../interfaces/dto/product.interface'
+import { usePos } from '../../../shared/hooks'
+import { ProductItem } from './'
 
 export const ProductsList: React.FC = () => {
     const { products } = usePos()

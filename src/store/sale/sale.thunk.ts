@@ -9,11 +9,11 @@ import type {
     GetAllSalesResponse, 
     GetFilteredSalesResponse,
     GetSale
-} from "../../interfaces/sale.interface";
+} from "../../interfaces/dto/sale.interface";
 import type { Dispatch } from "@reduxjs/toolkit";
 import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
-import type { Pagination } from "../../interfaces/pagination.interface";
+import type { Pagination } from "../../interfaces/dto/pagination.interface";
 import type { DateRange, PriceRange } from "../../interfaces/ui/filter.interface";
 
 const urlSale = '/api/sale'

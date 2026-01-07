@@ -18,7 +18,7 @@ import {
     setStatusFilter 
 } from "../../store/categories/categories.slice"
 import type { RootState } from "../../store"
-import type { CreateCategory, UpdateCategory } from "../../interfaces/category.interface"
+import type { CreateCategory, UpdateCategory } from "../../interfaces/dto/category.interface"
 
 export const useCategories = () => {
 

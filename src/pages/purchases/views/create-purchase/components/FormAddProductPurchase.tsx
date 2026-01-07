@@ -2,7 +2,7 @@ import React from 'react'
 import { CancelButton, ErrorMessageForm, Input, Label, SaveButton } from '../../../../../shared/components'
 import { useModal, usePurchase, useTheme } from '../../../../../shared/hooks'
 import { useForm } from 'react-hook-form'
-import type { AddProduct, ProductInPurchase } from '../../../../../interfaces/purchase.interface'
+import type { AddProduct, ProductInPurchase } from '../../../../../interfaces/dto/purchase.interface'
 
 interface Props {
     sellingPrice: number

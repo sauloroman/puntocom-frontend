@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
-import { useAlert, useDrawer, useUsers, useTheme } from '../../../../../shared/hooks'
 import { useForm } from 'react-hook-form'
-import { Roles, type UpdateUser } from '../../../../../interfaces/user.interface'
-import { CancelButton, Input, Label, SaveButton } from '../../../../../shared/components'
 import { LuAsterisk } from 'react-icons/lu'
+import { Roles, type UpdateUser } from '../../../../../interfaces/dto/user.interface'
 import { AlertType } from '../../../../../interfaces/ui/alert.interface'
+import { useAlert, useDrawer, useUsers, useTheme } from '../../../../../shared/hooks'
+import { Input, Label } from '../../../../../shared/components/form'
+import { CancelButton, SaveButton } from '../../../../../shared/components/button'
+import { ErrorMessageForm } from '../../../../../shared/components/error-message'
 
 export const FormEditUser: React.FC = () => {
 
@@ -78,7 +80,7 @@ export const FormEditUser: React.FC = () => {
                         })
                         }
                     />
-                    {errors.name && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.name.message}</p>)}
+                    {errors.name && <ErrorMessageForm message={errors.name.message} />}
                 </div>
                 <div className="flex-1 w-full">
                     <Label htmlFor='userLastname' className='mb-3 flex items-center justify-between gap-2'>
@@ -98,7 +100,7 @@ export const FormEditUser: React.FC = () => {
                         })
                         }
                     />
-                    {errors.lastname && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.lastname.message}</p>)}
+                    {errors.lastname && <ErrorMessageForm message={errors.lastname.message} />}
                 </div>
                 <div className="flex-1 w-full">
                     <Label htmlFor='userPhone' className='mb-3 flex items-center justify-between gap-2'>
@@ -117,8 +119,9 @@ export const FormEditUser: React.FC = () => {
                         })
                         }
                     />
-                    {errors.phone && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.phone.message}</p>)}
+                    {errors.phone && <ErrorMessageForm message={errors.phone.message} />}
                 </div>
+                
                 <div className="flex-1 w-full">
                     <Label htmlFor='userRole' className='mb-3 flex items-center justify-between gap-2'>
                         Rol del usuario
@@ -153,8 +156,9 @@ export const FormEditUser: React.FC = () => {
                             Vendedor
                         </option>
                     </select>
-                    {errors.role && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.role.message}</p>)}
+                    {errors.role && <ErrorMessageForm message={errors.role.message} />}
                 </div>
+
                 <div className='flex items-center gap-5 justify-end mt-6 w-full'>
                     <SaveButton className='w-52 p-2' submit text='Editar Usuario' />
                     <CancelButton onClick={onCloseDrawers} className='w-48 p-2' text='Cancelar' />

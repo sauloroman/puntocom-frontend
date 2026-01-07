@@ -1,5 +1,5 @@
 import React from 'react'
-import type { InventoryAdjustmentResponse } from '../../../../../interfaces/inventory-adjustment.interface'
+import type { InventoryAdjustmentResponse } from '../../../../../interfaces/dto/inventory-adjustment.interface'
 import { useDrawer, useInventoryAdjustment, useTheme } from '../../../../../shared/hooks'
 import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
 import { CgDetailsMore } from 'react-icons/cg'

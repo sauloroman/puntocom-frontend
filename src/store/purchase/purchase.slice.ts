@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { ProductInPurchase, PurchaseWithDetails, SavePurchaseDetail } from "../../interfaces/purchase.interface";
-import type { Product } from "../../interfaces/product.interface";
-import type { MetaPagination } from "../../interfaces/pagination.interface";
+import type { ProductInPurchase, PurchaseWithDetails, SavePurchaseDetail } from "../../interfaces/dto/purchase.interface";
+import type { Product } from "../../interfaces/dto/product.interface";
+import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
 import type { Filter } from "../../interfaces/ui/filter.interface";
 
 interface PurchasesState {

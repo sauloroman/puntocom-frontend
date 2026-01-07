@@ -1,6 +1,6 @@
 import React from 'react'
-import type { User } from '../../../../../interfaces/user.interface'
-import { UserItem } from './UserItem'
+import type { User } from '../../../../../interfaces/dto/user.interface'
+import { UserItem } from './'
 
 interface UsersGridProps {
     data: User[]

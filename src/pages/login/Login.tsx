@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { Link } from 'react-router-dom'
-import { AuthLayout } from '../../layouts/AuthLayout'
-import { Button, Input, Label, SpinnerContainer } from '../../shared/components'
 import { useForm } from 'react-hook-form'
+import { FaEye, FaEyeSlash } from "react-icons/fa"
+import { AuthLayout } from '../../layouts'
 import { useAuth, useTheme } from '../../shared/hooks'
+import { Input, Label } from '../../shared/components/form'
+import { SaveButton } from '../../shared/components/button'
+import { ErrorMessageForm } from '../../shared/components/error-message'
+import { SpinnerContainer } from '../../shared/components/spinner'
 
 interface LoginFormInputs {
   email: string,
@@ -61,7 +64,7 @@ export const Login: React.FC = () => {
                 })
               }
             />
-            { errors.email && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.email.message}</p>)}
+            { errors.email && <ErrorMessageForm message={errors.email.message} />}
           </div>
 
           <div>
@@ -101,23 +104,15 @@ export const Login: React.FC = () => {
                 { showPassword ? <FaEyeSlash /> : <FaEye /> }
               </div>
             </div>
-            { errors.password && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.password.message}</p>)}
+            { errors.password && <ErrorMessageForm message={errors.password.message} />}
           </div>
 
-          <Button 
-            className={`
-              cursor-pointer rounded-lg w-full p-2
-              bg-[length:200%_auto] hover:bg-[position:right_center]
-              transition-all duration-1000 text-white
-              ${isDark
-                ? 'bg-[linear-gradient(to_right,#4C1D95_0%,#5B21B6_51%,#6D28D9_100%)] shadow-[0_0_20px_rgba(139,92,246,0.3)]'
-                : 'bg-[linear-gradient(to_right,#005C97_0%,#363795_51%,#005C97_100%)] shadow-[0_0_20px_#eee]'
-              }
-            `}
-            type='submit'
-          >
-            { isLoading ? <SpinnerContainer size='md' color='border-white' /> : 'Iniciar sesión'}
-          </Button>
+          {
+            isLoading
+            ? <SpinnerContainer size='md' color='border-white' />
+            : <SaveButton text='Iniciar Sesión' /> 
+          }
+
         </form>
       </div>
 

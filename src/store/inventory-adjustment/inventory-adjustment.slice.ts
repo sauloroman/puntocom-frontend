@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { AdjustmentEnum, InventoryAdjustmentResponse } from "../../interfaces/inventory-adjustment.interface";
-import type { MetaPagination } from "../../interfaces/pagination.interface";
+import type { AdjustmentEnum, InventoryAdjustmentResponse } from "../../interfaces/dto/inventory-adjustment.interface";
+import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
 
 interface InventorySliceState {
     isLoading: boolean,

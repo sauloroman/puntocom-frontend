@@ -1,8 +1,8 @@
 import type { Dispatch } from "@reduxjs/toolkit"
 import { setIsLoading, setProducts, setProductsMetaPagination } from "./pos.slice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
-import { type GetProductsResponse } from "../../interfaces/product.interface"
-import type { Pagination } from "../../interfaces/pagination.interface"
+import { type GetProductsResponse } from "../../interfaces/dto/product.interface"
+import type { Pagination } from "../../interfaces/dto/pagination.interface"
 import { productsValidToSale } from "../../shared/helpers/products-valid-to-sale"
 
 const urlProducts = '/api/product'

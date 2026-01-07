@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Reports } from "../../interfaces/report.interface";
+import type { Reports } from "../../interfaces/dto/report.interface";
 
 export type ReportEntities = 'users' | 'suppliers' | 'products' | 'purchases' | 'inventoryAdjustments'
 

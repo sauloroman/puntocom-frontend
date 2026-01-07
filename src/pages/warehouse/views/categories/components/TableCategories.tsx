@@ -3,7 +3,7 @@ import { useCategories, useDrawer, useTheme } from "../../../../../shared/hooks"
 import { DrawelNames } from "../../../../../interfaces/ui/drawel.interface";
 import { TableImage, TableActions } from "../../../../../shared/components/table";
 import { StatusBadge } from "../../../../../shared/components";
-import type { Category } from "../../../../../interfaces/category.interface";
+import type { Category } from "../../../../../interfaces/dto/category.interface";
 import { BsTag, BsFileText, BsToggleOn, BsCalendar3, BsClock } from "react-icons/bs";
 
 interface TableCategoriesProps {

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import { addProductToCart, decreaseQuantity, deleteProductFromCart, increaseQuantity, setCategoryActive, setProductToAdd } from "../../store/pos/pos.slice"
 import { startFilteringProductsByCategory, startGettingProductsToSale, startSearchingProducts } from "../../store/pos/pos.thunk"
-import type { Product, ProductInCart } from "../../interfaces/product.interface"
+import type { Product, ProductInCart } from "../../interfaces/dto/product.interface"
 
 export const usePos = () => {
 

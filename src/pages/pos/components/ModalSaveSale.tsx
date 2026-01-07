@@ -1,9 +1,9 @@
 import React from 'react'
-import { ModalLayout } from '../../../layouts/ModalLayout'
-import { useModal, usePos, useSale, useTheme } from '../../../shared/hooks'
 import { FaRegCheckCircle } from "react-icons/fa"
-import { OutlineButton } from '../../../shared/components/button/OutlineButton'
+import { ModalLayout } from '../../../layouts'
+import { useModal, usePos, useSale, useTheme } from '../../../shared/hooks'
 import { generarTicketPDF } from '../../../shared/helpers'
+import { OutlineButton } from '../../../shared/components/button'
 
 export const ModalSaveSale: React.FC = () => {
     const { theme } = useTheme()

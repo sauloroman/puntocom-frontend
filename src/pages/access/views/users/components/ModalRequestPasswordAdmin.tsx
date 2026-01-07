@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { RiLockPasswordLine } from "react-icons/ri"
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
-
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
-import { ConfirmButton, Input, Label } from '../../../../../shared/components'
+import type { CheckAdminPassword } from '../../../../../interfaces/dto/user.interface'
+import { ModalLayout } from '../../../../../layouts'
 import { useAuth, useModal, useUsers, useTheme } from '../../../../../shared/hooks'
-import type { CheckAdminPassword } from '../../../../../interfaces/user.interface'
+import { ConfirmButton } from '../../../../../shared/components/button'
+import { Input, Label } from '../../../../../shared/components/form'
+import { ErrorMessageForm } from '../../../../../shared/components/error-message'
 
 export const ModalRequestPasswordAdmin: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -91,9 +92,7 @@ export const ModalRequestPasswordAdmin: React.FC = () => {
               })}
             />
 
-            {errors.adminPassword && (
-              <p className="text-red-500 mt-1 text-right text-xs">{errors.adminPassword.message}</p>
-            )}
+            {errors.adminPassword && <ErrorMessageForm message={errors.adminPassword.message} />}
           </div>
 
           <ConfirmButton

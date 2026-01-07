@@ -1,7 +1,7 @@
 import React from 'react'
-import { Select } from '../../../../../shared/components'
+import { Roles } from '../../../../../interfaces/dto/user.interface'
 import { useUsers } from '../../../../../shared/hooks'
-import { Roles } from '../../../../../interfaces/user.interface'
+import { Select } from '../../../../../shared/components/select'
 
 export const SelectUsersByRole: React.FC = () => {
 

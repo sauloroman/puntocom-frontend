@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { MetaPagination } from "../../interfaces/pagination.interface";
-import type { User, Roles } from "../../interfaces/user.interface";
+import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
+import type { User, Roles } from "../../interfaces/dto/user.interface";
 
 interface IUsers {
   isLoading: boolean;

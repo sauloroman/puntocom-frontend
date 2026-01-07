@@ -1,9 +1,8 @@
 import React from 'react'
 import { IoAddCircleOutline } from "react-icons/io5"
 import { FiBox } from "react-icons/fi"
-import { useModal, useTheme } from '../../../shared/hooks'
 import { ModalNames } from '../../../interfaces/ui/modal.interface'
-import { usePos } from '../../../shared/hooks/usePos'
+import { useModal, useTheme, usePos } from '../../../shared/hooks'
 
 interface Props {
   name: string

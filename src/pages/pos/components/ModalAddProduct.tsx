@@ -1,8 +1,7 @@
 import React from 'react'
-import { ModalLayout } from '../../../layouts/ModalLayout'
-import { usePos } from '../../../shared/hooks/usePos'
+import { ModalLayout } from '../../../layouts'
+import { useTheme, usePos } from '../../../shared/hooks'
 import { FormAddProduct } from './'
-import { useTheme } from '../../../shared/hooks'
 
 export const ModalAddProduct: React.FC = () => {
     const { theme } = useTheme()

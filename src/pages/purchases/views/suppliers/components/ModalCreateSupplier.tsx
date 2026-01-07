@@ -6,7 +6,7 @@ import { Input, Label } from '../../../../../shared/components'
 import { LuAsterisk } from "react-icons/lu";
 import { SaveButton } from '../../../../../shared/components/button/SaveButton'
 import { CancelButton } from '../../../../../shared/components/button/CancelButton'
-import type { CreateSupplier } from '../../../../../interfaces/supplier.interface'
+import type { CreateSupplier } from '../../../../../interfaces/dto/supplier.interface'
 import { EmailRegEx, phoneRegEx } from '../../../../../shared/utils/regexp'
 import { SmallButton } from '../../../../../shared/components/button'
 import { AlertType } from '../../../../../interfaces/ui/alert.interface'

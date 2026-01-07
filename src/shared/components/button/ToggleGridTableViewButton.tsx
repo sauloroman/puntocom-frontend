@@ -8,7 +8,7 @@ interface ToggleGridTableViewProps {
     onToggle: ( status: boolean ) => void
 }
 
-export const ToggleGridTableView: React.FC<ToggleGridTableViewProps> = ({ onToggle, status }) => {
+export const ToggleGridTableViewButton: React.FC<ToggleGridTableViewProps> = ({ onToggle, status }) => {
     const { theme } = useTheme()
     const isDark = theme === "dark"
 

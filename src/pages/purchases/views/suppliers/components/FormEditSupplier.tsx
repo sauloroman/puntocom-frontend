@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useAlert, useDrawer, useSuppliers, useTheme } from '../../../../../shared/hooks'
 import { useForm } from 'react-hook-form'
-import { type UpdateSupplier } from '../../../../../interfaces/supplier.interface'
+import { type UpdateSupplier } from '../../../../../interfaces/dto/supplier.interface'
 import { CancelButton, Input, Label, SaveButton, SmallButton } from '../../../../../shared/components'
 import { LuAsterisk } from 'react-icons/lu'
 import { EmailRegEx, phoneRegEx } from '../../../../../shared/utils/regexp'

@@ -1,4 +1,4 @@
-import { getEnvVariables } from "./get-env-variables";
+import { getEnvVariables } from "./";
 
 export const handleDownloadPdf = (url: string) => {
   const { VITE_BACKEND_URL } = getEnvVariables()

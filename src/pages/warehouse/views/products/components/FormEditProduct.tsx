@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useAlert, useCategories, useDrawer, useProducts, useSuppliers, useTheme } from '../../../../../shared/hooks'
-import { type EditProduct } from '../../../../../interfaces/product.interface'
+import { type EditProduct } from '../../../../../interfaces/dto/product.interface'
 import { CancelButton, Input, Label, SaveButton, Textarea } from '../../../../../shared/components'
 import { AlertType } from '../../../../../interfaces/ui/alert.interface'
 

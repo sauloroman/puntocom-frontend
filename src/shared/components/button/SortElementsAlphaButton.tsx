@@ -7,7 +7,7 @@ interface SortElementsAlphaProps {
   desc: boolean;
 }
 
-export const SortElementsAlpha: React.FC<SortElementsAlphaProps> = ({ onToggle, desc }) => {
+export const SortElementsAlphaButton: React.FC<SortElementsAlphaProps> = ({ onToggle, desc }) => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 

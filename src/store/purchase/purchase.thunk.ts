@@ -1,11 +1,11 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { GetAllPurchases, GetFilteredPurchases, SavePurchase, SavePurchaseResponse } from "../../interfaces/purchase.interface";
+import type { GetAllPurchases, GetFilteredPurchases, SavePurchase, SavePurchaseResponse } from "../../interfaces/dto/purchase.interface";
 import { addPurchase, clearProductsInPurchase, setIsLoading, setProducts, setProductsMetaPagination, setPurchases, setPurchasesMetaPagination, updateProduct } from "./purchase.slice";
 import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
 import { puntocomApiPrivate } from "../../config/api/puntocom.api";
-import type { Pagination } from "../../interfaces/pagination.interface";
-import type { GetProductsResponse } from "../../interfaces/product.interface";
+import type { Pagination } from "../../interfaces/dto/pagination.interface";
+import type { GetProductsResponse } from "../../interfaces/dto/product.interface";
 import type { DateRange, PriceRange } from "../../interfaces/ui/filter.interface";
 
 const urlPurchases = '/api/purchase'

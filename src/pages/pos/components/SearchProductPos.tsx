@@ -1,6 +1,6 @@
 import React from 'react'
-import { Search } from '../../../shared/components'
-import { usePos } from '../../../shared/hooks/usePos'
+import { usePos } from '../../../shared/hooks'
+import { Search } from '../../../shared/components/form'
 
 export const SearchProductPos: React.FC = () => {
 

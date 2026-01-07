@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useTheme } from '../../../../../shared/hooks'
-import type { Roles } from '../../../../../interfaces/user.interface'
+import type { Roles } from '../../../../../interfaces/dto/user.interface'
 
 interface RoleTagProps {
   role: Roles

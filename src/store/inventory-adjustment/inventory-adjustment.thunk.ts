@@ -1,10 +1,10 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { GetInventoryAdjustments, SaveInventoryAdjustment, SaveInventoryAdjustmentResponse } from "../../interfaces/inventory-adjustment.interface";
+import type { GetInventoryAdjustments, SaveInventoryAdjustment, SaveInventoryAdjustmentResponse } from "../../interfaces/dto/inventory-adjustment.interface";
 import { addInventoryAdjustment, setAdjustmentsMetaPagination, setInventoryAdjustments, setIsLoading } from "./inventory-adjustment.slice";
 import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
 import { puntocomApiPrivate } from "../../config/api/puntocom.api";
-import type { Pagination } from "../../interfaces/pagination.interface";
+import type { Pagination } from "../../interfaces/dto/pagination.interface";
 import { handleError } from "../../config/api/handle-error";
 
 const urlInventoryAdjustment = '/api/inventory-adjustment'

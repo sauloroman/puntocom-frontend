@@ -1,7 +1,8 @@
 import React from 'react'
 import { FaAngleDoubleLeft } from "react-icons/fa"
-import { LocationTab, Menu } from '../shared/components'
+import { LocationTab } from '../shared/components/location-tab'
 import { useMenu, useTheme } from '../shared/hooks'
+import { Menu } from '../shared/components/menu'
 
 interface PuntoComLayoutProps {
   children: React.ReactNode

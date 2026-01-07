@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
-import type { CreateProduct, EditProduct, Product } from "../../interfaces/product.interface"
+import type { CreateProduct, EditProduct, Product } from "../../interfaces/dto/product.interface"
 import { 
     startChangingProductStatus, 
     startCreatingProduct, 

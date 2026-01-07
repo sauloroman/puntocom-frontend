@@ -1,6 +1,6 @@
 import React from 'react'
 import { useUsers } from '../../../../../shared/hooks'
-import { Select } from '../../../../../shared/components'
+import { Select } from '../../../../../shared/components/select'
 
 export const SelectUsersByStatus: React.FC = () => {
     

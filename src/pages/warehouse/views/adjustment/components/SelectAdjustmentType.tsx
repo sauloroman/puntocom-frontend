@@ -1,6 +1,6 @@
 import React from 'react'
 import type { UseFormRegister } from 'react-hook-form'
-import { AdjustmentEnum } from '../../../../../interfaces/inventory-adjustment.interface'
+import { AdjustmentEnum } from '../../../../../interfaces/dto/inventory-adjustment.interface'
 import { useTheme } from '../../../../../shared/hooks'
 
 interface Props {

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { CancelButton, Input, Label, SaveButton } from '../../../shared/components'
 import { LuAsterisk } from 'react-icons/lu'
 import { useModal } from '../../../shared/hooks'
-import type { PriceRange } from '../../../interfaces/sale.interface'
+import type { PriceRange } from '../../../interfaces/dto/sale.interface'
 
 interface Props {
     onSetFilterPrices: ( minPrice: number, maxPrice: number ) => void

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { useModal, useTheme } from '../shared/hooks';
 import { IoCloseOutline } from "react-icons/io5";
+import { useModal, useTheme } from '../shared/hooks';
 
 interface ModalProps {
     width: string,

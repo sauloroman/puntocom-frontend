@@ -1,11 +1,13 @@
 import React from 'react'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { useForm } from 'react-hook-form'
-import { Roles, type CreateUser } from '../../../../../interfaces/user.interface'
-import { CancelButton, Input, Label, SaveButton } from '../../../../../shared/components'
 import { LuAsterisk } from 'react-icons/lu'
+import { ModalLayout } from '../../../../../layouts'
+import { Roles, type CreateUser } from '../../../../../interfaces/dto/user.interface'
 import { EmailRegEx, PasswordRegEx } from '../../../../../shared/utils/regexp'
 import { useModal, useUsers, useTheme } from '../../../../../shared/hooks'
+import { CancelButton, SaveButton } from '../../../../../shared/components/button'
+import { Input, Label } from '../../../../../shared/components/form'
+import { ErrorMessageForm } from '../../../../../shared/components/error-message'
 
 export const ModalCreateUser: React.FC = () => {
     const { theme } = useTheme()
@@ -47,7 +49,7 @@ export const ModalCreateUser: React.FC = () => {
                             })
                             }
                         />
-                        {errors.name && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.name.message}</p>)}
+                        {errors.name && <ErrorMessageForm message={errors.name.message} />}
                     </div>
                     <div className='flex-1'>
                         <Label htmlFor='userLastname' className='mb-3 flex items-center justify-between gap-2'>
@@ -67,7 +69,7 @@ export const ModalCreateUser: React.FC = () => {
                             })
                             }
                         />
-                        {errors.lastname && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.lastname.message}</p>)}
+                        {errors.lastname && <ErrorMessageForm message={errors.lastname.message} />}
                     </div>
                 </div>
                     <div className="flex-1 w-full">
@@ -87,7 +89,7 @@ export const ModalCreateUser: React.FC = () => {
                             })
                             }
                         />
-                        {errors.phone && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.phone.message}</p>)}
+                        {errors.phone && <ErrorMessageForm message={errors.phone.message} />}
                     </div>
                 <div className="w-full">
                     <Label htmlFor='userRole' className='mb-3 flex items-center justify-between gap-2'>
@@ -115,7 +117,7 @@ export const ModalCreateUser: React.FC = () => {
                         <option value={Roles.SUPERVISOR}>Supervisor</option>
                         <option value={Roles.VENDEDOR}>Vendedor</option>
                     </select>
-                    {errors.role && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.role.message}</p>)}
+                    {errors.role && <ErrorMessageForm message={errors.role.message} />}
                 </div>
                 <div className='w-full'>
                     <Label htmlFor='userEmail' className='mb-3 flex items-center justify-between gap-2'>
@@ -136,7 +138,7 @@ export const ModalCreateUser: React.FC = () => {
                         })
                         }
                     />
-                    {errors.email && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.email.message}</p>)}
+                    {errors.email && <ErrorMessageForm message={errors.email.message} />}
                 </div>
                 <div className='w-full'>
                     <Label htmlFor='userPassword' className='mb-3 flex items-center justify-between gap-2'>
@@ -157,7 +159,7 @@ export const ModalCreateUser: React.FC = () => {
                         })
                         }
                     />
-                    {errors.password && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.password.message}</p>)}
+                    {errors.password && <ErrorMessageForm message={errors.password.message} />}
                 </div>
 
                 <div className='flex items-center gap-5 justify-end mt-6 w-full'>

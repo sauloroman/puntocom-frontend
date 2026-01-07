@@ -1,11 +1,32 @@
 import React, { useEffect } from 'react'
-import { useDrawer, useModal, useUsers } from '../../../../shared/hooks'
-import { CreateUserButton, ModalConfirmChangeStatusUser, ModalConfirmGenerateUsersReport, ModalRequestPasswordAdmin, PaginationUsers, SearchUsers, SelectUsersByRole, SelectUsersByStatus, TableUsers, UserEditDrawer, UserInfoDrawer, UsersGrid } from './components'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
-import { ModalEmailSentToUser } from './components/ModalEmailSentToUser'
-import {  GenerateReport, SortElementsAlpha, ToggleGridTableView } from '../../../../shared/components/button'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
-import { ModalCreateUser } from './components'
+import { 
+    useDrawer, 
+    useModal, 
+    useUsers 
+} from '../../../../shared/hooks'
+import { 
+    CreateUserButton, 
+    ModalConfirmChangeStatusUser, 
+    ModalConfirmGenerateUsersReport, 
+    ModalEmailSentToUser,
+    ModalRequestPasswordAdmin, 
+    ModalCreateUser,
+    PaginationUsers, 
+    SearchUsers, 
+    SelectUsersByRole, 
+    SelectUsersByStatus, 
+    TableUsers, 
+    UserEditDrawer, 
+    UserInfoDrawer, 
+    UsersGrid 
+} from './components'
+import {  
+    GenerateReportButton, 
+    SortElementsAlphaButton, 
+    ToggleGridTableViewButton 
+} from '../../../../shared/components/button'
 
 export const AccessUsers: React.FC = () => {
 
@@ -24,8 +45,8 @@ export const AccessUsers: React.FC = () => {
                     <div className="w-96"><SearchUsers /></div>
                     <div className='flex items-center gap-5'>
                         <div className="flex items-center gap-4">
-                            <ToggleGridTableView onToggle={setTableStyle} status={isTableStyleActive} />
-                            <SortElementsAlpha onToggle={onOrderAlpha} desc={isOrderedAsc} />
+                            <ToggleGridTableViewButton onToggle={setTableStyle} status={isTableStyleActive} />
+                            <SortElementsAlphaButton onToggle={onOrderAlpha} desc={isOrderedAsc} />
                             <div className="w-50">
                                 <SelectUsersByStatus />
                             </div>
@@ -33,7 +54,7 @@ export const AccessUsers: React.FC = () => {
                                 <SelectUsersByRole />
                             </div>
                         </div>
-                        <GenerateReport onConfirm={() => onOpenConfirmAdminPassword(ModalNames.createUsersReport)} />
+                        <GenerateReportButton text='Generar Reporte' onClick={() => onOpenConfirmAdminPassword(ModalNames.createUsersReport)} />
                         <CreateUserButton />
                     </div>
                 </div>

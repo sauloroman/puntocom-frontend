@@ -1,3 +1,6 @@
 export { AuthLayout } from './AuthLayout'
+export { LeftDrawerLayout } from './LeftDrawerLayout'
+export { ModalLayout } from './ModalLayout'
 export { PuntoComLayout } from './PuntoComLayout'
+export { RightDrawerLayout } from './RightDrawerLayout'
 export { TabsLayout } from './TabsLayout'

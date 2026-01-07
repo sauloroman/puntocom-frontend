@@ -1,6 +1,6 @@
 import React from 'react'
 import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
-import type { Product } from '../../../../../interfaces/product.interface'
+import type { Product } from '../../../../../interfaces/dto/product.interface'
 import { useTheme } from '../../../../../shared/hooks'
 
 interface Props {

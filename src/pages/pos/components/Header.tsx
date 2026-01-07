@@ -1,7 +1,7 @@
 import React from 'react'
-import { SearchProductPos } from './'
 import { IoMdArrowBack } from "react-icons/io"
 import { useNavPage, useTheme } from '../../../shared/hooks'
+import { SearchProductPos } from './'
 
 export const Header: React.FC = () => {
     const { theme } = useTheme()

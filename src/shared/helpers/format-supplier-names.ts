@@ -1,4 +1,4 @@
-import type { Supplier } from "../../interfaces/supplier.interface";
+import type { Supplier } from "../../interfaces/dto/supplier.interface";
 
 export const formatSupplierNames = ( suppliers: Supplier[] ) => {
     const suppliersNames = suppliers?.map(suppliers => `${suppliers.name} ${suppliers.lastname}`) ?? []

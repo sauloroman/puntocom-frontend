@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Category } from "../../interfaces/category.interface";
-import type { MetaPagination } from "../../interfaces/pagination.interface";
+import type { Category } from "../../interfaces/dto/category.interface";
+import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
 
 interface ICategories {
     isLoading: boolean,

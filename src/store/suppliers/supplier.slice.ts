@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Supplier } from "../../interfaces/supplier.interface";
-import type { MetaPagination } from "../../interfaces/pagination.interface";
+import type { Supplier } from "../../interfaces/dto/supplier.interface";
+import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
 
 interface ISuppliers {
     isLoading: boolean,

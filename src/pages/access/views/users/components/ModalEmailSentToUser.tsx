@@ -1,6 +1,6 @@
 import React from 'react'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
-import { ConfirmButton } from '../../../../../shared/components'
+import { ModalLayout } from '../../../../../layouts'
+import { ConfirmButton } from '../../../../../shared/components/button'
 import { useModal, useUsers, useTheme } from '../../../../../shared/hooks'
 
 export const ModalEmailSentToUser: React.FC = () => {

@@ -1,7 +1,6 @@
 import React from 'react'
-import { usePos } from '../../../shared/hooks/usePos'
-import { OrderItem } from './OrderItem'
-import { useTheme } from '../../../shared/hooks'
+import { useTheme, usePos } from '../../../shared/hooks'
+import { OrderItem } from './'
 
 export const OrderList: React.FC = () => {
     const { theme } = useTheme()

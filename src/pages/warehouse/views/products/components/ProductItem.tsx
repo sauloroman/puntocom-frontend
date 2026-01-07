@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Product } from '../../../../../interfaces/product.interface'
+import type { Product } from '../../../../../interfaces/dto/product.interface'
 import { useDrawer, useProducts, useTheme } from '../../../../../shared/hooks'
 import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
 import { CgDetailsMore } from 'react-icons/cg'

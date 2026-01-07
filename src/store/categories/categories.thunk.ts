@@ -1,7 +1,7 @@
 import type { Dispatch } from "@reduxjs/toolkit"
 import { addCategory, setAllCategories, setCategories, setCategoriesMetaPagination, setCategorySelected, setIsLoading, updateCategory } from "./categories.slice"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
-import type { Pagination } from "../../interfaces/pagination.interface"
+import type { Pagination } from "../../interfaces/dto/pagination.interface"
 import { 
     type ChangeCategoryStatus, 
     type CategoryResponse, 
@@ -11,7 +11,7 @@ import {
     type UpdateCategoryResponse, 
     type UploadCategoryImage, 
     type GetAllCategoriesResponse
-} from "../../interfaces/category.interface"
+} from "../../interfaces/dto/category.interface"
 import { showAlert } from "../alert/alert.slice"
 import { handleError } from "../../config/api/handle-error"
 import { AlertType } from "../../interfaces/ui/alert.interface"

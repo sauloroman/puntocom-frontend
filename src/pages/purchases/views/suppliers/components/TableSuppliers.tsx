@@ -2,7 +2,7 @@ import React from "react";
 import { useDrawer, useSuppliers, useTheme } from "../../../../../shared/hooks";
 import { DrawelNames } from "../../../../../interfaces/ui/drawel.interface";
 import { TableActions } from "../../../../../shared/components/table";
-import type { Supplier } from "../../../../../interfaces/supplier.interface";
+import type { Supplier } from "../../../../../interfaces/dto/supplier.interface";
 import { AvatarInitial, StatusBadge } from "../../../../../shared/components";
 import {
   BsPerson,

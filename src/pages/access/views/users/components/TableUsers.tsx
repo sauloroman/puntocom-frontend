@@ -1,12 +1,11 @@
 import React from 'react'
-import type { Roles, User } from '../../../../../interfaces/user.interface'
-import { TableActions, TableImage } from '../../../../../shared/components/table';
-import { UserRoleTag } from './UserRoleTag';
-import { UserValidateTag } from './UserValidateTag';
-import { useDrawer, useTheme, useUsers } from '../../../../../shared/hooks';
-import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface';
-import { StatusBadge } from '../../../../../shared/components';
 import { BsPerson, BsEnvelope, BsShield, BsToggleOn, BsCheckCircle, BsPhone } from 'react-icons/bs';
+import type { Roles, User } from '../../../../../interfaces/dto/user.interface'
+import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface';
+import { useDrawer, useTheme, useUsers } from '../../../../../shared/hooks';
+import { TableActions, TableImage } from '../../../../../shared/components/table';;
+import { StatusBadge } from '../../../../../shared/components/badgets';
+import { UserRoleTag, UserValidateTag } from './';
 
 interface TableUsersProps {
   data: User[]

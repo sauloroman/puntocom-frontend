@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { useForm } from 'react-hook-form'
-import { type SaveInventoryAdjustment } from '../../../../../interfaces/inventory-adjustment.interface'
+import { type SaveInventoryAdjustment } from '../../../../../interfaces/dto/inventory-adjustment.interface'
 import {
     CancelButton,
     ErrorMessageForm,

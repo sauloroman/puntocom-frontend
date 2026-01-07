@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDrawer, useModal, usePurchase } from '../../../../shared/hooks'
-import type { Purchase } from '../../../../interfaces/purchase.interface'
+import type { Purchase } from '../../../../interfaces/dto/purchase.interface'
 import { 
   AppliedPurchasesFilters,
   FilterPurchasesBySupplier, 

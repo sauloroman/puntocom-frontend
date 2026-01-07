@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useReports, useTheme } from '../../../shared/hooks'
-import type { ReportItem } from '../../../interfaces/report.interface'
+import type { ReportItem } from '../../../interfaces/dto/report.interface'
 import { TableReportsButtons } from './'
 import { BsFileText, BsCalendar3 } from 'react-icons/bs'
 

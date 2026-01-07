@@ -19,9 +19,9 @@ import {
     setSelectedSale, 
     setUserFilter 
 } from "../../store/sale/sale.slice"
-import type { Pagination } from "../../interfaces/pagination.interface"
-import type { ProductInCart } from "../../interfaces/product.interface"
-import type { GetSale, SaleResponse, SaveSale } from "../../interfaces/sale.interface"
+import type { Pagination } from "../../interfaces/dto/pagination.interface"
+import type { ProductInCart } from "../../interfaces/dto/product.interface"
+import type { GetSale, SaleResponse, SaveSale } from "../../interfaces/dto/sale.interface"
 import type { RootState } from "../../store"
 import type { DateRange, PriceRange } from "../../interfaces/ui/filter.interface"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"

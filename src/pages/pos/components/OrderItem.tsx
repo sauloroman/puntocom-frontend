@@ -1,7 +1,6 @@
 import React from 'react'
 import { FiMinus, FiPlus, FiTrash2 } from 'react-icons/fi'
-import { usePos } from '../../../shared/hooks/usePos'
-import { useTheme } from '../../../shared/hooks'
+import { useTheme, usePos } from '../../../shared/hooks'
 
 interface Props {
     id: string,

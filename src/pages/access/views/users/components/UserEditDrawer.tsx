@@ -1,11 +1,11 @@
 import React from 'react'
-import { RightDrawerLayout } from '../../../../../layouts/RightDrawerLayout'
-import { useModal, useUsers, useTheme } from '../../../../../shared/hooks'
-import { SpinnerContainer } from '../../../../../shared/components'
-import { FormEditUser, UploadUserImage } from './'
-import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
-import { DrawerInfoStatus } from '../../../../../shared/components/drawer/DrawerInfoStatus'
 import { FaPlus } from "react-icons/fa6";
+import { RightDrawerLayout } from '../../../../../layouts'
+import { useModal, useUsers, useTheme } from '../../../../../shared/hooks'
+import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
+import { DrawerInfoStatus } from '../../../../../shared/components/drawer'
+import { SpinnerContainer } from '../../../../../shared/components/spinner'
+import { FormEditUser, UploadUserImage } from './'
 
 export const UserEditDrawer: React.FC = () => {
   const { theme } = useTheme()

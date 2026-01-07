@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react'
-import { PuntoComLayout } from '../../layouts/PuntoComLayout'
-import { TabsLayout } from '../../layouts'
-import { useTabs } from '../../shared/hooks'
 import { WindowsTab } from '../../interfaces/ui/tabs.interface'
-import { PurchasesSuppliers } from './views/suppliers/PurchasesSuppliers'
-import { CreatePurchase } from './views/create-purchase/CreatePurchase'
-import { PurchasesPage } from './views/purchases/PurchasesPage'
+import { PuntoComLayout, TabsLayout } from '../../layouts'
+import { useTabs } from '../../shared/hooks'
+import { CreatePurchase, PurchasesPage, PurchasesSuppliers } from './views'
 
 const tabs = ["Registrar Compra", "Registro de compras", "Proveedores del sistema"]
 

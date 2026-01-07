@@ -1,7 +1,7 @@
 import React from 'react'
 import { useCategories } from '../../../../../shared/hooks'
 import type { FieldErrors, UseFormRegister } from 'react-hook-form'
-import type { CreateProduct } from '../../../../../interfaces/product.interface'
+import type { CreateProduct } from '../../../../../interfaces/dto/product.interface'
 
 interface SelectActiveCategoriesProps {
     register: UseFormRegister<CreateProduct>,

@@ -1,12 +1,11 @@
-import { MenuItem, type MenuItemProps } from "./MenuItem"
 import { BsBox, BsCoin } from "react-icons/bs"
 import { IoCartOutline, IoKeyOutline, IoSettingsOutline, IoLogOutOutline, IoCalculatorOutline, IoDocumentTextOutline  } from "react-icons/io5"
 import { MdOutlineDarkMode } from "react-icons/md"
 import { TfiStatsUp } from "react-icons/tfi"
-import { MenuSection } from "./MenuSection"
 import { useAuth, useTheme } from "../../hooks"
 import { ThemeType } from "../../../interfaces/ui/theme.interface"
 import { UserWidget } from "../../../pages/access/views/users/components"
+import { MenuSection, MenuItem, type MenuItemProps } from "./"
 
 interface MenuProps {
   collapsed: boolean

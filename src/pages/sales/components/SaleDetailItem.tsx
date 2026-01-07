@@ -1,5 +1,5 @@
 import React from 'react'
-import type { SaleProductDetailResponse } from '../../../interfaces/sale.interface'
+import type { SaleProductDetailResponse } from '../../../interfaces/dto/sale.interface'
 import { useTheme } from '../../../shared/hooks'
 
 interface Props {

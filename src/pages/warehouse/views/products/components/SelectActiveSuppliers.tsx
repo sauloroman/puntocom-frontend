@@ -1,6 +1,6 @@
 import React from 'react'
 import type { FieldErrors, UseFormRegister } from 'react-hook-form'
-import type { CreateProduct } from '../../../../../interfaces/product.interface'
+import type { CreateProduct } from '../../../../../interfaces/dto/product.interface'
 import { useSuppliers } from '../../../../../shared/hooks'
 
 interface SelectActiveSuppliersProps {

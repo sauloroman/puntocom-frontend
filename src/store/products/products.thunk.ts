@@ -10,7 +10,7 @@ import type {
     ProductsByStock,
     GetProductsMinimal,
     GetAllProducts
-} from "../../interfaces/product.interface"
+} from "../../interfaces/dto/product.interface"
 import { 
     addProducts, 
     setAllProducts, 
@@ -26,7 +26,7 @@ import {
 import { showAlert } from "../alert/alert.slice"
 import { AlertType } from "../../interfaces/ui/alert.interface"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
-import type { Pagination } from "../../interfaces/pagination.interface"
+import type { Pagination } from "../../interfaces/dto/pagination.interface"
 import { handleError } from "../../config/api/handle-error"
 
 const urlProducts = '/api/product'

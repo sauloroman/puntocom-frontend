@@ -1,4 +1,4 @@
-import type { User } from "../../interfaces/user.interface";
+import type { User } from "../../interfaces/dto/user.interface";
 
 export const formatUserNames = ( users: User[] ) => {
     const userNames = users?.map(user => `${user.name} ${user.lastname}`) ?? []

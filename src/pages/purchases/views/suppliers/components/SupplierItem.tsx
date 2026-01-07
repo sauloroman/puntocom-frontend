@@ -4,7 +4,7 @@ import { CgDetailsMore } from "react-icons/cg"
 import { CiEdit } from "react-icons/ci"
 import { useDrawer, useSuppliers, useTheme } from "../../../../../shared/hooks"
 import { DrawelNames } from "../../../../../interfaces/ui/drawel.interface"
-import type { Supplier } from "../../../../../interfaces/supplier.interface"
+import type { Supplier } from "../../../../../interfaces/dto/supplier.interface"
 import { StatusBadge } from "../../../../../shared/components"
 
 interface SupplierItemButtonsProps {

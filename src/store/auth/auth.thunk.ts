@@ -1,5 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { UserRenewAuth, UserRequest, UserResponse } from "../../interfaces/user.interface";
+import type { UserRenewAuth, UserRequest, UserResponse } from "../../interfaces/dto/user.interface";
 import { login, setIsLoading } from "./auth.slice";
 import { puntocomApiPrivate, puntocomApiPublic } from "../../config/api/puntocom.api";
 import { getEnvVariables } from "../../shared/helpers";

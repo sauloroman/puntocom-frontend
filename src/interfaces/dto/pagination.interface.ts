@@ -1,4 +1,4 @@
-import type { Filter } from "./ui/filter.interface"
+import type { Filter } from "../ui/filter.interface"
 
 export interface Pagination {
     page: number,

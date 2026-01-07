@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAlert, useCategories, useDrawer } from '../../../../../shared/hooks'
-import { Label } from '../../../../../shared/components/label/Label'
+import { Label } from '../../../../../shared/components/form/Label'
 import { IoTextOutline } from 'react-icons/io5'
-import { Textarea } from '../../../../../shared/components/textarea/Textarea'
-import { Input } from '../../../../../shared/components/input/Input'
+import { Textarea } from '../../../../../shared/components/form/Textarea'
+import { Input } from '../../../../../shared/components/form/Input'
 import { SaveButton } from '../../../../../shared/components/button/SaveButton'
 import { CancelButton } from '../../../../../shared/components/button/CancelButton'
-import type { UpdateCategory } from '../../../../../interfaces/category.interface'
+import type { UpdateCategory } from '../../../../../interfaces/dto/category.interface'
 import { AlertType } from '../../../../../interfaces/ui/alert.interface'
 
 export const FormEditCategory: React.FC = () => {

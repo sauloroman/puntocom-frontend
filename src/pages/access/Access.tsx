@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react'
-import { PuntoComLayout } from '../../layouts/PuntoComLayout'
-import { TabsLayout } from '../../layouts'
-import { useTabs } from '../../shared/hooks'
 import { WindowsTab } from '../../interfaces/ui/tabs.interface'
-import { AccessUsers } from './views/users/AccessUsers'
-import { AccessRoles } from './views/roles/AccessRoles'
+import { PuntoComLayout, TabsLayout } from '../../layouts'
+import { AccessRoles, AccessUsers } from './views'
+import { useTabs } from '../../shared/hooks'
 
 const tabs = ["Usuarios del sistema", "Roles de usuario"]
 

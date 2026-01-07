@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import type { CreateCategory } from '../../../../../interfaces/category.interface'
+import type { CreateCategory } from '../../../../../interfaces/dto/category.interface'
 import { useCategories, useModal } from '../../../../../shared/hooks'
 import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { Input, Label, Textarea } from '../../../../../shared/components'

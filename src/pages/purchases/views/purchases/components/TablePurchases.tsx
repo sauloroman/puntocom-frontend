@@ -1,6 +1,6 @@
 import React from "react";
 import { BsCalendar3, BsPerson, BsShop, BsCashStack } from "react-icons/bs";
-import type { Purchase } from "../../../../../interfaces/purchase.interface";
+import type { Purchase } from "../../../../../interfaces/dto/purchase.interface";
 import { useTheme } from "../../../../../shared/hooks";
 import { TableImage } from "../../../../../shared/components/table";
 import { TablePurchasesActions } from "./TablePurchasesActions";

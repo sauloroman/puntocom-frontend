@@ -1,7 +1,6 @@
 import React from 'react'
 import { MdOutlineCategory } from 'react-icons/md'
-import { usePos } from '../../../shared/hooks/usePos'
-import { useTheme } from '../../../shared/hooks'
+import { useTheme, usePos } from '../../../shared/hooks'
 
 interface Props {
   categoryId: string

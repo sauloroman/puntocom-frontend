@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
-import type { Product } from "../../interfaces/product.interface"
+import type { Product } from "../../interfaces/dto/product.interface"
 import {
   addProductInPurchase,
   decrementProductQuantityInPurchase,
@@ -20,7 +20,7 @@ import {
 import type {
   ProductInPurchase,
   SavePurchase,
-} from "../../interfaces/purchase.interface"
+} from "../../interfaces/dto/purchase.interface"
 import {
   startFilteringPurchases,
   startGettingAllPurchases,

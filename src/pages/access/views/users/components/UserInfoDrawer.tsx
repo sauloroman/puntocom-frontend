@@ -1,11 +1,10 @@
 import React from 'react'
-import { RightDrawerLayout } from '../../../../../layouts/RightDrawerLayout'
+import type { Roles, User } from '../../../../../interfaces/dto/user.interface'
+import { RightDrawerLayout } from '../../../../../layouts'
 import { useUsers, useTheme } from '../../../../../shared/hooks'
-import { AvatarInitialSquare } from '../../../../../shared/components/avatar/AvatarInitialSquare'
-import type { Roles, User } from '../../../../../interfaces/user.interface'
-import { StatusBadge } from '../../../../../shared/components/badgets/StatusBadge'
+import { StatusBadge } from '../../../../../shared/components/badgets'
+import { AvatarImage, AvatarInitialSquare } from '../../../../../shared/components/avatar'
 import { UserRoleTag, UserValidateTag } from './'
-import { AvatarImage } from '../../../../../shared/components'
 
 export const UserInfoDrawer: React.FC = () => {
 

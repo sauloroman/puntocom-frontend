@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useProducts, useTheme } from '../../../../../shared/hooks'
 import { ListProductItem } from './ListProductItem'
-import type { Product } from '../../../../../interfaces/product.interface'
+import type { Product } from '../../../../../interfaces/dto/product.interface'
 import { SelectSupplier } from './SelectSupplier'
 import { PaginationProductsPurchase } from './'
 

@@ -1,5 +1,5 @@
 import React from "react";
-import type { SaleResponse } from "../../../interfaces/sale.interface";
+import type { SaleResponse } from "../../../interfaces/dto/sale.interface";
 import { TableImage } from "../../../shared/components/table";
 import { BsCalendar3, BsPerson, BsCode, BsCashStack } from "react-icons/bs";
 import { TableSalesActions } from "./TableSalesActions";

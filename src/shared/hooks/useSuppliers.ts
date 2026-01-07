@@ -20,7 +20,7 @@ import {
     setSupplierSelected, 
     setTableView
 } from "../../store/suppliers/supplier.slice"
-import type { CreateSupplier, UpdateSupplier } from "../../interfaces/supplier.interface"
+import type { CreateSupplier, UpdateSupplier } from "../../interfaces/dto/supplier.interface"
 import type { RootState } from "../../store"
 
 export const useSuppliers = () => {

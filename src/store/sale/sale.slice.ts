@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { SaleResponse } from "../../interfaces/sale.interface";
-import type { MetaPagination } from "../../interfaces/pagination.interface";
+import type { SaleResponse } from "../../interfaces/dto/sale.interface";
+import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
 import type { Filter } from "../../interfaces/ui/filter.interface";
 
 interface SliceState {

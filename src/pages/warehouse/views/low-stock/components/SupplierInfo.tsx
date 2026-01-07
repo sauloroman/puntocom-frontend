@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Product } from '../../../../../interfaces/product.interface'
+import type { Product } from '../../../../../interfaces/dto/product.interface'
 import { useTheme } from '../../../../../shared/hooks'
 
 interface Props {

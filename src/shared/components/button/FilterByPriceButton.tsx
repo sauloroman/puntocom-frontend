@@ -1,14 +1,14 @@
 import React from 'react'
-import { OutlineButton } from '../../../shared/components/button/OutlineButton'
+import { OutlineButton } from './OutlineButton'
 import { CiFilter } from 'react-icons/ci'
-import { useModal } from '../../../shared/hooks'
+import { useModal } from '../../hooks'
 import { ModalNames } from '../../../interfaces/ui/modal.interface'
 
 interface Props {
     modal: ModalNames
 }
 
-export const ButtonFilterByPrice: React.FC<Props> = ({ modal }) => {
+export const FilterByPriceButton: React.FC<Props> = ({ modal }) => {
     const { onOpenModal } = useModal() 
 
     return (

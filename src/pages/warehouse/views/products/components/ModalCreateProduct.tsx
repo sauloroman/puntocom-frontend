@@ -5,7 +5,7 @@ import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { CancelButton, Input, Label, SaveButton, Textarea } from '../../../../../shared/components'
 import { useCategories, useModal, useSuppliers, useTheme } from '../../../../../shared/hooks'
 import { useProducts } from '../../../../../shared/hooks/useProducts'
-import type { CreateProduct } from '../../../../../interfaces/product.interface'
+import type { CreateProduct } from '../../../../../interfaces/dto/product.interface'
 
 export const ModalCreateProduct: React.FC = () => {
   const {

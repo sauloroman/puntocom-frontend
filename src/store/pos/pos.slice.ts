@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { ProductInCart, Product } from "../../interfaces/product.interface";
-import type { MetaPagination } from "../../interfaces/pagination.interface";
+import type { ProductInCart, Product } from "../../interfaces/dto/product.interface";
+import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
 
 interface PosState {
   products: Product[] | null;

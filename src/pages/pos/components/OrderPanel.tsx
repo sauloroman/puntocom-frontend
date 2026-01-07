@@ -1,9 +1,8 @@
 import React from 'react'
-import { OrderList } from './OrderList'
 import { FaRegListAlt } from "react-icons/fa"
-import { OrderSummary } from './OrderSummary'
-import { SaveButton } from '../../../shared/components'
 import { useSale, useCart, useTheme } from '../../../shared/hooks'
+import { SaveButton } from '../../../shared/components/button'
+import { OrderSummary, OrderList } from './'
 
 export const OrderPanel: React.FC = () => {
   const { theme } = useTheme()

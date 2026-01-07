@@ -13,7 +13,7 @@ import { showAlert } from "../alert/alert.slice"
 import { AlertType } from "../../interfaces/ui/alert.interface"
 import { handleError } from "../../config/api/handle-error"
 import type { Dispatch } from "@reduxjs/toolkit"
-import type { Pagination } from "../../interfaces/pagination.interface"
+import type { Pagination } from "../../interfaces/dto/pagination.interface"
 import { 
     type CreateSupplierResponse, 
     type CreateSupplier, 
@@ -23,7 +23,7 @@ import {
     type UpdateSupplier,
     type UpdateSupplierResponse,
     type GetAllSuppliers
-} from "../../interfaces/supplier.interface"
+} from "../../interfaces/dto/supplier.interface"
 
 const urlSuppliers = '/api/supplier'
 

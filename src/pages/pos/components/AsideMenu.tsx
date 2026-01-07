@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
-import { useCategories, useTheme } from '../../../shared/hooks'
-import { CategoryItemMenu } from './CategoryItemMenu'
-import { usePos } from '../../../shared/hooks/usePos'
+import { useCategories, useTheme, usePos } from '../../../shared/hooks'
+import { CategoryItemMenu } from './'
 
 export const AsideMenu: React.FC = () => {
     const { theme } = useTheme()

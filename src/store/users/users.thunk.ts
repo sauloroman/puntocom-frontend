@@ -18,9 +18,9 @@ import {
     type UploadUserImage,
     type UpdateUser,
     type UpdateUserResponse,
-} from "../../interfaces/user.interface"
+} from "../../interfaces/dto/user.interface"
 import type { Dispatch } from "@reduxjs/toolkit"
-import type { Pagination } from "../../interfaces/pagination.interface"
+import type { Pagination } from "../../interfaces/dto/pagination.interface"
 
 import { showAlert } from "../alert/alert.slice"
 import { AlertType } from "../../interfaces/ui/alert.interface"

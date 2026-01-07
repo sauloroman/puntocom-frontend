@@ -1,9 +1,8 @@
 import React from 'react'
-import { usePos } from '../../../shared/hooks/usePos'
 import { useForm } from 'react-hook-form'
-import { CancelButton, Input, Label } from '../../../shared/components'
-import { AddToCartButton } from '../../../shared/components/button/AddToListCart'
-import { useModal } from '../../../shared/hooks'
+import { useModal, usePos } from '../../../shared/hooks'
+import { Input, Label } from '../../../shared/components/form'
+import { AddToCartButton, CancelButton } from '../../../shared/components/button'
 
 interface ProductInCartMeta {
     quantity: number,

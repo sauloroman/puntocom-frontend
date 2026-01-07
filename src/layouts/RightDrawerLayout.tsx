@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { useDrawer, useTheme } from "../shared/hooks";

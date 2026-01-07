@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Product } from '../../../../../interfaces/product.interface'
+import type { Product } from '../../../../../interfaces/dto/product.interface'
 import { useAlert, useModal, usePurchase, useTheme } from '../../../../../shared/hooks';
 import { ModalNames } from '../../../../../interfaces/ui/modal.interface';
 import { AlertType } from '../../../../../interfaces/ui/alert.interface';

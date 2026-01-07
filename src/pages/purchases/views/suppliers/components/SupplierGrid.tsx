@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Supplier } from '../../../../../interfaces/supplier.interface'
+import type { Supplier } from '../../../../../interfaces/dto/supplier.interface'
 import { SupplierItem } from './SupplierItem'
 
 interface SupplierGridProps {
