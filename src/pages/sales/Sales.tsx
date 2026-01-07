@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
-import { PuntoComLayout } from '../../layouts/PuntoComLayout'
+import { DrawelNames } from '../../interfaces/ui/drawel.interface'
+import { ModalNames } from '../../interfaces/ui/modal.interface'
 import { useDrawer, useModal, useSale, useUsers } from '../../shared/hooks'
+import { PuntoComLayout } from '../../layouts'
 import { 
   AppliedSalesFilters,  
   PaginationSales, 
@@ -10,10 +12,8 @@ import {
   ModalSalesRangeDates,
   ModalSalesRangePrices
 } from './components'
-import { SpinnerContainer } from '../../shared/components'
-import { DrawelNames } from '../../interfaces/ui/drawel.interface'
-import { ModalNames } from '../../interfaces/ui/modal.interface'
-import { ButtonFilterByDate, ButtonFilterByPrice } from '../../shared/components/button'
+import { SpinnerContainer } from '../../shared/components/spinner'
+import { FilterByDateButton, FilterByPriceButton } from '../../shared/components/button'
 
 export const Sales: React.FC = () => {
 
@@ -33,8 +33,8 @@ export const Sales: React.FC = () => {
         <div className="flex items-center justify-between my-7">
           <div className='flex items-center gap-3'>  
             <div className="w-64"><FilterSalesByUser /></div>
-            <ButtonFilterByPrice modal={ModalNames.rangeSalesPrices} />
-            <ButtonFilterByDate modal={ModalNames.rangeSalesDates} />
+            <FilterByPriceButton modal={ModalNames.rangeSalesPrices} />
+            <FilterByDateButton modal={ModalNames.rangeSalesDates} />
           </div>
           <AppliedSalesFilters />
         </div>

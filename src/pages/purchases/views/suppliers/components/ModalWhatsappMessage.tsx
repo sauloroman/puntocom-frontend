@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
-import { useSuppliers, useTheme, useModal } from '../../../../../shared/hooks'
 import { FaWhatsapp } from 'react-icons/fa'
-import { CancelButton, SaveButton } from '../../../../../shared/components'
+import { ModalLayout } from '../../../../../layouts'
+import { useSuppliers, useTheme, useModal } from '../../../../../shared/hooks'
+import { CancelButton, SaveButton } from '../../../../../shared/components/button'
 
 const predefinedMessages = [
     'Hola, necesito información sobre productos disponibles.',

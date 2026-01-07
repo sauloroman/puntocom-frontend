@@ -1,11 +1,11 @@
 import React from 'react'
-import { FormEditCategory, UploadCategoryImage } from './'
-import { RightDrawerLayout } from '../../../../../layouts/RightDrawerLayout'
-import { SpinnerContainer } from '../../../../../shared/components'
-import { useCategories, useModal, useTheme } from '../../../../../shared/hooks'
-import { DrawerInfoStatus } from '../../../../../shared/components/drawer/DrawerInfoStatus'
-import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
 import { FaPlus } from 'react-icons/fa'
+import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
+import { RightDrawerLayout } from '../../../../../layouts'
+import { useCategories, useModal, useTheme } from '../../../../../shared/hooks'
+import { SpinnerContainer } from '../../../../../shared/components/spinner'
+import { DrawerInfoStatus } from '../../../../../shared/components/drawer'
+import { FormEditCategory, UploadCategoryImage } from './'
 
 export const CategoryEditDrawer: React.FC = () => {
   const { isLoading, categorySelected } = useCategories()

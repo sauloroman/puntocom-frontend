@@ -1,12 +1,14 @@
 import React from 'react'
-import { ModalLayout } from '../../../layouts/ModalLayout'
 import { useForm } from 'react-hook-form'
-import { CancelButton, Input, Label, SaveButton } from '../../../shared/components'
 import { LuAsterisk } from 'react-icons/lu'
-import { useAlert, useModal } from '../../../shared/hooks'
 import { AlertType } from '../../../interfaces/ui/alert.interface'
-import { today } from '../../../shared/helpers/format-dates'
 import type { DateRange } from '../../../interfaces/ui/filter.interface'
+import { ModalLayout } from '../../../layouts'
+import { today } from '../../../shared/helpers'
+import { useAlert, useModal } from '../../../shared/hooks'
+import { CancelButton, SaveButton } from '../button'
+import { Input, Label } from '../form'
+import { ErrorMessageForm } from '../error-message'
 
 interface Props {
     onSetFilterDates: (dateFrom: string, dateTo: string) => void
@@ -25,13 +27,13 @@ export const ModalRangeDates: React.FC<Props> = ({ onSetFilterDates }) => {
         watch
     } = useForm<DateRange>()
 
-    const dateFrom = watch('dateFrom')
+    const dateStart = watch('dateStart')
 
     const onApplyFilter = (data: DateRange) => {
-        const { dateFrom, dateTo } = data
+        const { dateStart, dateEnd } = data
 
-        const fromDate = new Date(dateFrom)
-        const toDate = new Date(dateTo)
+        const fromDate = new Date(dateStart as string)
+        const toDate = new Date(dateEnd as string)
 
         if (toDate < fromDate) {
             return activateAlert({ 
@@ -69,12 +71,12 @@ export const ModalRangeDates: React.FC<Props> = ({ onSetFilterDates }) => {
                             className='cursor-pointer'
                             max={today}
                             {
-                                ...register('dateFrom', {
+                                ...register('dateStart', {
                                     required: 'La fecha inicial es obligatoria'
                                 })
                             }
                         />
-                        {errors.dateFrom && <p className='text-red-600 mt-1 text-right text-xs'>{errors.dateFrom.message}</p>}
+                        {errors.dateStart && <ErrorMessageForm message={errors.dateStart.message} />}
                     </div>
 
                     <div className='flex-1'>
@@ -91,18 +93,18 @@ export const ModalRangeDates: React.FC<Props> = ({ onSetFilterDates }) => {
                             className='cursor-pointer'
                             max={today}
                             {
-                                ...register('dateTo', {
+                                ...register('dateEnd', {
                                     required: 'La fecha final es obligatoria',
                                     validate: {
                                         greaterThanFrom: (value) => {
-                                            if (!dateFrom) return true
-                                            return value >= dateFrom || 'La fecha final debe ser mayor o igual a la inicial'
+                                            if (!dateStart ) return true
+                                            return value! >= dateStart || 'La fecha final debe ser mayor o igual a la inicial'
                                         }
                                     }
                                 })
                             }
                         />
-                        {errors.dateTo && <p className='text-red-600 mt-1 text-right text-xs'>{errors.dateTo.message}</p>}
+                        {errors.dateEnd && <p className='text-red-600 mt-1 text-right text-xs'>{errors.dateEnd.message}</p>}
                     </div>
                 </div>
 

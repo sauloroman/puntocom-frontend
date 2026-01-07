@@ -1,6 +1,6 @@
 import React from 'react'
-import { EntityReportList } from './EntityReportList'
 import { useTheme } from '../../../shared/hooks'
+import { EntityReportList } from './'
 
 export const ReportsFolder: React.FC = () => {
   const { theme } = useTheme()

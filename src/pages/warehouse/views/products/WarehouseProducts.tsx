@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { CreateButton, SpinnerContainer } from '../../../../shared/components'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
-import { useCategories, useDrawer, useModal, useSuppliers } from '../../../../shared/hooks'
+import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
+import { useCategories, useDrawer, useModal, useSuppliers, useProducts } from '../../../../shared/hooks'
+import { CreateButton, SortElementsAlphaButton } from '../../../../shared/components/button'
 import {
   FilterProductsByCategoryDrawer,
   ModalConfirmChangeStatusProduct,
@@ -19,10 +20,9 @@ import {
   FilterProductsByCategories,
   FilterProductsBySupplier
 } from './components'
-import { useProducts } from '../../../../shared/hooks/useProducts'
-import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 import { ModalRequestPasswordAdmin } from '../../../access/views/users/components'
-import { GenerateReport, SortElementsAlpha } from '../../../../shared/components/button'
+import { GenerateReport } from '../../../reports/components'
+import { SpinnerContainer } from '../../../../shared/components/spinner'
 
 export const WarehouseProducts: React.FC = () => {
 
@@ -58,7 +58,7 @@ export const WarehouseProducts: React.FC = () => {
         <div className="flex items-center justify-between mb-7">
           <div className="w-96"><SearchProduct /></div>
           <div className='flex items-center gap-3 justify-end'>
-            <SortElementsAlpha onToggle={onOrderAlpha} desc={isOrderedAsc} />
+            <SortElementsAlphaButton onToggle={onOrderAlpha} desc={isOrderedAsc} />
             { filter.supplier.id === null && (<FilterProductsByCategories />) }
             { filter.category.id === null && (<FilterProductsBySupplier />) }
             <div className='w-48'><SelectProductsByStatus /></div>

@@ -1,6 +1,7 @@
+import React from 'react'
 import { FiPackage, FiTrash2 } from "react-icons/fi"
-import type { ProductInPurchase } from "../../../../../interfaces/dto/purchase.interface"
 import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5"
+import type { ProductInPurchase } from "../../../../../interfaces/dto/purchase.interface"
 import { usePurchase } from "../../../../../shared/hooks"
 
 interface Props {

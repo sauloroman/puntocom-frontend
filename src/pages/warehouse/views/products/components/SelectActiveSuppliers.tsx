@@ -2,6 +2,7 @@ import React from 'react'
 import type { FieldErrors, UseFormRegister } from 'react-hook-form'
 import type { CreateProduct } from '../../../../../interfaces/dto/product.interface'
 import { useSuppliers } from '../../../../../shared/hooks'
+import { ErrorMessageForm } from '../../../../../shared/components/error-message'
 
 interface SelectActiveSuppliersProps {
     register: UseFormRegister<CreateProduct>,
@@ -38,7 +39,7 @@ export const SelectActiveSuppliers: React.FC<SelectActiveSuppliersProps> = ({ er
                     ))
                 }
             </select>           
-            { errors.supplierId && <p className='text-red-600 mt-1 text-right text-xs'>{errors.supplierId.message}</p>}
+            { errors.supplierId && <ErrorMessageForm message={errors.supplierId.message} />}
         </div>
     )
 }

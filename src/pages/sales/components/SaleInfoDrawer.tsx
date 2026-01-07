@@ -1,11 +1,9 @@
 import React from 'react'
-import { RightDrawerLayout } from '../../../layouts/RightDrawerLayout'
-import { useSale, useTheme } from '../../../shared/hooks'
-import { SpinnerContainer } from '../../../shared/components'
 import { FiCalendar, FiPackage, FiTag } from 'react-icons/fi'
-import { SaleDetailItem } from './SaleDetailItem'
-import { SaleDetailUser } from './SaleDetailUser'
-import { PrintSale } from './PrintSale'
+import { RightDrawerLayout } from '../../../layouts'
+import { useSale, useTheme } from '../../../shared/hooks'
+import { SpinnerContainer } from '../../../shared/components/spinner'
+import { SaleDetailItem, SaleDetailUser, PrintSale } from './'
 
 export const SaleInfoDrawer: React.FC = () => {
     const { theme } = useTheme()

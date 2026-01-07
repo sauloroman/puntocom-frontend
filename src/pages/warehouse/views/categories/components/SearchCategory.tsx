@@ -1,6 +1,6 @@
 import React from 'react'
-import { Search } from '../../../../../shared/components'
 import { useCategories } from '../../../../../shared/hooks'
+import { Search } from '../../../../../shared/components/form'
 
 export const SearchCategory: React.FC = () => {
 

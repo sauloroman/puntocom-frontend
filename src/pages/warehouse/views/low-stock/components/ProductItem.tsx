@@ -1,7 +1,7 @@
 import React from 'react'
 import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
-import { useModal, useTheme } from '../../../../../shared/hooks'
 import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
+import { useModal, useTheme } from '../../../../../shared/hooks'
 
 interface Props {
     id: string,

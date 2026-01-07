@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDrawer, useProducts } from '../../../../../shared/hooks'
-import { ImageButton, UploadImage } from '../../../../../shared/components'
+import { ImageButton } from '../../../../../shared/components/button'
+import { UploadImage } from '../../../../../shared/components/upload'
 
 export const UploadProductImage: React.FC = () => {
     

@@ -1,8 +1,7 @@
 import React from 'react'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
+import { ModalLayout } from '../../../../../layouts'
 import { usePurchase, useTheme } from '../../../../../shared/hooks'
-import { ListProductItem } from './ListProductItem'
-import { FormAddProductPurchase } from './FormAddProductPurchase'
+import { ListProductItem, FormAddProductPurchase } from './'
 
 export const ModalAddProductPurchase: React.FC = () => {
     

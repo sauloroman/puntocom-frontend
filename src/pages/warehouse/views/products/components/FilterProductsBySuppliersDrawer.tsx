@@ -1,7 +1,7 @@
 import React from 'react'
-import { LeftDrawerLayout } from '../../../../../layouts/LeftDrawerLayout'
+import { LeftDrawerLayout } from '../../../../../layouts'
 import { useSuppliers } from '../../../../../shared/hooks'
-import { SupplierItemFilter } from './SupplierItemFilter'
+import { SupplierItemFilter } from './'
 
 export const FilterProductsBySuppliersDrawer: React.FC = () => {
     const { suppliers } = useSuppliers()

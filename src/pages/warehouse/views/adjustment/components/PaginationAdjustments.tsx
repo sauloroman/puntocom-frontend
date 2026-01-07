@@ -1,6 +1,6 @@
 import React from 'react'
-import { Pagination } from '../../../../../shared/components'
 import { useInventoryAdjustment } from '../../../../../shared/hooks'
+import { Pagination } from '../../../../../shared/components/pagination'
 
 export const PaginationAdjustments: React.FC = () => {
     const { pagination, onSetPage } = useInventoryAdjustment()

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDrawer, useInventoryAdjustment, useModal, useReports } from '../../../../shared/hooks'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
+import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 import { 
   AdjustmentGrid,
   AdjustmentInfoLeftDrawer,
@@ -12,10 +13,10 @@ import {
   PaginationAdjustments, 
   TableAdjustments, 
 } from './components'
-import { SpinnerContainer } from '../../../../shared/components'
-import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
-import { GenerateReport, ToggleGridTableView } from '../../../../shared/components/button'
+import { SpinnerContainer } from '../../../../shared/components/spinner'
+import { ToggleGridTableViewButton } from '../../../../shared/components/button'
 import { ModalRequestPasswordAdmin } from '../../../access/views/users/components'
+import { GenerateReport } from '../../../reports/components'
 
 export const WarehouseAdjustment: React.FC = () => {
   
@@ -43,7 +44,7 @@ export const WarehouseAdjustment: React.FC = () => {
             <div className="w-60"><FilterSelectAdjustmentType /></div>
           </div>
           <div className='flex gap-4 items-center'>
-            <ToggleGridTableView status={isTableStyleActive} onToggle={setTableStyle} /> 
+            <ToggleGridTableViewButton status={isTableStyleActive} onToggle={setTableStyle} /> 
             <div className="w-fit"><GenerateReport onConfirm={() => onOpenConfirmAdminPassword(ModalNames.confirmCreateInventoryAdjustmentsReport)} /></div>
             <div className="w-fit"><ButtonOpenModalCreateInventory /></div>
           </div>

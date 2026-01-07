@@ -1,10 +1,10 @@
 import React from 'react'
-import { RightDrawerLayout } from '../../../../../layouts/RightDrawerLayout'
-import { useModal, useProducts, useTheme } from '../../../../../shared/hooks'
-import { SpinnerContainer } from '../../../../../shared/components'
 import { FaPlus } from 'react-icons/fa'
-import { DrawerInfoStatus } from '../../../../../shared/components/drawer/DrawerInfoStatus'
 import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
+import { RightDrawerLayout } from '../../../../../layouts'
+import { useModal, useProducts, useTheme } from '../../../../../shared/hooks'
+import { SpinnerContainer } from '../../../../../shared/components/spinner'
+import { DrawerInfoStatus } from '../../../../../shared/components/drawer'
 import { FormEditProduct, UploadProductImage } from './'
 
 export const ProductEditDrawer: React.FC = () => {

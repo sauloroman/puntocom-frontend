@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { CreateButton } from '../../../../shared/components'
+import { ModalNames } from '../../../../interfaces/ui/modal.interface'
+import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 import { 
   ModalConfirmChangeStatusSupplier,
   ModalConfirmCreateSupplierReport,
   ModalCreateSupplier, 
-  ModalSupplierReport, 
   ModalWhatsappMessage, 
   PaginationSuppliers, 
   SearchSupplier, 
@@ -15,10 +15,9 @@ import {
   SupplierInfoDrawer, 
   TableSuppliers } from './components'
 import { useDrawer, useModal, useSuppliers } from '../../../../shared/hooks'
-import { ModalNames } from '../../../../interfaces/ui/modal.interface'
-import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
-import { GenerateReport, SortElementsAlpha, ToggleGridTableView } from '../../../../shared/components/button'
 import { ModalRequestPasswordAdmin } from '../../../access/views/users/components'
+import { CreateButton, SortElementsAlphaButton, ToggleGridTableViewButton } from '../../../../shared/components/button'
+import { GenerateReport } from '../../../reports/components/GenerateReport'
 
 export const PurchasesSuppliers: React.FC = () => {
 
@@ -40,8 +39,8 @@ export const PurchasesSuppliers: React.FC = () => {
           <div className="flex items-center justify-end gap-4 w-full">
 
             <div className="flex items-center gap-4">
-              <SortElementsAlpha onToggle={ onOrderAlpha } desc={isOrderedAsc} />
-              <ToggleGridTableView onToggle={setTableStyle} status={isTableStyleActive} />
+              <SortElementsAlphaButton onToggle={ onOrderAlpha } desc={isOrderedAsc} />
+              <ToggleGridTableViewButton onToggle={setTableStyle} status={isTableStyleActive} />
               <div className='w-64'>
                 <SelectSupplierByCompany />
               </div>
@@ -69,7 +68,6 @@ export const PurchasesSuppliers: React.FC = () => {
       {modalIsOpen && modalName === ModalNames.confirmAdminPassword && <ModalRequestPasswordAdmin />}
       {modalIsOpen && modalName === ModalNames.createSupplier && <ModalCreateSupplier />}
       {modalIsOpen && modalName === ModalNames.confirmCreateSupplierReport && <ModalConfirmCreateSupplierReport />}
-      {modalIsOpen && modalName === ModalNames.reportSuppliers && <ModalSupplierReport />}
       {modalIsOpen && modalName === ModalNames.confirmChangeStatusSupplier && <ModalConfirmChangeStatusSupplier />}
       {modalIsOpen && modalName === ModalNames.sendMessageToSupplier && <ModalWhatsappMessage />}
       {rightDrawerIsOpen && drawelName === DrawelNames.infoSupplier && <SupplierInfoDrawer />}

@@ -4,7 +4,7 @@ import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { ModalAddProductPurchase, ListProducts, PurchaseOrder } from './components'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 import { FilterProductsBySuppliersDrawer } from '../../../warehouse/views/products/components'
-import { Spinner } from '../../../../shared/components'
+import { Spinner } from '../../../../shared/components/spinner'
 
 export const CreatePurchase: React.FC = () => {
 

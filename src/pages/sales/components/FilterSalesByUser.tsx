@@ -1,6 +1,6 @@
 import React from 'react'
-import { SelectUserFilter } from '../../../shared/components/select/SelectUserFilter'
 import { useSale } from '../../../shared/hooks'
+import { SelectUserFilter } from '../../../shared/components/select'
 
 export const FilterSalesByUser: React.FC = () => {
     

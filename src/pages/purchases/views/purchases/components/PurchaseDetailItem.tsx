@@ -1,6 +1,6 @@
 import React from 'react'
-import { useTheme } from '../../../../../shared/hooks'
 import type { PurchaseDetail } from '../../../../../interfaces/dto/purchase.interface'
+import { useTheme } from '../../../../../shared/hooks'
 
 interface Props {
     detail: PurchaseDetail

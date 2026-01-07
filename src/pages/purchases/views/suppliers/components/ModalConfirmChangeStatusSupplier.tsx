@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { FaExclamationTriangle } from 'react-icons/fa'
-import { CancelButton, ConfirmButton } from '../../../../../shared/components'
+import { ModalLayout } from '../../../../../layouts'
+import { CancelButton, ConfirmButton } from '../../../../../shared/components/button'
 import { useModal, useSuppliers } from '../../../../../shared/hooks'
 
 export const ModalConfirmChangeStatusSupplier: React.FC = () => {

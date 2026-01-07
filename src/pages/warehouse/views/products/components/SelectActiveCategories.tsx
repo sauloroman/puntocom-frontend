@@ -1,7 +1,8 @@
 import React from 'react'
-import { useCategories } from '../../../../../shared/hooks'
 import type { FieldErrors, UseFormRegister } from 'react-hook-form'
 import type { CreateProduct } from '../../../../../interfaces/dto/product.interface'
+import { useCategories } from '../../../../../shared/hooks'
+import { ErrorMessageForm } from '../../../../../shared/components/error-message'
 
 interface SelectActiveCategoriesProps {
     register: UseFormRegister<CreateProduct>,
@@ -41,7 +42,7 @@ export const SelectActiveCategories: React.FC<SelectActiveCategoriesProps> = ({ 
                     ))
                 }
             </select> 
-            { errors.categoryId && <p className='text-red-600 mt-1 text-right text-xs'>{errors.categoryId.message}</p>}
+            { errors.categoryId && <ErrorMessageForm message={errors.categoryId.message} />}
         </div>
     )
 }

@@ -1,8 +1,8 @@
 import React from 'react'
-import { OutlineButton } from '../../../shared/components/button/OutlineButton'
 import { FiPrinter } from 'react-icons/fi'
 import { useSale } from '../../../shared/hooks'
 import { generarTicketPDF } from '../../../shared/helpers'
+import { OutlineButton } from '../../../shared/components/button'
 
 export const PrintSale: React.FC = () => {
 

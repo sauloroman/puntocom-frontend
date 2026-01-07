@@ -1,11 +1,11 @@
 import React from "react"
-import { useModal, useSuppliers, useTheme } from "../../../../../shared/hooks"
-import { RightDrawerLayout } from "../../../../../layouts/RightDrawerLayout"
-import { SpinnerContainer } from "../../../../../shared/components"
 import type { Supplier } from "../../../../../interfaces/dto/supplier.interface"
-import { AvatarInitialSquare } from "../../../../../shared/components/avatar/AvatarInitialSquare"
-import { WhatsAppButton } from "../../../../../shared/components/button/WhatsAppButton"
 import { ModalNames } from "../../../../../interfaces/ui/modal.interface"
+import { useModal, useSuppliers, useTheme } from "../../../../../shared/hooks"
+import { RightDrawerLayout } from "../../../../../layouts"
+import { SpinnerContainer } from "../../../../../shared/components/spinner"
+import { AvatarInitialSquare } from "../../../../../shared/components/avatar"
+import { WhatsAppButton } from "../../../../../shared/components/button"
 
 export const SupplierInfoDrawer: React.FC = () => {
 

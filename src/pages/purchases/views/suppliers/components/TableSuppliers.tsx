@@ -1,9 +1,4 @@
 import React from "react";
-import { useDrawer, useSuppliers, useTheme } from "../../../../../shared/hooks";
-import { DrawelNames } from "../../../../../interfaces/ui/drawel.interface";
-import { TableActions } from "../../../../../shared/components/table";
-import type { Supplier } from "../../../../../interfaces/dto/supplier.interface";
-import { AvatarInitial, StatusBadge } from "../../../../../shared/components";
 import {
   BsPerson,
   BsEnvelope,
@@ -14,6 +9,12 @@ import {
   BsCalendar3,
   BsClock,
 } from "react-icons/bs";
+import { DrawelNames } from "../../../../../interfaces/ui/drawel.interface";
+import type { Supplier } from "../../../../../interfaces/dto/supplier.interface";
+import { useDrawer, useSuppliers, useTheme } from "../../../../../shared/hooks";
+import { TableActions } from "../../../../../shared/components/table";
+import { StatusBadge } from "../../../../../shared/components/badgets";
+import { AvatarInitial } from "../../../../../shared/components/avatar";
 
 interface TableSuppliersProps {
   data: Supplier[];

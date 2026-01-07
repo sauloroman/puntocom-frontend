@@ -1,10 +1,12 @@
 import React from 'react'
-import { ModalLayout } from '../../../layouts/ModalLayout'
 import { useForm } from 'react-hook-form'
-import { CancelButton, Input, Label, SaveButton } from '../../../shared/components'
 import { LuAsterisk } from 'react-icons/lu'
+import type { PriceRange } from '../../../interfaces/ui/filter.interface'
+import { ModalLayout } from '../../../layouts'
 import { useModal } from '../../../shared/hooks'
-import type { PriceRange } from '../../../interfaces/dto/sale.interface'
+import { CancelButton, SaveButton } from '../button'
+import { Input, Label } from '../form'
+import { ErrorMessageForm } from '../error-message'
 
 interface Props {
     onSetFilterPrices: ( minPrice: number, maxPrice: number ) => void
@@ -61,7 +63,7 @@ export const ModalRangePrices: React.FC<Props> = ({ onSetFilterPrices }) => {
                                 })
                             }
                         />
-                        {errors.minPrice && <p className='text-red-600 mt-1 text-right text-xs'>{errors.minPrice.message}</p>}
+                        {errors.minPrice && <ErrorMessageForm message={errors.minPrice.message} />}
                     </div>
 
                     <div className='flex-1'>
@@ -95,7 +97,7 @@ export const ModalRangePrices: React.FC<Props> = ({ onSetFilterPrices }) => {
                                 })
                             }
                         />
-                        {errors.maxPrice && <p className='text-red-600 mt-1 text-right text-xs'>{errors.maxPrice.message}</p>}
+                        {errors.maxPrice && <ErrorMessageForm message={errors.maxPrice.message} />}
                     </div>
                 </div>
 

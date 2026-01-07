@@ -1,8 +1,8 @@
 import React from "react";
+import { RightDrawerLayout } from "../../../../../layouts";
 import { useCategories, useTheme } from "../../../../../shared/hooks";
-import { RightDrawerLayout } from "../../../../../layouts/RightDrawerLayout";
-import { AvatarImage, StatusBadge } from "../../../../../shared/components";
-import { AvatarInitialSquare } from "../../../../../shared/components/avatar/AvatarInitialSquare";
+import { AvatarImage, AvatarInitialSquare } from "../../../../../shared/components/avatar";
+import { StatusBadge } from "../../../../../shared/components/badgets";
 
 export const CategoryInfoDrawer: React.FC = () => {
   const { categorySelected } = useCategories();

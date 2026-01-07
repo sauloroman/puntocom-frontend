@@ -1,6 +1,6 @@
 import React from 'react'
 import type { InventoryAdjustmentResponse } from '../../../../../interfaces/dto/inventory-adjustment.interface'
-import { AdjustmentCard } from './AdjustmentCard'
+import { AdjustmentCard } from './'
 
 interface Props {
     data: InventoryAdjustmentResponse[]

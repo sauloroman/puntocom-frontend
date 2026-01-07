@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react'
-import { PuntoComLayout } from '../../layouts/PuntoComLayout'
-import { TabsLayout } from '../../layouts'
-import { useTabs } from '../../shared/hooks/useTabs'
 import { WindowsTab } from '../../interfaces/ui/tabs.interface'
-import { WarehouseCategories } from './views/categories/WarehouseCategories'
-import { WarehouseProducts } from './views/products/WarehouseProducts'
-import { WarehouseLowStock } from './views/low-stock/WarehouseLowStock'
-import { WarehouseAdjustment } from './views/adjustment/WarehouseAdjustment'
+import { useTabs } from '../../shared/hooks'
+import { PuntoComLayout, TabsLayout  } from '../../layouts'
+import { WarehouseCategories, WarehouseProducts, WarehouseLowStock, WarehouseAdjustment } from './views'
 
 const tabs = ["Categorías", "Productos", "Control de Stock", "Ajustes de Almacén"]
 

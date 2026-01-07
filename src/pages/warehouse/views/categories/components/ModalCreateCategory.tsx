@@ -1,12 +1,12 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import type { CreateCategory } from '../../../../../interfaces/dto/category.interface'
-import { useCategories, useModal } from '../../../../../shared/hooks'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
-import { Input, Label, Textarea } from '../../../../../shared/components'
 import { LuAsterisk } from "react-icons/lu";
-import { SaveButton } from '../../../../../shared/components/button/SaveButton'
-import { CancelButton } from '../../../../../shared/components/button/CancelButton'
+import type { CreateCategory } from '../../../../../interfaces/dto/category.interface'
+import { ModalLayout } from '../../../../../layouts'
+import { useCategories, useModal } from '../../../../../shared/hooks'
+import { Input, Label, Textarea } from '../../../../../shared/components/form'
+import { SaveButton, CancelButton } from '../../../../../shared/components/button'
+import { ErrorMessageForm } from '../../../../../shared/components/error-message';
 
 export const ModalCreateCategory: React.FC = () => {
 
@@ -44,7 +44,7 @@ export const ModalCreateCategory: React.FC = () => {
                             })
                         }
                     />
-                    { errors.name && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.name.message}</p>)}
+                    { errors.name && <ErrorMessageForm message={errors.name.message} />}
                 </div>
                 <div>
                    <Label htmlFor='categoryDescription' className='mb-3 flex items-center justify-between gap-2'>
@@ -58,7 +58,7 @@ export const ModalCreateCategory: React.FC = () => {
                             maxLength: { value: 220, message: 'Máximo 220 caracteres' }
                         })}
                     />
-                    { errors.description && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.description.message}</p>)}
+                    { errors.description && <ErrorMessageForm message={errors.description.message} />}
                 </div>
                 <div className='flex items-center gap-5 justify-end mt-5'>
                     <SaveButton className='p-2' submit text='Guardar Categoría' />

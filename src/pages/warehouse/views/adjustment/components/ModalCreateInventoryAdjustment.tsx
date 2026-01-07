@@ -1,17 +1,12 @@
 import React, { useEffect } from 'react'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
 import { useForm } from 'react-hook-form'
 import { type SaveInventoryAdjustment } from '../../../../../interfaces/dto/inventory-adjustment.interface'
-import {
-    CancelButton,
-    ErrorMessageForm,
-    Input,
-    Label,
-    SaveButton,
-    Textarea
-} from '../../../../../shared/components'
-import { SelectActiveProducts, SelectAdjustmentType } from './'
+import { ModalLayout } from '../../../../../layouts'
 import { useAuth, useInventoryAdjustment, useModal, useProducts } from '../../../../../shared/hooks'
+import { Input, Label, Textarea } from '../../../../../shared/components/form'
+import { ErrorMessageForm } from '../../../../../shared/components/error-message'
+import { CancelButton, SaveButton } from '../../../../../shared/components/button'
+import { SelectActiveProducts, SelectAdjustmentType } from './'
 
 export const ModalCreateInventoryAdjustment: React.FC = () => {
 

@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { useAlert, useDrawer, useSuppliers, useTheme } from '../../../../../shared/hooks'
 import { useForm } from 'react-hook-form'
-import { type UpdateSupplier } from '../../../../../interfaces/dto/supplier.interface'
-import { CancelButton, Input, Label, SaveButton, SmallButton } from '../../../../../shared/components'
 import { LuAsterisk } from 'react-icons/lu'
-import { EmailRegEx, phoneRegEx } from '../../../../../shared/utils/regexp'
+import { type UpdateSupplier } from '../../../../../interfaces/dto/supplier.interface'
 import { AlertType } from '../../../../../interfaces/ui/alert.interface'
+import { useAlert, useDrawer, useSuppliers, useTheme } from '../../../../../shared/hooks'
+import { EmailRegEx, phoneRegEx } from '../../../../../shared/utils/regexp'
+import { CancelButton, SaveButton, SmallButton } from '../../../../../shared/components/button'
+import { Input, Label } from '../../../../../shared/components/form'
+import { ErrorMessageForm } from '../../../../../shared/components/error-message'
 
 export const FormEditSupplier: React.FC = () => {
     const { theme } = useTheme()
@@ -36,7 +38,6 @@ export const FormEditSupplier: React.FC = () => {
     const onEditSupplier = (data: UpdateSupplier) => {
         if (!supplierSelected) return
 
-        // Validar nueva empresa repetida
         if (newCompany && companies?.includes(newCompany)) {
             activateAlert({
                 title: 'Empresa Existente',
@@ -46,7 +47,6 @@ export const FormEditSupplier: React.FC = () => {
             return
         }
 
-        // Construimos payload
         const finalCompany = newCompany || data.company
 
         const payload: Partial<UpdateSupplier> = {
@@ -61,7 +61,6 @@ export const FormEditSupplier: React.FC = () => {
             payload.email = data.email
         }
 
-        // Validar que sí hay cambios
         if (
             payload.name === supplierSelected.name &&
             payload.lastname === supplierSelected.lastname &&
@@ -102,7 +101,7 @@ export const FormEditSupplier: React.FC = () => {
                             maxLength: { value: 100, message: 'Máximo 100 caracteres' }
                         })}
                     />
-                    {errors.name && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.name.message}</p>)}
+                    {errors.name && <ErrorMessageForm message={errors.name.message} />}
                 </div>
                 <div className='flex-1'>
                     <Label htmlFor='supplierLastname' className='mb-3 flex items-center justify-between gap-2'>
@@ -120,7 +119,7 @@ export const FormEditSupplier: React.FC = () => {
                             maxLength: { value: 100, message: 'Máximo 100 caracteres' }
                         })}
                     />
-                    {errors.lastname && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.lastname.message}</p>)}
+                    {errors.lastname && <ErrorMessageForm message={errors.lastname.message} />}
                 </div>
             </div>
 
@@ -142,7 +141,7 @@ export const FormEditSupplier: React.FC = () => {
                             }
                         })}
                     />
-                    {errors.phone && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.phone.message}</p>)}
+                    {errors.phone && <ErrorMessageForm message={errors.phone.message} />}
                 </div>
                 <div className='w-full'>
                     <Label htmlFor='supplierEmail' className='mb-3 flex items-center justify-between gap-2'>
@@ -161,7 +160,7 @@ export const FormEditSupplier: React.FC = () => {
                             }
                         })}
                     />
-                    {errors.email && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.email.message}</p>)}
+                    {errors.email && <ErrorMessageForm message={errors.email.message} />}
                 </div>
             </div>
 
@@ -207,7 +206,7 @@ export const FormEditSupplier: React.FC = () => {
                     </div>
                 )
             }
-            {errors.company && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.company.message}</p>)}
+            {errors.company && <ErrorMessageForm message={errors.company.message} />}
 
             <div className='w-fit' onClick={() => {
                 setCreateNewCompany(!createNewCompany)
@@ -229,7 +228,7 @@ export const FormEditSupplier: React.FC = () => {
                         maxLength: { value: 200, message: 'La dirección no puede ser mayor a 200 caracteres' }
                     })}
                 />
-                {errors.address && (<p className='text-red-500 mt-1 text-right text-xs'>{errors.address.message}</p>)}
+                {errors.address && <ErrorMessageForm message={errors.address.message} />}
             </div>
 
             <div className='flex items-center gap-5 justify-end mt-8'>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaRegEye } from "react-icons/fa"
-import { useDrawer, useSale, useTheme } from '../../../shared/hooks'
 import { DrawelNames } from '../../../interfaces/ui/drawel.interface'
+import { useDrawer, useSale, useTheme } from '../../../shared/hooks'
 
 interface Props {
     saleId: string

@@ -1,8 +1,8 @@
 import React from 'react'
-import type { InventoryAdjustmentResponse } from '../../../../../interfaces/dto/inventory-adjustment.interface'
-import { useDrawer, useInventoryAdjustment, useTheme } from '../../../../../shared/hooks'
-import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
 import { CgDetailsMore } from 'react-icons/cg'
+import type { InventoryAdjustmentResponse } from '../../../../../interfaces/dto/inventory-adjustment.interface'
+import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
+import { useDrawer, useInventoryAdjustment, useTheme } from '../../../../../shared/hooks'
 import { UserPhoto } from '../../../../access/views/users/components'
 
 interface AdjustmentCardButtonsProps {

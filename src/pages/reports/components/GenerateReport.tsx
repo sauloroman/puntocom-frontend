@@ -1,7 +1,7 @@
 import React from 'react'
-import { GenerateReportButton } from '../../../shared/components/button'
 import { useReports } from '../../../shared/hooks'
-import { SpinnerContainer } from '../../../shared/components/spinner/SpinnerContainer'
+import { GenerateReportButton } from '../../../shared/components/button'
+import { SpinnerContainer } from '../../../shared/components/spinner'
 
 interface Props {
     onConfirm: () => void

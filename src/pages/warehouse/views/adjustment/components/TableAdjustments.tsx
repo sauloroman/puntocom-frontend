@@ -1,10 +1,10 @@
 import React from 'react'
 import { BsCalendar3, BsType, BsBox, BsPerson, BsTag } from 'react-icons/bs'
 import { AiOutlineProduct } from "react-icons/ai"
-import { TableImage } from '../../../../../shared/components/table'
-import { TypeBadgeAdjustmentType, TableAdjustmentsActions } from './'
 import type { InventoryAdjustmentResponse } from '../../../../../interfaces/dto/inventory-adjustment.interface'
 import { useTheme } from '../../../../../shared/hooks'
+import { TableImage } from '../../../../../shared/components/table'
+import { TypeBadgeAdjustmentType, TableAdjustmentsActions } from './'
 
 interface Props {
     data: InventoryAdjustmentResponse[]

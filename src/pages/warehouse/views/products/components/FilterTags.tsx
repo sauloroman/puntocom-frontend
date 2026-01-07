@@ -1,8 +1,7 @@
 import React from 'react'
 import { useCategories, useProducts } from '../../../../../shared/hooks'
-import { CategoryItemFilter } from './CategoryItemFilter'
-import { SupplierItemFilter } from './SupplierItemFilter'
-import { OutlineButton } from '../../../../../shared/components/button/OutlineButton'
+import { OutlineButton } from '../../../../../shared/components/button'
+import { CategoryItemFilter, SupplierItemFilter } from './'
 
 export const FilterTags: React.FC = () => {
 

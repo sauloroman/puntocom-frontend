@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useDrawer, useModal, usePurchase } from '../../../../shared/hooks'
 import type { Purchase } from '../../../../interfaces/dto/purchase.interface'
+import { ModalNames } from '../../../../interfaces/ui/modal.interface'
+import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
+import { useDrawer, useModal, usePurchase } from '../../../../shared/hooks'
 import { 
   AppliedPurchasesFilters,
   FilterPurchasesBySupplier, 
@@ -11,13 +13,11 @@ import {
   PurchaseInfoDrawer, 
   TablePurchases 
 } from './components'
-import { SpinnerContainer } from '../../../../shared/components'
+import { SpinnerContainer } from '../../../../shared/components/spinner'
 import { 
-  ButtonFilterByDate, 
-  ButtonFilterByPrice
+  FilterByDateButton, 
+  FilterByPriceButton
 } from '../../../../shared/components/button'
-import { ModalNames } from '../../../../interfaces/ui/modal.interface'
-import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 
 export const PurchasesPage: React.FC = () => {
   const { modalIsOpen, modalName } = useModal()
@@ -43,8 +43,8 @@ export const PurchasesPage: React.FC = () => {
             <FilterPurchasesByUser />
             <FilterPurchasesBySupplier />
           </div>
-          <ButtonFilterByPrice modal={ModalNames.rangePurchasesPrices} /> 
-          <ButtonFilterByDate modal={ModalNames.rangePurchasesDates} /> 
+          <FilterByPriceButton modal={ModalNames.rangePurchasesPrices} /> 
+          <FilterByDateButton modal={ModalNames.rangePurchasesDates} /> 
         </div>
         <AppliedPurchasesFilters />
       </div>

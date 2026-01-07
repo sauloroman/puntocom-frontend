@@ -1,7 +1,7 @@
 import React from 'react'
-import { CreateButton } from '../../../../../shared/components'
-import { useModal } from '../../../../../shared/hooks'
 import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
+import { useModal } from '../../../../../shared/hooks'
+import { CreateButton } from '../../../../../shared/components/button'
 
 export const ButtonOpenModalCreateInventory: React.FC = () => {
     const { onOpenModal } = useModal()

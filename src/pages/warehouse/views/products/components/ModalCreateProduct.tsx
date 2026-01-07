@@ -1,11 +1,11 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { LuAsterisk } from 'react-icons/lu'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
-import { CancelButton, Input, Label, SaveButton, Textarea } from '../../../../../shared/components'
-import { useCategories, useModal, useSuppliers, useTheme } from '../../../../../shared/hooks'
-import { useProducts } from '../../../../../shared/hooks/useProducts'
 import type { CreateProduct } from '../../../../../interfaces/dto/product.interface'
+import { ModalLayout } from '../../../../../layouts'
+import { Input, Label, Textarea } from '../../../../../shared/components/form'
+import { useProducts, useCategories, useModal, useSuppliers, useTheme } from '../../../../../shared/hooks'
+import { CancelButton, SaveButton } from '../../../../../shared/components/button'
 
 export const ModalCreateProduct: React.FC = () => {
   const {

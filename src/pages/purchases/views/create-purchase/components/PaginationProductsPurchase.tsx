@@ -1,6 +1,6 @@
 import React from 'react'
 import { usePurchase } from '../../../../../shared/hooks'
-import { Pagination } from '../../../../../shared/components'
+import { Pagination } from '../../../../../shared/components/pagination'
 
 export const PaginationProductsPurchase: React.FC = () => {
   const { pagination, isPaginationVisible, onSetPagePagination } = usePurchase()

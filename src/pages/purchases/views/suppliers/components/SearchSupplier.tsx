@@ -1,5 +1,5 @@
 import React from 'react'
-import { Search } from '../../../../../shared/components'
+import { Search } from '../../../../../shared/components/form'
 import { useSuppliers } from '../../../../../shared/hooks'
 
 export const SearchSupplier: React.FC = () => {

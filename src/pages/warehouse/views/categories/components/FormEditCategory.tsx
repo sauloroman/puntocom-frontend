@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useAlert, useCategories, useDrawer } from '../../../../../shared/hooks'
-import { Label } from '../../../../../shared/components/form/Label'
 import { IoTextOutline } from 'react-icons/io5'
-import { Textarea } from '../../../../../shared/components/form/Textarea'
-import { Input } from '../../../../../shared/components/form/Input'
-import { SaveButton } from '../../../../../shared/components/button/SaveButton'
-import { CancelButton } from '../../../../../shared/components/button/CancelButton'
 import type { UpdateCategory } from '../../../../../interfaces/dto/category.interface'
 import { AlertType } from '../../../../../interfaces/ui/alert.interface'
+import { useAlert, useCategories, useDrawer } from '../../../../../shared/hooks'
+import { Input, Label, Textarea } from '../../../../../shared/components/form'
+import { ErrorMessageForm } from '../../../../../shared/components/error-message'
+import { CancelButton, SaveButton } from '../../../../../shared/components/button'
 
 export const FormEditCategory: React.FC = () => {
 
@@ -29,7 +27,6 @@ export const FormEditCategory: React.FC = () => {
     })
 
     const onEditCategory = (data: UpdateCategory) => {
-        // Si no hay cambios, no hacer nada
         if (data.name === categorySelected?.name && data.description === categorySelected?.description) {
             activateAlert({
                 title: 'No hay cambios',
@@ -40,10 +37,8 @@ export const FormEditCategory: React.FC = () => {
         }
 
         if (data.description && data.name === categorySelected?.name) {
-            // Solo cambia la descripción
             updateCategory(categorySelected?.id!, { description: data.description })
         } else {
-            // Cambió el nombre o ambos
             updateCategory(categorySelected?.id!, data)
         }
 
@@ -77,7 +72,7 @@ export const FormEditCategory: React.FC = () => {
                         maxLength: { value: 100, message: "Máximo 100 caracteres" },
                     })}
                 />
-                {errors.name && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.name.message}</p>)}
+                {errors.name && <ErrorMessageForm message={errors.name.message} />}
             </div>
             <div>
                 <Label htmlFor='categoryDescription' className='mb-3 flex items-center justify-between gap-2'>
@@ -92,7 +87,7 @@ export const FormEditCategory: React.FC = () => {
                         maxLength: { value: 220, message: "Máximo 220 caracteres" },
                     })}
                 />
-                {errors.description && (<p className=' text-red-600 mt-1 text-right text-xs'>{errors.description.message}</p>)}
+                {errors.description && <ErrorMessageForm message={errors.description.message} />}
             </div>
             <div className='flex items-center gap-5 justify-end mt-8'>
                 <SaveButton className='p-2 w-48' submit text='Editar Categoría' />

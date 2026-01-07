@@ -1,6 +1,6 @@
 import React from 'react'
-import { OutlineButton } from '../../../../../shared/components/button/OutlineButton'
 import { FiPrinter } from 'react-icons/fi'
+import { OutlineButton } from '../../../../../shared/components/button'
 // import { usePurchase } from '../../../../../shared/hooks'
 // import { generarTicketCompraPDF } from '../../../../../shared/helpers'
 

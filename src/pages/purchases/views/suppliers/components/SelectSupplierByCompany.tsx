@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSuppliers } from '../../../../../shared/hooks'
-import { Select } from '../../../../../shared/components'
+import { Select } from '../../../../../shared/components/select'
 
 export const SelectSupplierByCompany: React.FC = () => {
 

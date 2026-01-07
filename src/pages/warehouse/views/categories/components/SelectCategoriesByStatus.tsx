@@ -1,6 +1,6 @@
 import React from 'react'
-import { Select } from '../../../../../shared/components'
 import { useCategories } from '../../../../../shared/hooks'
+import { Select } from '../../../../../shared/components/select'
 
 export const SelectCategoriesByStatus: React.FC = () => {
 

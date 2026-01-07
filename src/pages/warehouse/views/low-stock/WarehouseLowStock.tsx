@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
+import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { ModalSendMessageToSupplier, ProductsGrid } from './components'
 import { useModal, useProducts } from '../../../../shared/hooks'
-import { SpinnerContainer } from '../../../../shared/components'
-import { ModalNames } from '../../../../interfaces/ui/modal.interface'
+import { SpinnerContainer } from '../../../../shared/components/spinner'
 
 export const WarehouseLowStock: React.FC = () => {
 

@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
+import { ModalLayout } from '../../../../../layouts'
 import { useModal, useProducts, useTheme } from '../../../../../shared/hooks'
-import { ProductInfo } from './ProductInfo'
-import { SupplierInfo } from './SupplierInfo'
-import { SupplierMessage } from './SupplierMessage'
-import { CancelButton } from '../../../../../shared/components'
-import { WhatsAppButton } from '../../../../../shared/components/button/WhatsAppButton'
+import { CancelButton, WhatsAppButton  } from '../../../../../shared/components/button'
+import { ProductInfo, SupplierInfo, SupplierMessage } from './'
 
 export const ModalSendMessageToSupplier: React.FC = () => {
     const { theme } = useTheme()

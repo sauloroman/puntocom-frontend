@@ -1,9 +1,11 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useAlert, useCategories, useDrawer, useProducts, useSuppliers, useTheme } from '../../../../../shared/hooks'
 import { type EditProduct } from '../../../../../interfaces/dto/product.interface'
-import { CancelButton, Input, Label, SaveButton, Textarea } from '../../../../../shared/components'
 import { AlertType } from '../../../../../interfaces/ui/alert.interface'
+import { useAlert, useCategories, useDrawer, useProducts, useSuppliers, useTheme } from '../../../../../shared/hooks'
+import { CancelButton, SaveButton, } from '../../../../../shared/components/button'
+import { Input, Label, Textarea } from '../../../../../shared/components/form'
+import { ErrorMessageForm } from '../../../../../shared/components/error-message'
 
 export const FormEditProduct: React.FC = () => {
   const { theme } = useTheme()
@@ -100,7 +102,7 @@ export const FormEditProduct: React.FC = () => {
           })
           }
         />
-        {errors.name && <p className='text-red-600 mt-1 text-right text-xs'>{errors.name.message}</p>}
+        {errors.name && <ErrorMessageForm message={errors.name.message} />}
       </div>
 
       <div>
@@ -121,7 +123,7 @@ export const FormEditProduct: React.FC = () => {
           })
           }
         />
-        {errors.sellingPrice && <p className='text-red-600 mt-1 text-right text-xs'>{errors.sellingPrice.message}</p>}
+        {errors.sellingPrice && <ErrorMessageForm message={errors.sellingPrice.message} />}
       </div>
 
       <section className="flex gap-5 items-center">
@@ -150,7 +152,7 @@ export const FormEditProduct: React.FC = () => {
               </option>
             ))}
           </select>
-          {errors.categoryId && <p className='text-red-600 mt-1 text-right text-xs'>{errors.categoryId.message}</p>}
+          {errors.categoryId && <ErrorMessageForm message={errors.categoryId.message} />}
         </div>
 
         <div className='w-full'>
@@ -177,7 +179,7 @@ export const FormEditProduct: React.FC = () => {
               </option>
             ))}
           </select>
-          {errors.supplierId && <p className='text-red-600 mt-1 text-right text-xs'>{errors.supplierId.message}</p>}
+          {errors.supplierId && <ErrorMessageForm message={errors.supplierId.message} />}
         </div>
 
       </section>
@@ -193,7 +195,7 @@ export const FormEditProduct: React.FC = () => {
           })
           }
         />
-        {errors.description && <p className='text-red-600 mt-1 text-right text-xs'>{errors.description.message}</p>}
+        {errors.description && <ErrorMessageForm message={errors.description.message} />}
       </div>
 
       <div className='flex items-center justify-end gap-5'>

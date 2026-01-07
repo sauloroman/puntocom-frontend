@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { PuntoComLayout } from '../../layouts/PuntoComLayout'
-import { ModalConfirmDeleteReport, ReportsFolder, TableReports, ViewReport } from './components'
-import { useModal, useReports, useTheme } from '../../shared/hooks'
 import { ModalNames } from '../../interfaces/ui/modal.interface'
+import { PuntoComLayout } from '../../layouts'
+import { useModal, useReports, useTheme } from '../../shared/hooks'
+import { ModalConfirmDeleteReport, ReportsFolder, TableReports, ViewReport } from './components'
 
 export const Reports: React.FC = () => {
   const { theme } = useTheme()

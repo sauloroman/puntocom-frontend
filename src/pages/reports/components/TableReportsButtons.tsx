@@ -1,8 +1,8 @@
 import React from 'react'
 import { LuFileText } from 'react-icons/lu'
 import { RiDeleteBin6Line } from 'react-icons/ri'
-import { useModal, useReports, useTheme } from '../../../shared/hooks'
 import { ModalNames } from '../../../interfaces/ui/modal.interface'
+import { useModal, useReports, useTheme } from '../../../shared/hooks'
 
 interface Props {
   reportId: string

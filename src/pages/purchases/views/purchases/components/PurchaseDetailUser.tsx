@@ -1,6 +1,6 @@
 import React from 'react'
-import { useTheme } from '../../../../../shared/hooks'
 import { FiUser } from 'react-icons/fi'
+import { useTheme } from '../../../../../shared/hooks'
 
 interface Props {
     image: string

@@ -1,8 +1,8 @@
 import React from 'react'
 import type { Product } from '../../../../../interfaces/dto/product.interface'
-import { useAlert, useModal, usePurchase, useTheme } from '../../../../../shared/hooks';
 import { ModalNames } from '../../../../../interfaces/ui/modal.interface';
 import { AlertType } from '../../../../../interfaces/ui/alert.interface';
+import { useAlert, useModal, usePurchase, useTheme } from '../../../../../shared/hooks';
 
 interface Props {
     product: Product
@@ -21,8 +21,8 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
     const onSelectProduct = () => {
         let existingProduct = false
 
-        productsInPurchase.forEach( prod => {
-            if ( prod.product.id === product.id ) {
+        productsInPurchase.forEach(prod => {
+            if (prod.product.id === product.id) {
                 activateAlert({
                     title: 'Error en compra 🗒️',
                     text: 'Ya existe el producto en la compra',
@@ -32,8 +32,8 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
             }
         })
 
-        if ( existingProduct ) return
-        
+        if (existingProduct) return
+
         onOpenModal(ModalNames.addProductPurchase)
         onSelectProductToAddPurchase(product)
     }
@@ -45,7 +45,7 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
             ${isDark ? 'hover:border-blue-500' : 'hover:border-blue-400'}
             border-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}
         `}
-    >
+        >
 
             <div className="flex-shrink-0">
                 <div className={`
@@ -120,24 +120,24 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
 
                     <div className={`
                         flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors
-                        ${isLowStock 
+                        ${isLowStock
                             ? isDark ? 'bg-red-900/30' : 'bg-red-50'
                             : isDark ? 'bg-green-900/30' : 'bg-green-50'
                         }
                     `}>
                         <svg className={`w-4 h-4 ${isLowStock
-                                ? isDark ? 'text-red-400' : 'text-red-600'
-                                : isDark ? 'text-green-400' : 'text-green-600'
+                            ? isDark ? 'text-red-400' : 'text-red-600'
+                            : isDark ? 'text-green-400' : 'text-green-600'
                             }`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                         </svg>
                         <span className={`
-              text-xs font-semibold transition-colors
-              ${isLowStock
+                            text-xs font-semibold transition-colors
+                            ${isLowStock 
                                 ? isDark ? 'text-red-400' : 'text-red-700'
                                 : isDark ? 'text-green-400' : 'text-green-700'
                             }
-            `}>
+                        `}>
                             {product.stock} unid.
                         </span>
                     </div>
@@ -146,16 +146,16 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
 
             <div className="flex-shrink-0 text-right">
                 <div className={`
-          text-2xl font-bold transition-colors
-          ${isDark ? 'text-green-400' : 'text-green-600'}
-        `}>
+                    text-2xl font-bold transition-colors
+                    ${isDark ? 'text-green-400' : 'text-green-600'}
+                `}>
                     ${product.sellingPrice.toFixed(2)}
                 </div>
                 {product.Supplier && (
                     <div className={`
-            text-xs mt-1 transition-colors
-            ${isDark ? 'text-gray-400' : 'text-gray-500'}
-          `}>
+                        text-xs mt-1 transition-colors
+                        ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                    `}>
                         {product.Supplier.company}
                     </div>
                 )}

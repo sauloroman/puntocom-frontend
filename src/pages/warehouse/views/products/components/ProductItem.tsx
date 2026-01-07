@@ -1,12 +1,12 @@
 import React from 'react'
-import type { Product } from '../../../../../interfaces/dto/product.interface'
-import { useDrawer, useProducts, useTheme } from '../../../../../shared/hooks'
-import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
 import { CgDetailsMore } from 'react-icons/cg'
 import { CiEdit } from 'react-icons/ci'
-import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
-import { StatusBadge } from '../../../../../shared/components'
+import type { Product } from '../../../../../interfaces/dto/product.interface'
+import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
+import { useDrawer, useProducts, useTheme } from '../../../../../shared/hooks'
+import { StatusBadge } from '../../../../../shared/components/badgets'
 import { formatPrices } from '../../../../../shared/helpers'
+import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
 
 interface ProductItemButtonsProps {
   productId: string

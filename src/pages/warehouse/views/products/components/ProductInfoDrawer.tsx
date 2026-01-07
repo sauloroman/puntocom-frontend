@@ -1,12 +1,12 @@
 import React from 'react'
-import { RightDrawerLayout } from '../../../../../layouts/RightDrawerLayout'
-import { useModal, useProducts, useTheme } from '../../../../../shared/hooks'
-import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
-import { AvatarImage, StatusBadge } from '../../../../../shared/components'
-import { AvatarInitialSquare } from '../../../../../shared/components/avatar/AvatarInitialSquare'
-import { formatPrices } from '../../../../../shared/helpers'
 import { FaExpand } from "react-icons/fa"
+import { RightDrawerLayout } from '../../../../../layouts'
 import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
+import { useModal, useProducts, useTheme } from '../../../../../shared/hooks'
+import { formatPrices } from '../../../../../shared/helpers'
+import { AvatarImage, AvatarInitialSquare } from '../../../../../shared/components/avatar'
+import { StatusBadge } from '../../../../../shared/components/badgets'
+import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
 
 export const ProductInfoDrawer: React.FC = () => {
     const { theme } = useTheme()

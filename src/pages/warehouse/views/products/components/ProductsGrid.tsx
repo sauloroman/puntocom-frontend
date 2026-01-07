@@ -1,6 +1,6 @@
 import React from 'react'
 import { useProducts } from '../../../../../shared/hooks'
-import { ProductItem } from './ProductItem'
+import { ProductItem } from './'
 
 export const ProductsGrid: React.FC = () => {
 

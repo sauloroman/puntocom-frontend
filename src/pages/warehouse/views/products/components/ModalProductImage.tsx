@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
+import { ModalLayout } from '../../../../../layouts'
 import { useProducts } from '../../../../../shared/hooks'
 
 export const ModalProductImage: React.FC = () => {

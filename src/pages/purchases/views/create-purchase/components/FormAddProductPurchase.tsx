@@ -1,8 +1,10 @@
 import React from 'react'
-import { CancelButton, ErrorMessageForm, Input, Label, SaveButton } from '../../../../../shared/components'
-import { useModal, usePurchase, useTheme } from '../../../../../shared/hooks'
 import { useForm } from 'react-hook-form'
 import type { AddProduct, ProductInPurchase } from '../../../../../interfaces/dto/purchase.interface'
+import { useModal, usePurchase, useTheme } from '../../../../../shared/hooks'
+import { CancelButton, SaveButton } from '../../../../../shared/components/button'
+import { Input, Label } from '../../../../../shared/components/form'
+import { ErrorMessageForm } from '../../../../../shared/components/error-message'
 
 interface Props {
     sellingPrice: number

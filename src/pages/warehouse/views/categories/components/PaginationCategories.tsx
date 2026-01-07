@@ -1,6 +1,6 @@
 import React from 'react'
-import { Pagination } from '../../../../../shared/components'
 import { useCategories } from '../../../../../shared/hooks'
+import { Pagination } from '../../../../../shared/components/pagination'
 
 export const PaginationCategories: React.FC = () => {
     

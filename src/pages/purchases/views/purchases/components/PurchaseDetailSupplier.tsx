@@ -1,6 +1,6 @@
 import React from 'react'
-import { useTheme } from '../../../../../shared/hooks'
 import { FiShoppingBag } from 'react-icons/fi'
+import { useTheme } from '../../../../../shared/hooks'
 
 interface Props {
     name: string

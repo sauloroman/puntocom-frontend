@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalRangePrices } from '../../../../../shared/components/modal/ModalRangePrice'
+import { ModalRangePrices } from '../../../../../shared/components/modal'
 import { usePurchase } from '../../../../../shared/hooks'
 
 export const ModalPurchasesRangePrices: React.FC = () => {

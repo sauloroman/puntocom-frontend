@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useAlert, useModal, useSuppliers, useTheme } from '../../../../../shared/hooks'
-import { ModalLayout } from '../../../../../layouts/ModalLayout'
-import { Input, Label } from '../../../../../shared/components'
 import { LuAsterisk } from "react-icons/lu";
-import { SaveButton } from '../../../../../shared/components/button/SaveButton'
-import { CancelButton } from '../../../../../shared/components/button/CancelButton'
+
 import type { CreateSupplier } from '../../../../../interfaces/dto/supplier.interface'
-import { EmailRegEx, phoneRegEx } from '../../../../../shared/utils/regexp'
-import { SmallButton } from '../../../../../shared/components/button'
 import { AlertType } from '../../../../../interfaces/ui/alert.interface'
+import { ModalLayout } from '../../../../../layouts'
+import { useAlert, useModal, useSuppliers, useTheme } from '../../../../../shared/hooks'
+import { EmailRegEx, phoneRegEx } from '../../../../../shared/utils/regexp'
+import { Input, Label } from '../../../../../shared/components/form'
+import { CancelButton, SaveButton, SmallButton } from '../../../../../shared/components/button';
+import { ErrorMessageForm } from '../../../../../shared/components/error-message';
 
 export const ModalCreateSupplier: React.FC = () => {
 
@@ -77,7 +77,7 @@ export const ModalCreateSupplier: React.FC = () => {
                                 })
                             }
                         />
-                        {errors.name && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.name.message}</p>)}
+                        {errors.name && <ErrorMessageForm message={errors.name.message} />}
                     </div>
                     <div className='flex-1'>
                         <Label htmlFor='supplierLastname' className='mb-3 flex items-center justify-between gap-2'>
@@ -97,7 +97,7 @@ export const ModalCreateSupplier: React.FC = () => {
                                 })
                             }
                         />
-                        {errors.lastname && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.lastname.message}</p>)}
+                        {errors.lastname && <ErrorMessageForm message={errors.lastname.message} />}
                     </div>
                 </div>
 
@@ -121,7 +121,7 @@ export const ModalCreateSupplier: React.FC = () => {
                                 })
                             }
                         />
-                        {errors.phone && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.phone.message}</p>)}
+                        {errors.phone && <ErrorMessageForm message={errors.phone.message} />}
                     </div>
                     <div className='w-full'>
                         <Label htmlFor='supplierEmail' className='mb-3 flex items-center justify-between gap-2'>
@@ -142,7 +142,7 @@ export const ModalCreateSupplier: React.FC = () => {
                                 })
                             }
                         />
-                        {errors.email && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.email.message}</p>)}
+                        {errors.email && <ErrorMessageForm message={errors.email.message} />}
                     </div>
                 </div>
 
@@ -201,7 +201,7 @@ export const ModalCreateSupplier: React.FC = () => {
                             </div>
                         )
                 }
-                {errors.company && (<p className='text-red-600 mt-1 text-right text-xs'>{errors.company.message}</p>)}
+                {errors.company && <ErrorMessageForm message={errors.company.message} />}
 
                 <div className='w-fit' onClick={() => setCreateNewCompany(!createNewCompany)}>
                     <SmallButton text={!createNewCompany ? 'Crear Nueva Empresa' : 'Seleccionar Empresa'} />

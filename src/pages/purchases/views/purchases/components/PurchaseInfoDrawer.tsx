@@ -1,12 +1,9 @@
 import React from 'react'
-import { RightDrawerLayout } from '../../../../../layouts/RightDrawerLayout'
-import { usePurchase, useTheme } from '../../../../../shared/hooks'
-import { SpinnerContainer } from '../../../../../shared/components'
 import { FiCalendar, FiPackage, FiShoppingBag } from 'react-icons/fi'
-import { PurchaseDetailItem } from './PurchaseDetailItem'
-import { PurchaseDetailUser } from './PurchaseDetailUser'
-import { PurchaseDetailSupplier } from './PurchaseDetailSupplier'
-import { PrintPurchase } from './PrintPurchase'
+import { RightDrawerLayout } from '../../../../../layouts'
+import { usePurchase, useTheme } from '../../../../../shared/hooks'
+import { SpinnerContainer } from '../../../../../shared/components/spinner'
+import { PurchaseDetailItem, PurchaseDetailUser, PurchaseDetailSupplier, PrintPurchase } from './'
 
 export const PurchaseInfoDrawer: React.FC = () => {
     const { theme } = useTheme()

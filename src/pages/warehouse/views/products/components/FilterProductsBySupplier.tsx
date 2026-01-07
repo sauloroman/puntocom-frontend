@@ -1,8 +1,8 @@
 import React from 'react'
-import { useDrawer } from '../../../../../shared/hooks'
-import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
 import { CiFilter } from 'react-icons/ci'
-import { OutlineButton } from '../../../../../shared/components/button/OutlineButton'
+import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
+import { useDrawer } from '../../../../../shared/hooks'
+import { OutlineButton } from '../../../../../shared/components/button'
 
 export const FilterProductsBySupplier: React.FC = () => {
     const { onOpenLeftDrawer } = useDrawer()

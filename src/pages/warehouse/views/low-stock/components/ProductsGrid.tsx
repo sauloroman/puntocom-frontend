@@ -1,6 +1,6 @@
 import React from 'react'
-import { ProductStack } from './ProductStack'
 import { useProducts } from '../../../../../shared/hooks'
+import { ProductStack } from './'
 
 export const ProductsGrid: React.FC = () => {
     const { productNormalStock, productWarningStock, productsLowStock, onSelectProduct } = useProducts()

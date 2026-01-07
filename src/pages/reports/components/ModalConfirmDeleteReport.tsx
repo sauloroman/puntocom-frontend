@@ -1,8 +1,8 @@
 import React from 'react'
 import { FaExclamationTriangle } from 'react-icons/fa'
-import { ModalLayout } from '../../../layouts/ModalLayout'
-import { CancelButton, ConfirmButton } from '../../../shared/components/button'
+import { ModalLayout } from '../../../layouts'
 import { useModal, useReports, useTheme } from '../../../shared/hooks'
+import { CancelButton, ConfirmButton } from '../../../shared/components/button'
 
 export const ModalConfirmDeleteReport: React.FC = () => {
   const { theme } = useTheme()

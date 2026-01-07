@@ -1,9 +1,9 @@
 import React from "react";
+import { BsCalendar3, BsPerson, BsCode, BsCashStack } from "react-icons/bs";
 import type { SaleResponse } from "../../../interfaces/dto/sale.interface";
 import { TableImage } from "../../../shared/components/table";
-import { BsCalendar3, BsPerson, BsCode, BsCashStack } from "react-icons/bs";
-import { TableSalesActions } from "./TableSalesActions";
 import { useTheme } from "../../../shared/hooks";
+import { TableSalesActions } from "./";
 
 interface TableSalesProps {
     data: SaleResponse[];

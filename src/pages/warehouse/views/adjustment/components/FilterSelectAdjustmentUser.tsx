@@ -1,6 +1,6 @@
 import React from 'react'
-import { Select } from '../../../../../shared/components'
 import { useInventoryAdjustment, useUsers } from '../../../../../shared/hooks'
+import { Select } from '../../../../../shared/components/select'
 
 const placeholder = 'Usuarios'
 

@@ -2,10 +2,10 @@ import React from "react"
 import { FiMail, FiPhone, FiMapPin, FiBriefcase } from "react-icons/fi"
 import { CgDetailsMore } from "react-icons/cg"
 import { CiEdit } from "react-icons/ci"
-import { useDrawer, useSuppliers, useTheme } from "../../../../../shared/hooks"
 import { DrawelNames } from "../../../../../interfaces/ui/drawel.interface"
 import type { Supplier } from "../../../../../interfaces/dto/supplier.interface"
-import { StatusBadge } from "../../../../../shared/components"
+import { useDrawer, useSuppliers, useTheme } from "../../../../../shared/hooks"
+import { StatusBadge } from "../../../../../shared/components/badgets"
 
 interface SupplierItemButtonsProps {
     supplierId: string,

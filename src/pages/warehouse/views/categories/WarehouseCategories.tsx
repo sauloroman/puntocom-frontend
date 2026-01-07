@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { useCategories, useDrawer, useModal } from '../../../../shared/hooks'
-import { CreateButton } from '../../../../shared/components'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
+import { useCategories, useDrawer, useModal } from '../../../../shared/hooks'
+import { CreateButton } from '../../../../shared/components/button'
 import { 
   CategoryEditDrawer, 
   CategoryInfoDrawer, 
@@ -13,7 +13,7 @@ import {
   SelectCategoriesByStatus, 
   TableCategories 
 } from './components'
-import { SortElementsAlpha } from '../../../../shared/components/button'
+import { SortElementsAlphaButton } from '../../../../shared/components/button'
 
 export const WarehouseCategories: React.FC = () => {
 
@@ -34,7 +34,7 @@ export const WarehouseCategories: React.FC = () => {
             <SearchCategory />
           </div>
           <div className='flex items-center gap-5'>
-            <SortElementsAlpha onToggle={onOrderAlpha} desc={isOrderedAsc} />
+            <SortElementsAlphaButton onToggle={onOrderAlpha} desc={isOrderedAsc} />
             <div className='w-50'>
               <SelectCategoriesByStatus />
             </div>

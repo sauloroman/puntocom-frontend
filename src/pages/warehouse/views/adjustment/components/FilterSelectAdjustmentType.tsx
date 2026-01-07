@@ -1,7 +1,7 @@
 import React from 'react'
-import { Select } from '../../../../../shared/components'
-import { useInventoryAdjustment } from '../../../../../shared/hooks'
 import type { AdjustmentEnum } from '../../../../../interfaces/dto/inventory-adjustment.interface'
+import { useInventoryAdjustment } from '../../../../../shared/hooks'
+import { Select } from '../../../../../shared/components/select'
 
 const placeholder = 'Tipo de ajuste'
 const options = ['Entradas', 'Salidas']
