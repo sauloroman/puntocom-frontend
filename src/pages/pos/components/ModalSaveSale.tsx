@@ -62,7 +62,7 @@ export const ModalSaveSale: React.FC = () => {
                         `}>
                             Folio:
                         </p>
-                        <p className='font-bold text-red-600'>{saleCreated.code}</p>
+                        <p className='font-bold text-red-600'>{saleCreated.sale.saleCode}</p>
 
                         <p className={`
                             font-medium transition-colors
@@ -74,7 +74,7 @@ export const ModalSaveSale: React.FC = () => {
                             text-4xl font-bold transition-colors
                             ${isDark ? 'text-gray-100' : 'text-gray-800'}
                         `}>
-                            ${saleCreated.total.toFixed(2)}
+                            ${saleCreated.sale.saleTotal.toFixed(2)}
                         </p>
 
                         <p className={`
@@ -87,10 +87,10 @@ export const ModalSaveSale: React.FC = () => {
                             transition-colors
                             ${isDark ? 'text-gray-200' : 'text-gray-800'}
                         `}>
-                            {new Date(saleCreated.date).toLocaleString()}
+                            {new Date(saleCreated.sale.saleDate).toLocaleString()}
                         </p>
 
-                        {saleCreated.User && (
+                        {saleCreated.sale.User && (
                             <>
                                 <p className={`
                                     font-medium transition-colors
@@ -102,7 +102,7 @@ export const ModalSaveSale: React.FC = () => {
                                     transition-colors
                                     ${isDark ? 'text-gray-200' : 'text-gray-800'}
                                 `}>
-                                    {saleCreated.User.name} ({saleCreated.User.role})
+                                    {saleCreated.sale.User.name} ({saleCreated.sale.User.role})
                                 </p>
                             </>
                         )}

@@ -37,7 +37,7 @@ export const PurchasesPage: React.FC = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-start gap-6 flex-col justify-between mb-6">
         <div className='flex items-center gap-3'>
           <div className="w-[400px] flex items-center gap-3">
             <FilterPurchasesByUser />

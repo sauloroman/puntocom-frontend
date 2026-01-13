@@ -1,5 +1,5 @@
 import { BsBox, BsCoin } from "react-icons/bs"
-import { IoCartOutline, IoKeyOutline, IoSettingsOutline, IoLogOutOutline, IoCalculatorOutline, IoDocumentTextOutline  } from "react-icons/io5"
+import { IoCartOutline, IoKeyOutline, IoLogOutOutline, IoCalculatorOutline, IoDocumentTextOutline  } from "react-icons/io5"
 import { MdOutlineDarkMode } from "react-icons/md"
 import { TfiStatsUp } from "react-icons/tfi"
 import { useAuth, useTheme } from "../../hooks"
@@ -28,7 +28,6 @@ export const Menu: React.FC<MenuProps> = ({ collapsed }) => {
   ]
 
   const systemItems: MenuItemProps[] = [
-    { to: '/settings', icon: <IoSettingsOutline />, label: 'Ajustes'},
     { icon: <MdOutlineDarkMode />, label: 'Modo Oscuro', isToggle: true, onClick: toggleDarkMode, toggled: theme === ThemeType.dark  }
   ]
 

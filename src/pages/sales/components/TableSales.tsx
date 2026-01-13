@@ -1,17 +1,19 @@
 import React from "react";
 import { BsCalendar3, BsPerson, BsCode, BsCashStack } from "react-icons/bs";
-import type { SaleResponse } from "../../../interfaces/dto/sale.interface";
+import type { SaleWithDetailsResponse } from "../../../interfaces/dto/sale.interface";
 import { TableImage } from "../../../shared/components/table";
 import { useTheme } from "../../../shared/hooks";
 import { TableSalesActions } from "./";
 
 interface TableSalesProps {
-    data: SaleResponse[];
+    data: SaleWithDetailsResponse[];
 }
 
 export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
     const { theme } = useTheme();
     const isDark = theme === "dark";
+
+    if ( !data ) return null 
 
     return (
         <div className={`
@@ -77,7 +79,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                         {data.length > 0 ? (
                             data.map((sale) => (
                                 <tr
-                                    key={sale.id}
+                                    key={sale.sale.saleId}
                                     className={`
                                         transition-all duration-200 group
                                         ${isDark 
@@ -91,7 +93,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                             text-sm font-semibold transition-colors
                                             ${isDark ? 'text-gray-200' : 'text-gray-900'}
                                         `}>
-                                            {sale.date.toString()}
+                                            {sale.sale.saleDate as string} 
                                         </p>
                                     </td>
 
@@ -101,8 +103,8 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                                 <TableImage
                                                     width='w-6'
                                                     text='Usuario sin imagen'
-                                                    icon={sale.User?.image ?? 'Usuario sin imagen'}
-                                                    initial={sale.User?.name[0]}
+                                                    icon={sale.sale.User?.image ?? 'Usuario sin imagen'}
+                                                    initial={sale.sale.User?.name[0]}
                                                 />
                                             </div>
                                             <div>
@@ -110,13 +112,13 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                                     text-sm font-medium transition-colors
                                                     ${isDark ? 'text-gray-200' : 'text-gray-900'}
                                                 `}>
-                                                    {sale.User?.name}
+                                                    {sale.sale.User?.name}
                                                 </p>
                                                 <p className={`
                                                     text-xs capitalize transition-colors
                                                     ${isDark ? 'text-gray-400' : 'text-gray-500'}
                                                 `}>
-                                                    {sale.User?.role}
+                                                    {sale.sale.User?.role}
                                                 </p>
                                             </div>
                                         </div>
@@ -131,7 +133,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                                 : 'bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 border-indigo-200'
                                             }
                                         `}>
-                                            {sale.code}
+                                            {sale.sale.saleCode}
                                         </span>
                                     </td>
 
@@ -145,7 +147,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                                         : 'bg-gradient-to-r from-indigo-600 to-purple-600'
                                                     }
                                                 `}>
-                                                    ${sale.total.toFixed(2)}
+                                                    ${sale.sale.saleTotal.toFixed(2)}
                                                 </span>
                                                 <span className={`
                                                     text-xs font-medium transition-colors
@@ -158,7 +160,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                     </td>
 
                                     <td className="px-6 py-4 text-center">
-                                        <TableSalesActions saleId={sale.id} />
+                                        <TableSalesActions saleId={sale.sale.saleId} />
                                     </td>
                                 </tr>
                             ))

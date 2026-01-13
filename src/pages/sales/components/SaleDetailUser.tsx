@@ -1,6 +1,7 @@
 import React from 'react'
 import { FiUser } from 'react-icons/fi'
 import { useTheme } from '../../../shared/hooks'
+import { AvatarInitial } from '../../../shared/components/avatar'
 
 interface Props {
     name: string,
@@ -11,6 +12,8 @@ interface Props {
 export const SaleDetailUser: React.FC<Props> = ({ image, name, role }) => {
     const { theme } = useTheme()
     const isDark = theme === "dark"
+
+    console.log(image)
 
     return (
         <div className={`
@@ -29,23 +32,15 @@ export const SaleDetailUser: React.FC<Props> = ({ image, name, role }) => {
             </div>
             <div className="flex items-center space-x-3">
                 <div className="flex-shrink-0">
-                    {image !== 'Usuario sin imagen' ? (
+                    {(image) ? (
                         <img
                             src={image}
                             alt={name}
                             className="w-10 h-10 rounded-full object-cover"
                         />
                     ) : (
-                        <div className={`
-                            w-10 h-10 rounded-full flex items-center justify-center transition-colors
-                            ${isDark 
-                                ? 'bg-indigo-900/50 text-indigo-300' 
-                                : 'bg-indigo-100 text-indigo-600'
-                            }
-                        `}>
-                            <span className="font-medium text-sm">
-                                {name.charAt(0).toUpperCase()}
-                            </span>
+                        <div className='w-10 h-10'>
+                            <AvatarInitial initial={name[0]} />
                         </div>
                     )}
                 </div>

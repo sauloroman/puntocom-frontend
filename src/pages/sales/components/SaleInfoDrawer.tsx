@@ -53,7 +53,7 @@ export const SaleInfoDrawer: React.FC = () => {
                                 text-2xl font-semibold transition-colors
                                 ${isDark ? 'text-gray-100' : 'text-gray-900'}
                             `}>
-                                {selectedSale.code}
+                                {selectedSale.sale.saleCode}
                             </div>
                         </div>
                         <div className="flex flex-col gap-4">
@@ -64,7 +64,7 @@ export const SaleInfoDrawer: React.FC = () => {
                                     : 'bg-indigo-50 text-indigo-700'
                                 }
                             `}>
-                                ${selectedSale.total.toFixed(2)}
+                                ${selectedSale.sale.saleTotal.toFixed(2)}
                             </div>
                             <PrintSale />
                         </div>
@@ -74,14 +74,14 @@ export const SaleInfoDrawer: React.FC = () => {
                         ${isDark ? 'text-gray-400' : 'text-gray-600'}
                     `}>
                         <FiCalendar className="w-4 h-4" />
-                        {selectedSale.date.toString()}
+                        {selectedSale.sale.saleDate.toString()}
                     </div>
                 </header>
 
-                {selectedSale.User && <SaleDetailUser 
-                    image={selectedSale.User.image}
-                    name={selectedSale.User.name}
-                    role={selectedSale.User.role}
+                {selectedSale.sale.User && <SaleDetailUser 
+                    image={selectedSale.sale.User.image}
+                    name={selectedSale.sale.User.name}
+                    role={selectedSale.sale.User.role}
                 />}
 
                 <div className="flex-1 overflow-y-auto p-6">
@@ -112,7 +112,7 @@ export const SaleInfoDrawer: React.FC = () => {
                             ${isDark ? 'text-gray-400' : 'text-gray-600'}
                         `}>
                             <span>Subtotal</span>
-                            <span>${selectedSale.total.toFixed(2)}</span>
+                            <span>${selectedSale.sale.saleTotal.toFixed(2)}</span>
                         </div>
                         <div className={`
                             flex justify-between text-lg font-semibold pt-2 border-t transition-colors
@@ -126,7 +126,7 @@ export const SaleInfoDrawer: React.FC = () => {
                                 transition-colors
                                 ${isDark ? 'text-indigo-400' : 'text-indigo-600'}
                             `}>
-                                ${selectedSale.total.toFixed(2)}
+                                ${selectedSale.sale.saleTotal.toFixed(2)}
                             </span>
                         </div>
                     </div>

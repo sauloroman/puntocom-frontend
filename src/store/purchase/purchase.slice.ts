@@ -167,7 +167,7 @@ export const purchaseSlice = createSlice({
 
         setPricesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'price'>> ) => {
             state.filter.price.minPrice = payload.price.minPrice
-            state.filter.price.maxPrice = payload.price.minPrice
+            state.filter.price.maxPrice = payload.price.maxPrice
         },
 
         setDatesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'dates'>>) => {

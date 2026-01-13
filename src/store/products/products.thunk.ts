@@ -46,7 +46,11 @@ export const startGettingProducts = ( pagination: Pagination ) => {
             dispatch(setProductsMetaPagination({...meta, itemsPerPage: 20 }))
 
         } catch(error) {
-            console.log(error)
+            dispatch(showAlert({
+                title: "⚠️ Error productos",
+                text: 'No se pudieron obtener los productos',
+                type: AlertType.error,
+            }))
         } finally {
             dispatch(setIsLoading(false))
         }
@@ -63,7 +67,11 @@ export const startGettingAllProducts = () => {
 
             dispatch(setProductsMinimal(products))
         } catch(error) {
-            console.log(error)
+            dispatch(showAlert({
+                title: "⚠️ Error productos",
+                text: 'No se pudieron obtener todos los productos',
+                type: AlertType.error,
+            }))
         } finally {
             dispatch(setIsLoading(false))
         }
@@ -79,7 +87,7 @@ export const startGettingAllProductsFull = () => {
 
             dispatch(setAllProducts(products))
         } catch(error) {
-             dispatch(showAlert({
+            dispatch(showAlert({
                 title: "⚠️ Error productos",
                 text: 'No se pudieron obtener los productos',
                 type: AlertType.error,

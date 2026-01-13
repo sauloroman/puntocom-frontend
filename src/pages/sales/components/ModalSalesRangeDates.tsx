@@ -4,11 +4,11 @@ import { ModalRangeDates } from '../../../shared/components/modal'
 
 export const ModalSalesRangeDates: React.FC = () => {
 
-    const { onSetFilterDates } = useSale()
+    const { onSetFilterSalesByDateRange } = useSale()
 
     return (
         <ModalRangeDates 
-            onSetFilterDates={onSetFilterDates}
+            onSetFilterDates={onSetFilterSalesByDateRange}
         />
     )
 }

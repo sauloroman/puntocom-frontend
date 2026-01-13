@@ -19,7 +19,7 @@ export const generarTicketPDF = async (saleCreated: any, products: any[]) => {
         })
     );
 
-  const qrBase64 = await QRCode.toDataURL(saleCreated.code);
+  const qrBase64 = await QRCode.toDataURL(saleCreated.sale.saleCode);
 
   const content: any[] = [
     {
@@ -35,18 +35,18 @@ export const generarTicketPDF = async (saleCreated: any, products: any[]) => {
       margin: [0, 0, 0, 4],
     },
     {
-      text: `Folio: ${saleCreated.code}`,
+      text: `Folio: ${saleCreated.sale.saleCode}`,
       margin: [0, 0, 0, 2],
     },
     {
-      text: `Fecha: ${new Date(saleCreated.date).toLocaleString()}`,
+      text: `Fecha: ${new Date(saleCreated.sale.saleDate).toLocaleString()}`,
       margin: [0, 0, 0, 2],
     },
   ];
 
-  if (saleCreated.User?.name) {
+  if (saleCreated.sale.User?.name) {
     content.push({
-      text: `Vendedor: ${saleCreated.User.name}`,
+      text: `Vendedor: ${saleCreated.sale.User.name}`,
       margin: [0, 0, 0, 2],
     });
   }
@@ -99,7 +99,7 @@ export const generarTicketPDF = async (saleCreated: any, products: any[]) => {
       canvas: [{ type: 'line', x1: 0, y1: 0, x2: 200, y2: 0, lineWidth: 1 }],
     },
     {
-      text: `\nTOTAL: $${saleCreated.total.toFixed(2)}`,
+      text: `\nTOTAL: $${saleCreated.sale.saleTotal.toFixed(2)}`,
       alignment: 'right',
       bold: true,
       fontSize: 11,
@@ -115,7 +115,7 @@ export const generarTicketPDF = async (saleCreated: any, products: any[]) => {
       alignment: 'center',
       margin: [0, 5, 0, 0],
     }
-  );
+  );  
 
   const docDefinition: TDocumentDefinitions  = {
     pageSize: {
@@ -129,5 +129,5 @@ export const generarTicketPDF = async (saleCreated: any, products: any[]) => {
     content,
   };
 
-  pdfMake.createPdf(docDefinition).download(`ticket-${saleCreated.code}.pdf`);
+  pdfMake.createPdf(docDefinition).download(`ticket-${saleCreated.sale.saleCode}.pdf`);
 };

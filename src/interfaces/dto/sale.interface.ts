@@ -6,17 +6,21 @@ export interface SaveSale {
     details: SaveSaleDetail[]
 }
 
-export interface SaleResponse {
-    id: string
-    date: Date | string,
-    total: number,
-    code: string,
+export interface Sale {
+    saleId: string
+    saleDate: Date | string,
+    saleTotal: number,
+    saleCode: string,
     User?: {
         id: string,
         name: string,
         role: string,
         image: string,
-    },
+    }
+}
+
+export interface SaleWithDetailsResponse {
+    sale: Sale,
     details: SaleProductDetailResponse[]
 }
 
@@ -44,12 +48,12 @@ export interface SaleProductDetailResponse {
 export interface SaveSaleResponse {
     ok: boolean,
     message: string,
-    sale: SaleResponse
+    sale: SaleWithDetailsResponse
 }
 
 export interface GetSale {
     ok: boolean,
-    sale: SaleResponse
+    sale: SaleWithDetailsResponse
 }
 
 export interface SaveSaleDetail {
@@ -62,7 +66,7 @@ export interface SaveSaleDetail {
 export interface GetAllSalesResponse {
     ok: boolean,
     meta: MetaPagination,
-    sales: SaleResponse[]
+    sales: SaleWithDetailsResponse[]
 }
 
 export interface GetFilteredSalesResponse {
@@ -79,5 +83,13 @@ export interface GetFilteredSalesResponse {
             }
         }
     },
-    sales: SaleResponse[]
+    sales: SaleWithDetailsResponse[]
+}
+
+export interface SalesFilterDTO {
+    userId: string | null,
+    dateStart: string | null,
+    dateEnd: string | null,
+    minPrice: number | null,
+    maxPrice: number | null
 }

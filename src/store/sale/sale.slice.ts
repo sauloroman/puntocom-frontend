@@ -1,14 +1,14 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { SaleResponse } from "../../interfaces/dto/sale.interface";
+import type { SaleWithDetailsResponse } from "../../interfaces/dto/sale.interface";
 import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
 import type { Filter } from "../../interfaces/ui/filter.interface";
 
 interface SliceState {
     isLoading: boolean,
-    saleCreated: SaleResponse | null,
-    sales: SaleResponse[],
-    selectedSale: SaleResponse | null,
-    saleToPrint: SaleResponse | null,
+    saleCreated: SaleWithDetailsResponse | null,
+    sales: SaleWithDetailsResponse[],
+    selectedSale: SaleWithDetailsResponse | null,
+    saleToPrint: SaleWithDetailsResponse | null,
     pagination: MetaPagination & { itemsPerPage: number },
     isPaginationVisible: boolean,
     filter: Omit<Filter, 'supplier'>
@@ -52,15 +52,15 @@ export const saleSlice = createSlice({
             state.isLoading = payload
         },
 
-        setSaleCreated: ( state, {payload}: PayloadAction<SaleResponse>) => {
+        setSaleCreated: ( state, {payload}: PayloadAction<SaleWithDetailsResponse>) => {
             state.saleCreated = payload
         },
 
-        setSales: ( state, { payload }: PayloadAction<SaleResponse[]> ) => {
+        setSales: ( state, { payload }: PayloadAction<SaleWithDetailsResponse[]> ) => {
             state.sales = payload
         },
 
-        addSale: ( state, {payload}: PayloadAction<SaleResponse> ) => {
+        addSale: ( state, {payload}: PayloadAction<SaleWithDetailsResponse> ) => {
             state.sales.unshift( payload )
         },
 
@@ -75,7 +75,7 @@ export const saleSlice = createSlice({
 
         setPricesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'price'>> ) => {
             state.filter.price.minPrice = payload.price.minPrice
-            state.filter.price.maxPrice = payload.price.minPrice
+            state.filter.price.maxPrice = payload.price.maxPrice
         },
 
         setDatesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'dates'>>) => {
@@ -87,11 +87,11 @@ export const saleSlice = createSlice({
             state.isPaginationVisible = payload
         },
 
-        setSelectedSale: ( state, {payload}: PayloadAction<SaleResponse>) => {
+        setSelectedSale: ( state, {payload}: PayloadAction<SaleWithDetailsResponse>) => {
             state.selectedSale = payload
         },
 
-        setSaleToPrint: ( state, {payload}: PayloadAction<SaleResponse>) => {
+        setSaleToPrint: ( state, {payload}: PayloadAction<SaleWithDetailsResponse>) => {
             state.saleToPrint = payload
         },
 

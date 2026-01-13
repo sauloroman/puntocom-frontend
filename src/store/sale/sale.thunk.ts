@@ -48,29 +48,6 @@ export const startSavingSale = ( saveSale: SaveSale ) => {
     }
 }
 
-export const startGettingSalesByUser = ( userId: string, pagination: Pagination ) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch( setIsLoading( true ) )
-        try {
-            const { page, limit } = pagination
-            const { data } = await puntocomApiPrivate.get<GetAllSalesResponse>(`${urlSale}/user/${userId}?page=${page}&limit=${limit}&sort=saleDate:desc`)
-            const { meta, sales } = data
-
-            dispatch(setSales(sales))
-            dispatch(setSalesMetaPagination({...meta, itemsPerPage: limit}))
-        } catch( error ) {
-            console.log(error)
-            dispatch(showAlert({
-                title: 'Error Ventas 🗒️',
-                text: 'No se pudieron obtener las ventas del usuario',
-                type: AlertType.error
-            }))
-        } finally {
-            dispatch( setIsLoading( false ) )
-        }
-    }
-}
-
 export const startGettingAllSales = ( pagination: Pagination ) => {
     return async ( dispatch: Dispatch ) => {
         dispatch( setIsLoading( true ) )
@@ -93,7 +70,12 @@ export const startGettingAllSales = ( pagination: Pagination ) => {
     }
 }
 
-export const startGettingFilteredSales = ( prices?: PriceRange, dates?: DateRange, pagination?: Pagination ) => {
+export const startFilteringSales = ( 
+    userId?: string,
+    prices?: PriceRange, 
+    dates?: DateRange, 
+    pagination?: Pagination 
+) => {
     return async ( dispatch: Dispatch ) => {
         dispatch( setIsLoading( true ) )
         try {
@@ -104,8 +86,8 @@ export const startGettingFilteredSales = ( prices?: PriceRange, dates?: DateRang
             }
 
             if ( prices?.minPrice !== undefined && prices?.maxPrice !== undefined ) {
-                params['priceMin'] = prices?.minPrice?.toString() 
-                params['priceMax'] = prices?.maxPrice?.toString() 
+                params['minPrice'] = prices?.minPrice?.toString() 
+                params['maxPrice'] = prices?.maxPrice?.toString() 
             }
 
             if ( dates?.dateStart && dates?.dateEnd ) {
@@ -113,47 +95,11 @@ export const startGettingFilteredSales = ( prices?: PriceRange, dates?: DateRang
                 params['dateTo'] = dates.dateEnd
             }
 
+            if ( userId) {
+                params['user'] = userId
+            }
+
             const { data } = await puntocomApiPrivate.get<GetFilteredSalesResponse>(`${urlSale}/filter`, { params })
-            const { sales, meta } = data
-            const { filter, ...restMetaPagination } = meta
-
-            dispatch(setSales(sales))
-            dispatch(setSalesMetaPagination({ ...restMetaPagination, itemsPerPage: pagination?.limit ?? 15 }))
-
-        } catch( error ) {
-            dispatch(showAlert({
-                title: 'Error Ventas 🗒️',
-                text: 'No se pudieron filtrar las ventas',
-                type: AlertType.error
-            }))
-        } finally {
-            dispatch( setIsLoading( false ) )
-        }
-    }
-}
-
-export const startGettingFilteredSalesByUser = ( userId: string, prices?: PriceRange, dates?: DateRange, pagination?: Pagination ) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch( setIsLoading( true ) )
-        try {
-
-            const params: any = {
-                page: pagination?.page.toString() ?? '1',
-                limit: pagination?.limit.toString() ?? '10',
-                sort: 'saleDate:desc'
-            }
-
-            if ( prices?.minPrice !== undefined && prices?.maxPrice !== undefined ) {
-                params['priceMin'] = prices?.minPrice?.toString() 
-                params['priceMax'] = prices?.maxPrice?.toString() 
-            }
-
-            if ( dates?.dateStart && dates?.dateEnd ) {
-                params['dateStart'] = dates.dateStart
-                params['dateEnd'] = dates.dateEnd
-            }
-
-            const { data } = await puntocomApiPrivate.get<GetFilteredSalesResponse>(`${urlSale}/filter/user/${userId}`, { params })
             const { sales, meta } = data
             const { filter, ...restMetaPagination } = meta
 

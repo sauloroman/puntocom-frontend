@@ -5,13 +5,12 @@ import {
     useSelector 
 } from "react-redux"
 import { 
+    startFilteringSales,
     startGettingAllSales, 
-    startGettingFilteredSales, 
-    startGettingFilteredSalesByUser, 
-    startGettingSalesByUser, 
     startSavingSale 
 } from "../../store/sale/sale.thunk"
 import { 
+    resetFilter,
     setDatesFilter, 
     setPage, 
     setPaginationVisible, 
@@ -19,11 +18,9 @@ import {
     setSelectedSale, 
     setUserFilter 
 } from "../../store/sale/sale.slice"
-import type { Pagination } from "../../interfaces/dto/pagination.interface"
 import type { ProductInCart } from "../../interfaces/dto/product.interface"
-import type { GetSale, SaleResponse, SaveSale } from "../../interfaces/dto/sale.interface"
+import type { GetSale, SalesFilterDTO, SaleWithDetailsResponse, SaveSale } from "../../interfaces/dto/sale.interface"
 import type { RootState } from "../../store"
-import type { DateRange, PriceRange } from "../../interfaces/ui/filter.interface"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 
 export const useSale = () => {
@@ -37,23 +34,8 @@ export const useSale = () => {
         pagination, 
         filter, 
         selectedSale, 
-        isPaginationVisible } = useSelector( (state: RootState) => state.sale )
-
-    const filterSalesByUser = ( userId: string ) => {
-        dispatch(startGettingSalesByUser( userId, { page: 1, limit: pagination.itemsPerPage }))
-    }
-
-    const filterSales = ( prices?: PriceRange, dates?: DateRange, pagination?: Pagination ) => {
-        dispatch(startGettingFilteredSales(prices, dates, pagination))
-
-        if ( prices?.minPrice !== undefined && prices?.maxPrice !== undefined ) {
-            dispatch(setPricesFilter({ price: { minPrice: prices.minPrice, maxPrice: prices.maxPrice }}))
-        }
-
-        if ( dates?.dateStart && dates?.dateEnd ) {
-            dispatch(setDatesFilter({ dates: { dateStart: dates?.dateStart, dateEnd: dates?.dateEnd }}))
-        }
-    }
+        isPaginationVisible 
+    } = useSelector( (state: RootState) => state.sale )
 
     const saveSale = ( productsInCart: ProductInCart[], total: number ) => {
         if (  productsInCart?.length === 0 || total === 0 ) {
@@ -89,140 +71,105 @@ export const useSale = () => {
         dispatch(setPaginationVisible(isVisible))
     }
 
-    const filterSalesDependingActiveFilters = (
-        page: number,
-        limit: number,
-        filtersOverride?: {
-            userId: string | null
-            dateStart: string | null
-            dateEnd: string | null
-            minPrice: number | null
-            maxPrice: number | null
-    }) => {
-
-        const current = filter
-        const applied = {
-            userId: filtersOverride?.userId ?? current.user.id,
-            dateStart: filtersOverride?.dateStart ?? current.dates.dateStart,
-            dateEnd: filtersOverride?.dateEnd ?? current.dates.dateEnd,
-            minPrice: filtersOverride?.minPrice ?? current.price.minPrice,
-            maxPrice: filtersOverride?.maxPrice ?? current.price.maxPrice,
-        }
-
-        const paginationParams = { page, limit }
-
-        const priceFilter =
-            applied.minPrice !== null && applied.maxPrice !== null
-                ? { minPrice: applied.minPrice, maxPrice: applied.maxPrice }
-                : undefined
-
-        const dateFilter =
-            applied.dateStart && applied.dateEnd
-                ? { dateStart: applied.dateStart, dateEnd: applied.dateEnd }
-                : undefined
-
-        if (applied.userId) {
-            if (priceFilter || dateFilter) {
-                dispatch(startGettingFilteredSalesByUser(applied.userId, priceFilter, dateFilter, paginationParams))
-            } else {
-                dispatch(startGettingSalesByUser(applied.userId, paginationParams))
-            }
-            return
-        }
-
-        if (priceFilter || dateFilter) {
-            dispatch(startGettingFilteredSales(priceFilter, dateFilter, paginationParams))
-        } else {
-            dispatch(startGettingAllSales(paginationParams))
-        }
-    }
-
-    const onSetFilterUser = (userId: string | null, userName: string | null) => {
-        dispatch(setUserFilter({ user: { id: userId, name: userName }}))
-        dispatch(setPage(1))
-        filterSalesDependingActiveFilters(1, pagination.itemsPerPage, {
-            userId,
-            dateStart: filter.dates.dateStart,
-            dateEnd: filter.dates.dateEnd,
-            minPrice: filter.price.minPrice,
-            maxPrice: filter.price.maxPrice,
-        })
-    }
-
-    const onSetFilterPrices = (minPrice: number | null, maxPrice: number | null) => {
-        dispatch(setPricesFilter({price: { minPrice, maxPrice }}))
-        dispatch(setPage(1))
-        filterSalesDependingActiveFilters(1, pagination.itemsPerPage, {
-            userId: filter.user.id,
-            dateStart: filter.dates.dateStart,
-            dateEnd: filter.dates.dateEnd,
-            minPrice,
-            maxPrice,
-        })
-    }
-
-    const onSetFilterDates = (dateStart: string | null, dateEnd: string | null) => {
-        dispatch(setDatesFilter({ dates: { dateStart, dateEnd }}))
-        dispatch(setPage(1))
-        filterSalesDependingActiveFilters(1, pagination.itemsPerPage, {
-            userId: filter.user.id,
-            minPrice: filter.price.minPrice,
-            maxPrice: filter.price.maxPrice,
-            dateStart,
-            dateEnd
-        })
-    }
-
-    const onResetFilters = () => {
-        dispatch(setUserFilter({ user: { id: null, name: null }}))
-        dispatch(setPricesFilter({ price: { minPrice: null, maxPrice: null }}))
-        dispatch(setDatesFilter({ dates: { dateStart: null, dateEnd: null }}))
-        dispatch(setPage(1))
-        getAllSales()
-    }
-
     const onSetSelectedSale = ( saleId: string ) => {
-        const sale = sales.find( sale => sale.id === saleId )
+        const sale = sales.find( sale => sale.sale.saleId === saleId )
         if ( !sale ) return
         dispatch(setSelectedSale( sale ))
     }
 
-    const onSetPage = (page: number) => {
-        dispatch(setPage(page))
-        filterSalesDependingActiveFilters(page, pagination.itemsPerPage)
-    }
-
-    const onGetSaleById = async (): Promise<SaleResponse> => {
+    const onGetSaleById = async (): Promise<SaleWithDetailsResponse> => {
         if (!selectedSale) throw new Error('Seleccione una venta para imprimir')
-        const saleId = selectedSale.id
+        const saleId = selectedSale.sale.saleId
         const { data } = await puntocomApiPrivate.get<GetSale>(`/api/sale/${saleId}`)
         const { sale } = data
         return sale
     }
 
+    const applySalesFilters = (
+        page: number,
+        limit: number,
+        overrides?: Partial<SalesFilterDTO>
+    ) => {
+
+        const current: SalesFilterDTO = {
+            userId: filter.user.id,
+            dateStart: filter.dates.dateStart,
+            dateEnd: filter.dates.dateEnd,
+            minPrice: filter.price.minPrice,
+            maxPrice: filter.price.maxPrice
+        }
+        const applied: SalesFilterDTO = { ...current, ...overrides}
+        const hasPriceFilter = applied.minPrice !== null && applied.maxPrice !== null
+        const hasDateFilter = applied.dateStart !== null && applied.dateEnd !== null
+        const hasOtherFilters = applied.userId !== null 
+
+        if ( hasPriceFilter || hasDateFilter || hasOtherFilters ) {
+            dispatch(startFilteringSales(
+                applied.userId ?? '',
+                hasPriceFilter
+                    ? { minPrice: applied.minPrice ?? 0, maxPrice: applied.maxPrice ?? 0 }
+                    : undefined,
+                hasDateFilter
+                    ? { dateStart: applied.dateStart!, dateEnd: applied.dateEnd! }
+                    : undefined
+            ))
+        } else {
+            dispatch(startGettingAllSales({ page, limit }))
+        }
+
+    }
+
+    const onSetPage = (page: number) => {
+        dispatch(setPage(page))
+        applySalesFilters(page, pagination.itemsPerPage)
+    }
+
+    const onSetFilterSalesByUser = (userId: string | null, userName: string | null) => {
+        dispatch(setUserFilter({ user: { id: userId, name: userName }}))
+        dispatch(setPage(1))
+        applySalesFilters(1, pagination.itemsPerPage, { userId })
+    }
+
+    const onSetFilterSalesByPriceRange = (minPrice: number | null, maxPrice: number | null) => {
+        dispatch(setPricesFilter({price: { minPrice, maxPrice }}))
+        dispatch(setPage(1))
+        applySalesFilters(1, pagination.itemsPerPage, { minPrice, maxPrice })
+    }
+
+    const onSetFilterSalesByDateRange = (dateStart: string | null, dateEnd: string | null) => {
+        dispatch(setDatesFilter({ dates: { dateStart, dateEnd }}))
+        dispatch(setPage(1))
+        applySalesFilters(1, pagination.itemsPerPage, {dateStart, dateEnd})
+    }
+
+    const onResetFilters = () => {
+        dispatch(resetFilter())
+        dispatch(setPage(1))
+        getAllSales()
+    }
+
     return {
+        // Properties
         filter,
-        filterSalesByUser,
-        getAllSales,
         isLoading,
         isPaginationVisible,
-        onChangePaginationVisibility,
-        onSetFilterUser,
-        onSetPage,
-        onSetSelectedSale,
-        onSetFilterPrices,
-        onGetSaleById,
-
         pagination,
         saleCreated,
         sales,
-        saveSale,
         selectedSale,
-        filterSales,
-        onSetFilterDates,
-        onResetFilters,
         saleToPrint,
-        filterSalesDependingActiveFilters,
+        
+        // Actions
+        getAllSales,
+        saveSale,
+        onChangePaginationVisibility,
+        onSetPage,
+        onSetSelectedSale,
+        onGetSaleById,
+        onSetFilterSalesByUser,
+        onSetFilterSalesByPriceRange,
+        onSetFilterSalesByDateRange,
+        onResetFilters,
     }
 
 }

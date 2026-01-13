@@ -129,12 +129,7 @@ export const usePurchase = () => {
 
   const onSetPagePurchasesPagination = (page: number) => {
     dispatch(setPagePurchases(page))
-    dispatch(
-      startGettingAllPurchases({
-        page,
-        limit: purchasesPagination.itemsPerPage,
-      })
-    )
+    dispatch( applyPurchasesFilters(page, purchasesPagination.itemsPerPage) )
   }
 
   const applyPurchasesFilters = (

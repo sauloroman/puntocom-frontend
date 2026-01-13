@@ -15,26 +15,27 @@ import { posSlice } from "./pos/pos.slice";
 import { saleSlice } from "./sale/sale.slice";
 import { inventorySlice } from "./inventory-adjustment/inventory-adjustment.slice";
 import { purchaseSlice } from "./purchase/purchase.slice";
+import { dashboardSlice } from "./dashboard/dashboard.slice";
 
 export const store = configureStore({
     reducer: {
-        auth: authSlice.reducer,
-        theme: themeSlice.reducer,
-        alert: alertSlice.reducer,
-        menu: menuSlice.reducer,
-        tabs: tabsSlice.reducer,
-        modal: modalSlice.reducer,
-        drawer: drawerSlice.reducer,
-        reports: reportsSlice.reducer,
-        pos: posSlice.reducer,
-        sale: saleSlice.reducer,
-        inventoryAdjustment: inventorySlice.reducer,
-        purchase: purchaseSlice.reducer,
-
-        users: usersSlice.reducer,
-        categories: categoriesSlice.reducer,
-        suppliers: suppliersSlice.reducer,
-        products: productsSlice.reducer
+        auth:                   authSlice.reducer,
+        theme:                  themeSlice.reducer,
+        alert:                  alertSlice.reducer,
+        menu:                   menuSlice.reducer,
+        tabs:                   tabsSlice.reducer,
+        modal:                  modalSlice.reducer,
+        drawer:                 drawerSlice.reducer,
+        reports:                reportsSlice.reducer,
+        pos:                    posSlice.reducer,
+        sale:                   saleSlice.reducer,
+        inventoryAdjustment:    inventorySlice.reducer,
+        purchase:               purchaseSlice.reducer,
+        users:                  usersSlice.reducer,
+        categories:             categoriesSlice.reducer,
+        suppliers:              suppliersSlice.reducer,
+        products:               productsSlice.reducer,
+        dashboard:              dashboardSlice.reducer
     }
 })
 

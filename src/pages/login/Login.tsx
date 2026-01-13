@@ -38,10 +38,12 @@ export const Login: React.FC = () => {
       <div className='flex flex-col justify-center'>  
         <div className="mb-8">
           <h2 className={`
+            flex items-center gap-2
             text-3xl font-bold mb-1 transition-colors duration-200
             ${isDark ? 'text-gray-100' : 'text-gray-900'}
           `}>
-            Bienvenido de vuelta
+            <div className="w-7 h-7 bg-indigo-700 rounded-full"></div>
+            <p>Bienvenido de vuelta</p>
           </h2>
           <p className={`
             transition-colors duration-200
@@ -70,14 +72,6 @@ export const Login: React.FC = () => {
           <div>
             <div className="flex justify-between items-center">
               <Label htmlFor='password'>Contraseña</Label>
-              <Link to='/auth/forgot-password'>
-                <p className={`
-                  text-sm cursor-pointer transition-colors duration-200
-                  ${isDark ? 'text-indigo-400 hover:text-indigo-300' : 'text-indigo-500 hover:text-indigo-600'}
-                `}>
-                  Olvidé mi contraseña
-                </p>
-              </Link>
             </div>
             <div className={`
               border rounded-lg pr-4 flex justify-between items-center transition-colors duration-200
@@ -106,11 +100,20 @@ export const Login: React.FC = () => {
             </div>
             { errors.password && <ErrorMessageForm message={errors.password.message} />}
           </div>
+          
+          <Link to='/auth/forgot-password'>
+            <p className={`
+              text-sm cursor-pointer transition-colors duration-200 text-right
+              ${isDark ? 'text-indigo-400 hover:text-indigo-300' : 'text-indigo-500 hover:text-indigo-600'}
+            `}>
+              Olvidé mi contraseña
+            </p>
+          </Link>
 
           {
             isLoading
             ? <SpinnerContainer size='md' color='border-white' />
-            : <LoginButton className='w-full p-4' submit text='Iniciar Sesión' /> 
+            : <LoginButton className='w-full p-4 mt-8' submit text='Iniciar Sesión' /> 
           }
 
         </form>
