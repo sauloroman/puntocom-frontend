@@ -25,7 +25,8 @@ export type ModalNames =
 'rangePurchasesDates' |
 'createInventoryAdjustment' |
 'supplierSenMessageWhatsapp' |
-'addProductPurchase'
+'addProductPurchase' |
+'emailSentForgotPassword'
 
 export const ModalNames = {
     addProduct: 'addProduct' as ModalNames,
@@ -54,5 +55,6 @@ export const ModalNames = {
     seeProductImage: 'seeProductImage' as ModalNames,
     sendMessageToSupplier: 'sendMessageToSupplier' as ModalNames,
     supplierSenMessageWhatsapp: 'supplierSenMessageWhatsapp' as ModalNames,
-    addProductPurchase: 'addProductPurchase' as ModalNames
+    addProductPurchase: 'addProductPurchase' as ModalNames,
+    emailSentForgotPassword: 'emailSentForgotPassword' as ModalNames
 }

@@ -1,11 +1,14 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import type { UserRenewAuth, UserRequest, UserResponse } from "../../interfaces/dto/user.interface";
-import { login, setIsLoading } from "./auth.slice";
+import { login, setForgotPassword, setIsLoading } from "./auth.slice";
 import { puntocomApiPrivate, puntocomApiPublic } from "../../config/api/puntocom.api";
 import { getEnvVariables } from "../../shared/helpers";
 import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
 import { handleError } from "../../config/api/handle-error";
+import type { ForgotPasswordRequest, ForgotPasswordResponse } from "../../interfaces/dto/auth.interface";
+import { openModal } from "../modal/modal.slice";
+import { ModalNames } from "../../interfaces/ui/modal.interface";
 
 const urlUsers = '/api/user'
 const { VITE_TOKEN_NAME } = getEnvVariables()
@@ -65,5 +68,32 @@ export const startRenewingAuth = () => {
 
         dispatch(setIsLoading(false))
 
+    }
+}
+
+export const startSendEmailForgotPassword = ( forgotPasswordData: ForgotPasswordRequest ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            
+            await puntocomApiPublic.post<ForgotPasswordResponse>(`${urlUsers}/forgot-password`, forgotPasswordData)
+            
+            localStorage.setItem('forgot-password-email', JSON.stringify(forgotPasswordData.email))
+    
+            dispatch(setForgotPassword({ email: forgotPasswordData.email }))
+            dispatch(openModal(ModalNames.emailSentForgotPassword))
+            
+        } catch(error) {
+            const errorMessage = handleError(error)
+            dispatch(
+                showAlert({
+                    title: "⚠️ Error al enviar el correo",
+                    text: errorMessage,
+                    type: AlertType.error,
+                })
+            );
+        } finally {
+            dispatch(setIsLoading(false))
+        }
     }
 }

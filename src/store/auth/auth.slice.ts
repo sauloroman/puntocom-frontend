@@ -4,13 +4,19 @@ import { AuthStatus, type User } from "../../interfaces/dto/user.interface";
 interface AuthStateI {
     status: AuthStatus
     user: User | null
-    isLoading: boolean
+    isLoading: boolean,
+    forgotPasswordEmail: {
+        email: string | null,
+    }
 }
 
 const initalState: AuthStateI = {
     status: AuthStatus.UNAUTHENTICATED,
     user: null,
-    isLoading: false
+    isLoading: false,
+    forgotPasswordEmail: {
+        email: null,
+    }
 }
 
 export const authSlice = createSlice({
@@ -32,6 +38,10 @@ export const authSlice = createSlice({
             state.status = AuthStatus.UNAUTHENTICATED
             state.user = null
             state.isLoading = false
+        },
+
+        setForgotPassword: ( state, { payload }: PayloadAction<{ email: string}>) => {
+            state.forgotPasswordEmail = payload
         }
 
     }
@@ -40,5 +50,6 @@ export const authSlice = createSlice({
 export const {
     login,
     logout,
-    setIsLoading
+    setIsLoading,
+    setForgotPassword
 } = authSlice.actions

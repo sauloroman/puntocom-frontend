@@ -34,7 +34,7 @@ export const Login: React.FC = () => {
 
   return (
    <AuthLayout>
-    <div className="w-full px-8 md:px-10 lg:px-16">
+    <div className="w-full px-8 md:px-10 lg:px-8">
       <div className='flex flex-col justify-center'>  
         <div className="mb-8">
           <h2 className={`
@@ -55,7 +55,7 @@ export const Login: React.FC = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
           <div>
-            <Label htmlFor='email'>Correo electrónico</Label>
+            <Label className='mb-3' htmlFor='email'>Correo electrónico</Label>
             <Input 
               id='email'
               type='email'
@@ -70,9 +70,7 @@ export const Login: React.FC = () => {
           </div>
 
           <div>
-            <div className="flex justify-between items-center">
-              <Label htmlFor='password'>Contraseña</Label>
-            </div>
+            <Label className='mb-3' htmlFor='password'>Contraseña</Label>
             <div className={`
               border rounded-lg pr-4 flex justify-between items-center transition-colors duration-200
               ${isDark ? 'border-gray-600 bg-gray-800' : 'border-gray-300 bg-white'}
@@ -102,12 +100,14 @@ export const Login: React.FC = () => {
           </div>
           
           <Link to='/auth/forgot-password'>
-            <p className={`
-              text-sm cursor-pointer transition-colors duration-200 text-right
-              ${isDark ? 'text-indigo-400 hover:text-indigo-300' : 'text-indigo-500 hover:text-indigo-600'}
-            `}>
-              Olvidé mi contraseña
-            </p>
+            <div className="flex justify-end w-full">
+              <p className={`
+                text-md border-b-2 pb-1 cursor-pointer transition-colors duration-200
+                ${isDark ? 'text-indigo-400 hover:text-indigo-300' : 'text-indigo-500 hover:text-indigo-600'}
+              `}>
+                Olvidé mi contraseña
+              </p>
+            </div>
           </Link>
 
           {
