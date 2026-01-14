@@ -6,7 +6,7 @@ import { getEnvVariables } from "../../shared/helpers";
 import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
 import { handleError } from "../../config/api/handle-error";
-import type { ForgotPasswordRequest, ForgotPasswordResponse } from "../../interfaces/dto/auth.interface";
+import type { ChangePasswordRequest, ChangePasswordResponse, ForgotPasswordRequest, ForgotPasswordResponse } from "../../interfaces/dto/auth.interface";
 import { openModal } from "../modal/modal.slice";
 import { ModalNames } from "../../interfaces/ui/modal.interface";
 
@@ -88,6 +88,27 @@ export const startSendEmailForgotPassword = ( forgotPasswordData: ForgotPassword
             dispatch(
                 showAlert({
                     title: "⚠️ Error al enviar el correo",
+                    text: errorMessage,
+                    type: AlertType.error,
+                })
+            );
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startChangingPassword = ( changePasswordData: ChangePasswordRequest ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            await puntocomApiPublic.post<ChangePasswordResponse>(`${urlUsers}/change-password`, changePasswordData)
+            dispatch(openModal(ModalNames.passwordChanged))
+        } catch(error) {
+            const errorMessage = handleError(error)
+            dispatch(
+                showAlert({
+                    title: "⚠️ Error al cambiar constraseña",
                     text: errorMessage,
                     type: AlertType.error,
                 })

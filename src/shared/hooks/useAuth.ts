@@ -1,10 +1,15 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import type { UserRequest } from "../../interfaces/dto/user.interface"
-import { startLoginUserWithEmailAndPassword, startRenewingAuth, startSendEmailForgotPassword } from "../../store/auth/auth.thunk"
+import { 
+    startChangingPassword, 
+    startLoginUserWithEmailAndPassword, 
+    startRenewingAuth, 
+    startSendEmailForgotPassword 
+} from "../../store/auth/auth.thunk"
 import { logout } from "../../store/auth/auth.slice"
 import { getEnvVariables } from "../helpers"
-import type { ForgotPasswordRequest } from "../../interfaces/dto/auth.interface"
+import type { ChangePasswordRequest, ForgotPasswordRequest } from "../../interfaces/dto/auth.interface"
 
 const { VITE_TOKEN_NAME } = getEnvVariables()
 
@@ -30,6 +35,10 @@ export const useAuth = () => {
         dispatch(startSendEmailForgotPassword(data))
     }
 
+    const changePassword = ( data: ChangePasswordRequest ) => {
+        dispatch(startChangingPassword(data))
+    }
+
     return {
         //Attributes
         isLoading,
@@ -41,7 +50,8 @@ export const useAuth = () => {
         onLoginEmailPassword,
         onLogout,
         renewAuth,
-        sendEmailForgotPassword
+        sendEmailForgotPassword,
+        changePassword
     }
 
 }
