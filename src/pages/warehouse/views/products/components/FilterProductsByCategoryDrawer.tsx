@@ -8,7 +8,7 @@ export const FilterProductsByCategoryDrawer: React.FC = () => {
     const activeCategories = categories?.filter( cat => cat.isActive ) ?? [] 
 
     return (
-        <LeftDrawerLayout width='w-xl' title='Filtrar productos por categoría'>
+        <LeftDrawerLayout width='e-full md:w-xl' title='Filtrar productos por categoría'>
             <h2 className="text-xl mb-8 font-semibold">Categorías de productos</h2>
             <ul className='flex flex-wrap gap-4'>
                 {

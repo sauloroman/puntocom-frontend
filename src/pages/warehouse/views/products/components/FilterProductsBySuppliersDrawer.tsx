@@ -8,7 +8,7 @@ export const FilterProductsBySuppliersDrawer: React.FC = () => {
     const activeSuppliers = suppliers?.filter( supp => supp.isActive ) ?? []
 
     return (
-        <LeftDrawerLayout width='w-xl' title='Filtrar productos por proveedores'>
+        <LeftDrawerLayout width='w-full md:w-xl' title='Filtrar productos por proveedores'>
             <h2 className="text-xl mb-8 font-semibold">Proveedores de productos</h2>
             <ul className="flex flex-wrap gap-4">
                 {

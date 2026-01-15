@@ -7,7 +7,7 @@ export const ProductsGrid: React.FC = () => {
   const { products } = useProducts()
 
   return (
-    <div className='grid grid-cols-5 gap-8 w-[95%] m-auto pt-2 py-8'>
+    <div className='grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5 lg:gap-8 w-[95%] m-auto pt-2 py-8'>
         {
           products?.map( product => (
             <ProductItem 

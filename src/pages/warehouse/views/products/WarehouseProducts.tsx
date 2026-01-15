@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 import { useCategories, useDrawer, useModal, useSuppliers, useProducts } from '../../../../shared/hooks'
-import { CreateButton, SortElementsAlphaButton } from '../../../../shared/components/button'
+import { CreateButton, SortElementsAlphaButton, FAB } from '../../../../shared/components/button'
 import {
   FilterProductsByCategoryDrawer,
   ModalConfirmChangeStatusProduct,
@@ -23,6 +23,7 @@ import {
 import { ModalRequestPasswordAdmin } from '../../../access/views/users/components'
 import { GenerateReport } from '../../../reports/components'
 import { SpinnerContainer } from '../../../../shared/components/spinner'
+import { BsPlus, BsFileEarmarkText } from 'react-icons/bs'
 
 export const WarehouseProducts: React.FC = () => {
 
@@ -31,6 +32,7 @@ export const WarehouseProducts: React.FC = () => {
   const { categories, getCategories, getAllCategories } = useCategories()
   const { suppliers, getSuppliers, getAllSuppliers } = useSuppliers()
   const { onOpenModal, modalIsOpen, modalName, onOpenConfirmAdminPassword } = useModal()
+  const [showFABMenu, setShowFABMenu] = useState(false)
 
   useEffect(() => {
     if ( !products ){
@@ -50,20 +52,40 @@ export const WarehouseProducts: React.FC = () => {
     getAllCategories()
     getAllSuppliers()
     onOpenModal(ModalNames.createProdut)
+    setShowFABMenu(false)
+  }
+
+  const openReportModal = () => {
+    onOpenConfirmAdminPassword(ModalNames.confirmCreateProductsReport)
+    setShowFABMenu(false)
   }
 
   return (
     <>
       <section>
-        <div className="flex items-center justify-between mb-7">
-          <div className="w-96"><SearchProduct /></div>
-          <div className='flex items-center gap-3 justify-end'>
-            <SortElementsAlphaButton onToggle={onOrderAlpha} desc={isOrderedAsc} />
-            { filter.supplier.id === null && (<FilterProductsByCategories />) }
-            { filter.category.id === null && (<FilterProductsBySupplier />) }
-            <div className='w-48'><SelectProductsByStatus /></div>
-            <GenerateReport onConfirm={() => onOpenConfirmAdminPassword(ModalNames.confirmCreateProductsReport)} />
-            <CreateButton className='w-40 p-2' onClick={openCreateProductModal} text='Crear Producto' />
+        <div className="flex flex-col gap-4 mb-6">
+          
+          <div className="w-full md:w-96">
+            <SearchProduct />
+          </div>
+
+          <div className='flex flex-col sm:flex-row items-stretch sm:items-center gap-3'>
+            
+            <div className='flex flex-wrap items-center gap-2 flex-1'>
+              <SortElementsAlphaButton onToggle={onOrderAlpha} desc={isOrderedAsc} />
+              
+              { filter.supplier.id === null && (<FilterProductsByCategories />) }
+              { filter.category.id === null && (<FilterProductsBySupplier />) }
+              
+              <div className='w-full sm:w-48'>
+                <SelectProductsByStatus />
+              </div>
+            </div>
+
+            <div className='hidden md:flex items-center gap-3'>
+              <GenerateReport onConfirm={() => onOpenConfirmAdminPassword(ModalNames.confirmCreateProductsReport)} />
+              <CreateButton className='w-40 p-2' onClick={openCreateProductModal} text='Crear Producto' />
+            </div>
           </div>
         </div>
 
@@ -77,6 +99,35 @@ export const WarehouseProducts: React.FC = () => {
         <PaginationProducts />
 
       </section>
+
+      {showFABMenu && (
+        <>
+          <div 
+            className="md:hidden fixed inset-0 bg-black/20 z-40"
+            onClick={() => setShowFABMenu(false)}
+          />
+          
+          <div className="md:hidden fixed bottom-24 right-6 flex flex-col gap-3 z-50">
+            <button
+              onClick={openReportModal}
+              className="flex items-center gap-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 active:scale-95 px-4 py-3"
+            >
+              <BsFileEarmarkText size={20} />
+              <span className="text-sm font-medium pr-2">Generar Reporte</span>
+            </button>
+
+            <button
+              onClick={openCreateProductModal}
+              className="flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 active:scale-95 px-4 py-3"
+            >
+              <BsPlus size={24} />
+              <span className="text-sm font-medium pr-2">Crear Producto</span>
+            </button>
+          </div>
+        </>
+      )}
+
+      <FAB onClick={() => setShowFABMenu(!showFABMenu)} />
 
       {modalIsOpen && modalName === ModalNames.confirmAdminPassword && <ModalRequestPasswordAdmin />}
       {modalIsOpen && modalName === ModalNames.createProdut && <ModalCreateProduct />}

@@ -160,9 +160,9 @@ export const FormEditProduct: React.FC = () => {
           <select
             id="productSupplier"
             {
-            ...register('supplierId', {
-              required: { value: true, message: 'El proveedor es obligatorio' }
-            })
+              ...register('supplierId', {
+                required: { value: true, message: 'El proveedor es obligatorio' }
+              })
             }
             className={selectClassName}
           >
@@ -188,7 +188,7 @@ export const FormEditProduct: React.FC = () => {
         <Label className='mb-3 flex items-center justify-between gap-2' htmlFor='productDescription'>Descripción del producto</Label>
         <Textarea
           id='productDescription'
-          rows={4}
+          rows={5}
           {
           ...register('description', {
             maxLength: { value: 220, message: 'Máximo 220 caracteres' }
@@ -199,8 +199,8 @@ export const FormEditProduct: React.FC = () => {
       </div>
 
       <div className='flex items-center justify-end gap-5'>
-        <SaveButton className='p-2 w-48' submit text='Editar Producto' />
-        <CancelButton onClick={onCloseDrawers} text='Cancelar' className='p-2 w-32' />
+        <SaveButton className='flex-1 p-2 md:w-48' submit text='Editar Producto' />
+        <CancelButton onClick={onCloseDrawers} text='Cancelar' className='p-2 flex-1 md:w-32' />
       </div>
     </form>
   )

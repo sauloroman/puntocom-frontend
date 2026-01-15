@@ -189,7 +189,7 @@ export const ModalCreateProduct: React.FC = () => {
         <div className="flex gap-7 w-full justify-end">
           <SaveButton
             className={`
-              p-2 w-54 font-medium rounded-lg transition-colors
+              p-2 md:w-54 flex-1 font-medium rounded-lg transition-colors
               ${isDark ? 'bg-indigo-600 hover:bg-indigo-500 text-white' : 'bg-indigo-500 hover:bg-indigo-600 text-white'}
             `}
             text="Guardar Producto"
@@ -197,7 +197,7 @@ export const ModalCreateProduct: React.FC = () => {
           />
           <CancelButton
             className={`
-              p-2 rounded-lg border transition-colors
+              p-2 flex-1 rounded-lg border transition-colors
               ${isDark
                 ? 'border-gray-600 text-gray-300 hover:bg-gray-700'
                 : 'border-gray-300 text-gray-700 hover:bg-gray-100'}

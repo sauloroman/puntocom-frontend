@@ -19,7 +19,7 @@ export const ProductEditDrawer: React.FC = () => {
   }
 
   return (
-    <RightDrawerLayout width='w-2xl' title='Editar Producto'>
+    <RightDrawerLayout width='w-full md:w-2xl' title='Editar Producto'>
       {
         isLoading
           ? (<SpinnerContainer size='lg' color={isDark ? 'border-indigo-400' : 'border-indigo-700'} />)

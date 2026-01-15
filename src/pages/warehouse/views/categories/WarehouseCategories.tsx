@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 import { useCategories, useDrawer, useModal } from '../../../../shared/hooks'
-import { CreateButton } from '../../../../shared/components/button'
+import { CreateButton, FAB } from '../../../../shared/components/button'
 import { 
   CategoryEditDrawer, 
   CategoryInfoDrawer, 
@@ -14,7 +14,6 @@ import {
   TableCategories 
 } from './components'
 import { SortElementsAlphaButton } from '../../../../shared/components/button'
-import { BsPlus } from 'react-icons/bs'
 
 export const WarehouseCategories: React.FC = () => {
 
@@ -47,13 +46,7 @@ export const WarehouseCategories: React.FC = () => {
         </div>
       </section>
 
-      <button
-        onClick={() => onOpenModal(ModalNames.createCategory)}
-        className="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center z-50 active:scale-95"
-        aria-label="Crear categoría"
-      >
-        <BsPlus size={32} />
-      </button>
+      <FAB onClick={() => onOpenModal(ModalNames.createCategory)} />
 
       { modalIsOpen && modalName === ModalNames.createCategory && <ModalCreateCategory />}
       { modalIsOpen && modalName === ModalNames.confirmChangeStatusCategory && <ModalConfirmChangeStatusCategory />}
