@@ -34,7 +34,7 @@ export const Login: React.FC = () => {
 
   return (
    <AuthLayout>
-    <div className="w-full px-8 md:px-10 lg:px-8">
+    <div className="w-full px-2 md:px-10 lg:px-8">
       <div className='flex flex-col justify-center'>  
         <div className="mb-8">
           <h2 className={`

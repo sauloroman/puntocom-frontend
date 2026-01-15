@@ -19,7 +19,7 @@ export const Reports: React.FC = () => {
 
   return (
     <PuntoComLayout>
-      <div className="grid grid-cols-4 gap-5">
+      <div className="px-5 md:px-0 grid md:grid-cols-4 gap-8">
         <div className='col-span-2'>
           <ReportsFolder />
           <TableReports />

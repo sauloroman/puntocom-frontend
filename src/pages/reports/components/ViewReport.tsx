@@ -9,7 +9,7 @@ export const ViewReport: React.FC = () => {
   const { urlReportSelected } = useReports()
 
   return (
-    <div className='mt-5 w-full h-full'>
+    <div className='my-8 md:mt-5 md:mb-0 w-full h-[90%]'>
       {urlReportSelected ? (
         <iframe
           src={urlReportSelected}

@@ -37,7 +37,7 @@ export const TableReportsButtons: React.FC<Props> = ({ reportId }) => {
           }
         `}
       >
-        <LuFileText />
+        <LuFileText size={20} />
       </button>
       <button
         onClick={onDeleteReport}
@@ -49,7 +49,7 @@ export const TableReportsButtons: React.FC<Props> = ({ reportId }) => {
           }
         `}
       >
-        <RiDeleteBin6Line />
+        <RiDeleteBin6Line size={20} />
       </button>
     </>
   )

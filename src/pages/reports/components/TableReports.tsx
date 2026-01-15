@@ -37,7 +37,7 @@ export const TableReports: React.FC = () => {
             }
           `}>
             <tr>
-              <th className="px-6 py-4 text-left font-bold">
+              <th className="hidden md:block px-6 py-4 text-left font-bold">
                 <div className="flex items-center gap-2">
                   <BsFileText 
                     className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
@@ -74,7 +74,7 @@ export const TableReports: React.FC = () => {
                     }
                   `}
                 >
-                  <td className="px-6 py-4">
+                  <td className="hidden md:block px-6 py-4">
                     <span className={`
                       inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg 
                       font-mono font-bold text-xs tracking-wider border transition-colors

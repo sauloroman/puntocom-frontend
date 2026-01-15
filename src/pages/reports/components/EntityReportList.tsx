@@ -3,7 +3,7 @@ import { IoIosFolderOpen } from "react-icons/io"
 import { useReports, useTheme } from '../../../shared/hooks'
 import type { ReportEntities } from '../../../store/reports/reports.slice'
 
-const entitiesTitle: string[] = ["users", "products", "suppliers", "inventoryAdjustments", "purchases"]
+const entitiesTitle: string[] = ["users", "products", "suppliers", "inventoryAdjustments"]
 
 const getSpanishNameEntity = (entity: string) => {
   switch (entity) {
@@ -27,7 +27,7 @@ export const EntityReportList: React.FC = () => {
   const { onSelectedReports } = useReports()
 
   return (
-    <div className='grid grid-cols-5 gap-5 w-full'>
+    <div className='grid grid-cols-4 gap-8 w-full'>
       {
         entitiesTitle.map(entity => (
           <div 

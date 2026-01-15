@@ -2,11 +2,13 @@ import React from 'react'
 import { FaExclamationTriangle } from 'react-icons/fa'
 import { ModalLayout } from '../../../../../layouts'
 import { CancelButton, ConfirmButton } from '../../../../../shared/components/button'
-import { useModal, useProducts } from '../../../../../shared/hooks'
+import { useModal, useProducts, useTheme } from '../../../../../shared/hooks'
 
 export const ModalConfirmChangeStatusProduct: React.FC = () => {
 
     const { onCloseModal } = useModal()
+    const { theme } = useTheme()
+    const isDark = theme === 'dark'
     const { productSelected, onChangeProductStatus }  = useProducts()
     const { id, name, isActive } = productSelected ?? {}
 
@@ -22,13 +24,13 @@ export const ModalConfirmChangeStatusProduct: React.FC = () => {
                     <FaExclamationTriangle size={32} />
                 </div>
 
-                <h2 className="text-xl font-semibold text-gray-800">
+                <h2 className={`text-xl font-semibold text-gray-800 ${isDark ? 'text-white' : 'text-gray-600' }`}>
                     {isActive ? 'Desactivar producto' : 'Activar producto'}
                 </h2>
 
-                <p className="text-gray-600">
+                <p className={`${isDark ? 'text-white' : 'text-gray-600' }`}>
                     ¿Estás seguro de que quieres {isActive ? 'desactivar' : 'activar'} el producto{' '}
-                    <span className="font-medium text-gray-800">{name}</span>?
+                    <span className={`font-medium text-gray-800 ${isDark ? 'text-white' : 'text-gray-600'}`}>{name}</span>?
                 </p>
 
                 <div className="flex items-center gap-4 pt-4 w-full">
