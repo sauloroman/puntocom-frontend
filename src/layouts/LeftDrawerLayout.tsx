@@ -38,7 +38,7 @@ export const LeftDrawerLayout: React.FC<DrawerProps> = ({ title, width, children
                     >
                         <div className="flex items-center justify-between p-4">
                             <div className={`flex items-center gap-2 ${isDark ? "text-indigo-400" : "text-indigo-600"}`}>
-                                <IoIosInformationCircleOutline size={20} />
+                                <IoIosInformationCircleOutline size={30} />
                                 <h2 className="text-lg font-semibold">
                                     {title}
                                 </h2>
@@ -51,7 +51,7 @@ export const LeftDrawerLayout: React.FC<DrawerProps> = ({ title, width, children
                                 `}
                                 onClick={onCloseDrawers}
                             >
-                                <IoCloseOutline className="w-6 h-6" />
+                                <IoCloseOutline className="w-10 h-10 md:w-6 md:h-6" />
                             </button>
                         </div>
 

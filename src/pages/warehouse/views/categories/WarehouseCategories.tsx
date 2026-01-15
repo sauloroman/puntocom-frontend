@@ -14,6 +14,7 @@ import {
   TableCategories 
 } from './components'
 import { SortElementsAlphaButton } from '../../../../shared/components/button'
+import { BsPlus } from 'react-icons/bs'
 
 export const WarehouseCategories: React.FC = () => {
 
@@ -29,16 +30,15 @@ export const WarehouseCategories: React.FC = () => {
   return (
     <>
       <section>
-        <div className="flex items-center justify-between mb-7">
-          <div className="w-96">
-            <SearchCategory />
-          </div>
-          <div className='flex items-center gap-5'>
-            <SortElementsAlphaButton onToggle={onOrderAlpha} desc={isOrderedAsc} />
-            <div className='w-50'>
-              <SelectCategoriesByStatus />
+        <div className="flex flex-col md:flex-row md:justify-between gap-4 mb-7">
+          <div className="w-full md:w-96"><SearchCategory /></div>
+          
+          <div className='flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3'>
+            <div className='flex items-center gap-3'>
+              <SortElementsAlphaButton onToggle={onOrderAlpha} desc={isOrderedAsc} />
+              <div className='flex-1 sm:w-60'><SelectCategoriesByStatus /></div>
             </div>
-            <CreateButton className='w-40 p-2' onClick={() => onOpenModal( ModalNames.createCategory )} text='Crear categoría' />
+            <CreateButton className='hidden md:flex w-52 p-2' onClick={() => onOpenModal( ModalNames.createCategory )} text='Crear categoría' />
           </div>
         </div>
         <div>
@@ -46,6 +46,15 @@ export const WarehouseCategories: React.FC = () => {
           <PaginationCategories />
         </div>
       </section>
+
+      <button
+        onClick={() => onOpenModal(ModalNames.createCategory)}
+        className="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center z-50 active:scale-95"
+        aria-label="Crear categoría"
+      >
+        <BsPlus size={32} />
+      </button>
+
       { modalIsOpen && modalName === ModalNames.createCategory && <ModalCreateCategory />}
       { modalIsOpen && modalName === ModalNames.confirmChangeStatusCategory && <ModalConfirmChangeStatusCategory />}
       { rightDrawerIsOpen && drawelName === DrawelNames.infoCategory && <CategoryInfoDrawer />}

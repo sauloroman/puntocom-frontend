@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
-import { setCollapsed } from "../../store/menu/menu.slice"
+import { setCollapsed, setIsMobileMenuOpen } from "../../store/menu/menu.slice"
 
 export const useMenu = () => {
 
     const dispatch = useDispatch<any>()
-    const { collapsed } = useSelector((state: RootState) => state.menu)
+    const { collapsed, isMobileMenuOpen } = useSelector((state: RootState) => state.menu)
 
     const openMenu = () => {
         dispatch(setCollapsed(true))
@@ -15,10 +15,21 @@ export const useMenu = () => {
         dispatch(setCollapsed(false))
     }
 
+    const openMenuMobile = () => {
+        dispatch(setIsMobileMenuOpen(true))
+    }
+
+    const closeMenuMobile = () => {
+        dispatch(setIsMobileMenuOpen(false))
+    }
+
     return {
         collapsed,
+        isMobileMenuOpen,
 
         openMenu,
-        closeMenu
+        closeMenu,
+        openMenuMobile,
+        closeMenuMobile,
     }
 }

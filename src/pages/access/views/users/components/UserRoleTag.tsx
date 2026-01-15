@@ -27,7 +27,7 @@ export const UserRoleTag: React.FC<RoleTagProps> = ({ role }) => {
   return (
     <span
       className={`
-        px-3 py-1 rounded-full text-xs font-semibold inline-block
+        px-3 py-1 rounded-full text-xl md:text-xs font-semibold inline-block
         ${roleStyles[role]}
       `}
     >

@@ -19,8 +19,8 @@ export const CategoryEditDrawer: React.FC = () => {
   }
 
   return (
-    <RightDrawerLayout width="w-2xl" title="Editar Categoría">
-      <div className="p-4">
+    <RightDrawerLayout width="w-full md:w-2xl" title="Editar Categoría">
+      <div className="p-2 md:p-4">
         {isLoading ? (
           <SpinnerContainer
             size="lg"

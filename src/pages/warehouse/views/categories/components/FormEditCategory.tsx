@@ -90,8 +90,8 @@ export const FormEditCategory: React.FC = () => {
                 {errors.description && <ErrorMessageForm message={errors.description.message} />}
             </div>
             <div className='flex items-center gap-5 justify-end mt-8'>
-                <SaveButton className='p-2 w-48' submit text='Editar Categoría' />
-                <CancelButton className='p-2 w-32' onClick={onCloseDrawers} text='Cancelar' />
+                <SaveButton className='p-2 w-full md:w-48' submit text='Editar Categoría' />
+                <CancelButton className='p-2 w-full md:w-32' onClick={onCloseDrawers} text='Cancelar' />
             </div>
         </form>
     )

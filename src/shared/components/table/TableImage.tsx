@@ -8,7 +8,6 @@ interface TableImageProps {
 }
 
 export const TableImage: React.FC<TableImageProps> = ({ width, text, icon, initial }) => {
-    console.log({icon, text})
     return (
         <div className={`flex items-center justify-center w-8 h-8 ${width}`}>
             {

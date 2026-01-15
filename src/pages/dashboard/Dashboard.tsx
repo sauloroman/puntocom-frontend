@@ -15,11 +15,11 @@ export const Dashboard: React.FC = () => {
 
   return (
     <PuntoComLayout>
-      <div className="space-y-8 py-5 w-[90%] mx-auto">
+      <div className="space-y-8 py-5 md:w-[90%] mx-auto">
         <DashboardKpisSection kpis={stats.kpis} />
         
-        <section className="grid grid-cols-6 gap-5">
-          <div className="col-span-4 space-y-6">
+        <section className="grid md:grid-cols-6 md:gap-5">
+          <div className="col-span-4 space-y-6 mb-5 md:mb-0">
             <SalesVsPurchasesChart
               sales={stats.charts.salesByDate}
               purchases={stats.charts.purchasesByDate}

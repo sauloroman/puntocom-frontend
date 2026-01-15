@@ -50,7 +50,7 @@ export const RightDrawerLayout: React.FC<DrawerProps> = ({ title, width, childre
                   ${isDark ? "text-indigo-400" : "text-indigo-600"}
                 `}
               >
-                <IoIosInformationCircleOutline size={20} />
+                <IoIosInformationCircleOutline size={30} />
                 <h2 className="text-lg">{title}</h2>
               </div>
 
@@ -64,7 +64,7 @@ export const RightDrawerLayout: React.FC<DrawerProps> = ({ title, width, childre
                   }
                 `}
               >
-                <IoCloseOutline className="w-6 h-6" />
+                <IoCloseOutline className="w-10 h-10 md:w-6 md:h-6" />
               </button>
             </div>
 

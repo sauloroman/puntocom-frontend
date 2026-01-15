@@ -26,7 +26,7 @@ export const UserWidget: React.FC<UserWidgetProps> = ({ collapsed }) => {
                 image={ image }
                 usernameInitial={name[0]}
             />
-            <div className={`flex flex-col text-sm ${collapsed && 'w-0 hidden opacity-0'}`}>
+            <div className={`flex flex-col text-xl md:text-sm ${collapsed && 'w-0 hidden opacity-0'}`}>
                 <p className='text-gray-500 px-2 pb-1 font-semibold'>{name}</p>
                 <UserRoleTag role={roleType!} />
             </div>

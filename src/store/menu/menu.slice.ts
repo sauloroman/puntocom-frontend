@@ -1,11 +1,13 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface MenuSliceI {
-    collapsed: boolean
+    collapsed: boolean,
+    isMobileMenuOpen: boolean
 }
 
 const initialState: MenuSliceI = {
-    collapsed: false
+    collapsed: false,
+    isMobileMenuOpen: false,
 }
 
 export const menuSlice = createSlice({
@@ -15,11 +17,16 @@ export const menuSlice = createSlice({
 
         setCollapsed: ( state, {payload}: PayloadAction<boolean> ) => {
             state.collapsed = payload
-        } 
+        },
+
+        setIsMobileMenuOpen: ( state, {payload}: PayloadAction<boolean>) => {
+            state.isMobileMenuOpen = payload
+        }
 
     }
 })
 
 export const {
-    setCollapsed
+    setCollapsed,
+    setIsMobileMenuOpen,
 } = menuSlice.actions

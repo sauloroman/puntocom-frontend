@@ -63,7 +63,7 @@ export const SalesByUserDonutChart: React.FC<Props> = ({ data }) => {
                             cx="50%"
                             cy="50%"
                             innerRadius={55}
-                            outerRadius={90}
+                            outerRadius={80}
                             paddingAngle={3}
                         >
                             {data.map((_, index) => (

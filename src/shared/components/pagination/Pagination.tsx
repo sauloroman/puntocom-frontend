@@ -38,9 +38,9 @@ export const Pagination: React.FC<PaginationProps> = ({
         ${className}
       `}
     >
-      <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+      <div className="flex flex-col sm:flex-row flex-1 items-center justify-between gap-3 sm:gap-0">
         
-        <p className={`text-sm ${isDark ? "text-gray-300" : "text-gray-700"}`}>
+        <p className={`text-md md:text-sm ${isDark ? "text-gray-300" : "text-gray-700"}`}>
           Mostrando{" "}
           <span className="font-medium">{(page - 1) * itemsPerPage + 1}</span> a{" "}
           <span className="font-medium">
@@ -62,15 +62,15 @@ export const Pagination: React.FC<PaginationProps> = ({
               }
             `}
           >
-            <BiChevronLeft className="h-4 w-4" />
-            Anterior
+            <BiChevronLeft className="w-8 h-6 md:h-4 md:w-4" />
+            <span className="hidden sm:inline">Anterior</span>
           </button>
 
           <button
             onClick={handleNext}
             disabled={page === totalPages}
             className={`
-              inline-flex items-center rounded-lg border  px-3 py-2 text-sm font-medium transition
+              inline-flex items-center rounded-lg border px-3 py-2 text-sm font-medium transition
               ${
                 page === totalPages
                   ? `cursor-not-allowed ${isDark ? "bg-gray-800 text-gray-500 border-gray-700" : "bg-gray-100 text-gray-400 border-gray-200"}`
@@ -78,8 +78,8 @@ export const Pagination: React.FC<PaginationProps> = ({
               }
             `}
           >
-            Siguiente
-            <BiChevronRight className="h-4 w-4" />
+            <span className="hidden sm:inline">Siguiente</span>
+            <BiChevronRight className="w-8 h-6 md:h-4 md:w-4" />
           </button>
         </div>
       </div>

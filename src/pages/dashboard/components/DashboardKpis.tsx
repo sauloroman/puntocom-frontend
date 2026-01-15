@@ -12,7 +12,7 @@ interface DashboardKpisProps {
 
 export const DashboardKpisSection: React.FC<DashboardKpisProps> = ({ kpis }) => {
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <section className="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-6">
 
       <KpiCard
         title="Ventas totales"

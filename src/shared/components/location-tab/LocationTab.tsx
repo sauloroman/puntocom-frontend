@@ -16,9 +16,9 @@ export const LocationTab: React.FC = () => {
     }, [])
 
     return (
-        <div className='flex justify-between items-center mb-2'>
-            <h1 className={`text-md font-bold uppercase ml-3 ${isDark && 'text-white'}`}>{page}</h1>
-            <div className='flex items-center gap-2'>
+        <div className='flex justify-end md:justify-between items-center h-20 md:h-10 mb-4'>
+            <h1 className={`text-xl font-bold uppercase md:ml-3 md:mr-0 mr-3 ${isDark && 'text-white'}`}>{page}</h1>
+            <div className='hidden md:flex items-center gap-2'>
                 <FaAngleRight className='text-indigo-400' />
                 <p className='text-xs uppercase text-indigo-400 font-semibold'>{locationPath}</p>
             </div>

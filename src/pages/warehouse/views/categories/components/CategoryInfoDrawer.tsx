@@ -13,7 +13,7 @@ export const CategoryInfoDrawer: React.FC = () => {
   const { id, name, description, icon, isActive, createdAt, updatedAt } = categorySelected;
 
   return (
-    <RightDrawerLayout width="w-xl" title="Información de categoría">
+    <RightDrawerLayout width="w-[320px] md:w-xl" title="Información de categoría">
       <div className="p-4 flex flex-col h-full">
         <div className="flex items-center gap-4 mb-6">
           {icon !== "Categoría sin ícono" ? (
