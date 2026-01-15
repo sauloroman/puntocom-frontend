@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTheme } from '../../../../../shared/hooks'
+import { BiMessage } from 'react-icons/bi'
 
 interface Props {
     message: string
@@ -23,14 +24,13 @@ export const SupplierMessage: React.FC<Props> = ({ message, defaultMessage, onCh
                 text-sm font-bold mb-3 uppercase tracking-wide flex items-center gap-2
                 ${isDark ? 'text-gray-200' : 'text-gray-700'}
             `}>
-                <svg className={`w-5 h-5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z' />
-                </svg>
+                <BiMessage />
                 Mensaje
             </label>
             <textarea
+                rows={7}
                 className={`
-                    flex-1 w-full px-4 py-3 border rounded-lg 
+                    flex-1 w-full px-4 py-3 border rounded-lg
                     focus:ring-2 focus:border-transparent resize-none custom-scrollbar text-sm
                     transition-colors duration-200
                     ${isDark

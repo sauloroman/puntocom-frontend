@@ -2,6 +2,7 @@ import React from 'react'
 import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
 import type { Product } from '../../../../../interfaces/dto/product.interface'
 import { useTheme } from '../../../../../shared/hooks'
+import { BiBox } from 'react-icons/bi'
 
 interface Props {
     product: Product
@@ -23,18 +24,16 @@ export const ProductInfo: React.FC<Props> = ({ product }) => {
                 text-sm font-bold mb-4 uppercase tracking-wide flex items-center gap-2
                 ${isDark ? 'text-gray-200' : 'text-gray-700'}
             `}>
-                <svg className={`w-5 h-5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' />
-                </svg>
+                <BiBox />
                 Producto
             </h3>
             
             {product.image && (
-                <div className='mb-4 flex justify-center items-center'>
+                <div className='flex mb-4 justify-center items-center'>
                     <img
                         src={product.image === 'Producto sin imagen' ? placeholderProduct : product.image}
                         alt={product.name}
-                        className="w-64 h-64 object-contain"
+                        className="w-24 h-24 md:w-64 md:h-64 object-contain"
                     />
                 </div>
             )}
@@ -46,7 +45,7 @@ export const ProductInfo: React.FC<Props> = ({ product }) => {
                         ${isDark ? 'text-gray-400' : 'text-gray-500'}
                     `}>Nombre</p>
                     <p className={`
-                        font-semibold text-lg
+                        font-semibold text-sm md:text-lg
                         ${isDark ? 'text-gray-100' : 'text-gray-800'}
                     `}>
                         {product.name}
