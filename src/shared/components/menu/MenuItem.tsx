@@ -24,12 +24,13 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   mobileOpen = false,
   onMobileClose
 }) => {
+
   const { theme } = useTheme()
   const isDark = theme === "dark"
   const isCollapsed = !mobileOpen && collapsed
 
   const handleClick = () => {
-    if (onClick) {
+    if (onClick && mobileOpen) {
       onClick()
     }
     if (mobileOpen && onMobileClose && to) {

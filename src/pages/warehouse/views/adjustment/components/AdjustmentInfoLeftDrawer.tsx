@@ -46,7 +46,7 @@ export const AdjustmentInfoLeftDrawer: React.FC = () => {
     const typeLabel = adjustmentType === 'entrada' ? 'Entrada' : 'Salida'
 
     return (
-        <LeftDrawerLayout title='Información de ajuste de inventario' width='w-2xl'>
+        <LeftDrawerLayout title='Información de ajuste de inventario' width='w-full md:w-2xl'>
             <div
                 className={`
                     space-y-6 p-6 rounded-md transition-colors duration-200

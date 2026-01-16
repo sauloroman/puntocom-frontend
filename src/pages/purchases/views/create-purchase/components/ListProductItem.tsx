@@ -40,7 +40,7 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
 
     return (
         <div onClick={onSelectProduct} className={`
-            group relative flex items-center gap-4 p-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer
+            group relative flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer
             ${isDark ? 'bg-gray-800' : 'bg-white'}
             ${isDark ? 'hover:border-blue-500' : 'hover:border-blue-400'}
             border-2 ${isDark ? 'border-gray-700' : 'border-gray-200'}
@@ -49,7 +49,7 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
 
             <div className="flex-shrink-0">
                 <div className={`
-                    relative w-16 h-16 rounded-lg overflow-hidden transition-colors
+                    relative w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden transition-colors
                     ${isDark ? 'bg-gray-700' : 'bg-gray-100'}
                 `}>
                     {product.image ? (
@@ -60,7 +60,7 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
                         />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                            <svg className={`w-8 h-8 ${isDark ? 'text-blue-400' : 'text-blue-500'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className={`w-6 h-6 sm:w-8 sm:h-8 ${isDark ? 'text-blue-400' : 'text-blue-500'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                             </svg>
                         </div>
@@ -73,31 +73,41 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
                 </div>
             </div>
 
-            <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-3 mb-1">
+            <div className="flex-1 min-w-0 w-full sm:w-auto">
+                <div className="flex items-start justify-between gap-2 sm:gap-3 mb-1">
                     <div className="flex-1 min-w-0">
                         <h3 className={`
-                            font-semibold text-base truncate transition-colors
+                            font-semibold text-sm sm:text-base truncate transition-colors
                             ${isDark ? 'text-gray-200' : 'text-gray-800'}
                         `}>
                             {product.name}
                         </h3>
                         <p className={`
-                            text-sm truncate transition-colors
+                            text-xs sm:text-sm truncate transition-colors
                             ${isDark ? 'text-gray-400' : 'text-gray-500'}
                         `}>
                             {product.description}
                         </p>
                     </div>
+                    
+                    {/* Precio visible en mobile - top right */}
+                    <div className="sm:hidden flex-shrink-0 text-right">
+                        <div className={`
+                            text-lg font-bold transition-colors
+                            ${isDark ? 'text-green-400' : 'text-green-600'}
+                        `}>
+                            ${product.sellingPrice.toFixed(2)}
+                        </div>
+                    </div>
                 </div>
 
-                <div className="flex items-center gap-4 mt-2 text-sm">
+                <div className="flex flex-wrap items-center gap-2 mt-2 text-xs sm:text-sm">
                     <div className="flex items-center gap-1.5">
-                        <svg className={`w-4 h-4 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                         </svg>
                         <span className={`
-                            font-mono transition-colors
+                            font-mono text-xs transition-colors
                             ${isDark ? 'text-gray-400' : 'text-gray-600'}
                         `}>
                             {product.code}
@@ -106,7 +116,7 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
 
                     {product.Category && (
                         <div className={`
-                            flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors
+                            flex items-center gap-1.5 px-2 py-0.5 sm:py-1 rounded-md transition-colors
                             ${isDark ? 'bg-blue-900/30' : 'bg-blue-50'}
                         `}>
                             <span className={`
@@ -119,13 +129,13 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
                     )}
 
                     <div className={`
-                        flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors
+                        flex items-center gap-1.5 px-2 py-0.5 sm:py-1 rounded-md transition-colors
                         ${isLowStock
                             ? isDark ? 'bg-red-900/30' : 'bg-red-50'
                             : isDark ? 'bg-green-900/30' : 'bg-green-50'
                         }
                     `}>
-                        <svg className={`w-4 h-4 ${isLowStock
+                        <svg className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isLowStock
                             ? isDark ? 'text-red-400' : 'text-red-600'
                             : isDark ? 'text-green-400' : 'text-green-600'
                             }`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -141,10 +151,21 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
                             {product.stock} unid.
                         </span>
                     </div>
+
+                    {product.Supplier && (
+                        <div className="sm:hidden w-full">
+                            <span className={`
+                                text-xs transition-colors
+                                ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                            `}>
+                                {product.Supplier.company}
+                            </span>
+                        </div>
+                    )}
                 </div>
             </div>
 
-            <div className="flex-shrink-0 text-right">
+            <div className="hidden sm:block flex-shrink-0 text-right">
                 <div className={`
                     text-2xl font-bold transition-colors
                     ${isDark ? 'text-green-400' : 'text-green-600'}
@@ -161,7 +182,7 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
                 )}
             </div>
 
-            <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="hidden sm:block flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                 <svg className={`w-5 h-5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8h16M4 16h16" />
                 </svg>

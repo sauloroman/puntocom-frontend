@@ -2,7 +2,7 @@ import { BsBox, BsCoin } from "react-icons/bs"
 import { IoCartOutline, IoKeyOutline, IoLogOutOutline, IoCalculatorOutline, IoDocumentTextOutline  } from "react-icons/io5"
 import { MdOutlineDarkMode } from "react-icons/md"
 import { TfiStatsUp } from "react-icons/tfi"
-import { useAuth, useTheme } from "../../hooks"
+import { useAuth, useMenu, useTheme } from "../../hooks"
 import { ThemeType } from "../../../interfaces/ui/theme.interface"
 import { UserWidget } from "../../../pages/access/views/users/components"
 import { MenuSection, MenuItem, type MenuItemProps } from "./"
@@ -15,6 +15,7 @@ interface MenuProps {
 
 export const Menu: React.FC<MenuProps> = ({ collapsed, mobileOpen = false, onMobileClose }) => {
 
+  const { closeMenuMobile } = useMenu()
   const { onLogout } = useAuth()
   const { activateDarkMode, activateLightMode, theme } = useTheme()
   const toggleDarkMode = () => theme === ThemeType.dark ? activateLightMode() : activateDarkMode() 
@@ -57,7 +58,8 @@ export const Menu: React.FC<MenuProps> = ({ collapsed, mobileOpen = false, onMob
         `}
       >
         <MenuSection
-          mobileOpen={mobileOpen} 
+          mobileOpen={mobileOpen}
+          onMobileClose={closeMenuMobile} 
           title="Menú General" 
           collapsed={collapsed} 
           items={generalItems}
