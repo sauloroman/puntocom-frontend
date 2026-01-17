@@ -18,15 +18,14 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
   onMobileClose
 }) => {
   const { theme } = useTheme()
-  const isDark = theme === "dark"
-  
+  const isDark = theme === "dark"  
   const showTitle = mobileOpen || !collapsed
   
   return (
     <nav>
       {showTitle && (
         <p className={`
-          text-xl md:text-xs font-semibold uppercase mb-5 transition-colors duration-200
+          text-xs font-semibold uppercase mb-5 transition-colors duration-200
           ${isDark ? 'text-indigo-400' : 'text-indigo-600'}
         `}>
           {title}

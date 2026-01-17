@@ -27,10 +27,10 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 
   const { theme } = useTheme()
   const isDark = theme === "dark"
-  const isCollapsed = !mobileOpen && collapsed
+  const showLabel = mobileOpen || !collapsed
 
   const handleClick = () => {
-    if (onClick && mobileOpen) {
+    if (onClick) {
       onClick()
     }
     if (mobileOpen && onMobileClose && to) {
@@ -40,9 +40,9 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 
   if (isToggle) {
     return (
-      !isCollapsed && (
+      showLabel && (
         <li className={`
-          text-xl md:text-sm
+          text-sm
           flex items-center justify-between px-3 py-2 rounded-md cursor-pointer 
           transition-colors
           ${isDark 
@@ -80,9 +80,11 @@ export const MenuItem: React.FC<MenuItemProps> = ({
         <button
           onClick={handleClick}
           className={`
-            ${isCollapsed && 'text-xl justify-center'} 
-            w-full cursor-pointer flex items-center gap-3 px-3 py-2 rounded-md text-xl md:text-sm 
-            transition-colors
+            w-full cursor-pointer flex items-center rounded-md transition-colors text-sm
+            ${showLabel 
+              ? 'gap-3 px-3 py-2' 
+              : 'justify-center px-2 py-2'
+            }
             ${isDark
               ? 'text-gray-200 hover:bg-red-900/30 hover:text-red-400'
               : 'text-gray-700 hover:bg-red-100 hover:text-red-600'
@@ -90,7 +92,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
           `}
         >
           {icon}
-          {!isCollapsed && label}
+          {showLabel && label}
         </button>
       </li>
     )
@@ -102,7 +104,11 @@ export const MenuItem: React.FC<MenuItemProps> = ({
       onClick={handleClick}
       className={({ isActive }) =>
         `
-          flex items-center gap-3 px-3 py-2 rounded-md text-xl lg:text-sm transition-colors
+          flex items-center rounded-md transition-colors 
+          ${showLabel 
+            ? 'gap-3 px-3 py-2' 
+            : 'justify-center px-2 py-2'
+          }
           ${isActive 
             ? isDark
               ? 'bg-indigo-900/50 text-indigo-400' 
@@ -111,12 +117,11 @@ export const MenuItem: React.FC<MenuItemProps> = ({
               ? 'text-gray-300 hover:bg-gray-800 hover:text-indigo-400 hover:font-medium'
               : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 hover:font-medium'
           }
-          ${isCollapsed && 'text-xl justify-center'}
         `
       }
     >
-      {icon}
-      {!isCollapsed && label}
+      <p className="text-lg">{icon}</p>
+      <p className="text-md">{showLabel && label}</p>
     </NavLink>
   )
 }

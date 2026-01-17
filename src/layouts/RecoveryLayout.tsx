@@ -2,12 +2,16 @@ import React from 'react'
 import { useTheme } from '../shared/hooks'
 
 interface RecoveryLayoutProps {
+  imageDark: string,
+  imageWhite: string,
   title: string
   description?: string
   children: React.ReactNode
 }
 
 export const RecoveryLayout: React.FC<RecoveryLayoutProps> = ({
+  imageDark,
+  imageWhite,
   title,
   description,
   children
@@ -94,11 +98,7 @@ export const RecoveryLayout: React.FC<RecoveryLayoutProps> = ({
         </div>
 
         <img
-          src={
-            isDark
-              ? 'https://res.cloudinary.com/dlamufioy/image/upload/v1768278902/puntocom/Dise%C3%B1o_sin_t%C3%ADtulo_4_oswdzm.png'
-              : 'https://res.cloudinary.com/dlamufioy/image/upload/v1768278903/puntocom/Dise%C3%B1o_sin_t%C3%ADtulo_3_beh20d.png'
-          }
+          src={ isDark ? imageDark : imageWhite }
           alt="Recuperación de contraseña"
           className="w-full h-[600px] transition-all duration-200 rounded-4xl absolute left-[6%] bottom-[-2%] z-10"
         />

@@ -31,7 +31,7 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                         }
                     `}>
                         <tr>
-                            <th className="px-6 py-4 text-left font-bold">
+                            <th className="hidden md:table-cell px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsCalendar3 
                                         className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
@@ -39,17 +39,17 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                     />
                                     Fecha
                                 </div>
-                            </th>
-                            <th className="px-6 py-4 text-left font-bold">
+                            </th>                            
+                            <th className="px-4 md:px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsShop 
                                         className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
                                         size={18} 
                                     />
-                                    Proveedor
+                                    <span className="hidden sm:inline">Proveedor</span>
                                 </div>
-                            </th>
-                            <th className="px-6 py-4 text-left font-bold">
+                            </th>                            
+                            <th className="hidden lg:table-cell px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsPerson 
                                         className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
@@ -57,17 +57,19 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                     />
                                     Usuario
                                 </div>
-                            </th>
-                            <th className="px-6 py-4 text-right font-bold">
+                            </th>                            
+                            <th className="px-4 md:px-6 py-4 text-right font-bold">
                                 <div className="flex items-center justify-end gap-2">
                                     <BsCashStack 
                                         className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
                                         size={16} 
                                     />
-                                    Total
+                                    <span className="hidden sm:inline">Total</span>
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-center font-bold">Acciones</th>
+                            <th className="px-4 md:px-6 py-4 text-center font-bold">
+                                <span className="hidden sm:inline">Acciones</span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody className={`
@@ -86,7 +88,7 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                         }
                                     `}
                                 >
-                                    <td className="px-6 py-4">
+                                    <td className="hidden md:table-cell px-6 py-4">
                                         <p className={`
                                             text-sm font-semibold transition-colors
                                             ${isDark ? 'text-gray-200' : 'text-gray-900'}
@@ -94,25 +96,30 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                             {purchase.purchaseDate.toString()}
                                         </p>
                                     </td>
-
-                                    <td className="px-6 py-4">
+                                    <td className="px-4 md:px-6 py-4">
                                         <div className="flex flex-col">
                                             <p className={`
-                                                text-sm font-medium transition-colors
+                                                text-sm font-medium transition-colors truncate max-w-[120px] md:max-w-none
                                                 ${isDark ? 'text-gray-200' : 'text-gray-900'}
                                             `}>
                                                 {purchase.Supplier?.supplierName}
                                             </p>
                                             <p className={`
-                                                text-xs transition-colors
+                                                text-xs transition-colors hidden sm:block
                                                 ${isDark ? 'text-gray-400' : 'text-gray-500'}
                                             `}>
                                                 {purchase.Supplier?.supplierPhone}
                                             </p>
+                                            <p className={`
+                                                text-xs transition-colors md:hidden mt-1
+                                                ${isDark ? 'text-gray-500' : 'text-gray-400'}
+                                            `}>
+                                                {purchase.purchaseDate.toString()}
+                                            </p>
                                         </div>
                                     </td>
 
-                                    <td className="px-6 py-4">
+                                   <td className="hidden lg:table-cell px-6 py-4">
                                         <div className="flex items-center gap-3">
                                             <div className="w-9 h-9 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
                                                 <TableImage
@@ -139,11 +146,11 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                         </div>
                                     </td>
 
-                                    <td className="px-6 py-4 text-right">
+                                    <td className="px-4 md:px-6 py-4 text-right">
                                         <div className="inline-flex items-center gap-2">
                                             <div className="flex flex-col items-end">
                                                 <span className={`
-                                                    text-2xl font-bold bg-clip-text text-transparent transition-colors
+                                                    text-lg md:text-2xl font-bold bg-clip-text text-transparent transition-colors
                                                     ${isDark 
                                                         ? 'bg-gradient-to-r from-indigo-400 to-purple-400' 
                                                         : 'bg-gradient-to-r from-indigo-600 to-purple-600'
@@ -161,7 +168,8 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                         </div>
                                     </td>
 
-                                    <td className="px-6 py-4 text-center">
+                                    {/* Acciones - Siempre visible */}
+                                    <td className="px-4 md:px-6 py-4 text-center">
                                         <TablePurchasesActions purchaseId={purchase.purchaseId} />
                                     </td>
                                 </tr>

@@ -14,7 +14,7 @@ export const UserValidateTag: React.FC<Props> = ({ isValidated }) => {
             {isValidated ? (
                 <span 
                     className={`
-                        px-3 py-1 text-xs font-semibold rounded-full
+                        px-3 py-1 font-semibold rounded-full text-lg md:text-xs
                         ${isDark 
                             ? "bg-blue-900/40 text-blue-300 border border-blue-700" 
                             : "bg-blue-100 text-blue-700 border border-blue-200"
@@ -26,7 +26,7 @@ export const UserValidateTag: React.FC<Props> = ({ isValidated }) => {
             ) : (
                 <span 
                     className={`
-                        opacity-70 px-3 py-1 text-xs font-semibold rounded-full
+                        opacity-70 px-3 py-1 font-semibold rounded-full text-lg md:text-xs
                         ${isDark 
                             ? "bg-blue-900/20 text-blue-400 border border-blue-800" 
                             : "bg-blue-50 text-blue-500 border border-blue-200"

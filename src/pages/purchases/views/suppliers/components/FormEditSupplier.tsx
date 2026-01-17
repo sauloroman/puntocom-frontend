@@ -232,8 +232,8 @@ export const FormEditSupplier: React.FC = () => {
             </div>
 
             <div className='flex items-center gap-5 justify-end mt-8'>
-                <SaveButton className='w-52 p-2' submit text='Editar Proveedor' />
-                <CancelButton className='w-48 p-2' onClick={onCloseDrawers} text='Cancelar' />
+                <SaveButton className='flex-1 w-52 p-2' submit text='Editar Proveedor' />
+                <CancelButton className='flex-1 w-48 p-2' onClick={onCloseDrawers} text='Cancelar' />
             </div>
         </form>
     )

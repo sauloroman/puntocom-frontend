@@ -58,63 +58,74 @@ export const TableSuppliers: React.FC<TableSuppliersProps> = ({ data }) => {
             `}
           >
             <tr>
-              <th className="px-6 py-4 text-left font-bold">
+              {/* Nombre - Siempre visible */}
+              <th className="px-4 md:px-6 py-4 text-left font-bold">
                 <div className="flex items-center gap-2">
                   <BsPerson className={isDark ? "text-gray-300" : "text-indigo-600"} size={18} />
-                  Nombre
+                  <span className="hidden sm:inline">Nombre</span>
                 </div>
               </th>
 
-              <th className="px-6 py-4 text-left font-bold">
+              {/* Email - Oculto en mobile */}
+              <th className="hidden md:table-cell px-6 py-4 text-left font-bold">
                 <div className="flex items-center gap-2">
                   <BsEnvelope className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
                   Email
                 </div>
               </th>
 
-              <th className="px-6 py-4 text-left font-bold">
+              {/* Teléfono - Visible desde sm */}
+              <th className="hidden sm:table-cell px-4 md:px-6 py-4 text-left font-bold">
                 <div className="flex items-center gap-2">
                   <BsTelephone className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
-                  Teléfono
+                  <span className="hidden md:inline">Teléfono</span>
                 </div>
               </th>
 
-              <th className="px-6 py-4 text-left font-bold">
+              {/* Dirección - Oculto en mobile y tablet */}
+              <th className="hidden lg:table-cell px-6 py-4 text-left font-bold">
                 <div className="flex items-center gap-2">
                   <BsGeoAlt className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
                   Dirección
                 </div>
               </th>
 
-              <th className="px-6 py-4 text-left font-bold">
+              {/* Empresa - Oculto hasta lg */}
+              <th className="hidden lg:table-cell px-6 py-4 text-left font-bold">
                 <div className="flex items-center gap-2">
                   <BsBuilding className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
                   Empresa
                 </div>
               </th>
 
-              <th className="px-6 py-4 text-left font-bold">
+              {/* Estado - Visible desde md */}
+              <th className="hidden md:table-cell px-6 py-4 text-left font-bold">
                 <div className="flex items-center gap-2">
                   <BsToggleOn className={isDark ? "text-gray-300" : "text-indigo-600"} size={18} />
                   Estado
                 </div>
               </th>
 
-              <th className="px-6 py-4 text-left font-bold">
+              {/* Creado - Oculto hasta xl */}
+              <th className="hidden xl:table-cell px-6 py-4 text-left font-bold">
                 <div className="flex items-center gap-2">
                   <BsCalendar3 className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
                   Creado
                 </div>
               </th>
 
-              <th className="px-6 py-4 text-left font-bold">
+              {/* Actualizado - Oculto hasta xl */}
+              <th className="hidden xl:table-cell px-6 py-4 text-left font-bold">
                 <div className="flex items-center gap-2">
                   <BsClock className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
                   Actualizado
                 </div>
               </th>
 
-              <th className="px-6 py-4 text-right font-bold">Acciones</th>
+              {/* Acciones - Siempre visible */}
+              <th className="px-4 md:px-6 py-4 text-right font-bold">
+                <span className="hidden sm:inline">Acciones</span>
+              </th>
             </tr>
           </thead>
 
@@ -137,18 +148,40 @@ export const TableSuppliers: React.FC<TableSuppliersProps> = ({ data }) => {
                     }
                   `}
                 >
-                  <td className="px-6 py-4 font-medium flex items-center gap-2">
-                    <div className="w-8 h-8">
-                      <AvatarInitial initial={sup.name[0]} />
+                  {/* Nombre - Siempre visible, compacto en mobile */}
+                  <td className="px-4 md:px-6 py-4 font-medium">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 flex-shrink-0">
+                        <AvatarInitial initial={sup.name[0]} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate">
+                          {sup.name} {sup.lastname}
+                        </p>
+                        {/* Info adicional en mobile */}
+                        <p className={`
+                          text-xs md:hidden truncate
+                          ${isDark ? "text-gray-400" : "text-gray-500"}
+                        `}>
+                          {sup.phone}
+                        </p>
+                      </div>
                     </div>
-                    {sup.name} {sup.lastname}
                   </td>
 
-                  <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
-                    {sup.email}
+                  {/* Email - Oculto en mobile */}
+                  <td className={`
+                    hidden md:table-cell px-6 py-4 max-w-[200px]
+                    ${isDark ? "text-gray-400" : "text-gray-600"}
+                  `}>
+                    <span className="truncate block">{sup.email}</span>
                   </td>
 
-                  <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+                  {/* Teléfono - Visible desde sm */}
+                  <td className={`
+                    hidden sm:table-cell px-4 md:px-6 py-4
+                    ${isDark ? "text-gray-400" : "text-gray-600"}
+                  `}>
                     <a
                       href={`tel:${sup.phone}`}
                       className={isDark ? "hover:text-indigo-400" : "hover:text-indigo-600"}
@@ -157,27 +190,45 @@ export const TableSuppliers: React.FC<TableSuppliersProps> = ({ data }) => {
                     </a>
                   </td>
 
-                  <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
-                    {sup.address}
+                  {/* Dirección - Oculto hasta lg */}
+                  <td className={`
+                    hidden lg:table-cell px-6 py-4 max-w-[200px]
+                    ${isDark ? "text-gray-400" : "text-gray-600"}
+                  `}>
+                    <span className="truncate block">{sup.address}</span>
                   </td>
 
-                  <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+                  {/* Empresa - Oculto hasta lg */}
+                  <td className={`
+                    hidden lg:table-cell px-6 py-4
+                    ${isDark ? "text-gray-400" : "text-gray-600"}
+                  `}>
                     {sup.company}
                   </td>
 
-                  <td className="px-6 py-4">
+                  {/* Estado - Visible desde md */}
+                  <td className="hidden md:table-cell px-6 py-4">
                     <StatusBadge status={sup.isActive} />
                   </td>
 
-                  <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-700"}`}>
+                  {/* Creado - Oculto hasta xl */}
+                  <td className={`
+                    hidden xl:table-cell px-6 py-4
+                    ${isDark ? "text-gray-400" : "text-gray-700"}
+                  `}>
                     {sup.createdAt}
                   </td>
 
-                  <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-700"}`}>
+                  {/* Actualizado - Oculto hasta xl */}
+                  <td className={`
+                    hidden xl:table-cell px-6 py-4
+                    ${isDark ? "text-gray-400" : "text-gray-700"}
+                  `}>
                     {sup.updatedAt}
                   </td>
 
-                  <td className="px-6 py-4 text-center">
+                  {/* Acciones - Siempre visible */}
+                  <td className="px-4 md:px-6 py-4 text-center">
                     <TableActions
                       onView={() => onSelectSupplierInfo(sup.id)}
                       onEdit={() => onEditSupplier(sup.id)}

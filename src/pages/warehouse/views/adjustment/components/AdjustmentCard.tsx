@@ -69,7 +69,7 @@ export const AdjustmentCard: React.FC<Props> = ({ inventoryAdjustment }) => {
 
     return (
         <div className={`
-            shadow-md rounded-2xl p-5 border hover:shadow-lg transition-all duration-200
+            shadow-md rounded-2xl p-4 md:p-5 border hover:shadow-lg transition-all duration-200
             ${isDark
                 ? 'bg-gray-800 border-gray-700'
                 : 'bg-white border-gray-100'
@@ -77,7 +77,7 @@ export const AdjustmentCard: React.FC<Props> = ({ inventoryAdjustment }) => {
         `}>
 
             <div className="flex items-center justify-between mb-4">
-                <span className={`px-3 py-1 text-xs font-semibold rounded-full ${typeColor}`}>
+                <span className={`px-2 md:px-3 py-1 text-xs font-semibold rounded-full ${typeColor}`}>
                     {typeLabel}
                 </span>
                 <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
@@ -96,13 +96,13 @@ export const AdjustmentCard: React.FC<Props> = ({ inventoryAdjustment }) => {
                             src={Product.image} 
                             alt={Product.name}
                             className={`
-                                w-16 h-16 rounded-lg object-cover border transition-colors duration-200
+                                w-14 h-14 md:w-16 md:h-16 rounded-lg object-cover border transition-colors duration-200
                                 ${isDark ? 'border-gray-600' : 'border-gray-200'}
                             `}
                         />
                     ) : (
                         <div className={`
-                            w-16 h-16 rounded-lg flex items-center justify-center transition-colors duration-200
+                            w-14 h-14 md:w-16 md:h-16 rounded-lg flex items-center justify-center transition-colors duration-200
                             ${isDark ? 'bg-gray-700' : 'bg-gray-100'}
                         `}>
                             <span className={`
@@ -115,13 +115,13 @@ export const AdjustmentCard: React.FC<Props> = ({ inventoryAdjustment }) => {
                     )}
                     <div className="flex-1 min-w-0">
                         <h3 className={`
-                            text-base font-semibold truncate transition-colors duration-200
+                            text-sm md:text-base font-semibold truncate transition-colors duration-200
                             ${isDark ? 'text-gray-100' : 'text-gray-800'}
                         `}>
                             {Product.name}
                         </h3>
                         <p className={`
-                            text-sm transition-colors duration-200
+                            text-xs md:text-sm transition-colors duration-200
                             ${isDark ? 'text-gray-400' : 'text-gray-500'}
                         `}>
                             Código: {Product.code}
@@ -140,9 +140,9 @@ export const AdjustmentCard: React.FC<Props> = ({ inventoryAdjustment }) => {
                           image={User.image}
                           usernameInitial={User.name[0]}
                         />
-                        <div>
+                        <div className="min-w-0">
                             <p className={`
-                                text-xs font-medium transition-colors duration-200
+                                text-xs font-medium transition-colors duration-200 truncate
                                 ${isDark ? 'text-gray-200' : 'text-gray-700'}
                             `}>
                                 {User.name}

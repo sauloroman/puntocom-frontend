@@ -50,7 +50,7 @@ export const PurchaseInfoDrawer: React.FC = () => {
                                 ID de compra
                             </div>
                             <div className={`
-                                text-2xl font-semibold transition-colors
+                                text-sm md:text-2xl font-semibold transition-colors
                                 ${isDark ? 'text-gray-100' : 'text-gray-900'}
                             `}>
                                 {purchaseSelected.purchase.purchaseId}
@@ -58,7 +58,7 @@ export const PurchaseInfoDrawer: React.FC = () => {
                         </div>
                         <div className="flex flex-col gap-4">
                             <div className={`
-                                px-4 py-2 rounded-lg font-medium transition-colors
+                                px-4 py-2 rounded-lg font-medium transition-colors text-center
                                 ${isDark 
                                     ? 'bg-indigo-900/50 text-indigo-300' 
                                     : 'bg-indigo-50 text-indigo-700'

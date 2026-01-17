@@ -38,13 +38,18 @@ export const PurchasesPage: React.FC = () => {
   return (
     <>
       <div className="flex items-start gap-6 flex-col justify-between mb-6">
-        <div className='flex items-center gap-3'>
-          <div className="w-[400px] flex items-center gap-3">
+        <div className='flex flex-col md:flex-row items-center gap-3'>
+
+          <div className="md:w-[650px] flex items-center gap-3">
             <FilterPurchasesByUser />
             <FilterPurchasesBySupplier />
           </div>
-          <FilterByPriceButton modal={ModalNames.rangePurchasesPrices} /> 
-          <FilterByDateButton modal={ModalNames.rangePurchasesDates} /> 
+
+          <div className='w-full flex justify-start gap-3'>
+            <FilterByPriceButton modal={ModalNames.rangePurchasesPrices} /> 
+            <FilterByDateButton modal={ModalNames.rangePurchasesDates} /> 
+          </div>
+
         </div>
         <AppliedPurchasesFilters />
       </div>

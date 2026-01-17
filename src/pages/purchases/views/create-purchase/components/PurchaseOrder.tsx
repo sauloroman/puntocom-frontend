@@ -44,20 +44,20 @@ export const PurchaseOrder: React.FC = () => {
 
     return (
         <div className={`
-            border rounded-lg p-5 transition-colors flex flex-col
+            border rounded-lg p-3 sm:p-5 transition-colors flex flex-col
             ${isDark ? 'border-gray-700 bg-gray-800' : 'border-gray-300 bg-white'}
         `}>
 
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-4 sm:mb-5">
                 <h2 className={`
-                    font-bold uppercase text-md transition-colors
+                    font-bold uppercase text-sm sm:text-md transition-colors
                     ${isDark ? 'text-gray-200' : 'text-gray-800'}
                 `}>
                     Orden de Compra
                 </h2>
                 {productsInPurchase.length > 0 && (
                     <span className={`
-                        text-sm font-semibold transition-colors
+                        text-xs sm:text-sm font-semibold transition-colors
                         ${isDark ? 'text-gray-400' : 'text-gray-500'}
                     `}>
                         {productsInPurchase.length} {productsInPurchase.length === 1 ? 'producto' : 'productos'}
@@ -67,18 +67,18 @@ export const PurchaseOrder: React.FC = () => {
 
             {productsInPurchase.length === 0 ? (
                 <div className={`
-                    flex flex-col items-center justify-center py-12 transition-colors
+                    flex flex-col items-center justify-center py-8 sm:py-12 transition-colors
                     ${isDark ? 'text-gray-500' : 'text-gray-400'}
                 `}>
-                    <svg className="w-16 h-16 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-12 h-12 sm:w-16 sm:h-16 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
-                    <p className="font-semibold">No hay productos agregados</p>
-                    <p className="text-sm mt-1">Selecciona productos de la lista para comenzar</p>
+                    <p className="font-semibold text-sm sm:text-base">No hay productos agregados</p>
+                    <p className="text-xs sm:text-sm mt-1 text-center px-4">Selecciona productos de la lista para comenzar</p>
                 </div>
             ) : (
                 <>
-                    <div className="flex flex-col gap-3 mb-5 max-h-[400px] overflow-y-auto no-scrollbar">
+                    <div className="flex flex-col gap-2 sm:gap-3 mb-4 sm:mb-5 max-h-[300px] sm:max-h-[400px] overflow-y-auto no-scrollbar">
                         {productsInPurchase.map((item, index) => (
                             <PurchaseOrderItem 
                                 key={`${item.product.id}-${index}`}
@@ -89,18 +89,18 @@ export const PurchaseOrder: React.FC = () => {
                     </div>
 
                     <div className={`
-                        border-t pt-4 space-y-2 transition-colors
+                        border-t pt-3 sm:pt-4 space-y-2 transition-colors
                         ${isDark ? 'border-gray-700' : 'border-gray-300'}
                     `}>
                         <div className="flex justify-between items-center">
                             <span className={`
-                                text-sm font-medium transition-colors
+                                text-xs sm:text-sm font-medium transition-colors
                                 ${isDark ? 'text-gray-400' : 'text-gray-600'}
                             `}>
                                 Total de unidades:
                             </span>
                             <span className={`
-                                text-lg font-bold transition-colors
+                                text-base sm:text-lg font-bold transition-colors
                                 ${isDark ? 'text-gray-200' : 'text-gray-800'}
                             `}>
                                 {totalItems}
@@ -108,13 +108,13 @@ export const PurchaseOrder: React.FC = () => {
                         </div>
                         <div className="flex justify-between items-center">
                             <span className={`
-                                text-lg font-semibold transition-colors
+                                text-base sm:text-lg font-semibold transition-colors
                                 ${isDark ? 'text-gray-200' : 'text-gray-800'}
                             `}>
                                 Total de Compra:
                             </span>
                             <span className={`
-                                text-2xl font-bold transition-colors
+                                text-xl sm:text-2xl font-bold transition-colors
                                 ${isDark ? 'text-green-400' : 'text-green-600'}
                             `}>
                                 ${totalAmount.toFixed(2)}
@@ -125,7 +125,7 @@ export const PurchaseOrder: React.FC = () => {
                     <SaveButton
                         onClick={onSavePurchase}
                         text='Confirmar Compra'
-                        className="mt-4 w-full py-3 rounded-lg font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-all"
+                        className="mt-3 sm:mt-4 w-full py-2.5 sm:py-3 rounded-lg font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-all text-sm sm:text-base"
                     />
                 </>
             )}

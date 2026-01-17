@@ -160,8 +160,8 @@ export const FormEditUser: React.FC = () => {
                 </div>
 
                 <div className='flex items-center gap-5 justify-end mt-6 w-full'>
-                    <SaveButton className='w-52 p-2' submit text='Editar Usuario' />
-                    <CancelButton onClick={onCloseDrawers} className='w-48 p-2' text='Cancelar' />
+                    <SaveButton className='flex-1 w-52 p-2' submit text='Editar Usuario' />
+                    <CancelButton onClick={onCloseDrawers} className='flex-1 w-48 p-2' text='Cancelar' />
                 </div>
             </div>
         </form>

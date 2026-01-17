@@ -33,9 +33,25 @@ export const Login: React.FC = () => {
   }
 
   return (
-   <AuthLayout>
+   <AuthLayout
+    imageDark='https://res.cloudinary.com/dlamufioy/image/upload/v1768278902/puntocom/Dise%C3%B1o_sin_t%C3%ADtulo_4_oswdzm.png'
+    imageWhite='https://res.cloudinary.com/dlamufioy/image/upload/v1768278903/puntocom/Dise%C3%B1o_sin_t%C3%ADtulo_3_beh20d.png'
+   >
     <div className="w-full px-2 md:px-10 lg:px-8">
       <div className='flex flex-col justify-center'>  
+        
+        <div className="flex justify-center">
+          <img
+            src={`${
+                  isDark
+                  ? "https://res.cloudinary.com/dlamufioy/image/upload/v1768623303/puntocom/Blue_and_Black_Minimalist_Brand_Logo_2_hlv0zb.png"
+                  : "https://res.cloudinary.com/dlamufioy/image/upload/v1755733945/puntocom/3_paawzo.png"
+                }`}
+            alt="Imagen de login"
+            className='fixed top-5 right-5 w-36 md:right-15 md:top-0 md:absolute md:w-42 mb-2'
+          />
+        </div>
+
         <div className="mb-8">
           <h2 className={`
             flex items-center gap-2

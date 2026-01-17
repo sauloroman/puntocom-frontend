@@ -29,7 +29,7 @@ export const SupplierItemButtons: React.FC<SupplierItemButtonsProps> = ({ suppli
     }
 
     return (
-        <div className="flex justify-end gap-3 items-center mt-[-15px]">
+        <div className="flex justify-end gap-2 md:gap-3 items-center mt-[-15px]">
             <button
                 onClick={onSelect}
                 className={`
@@ -68,46 +68,62 @@ export const SupplierItem: React.FC<SupplierItemProps> = ({ supplier }) => {
     return (
         <div
             className={`
-                w-full rounded-2xl border transition-all duration-200 p-5
+                w-full rounded-2xl border transition-all duration-200 p-4 md:p-5
                 ${isDark
                     ? 'border-gray-700 bg-gray-800 text-gray-200 hover:shadow-lg hover:border-indigo-500'
                     : 'border-gray-200 bg-white text-gray-800 shadow-md hover:shadow-lg'}
             `}
         >
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0 mb-4">
+                <h2 className="text-base md:text-lg font-semibold truncate">
                     {supplier.name} {supplier.lastname}
                 </h2>
-                <StatusBadge 
-                  status={supplier.isActive}
-                />
+                <div className="flex items-center justify-between sm:justify-end">
+                    <StatusBadge status={supplier.isActive} />
+                </div>
             </div>
 
             <div className={`space-y-2 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                 <div className="flex items-center gap-2">
-                    <FiBriefcase className="w-4 h-4" />
-                    <span>{supplier.company}</span>
+                    <FiBriefcase className="w-4 h-4 flex-shrink-0" />
+                    <span className="truncate">{supplier.company}</span>
                 </div>
+
                 <div className="flex items-center gap-2">
-                    <FiPhone className="w-4 h-4" />
-                    <span>{supplier.phone}</span>
+                    <FiPhone className="w-4 h-4 flex-shrink-0" />
+                    <a 
+                        href={`tel:${supplier.phone}`}
+                        className={`truncate ${isDark ? 'hover:text-indigo-400' : 'hover:text-indigo-600'}`}
+                    >
+                        {supplier.phone}
+                    </a>
                 </div>
-                <div className="flex items-center gap-2">
-                    <FiMail className="w-4 h-4" />
-                    <span>{supplier.email}</span>
+
+                <div className="hidden sm:flex items-center gap-2">
+                    <FiMail className="w-4 h-4 flex-shrink-0" />
+                    <a 
+                        href={`mailto:${supplier.email}`}
+                        className={`truncate ${isDark ? 'hover:text-indigo-400' : 'hover:text-indigo-600'}`}
+                    >
+                        {supplier.email}
+                    </a>
                 </div>
-                <div className="flex items-center gap-2">
-                    <FiMapPin className="w-4 h-4" />
-                    <span>{supplier.address}</span>
+
+                <div className="hidden md:flex items-center gap-2">
+                    <FiMapPin className="w-4 h-4 flex-shrink-0" />
+                    <span className="truncate">{supplier.address}</span>
                 </div>
             </div>
 
-            <div className={`mt-4 text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+            <div className={`
+                hidden sm:block mt-4 text-xs space-y-1
+                ${isDark ? 'text-gray-500' : 'text-gray-400'}
+            `}>
                 <p>Creado: {supplier.createdAt}</p>
                 <p>Actualizado: {supplier.updatedAt}</p>
             </div>
 
-            <div className="flex justify-end w-full">
+            <div className="flex justify-end w-full mt-3 sm:mt-0">
                 <SupplierItemButtons supplierId={supplier.id} />
             </div>
         </div>

@@ -25,7 +25,7 @@ export const CreatePurchase: React.FC = () => {
   }
 
   return (
-    <div className='grid md:grid-cols-2 gap-5'>
+    <div className='flex flex-col gap-5 md:grid md:grid-cols-2'>
       <ListProducts products={products ?? []} />
       <PurchaseOrder />
       {modalIsOpen && modalName === ModalNames.addProductPurchase && <ModalAddProductPurchase />}

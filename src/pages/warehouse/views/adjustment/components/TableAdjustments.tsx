@@ -29,7 +29,7 @@ export const TableAdjustments: React.FC<Props> = ({ data }) => {
                         }
                     `}>
                         <tr>
-                            <th className="px-4 sm:px-6 py-3 sm:py-4 text-left font-bold whitespace-nowrap">
+                            <th className="hidden md:block px-4 sm:px-6 py-3 sm:py-4 text-left font-bold whitespace-nowrap">
                                 <div className="flex items-center gap-2">
                                     <BsCalendar3 className={isDark ? 'text-gray-300' : 'text-indigo-600'} size={16} />
                                     <span className="hidden sm:inline">Fecha</span>
@@ -93,7 +93,7 @@ export const TableAdjustments: React.FC<Props> = ({ data }) => {
                                         }
                                     `}
                                 >
-                                    <td className={`px-4 sm:px-6 py-3 sm:py-4 font-medium ${isDark ? 'text-gray-400' : 'text-gray-700'}`}>
+                                    <td className={`hidden md:block px-4 sm:px-6 py-3 sm:py-4 font-medium ${isDark ? 'text-gray-400' : 'text-gray-700'}`}>
                                         <span className="hidden sm:inline">
                                             {new Date(adj?.adjustmentDate ?? Date.now()).toLocaleString()}
                                         </span>

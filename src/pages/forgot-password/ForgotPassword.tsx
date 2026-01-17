@@ -12,6 +12,8 @@ export const ForgotPassword: React.FC = () => {
 
   return (
     <RecoveryLayout 
+      imageDark='https://res.cloudinary.com/dlamufioy/image/upload/v1768623797/puntocom/4_cp6fks.png'
+      imageWhite='https://res.cloudinary.com/dlamufioy/image/upload/v1768623797/puntocom/2_pcw5dd.png'
       title="¿Olvidaste tu contraseña?"
       description="Ingresa tu correo electrónico y te enviaremos un enlace para restablecerla."
     >

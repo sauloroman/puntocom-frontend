@@ -23,7 +23,7 @@ export const PuntoComLayout: React.FC<PuntoComLayoutProps> = ({ children }) => {
       <button
         onClick={openMenuMobile}
         className={`
-          lg:hidden fixed top-4 left-4 z-30 p-2 rounded-md shadow-lg cursor-pointer border-2 border-gray-300
+          md:hidden fixed top-4 left-4 z-30 p-2 rounded-md shadow-lg cursor-pointer border-2 border-gray-300
           ${isDark
             ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
             : 'bg-white text-gray-700 hover:bg-gray-100'
@@ -35,7 +35,7 @@ export const PuntoComLayout: React.FC<PuntoComLayoutProps> = ({ children }) => {
 
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black opacity-70 z-40 lg:hidden"
+          className="fixed inset-0 bg-black opacity-70 z-40 md:hidden"
           onClick={closeMenuMobile}
         />
       )}
@@ -44,24 +44,39 @@ export const PuntoComLayout: React.FC<PuntoComLayoutProps> = ({ children }) => {
         className={`
           fixed top-0 left-0 h-screen z-50
           border-r shadow-sm flex flex-col
-          transition-all duration-300          
-          lg:translate-x-0
-          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
-          ${collapsed ? 'w-64 lg:w-20' : 'w-[300px] md:w-64'}
+          transition-all duration-300
           ${isDark
             ? 'bg-gray-800 border-gray-700'
             : 'bg-gray-50 border-gray-200'
+          }
+          ${
+            isMobileMenuOpen 
+              ? 'translate-x-0 w-[250px]' 
+              : '-translate-x-full w-[250px]'
+          }
+          ${
+            'md:translate-x-0'
+          }
+          ${
+            collapsed ? 'md:w-20' : 'md:w-64'
           }
         `}
       >
         <div
           className={`
-            h-14 flex items-center justify-between px-3 border-b
-            ${collapsed && 'lg:text-xl lg:justify-center'}
+            h-14 flex items-center border-b
             ${isDark ? 'border-gray-700' : 'border-gray-200'}
+            ${
+              isMobileMenuOpen 
+                ? 'justify-between px-3'
+                : collapsed 
+                  ? 'md:justify-center md:px-1' 
+                  : 'md:justify-between md:px-3'
+            }
+            ${!isMobileMenuOpen && 'justify-between px-3'}
           `}
         >
-          {(!collapsed || isMobileMenuOpen) && (
+          {(isMobileMenuOpen || !collapsed) && (
             <div className={`inline-block ${isDark ? 'bg-gray-800' : 'bg-gray-50'}`}>
               <img
                 className="w-24 object-contain"
@@ -74,8 +89,10 @@ export const PuntoComLayout: React.FC<PuntoComLayoutProps> = ({ children }) => {
               />
             </div>
           )}
+          
           <div
             className={`
+              hidden md:block
               cursor-pointer p-1 rounded-md transition-colors
               ${isDark
                 ? 'hover:bg-gray-700 text-gray-300'
@@ -101,9 +118,9 @@ export const PuntoComLayout: React.FC<PuntoComLayoutProps> = ({ children }) => {
 
       <main
         className={`
-          md:p-6 transition-all duration-300          
-          ml-0
-          ${collapsed ? 'lg:ml-20' : 'lg:ml-64'}
+          p-6 transition-all duration-300
+          ${ 'ml-0' }
+          ${ collapsed ? 'md:ml-20' : 'md:ml-64'}
         `}
       >
         <LocationTab />

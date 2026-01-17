@@ -48,43 +48,51 @@ export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
                         `}
                     >
                         <tr>
-                            <th className="px-6 py-4 text-left font-bold">
+                            <th className="px-4 md:px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsPerson className={isDark ? "text-gray-300" : "text-indigo-600"} size={18} />
-                                    Nombre Completo
+                                    <span className="hidden sm:inline">Nombre</span>
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-left font-bold">
+
+                            <th className="hidden md:table-cell px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsEnvelope className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
                                     Correo  
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-left font-bold">
+
+                            <th className="hidden lg:table-cell px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsPhone className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
                                     Teléfono
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-left font-bold">
+
+                            <th className="hidden sm:table-cell px-4 md:px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsShield className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
-                                    Rol
+                                    <span className="hidden md:inline">Rol</span>
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-left font-bold">
+
+                            <th className="hidden md:table-cell px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsToggleOn className={isDark ? "text-gray-300" : "text-indigo-600"} size={18} />
                                     Estado
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-left font-bold">
+
+                            <th className="hidden lg:table-cell px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsCheckCircle className={isDark ? "text-gray-300" : "text-indigo-600"} size={16} />
                                     Validado
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-right font-bold">Acciones</th>
+
+                            <th className="px-4 md:px-6 py-4 text-right font-bold">
+                                <span className="hidden sm:inline">Acciones</span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody
@@ -106,31 +114,60 @@ export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
                                         }
                                     `}
                                 >
-                                    <td className="px-6 py-4 font-medium flex items-center gap-2">
-                                        <TableImage 
-                                            width='w-6' 
-                                            text='Usuario sin imagen' 
-                                            icon={user.image} 
-                                            initial={user.name[0]}
-                                        /> 
-                                        {user.name} {user.lastname}
+                                    <td className="px-4 md:px-6 py-4 font-medium">
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex-shrink-0">
+                                                <TableImage 
+                                                    width='w-6' 
+                                                    text='Usuario sin imagen' 
+                                                    icon={user.image} 
+                                                    initial={user.name[0]}
+                                                />
+                                            </div>
+                                            <div className="min-w-0 flex-1">
+                                                <p className="truncate">
+                                                    {user.name} {user.lastname}
+                                                </p>
+                                                <p className={`
+                                                    text-xs md:hidden truncate
+                                                    ${isDark ? "text-gray-400" : "text-gray-500"}
+                                                `}>
+                                                    {user.email}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
-                                        {user.email}
+
+                                    <td className={`
+                                        hidden md:table-cell px-6 py-4 max-w-[200px]
+                                        ${isDark ? "text-gray-400" : "text-gray-600"}
+                                    `}>
+                                        <span className="truncate block">{user.email}</span>
                                     </td>
-                                    <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+
+                                    <td className={`
+                                        hidden lg:table-cell px-6 py-4
+                                        ${isDark ? "text-gray-400" : "text-gray-600"}
+                                    `}>
                                         {user.phone || 'Sin teléfono'}
                                     </td>
-                                    <td className={`px-6 py-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+
+                                    <td className={`
+                                        hidden sm:table-cell px-4 md:px-6 py-4
+                                        ${isDark ? "text-gray-400" : "text-gray-600"}
+                                    `}>
                                         <UserRoleTag role={user.role as Roles} />
                                     </td>
-                                    <td className="px-6 py-4">
+
+                                    <td className="hidden md:table-cell px-6 py-4">
                                         <StatusBadge status={user.isActive} />
                                     </td>
-                                    <td className='px-6 py-4'>
+
+                                    <td className='hidden lg:table-cell px-6 py-4'>
                                         <UserValidateTag isValidated={user.isValidated} />
                                     </td>
-                                    <td className="px-6 py-4 text-center relative">
+
+                                    <td className="px-4 md:px-6 py-4 text-center relative">
                                         <TableActions
                                             onView={() => onSelectUserAc(user.id)}
                                             onEdit={() => onEditUser(user.id)}
@@ -141,7 +178,7 @@ export const TableUsers: React.FC<TableUsersProps> = ({ data }) => {
                         ) : (
                             <tr>
                                 <td
-                                    colSpan={8}
+                                    colSpan={7}
                                     className="px-6 py-16 text-center"
                                 >
                                     <div className="flex flex-col items-center justify-center">

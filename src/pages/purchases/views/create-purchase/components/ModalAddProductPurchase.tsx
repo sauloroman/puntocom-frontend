@@ -12,18 +12,18 @@ export const ModalAddProductPurchase: React.FC = () => {
     if (!productSelectedToAdd) return null
 
     return (
-        <ModalLayout width='w-2xl'>
-            <div className="flex flex-col gap-6">
-                <div className="flex items-start justify-between gap-4">
+        <ModalLayout width='w-[90%] sm:w-2xl'>
+            <div className="flex flex-col gap-4 sm:gap-6">
+                <div className="flex items-start justify-between gap-3 sm:gap-4">
                     <div className="flex-1">
                         <h2 className={`
-                            text-2xl font-bold transition-colors
+                            text-xl sm:text-2xl font-bold transition-colors
                             ${isDark ? 'text-gray-200' : 'text-gray-800'}
                         `}>
                             Agregar Producto a Compra
                         </h2>
                         <p className={`
-                            text-sm mt-1 transition-colors
+                            text-xs sm:text-sm mt-1 transition-colors
                             ${isDark ? 'text-gray-400' : 'text-gray-500'}
                         `}>
                             Ingresa los detalles de compra del producto

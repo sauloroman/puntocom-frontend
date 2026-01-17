@@ -12,7 +12,7 @@ export const UserInfoDrawer: React.FC = () => {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
   
-  const { name, lastname, isActive, role, isValidated, id, email, createdAt, updatedAt, image } = userSelected as User
+  const { name, lastname, isActive, role, isValidated, id, email, phone, createdAt, updatedAt, image } = userSelected as User
 
   return (
     <RightDrawerLayout title='Información de usuario' width='w-2xl'>
@@ -38,7 +38,7 @@ export const UserInfoDrawer: React.FC = () => {
 
       </div>
 
-      <div className={`px-4 space-y-3 text-sm mb-10 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+      <div className={`px-4 space-y-3 text-md mb-10 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
         <p>
           <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>#Id: </span>
           {id}
@@ -50,6 +50,10 @@ export const UserInfoDrawer: React.FC = () => {
         <p>
           <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Email: </span>
           {email}
+        </p>
+        <p>
+          <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Teléfono: </span>
+          {phone}
         </p>
         <p>
           <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Fecha de creación: </span>
