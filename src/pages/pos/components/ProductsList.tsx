@@ -8,7 +8,7 @@ export const ProductsList: React.FC = () => {
     const productsToSale = products?.filter(pro => pro.stock > 0)
 
     return (
-        <ul className='grid grid-cols-4 gap-6 p-5'>
+        <ul className='grid grid-cols-2 md:grid-cols-4 gap-6 p-5'>
             {
                 productsToSale?.map((product: Product) => (
                     <ProductItem

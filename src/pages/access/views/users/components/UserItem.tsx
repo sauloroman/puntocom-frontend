@@ -29,7 +29,7 @@ export const UserItemButtons: React.FC<UserItemButtonsProps> = ({ userId }) => {
   }
 
   return (
-    <div className='flex items-center gap-3'>
+    <div className='flex items-center gap-2 md:gap-3'>
       <button 
         onClick={onSelect} 
         className={`
@@ -68,13 +68,13 @@ export const UserItem: React.FC<UserItemProps> = ({ user }) => {
 
   return (
     <div className={`
-      shadow-md rounded-2xl p-5 border transition-all
+      shadow-md rounded-2xl p-4 md:p-5 border transition-all
       ${isDark 
         ? 'bg-gray-800 border-gray-700 hover:shadow-xl hover:shadow-gray-900/30' 
         : 'bg-white border-gray-100 hover:shadow-lg'
       }
     `}>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3 md:gap-4">
 
         {
           user.image !== 'Usuario sin imagen'
@@ -83,29 +83,33 @@ export const UserItem: React.FC<UserItemProps> = ({ user }) => {
                 src={user.image}
                 alt={`${user.name} ${user.lastname}`}
                 className={`
-                  w-14 h-14 rounded-full object-cover border
+                  w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border flex-shrink-0
                   ${isDark ? 'border-gray-600' : 'border-gray-200'}
                 `}
               />
             )
-            : (<div className='w-12 h-12'><AvatarInitial initial={user.name[0]} /></div>)
+            : (
+              <div className='w-10 h-10 md:w-12 md:h-12 flex-shrink-0'>
+                <AvatarInitial initial={user.name[0]} />
+              </div>
+            )
         }
 
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <h3 className={`
-            text-lg font-semibold transition-colors
+            text-base md:text-lg font-semibold transition-colors truncate
             ${isDark ? 'text-gray-100' : 'text-gray-800'}
           `}>
             {user.name} {user.lastname}
           </h3>
           <p className={`
-            text-sm transition-colors
+            text-sm transition-colors truncate
             ${isDark ? 'text-gray-400' : 'text-gray-500'}
           `}>
             {user.email}
           </p>
 
-          <div className="mt-2 flex gap-2">
+          <div className="mt-2 flex flex-wrap gap-1.5 md:gap-2">
             <UserRoleTag role={user.role as Roles} />
             <span
               className={`px-2 py-0.5 text-xs font-medium rounded-md ${user.isActive
@@ -121,14 +125,14 @@ export const UserItem: React.FC<UserItemProps> = ({ user }) => {
       </div>
 
       <div className={`
-        mt-4 flex flex-col text-xs transition-colors
+        hidden sm:flex mt-4 flex-col text-xs transition-colors
         ${isDark ? 'text-gray-500' : 'text-gray-400'}
       `}>
         <span>Creado: {new Date(user.createdAt).toLocaleDateString()}</span>
         <span>Actualizado: {new Date(user.updatedAt).toLocaleDateString()}</span>
       </div>
 
-      <div className='flex justify-end'>
+      <div className='flex justify-end mt-3 sm:mt-0'>
         <UserItemButtons userId={user.id} />
       </div>
     </div>

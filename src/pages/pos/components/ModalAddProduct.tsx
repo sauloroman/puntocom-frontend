@@ -11,14 +11,14 @@ export const ModalAddProduct: React.FC = () => {
 
     return (
         <ModalLayout width='w-4xl'>
-            <section className='flex gap-6 p-4'>
+            <section className='flex flex-col md:flex-row gap-6 p-4'>
 
                 <div className={`
-                    flex-shrink-0 border rounded-xl p-4 transition-colors
+                    flex-shrink-0 flex justify-center border rounded-xl p-4 transition-colors
                     ${isDark ? 'border-gray-700' : 'border-gray-300'}
                 `}>
                     <img
-                        className='w-64 h-full object-cover rounded-lg'
+                        className='md:w-64 w-[50%] h-full object-cover rounded-lg'
                         src={productToAdd?.image}
                         alt={productToAdd?.name}
                     />

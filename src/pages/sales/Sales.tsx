@@ -28,14 +28,23 @@ export const Sales: React.FC = () => {
   return (
     <PuntoComLayout>
       <section className='p-4 py-0'>
-        <div className="flex items-start gap-6 flex-col justify-between my-7">
-          <div className='flex items-center gap-3'>  
-            <div className="w-64"><FilterSalesByUser /></div>
-            <FilterByPriceButton modal={ModalNames.rangeSalesPrices} />
-            <FilterByDateButton modal={ModalNames.rangeSalesDates} />
+        <div className="flex flex-col gap-4 mb-6">
+          
+          <div className='flex flex-col sm:flex-row items-stretch sm:items-center gap-3'>
+            
+            <div className='flex flex-wrap items-center gap-2 flex-1'>
+              <div className="w-full sm:w-auto sm:min-w-[200px]">
+                <FilterSalesByUser />
+              </div>
+              <FilterByPriceButton modal={ModalNames.rangeSalesPrices} />
+              <FilterByDateButton modal={ModalNames.rangeSalesDates} />
+            </div>
+
           </div>
+
           <AppliedSalesFilters />
         </div>
+
         {
           isLoading
           ? <div className='my-24'><SpinnerContainer size='lg' color='bg-white' /></div>

@@ -10,29 +10,29 @@ export const OrderList: React.FC = () => {
 
     return (
         <div className={`
-            rounded-2xl shadow-sm border p-5 mb-3 h-2/3 transition-colors
+            rounded-2xl shadow-sm border p-3 md:p-5 mb-3 transition-colors
             ${isDark 
                 ? 'bg-gray-800 border-gray-700' 
                 : 'bg-white border-gray-100'
             }
         `}>
       
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-3 md:mb-4">
                 <p className={`
-                    font-semibold text-lg transition-colors
+                    font-semibold text-base md:text-lg transition-colors
                     ${isDark ? 'text-gray-200' : 'text-gray-800'}
                 `}>
                     Productos en la orden
                 </p>
                 <p className={`
-                    text-sm transition-colors
+                    text-xs md:text-sm transition-colors
                     ${isDark ? 'text-gray-400' : 'text-gray-500'}
                 `}>
                     {String(cart?.length || 0).padStart(2, '0')} productos
                 </p>
             </div>
 
-            <ul className="space-y-3 h-[480px] overflow-y-auto pr-1">
+            <ul className="space-y-2 md:space-y-3 h-[300px] sm:h-[400px] md:h-[480px] overflow-y-auto pr-1">
                 {cart?.length ? (
                     cart.map((pro) => (
                         <OrderItem 
@@ -46,12 +46,16 @@ export const OrderList: React.FC = () => {
                         />
                     ))
                 ) : (
-                    <p className={`
-                        text-center py-8 transition-colors
-                        ${isDark ? 'text-gray-500' : 'text-gray-400'}
+                    <div className={`
+                        flex items-center justify-center h-full
                     `}>
-                        No hay productos en la orden
-                    </p>
+                        <p className={`
+                            text-center transition-colors
+                            ${isDark ? 'text-gray-500' : 'text-gray-400'}
+                        `}>
+                            No hay productos en la orden
+                        </p>
+                    </div>
                 )}
             </ul>
         </div>

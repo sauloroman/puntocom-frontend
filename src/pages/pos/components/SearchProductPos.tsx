@@ -11,7 +11,7 @@ export const SearchProductPos: React.FC = () => {
   }
 
   return (
-    <div className='w-1/3'>
+    <div className='w-2/3 md:w-1/3'>
         <Search 
             onChange={onSearchProduct}
             placeholder='Buscar productos para vender'

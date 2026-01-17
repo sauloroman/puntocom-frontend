@@ -33,7 +33,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                         }
                     `}>
                         <tr>
-                            <th className="px-6 py-4 text-left font-bold">
+                            <th className="hidden md:table-cell px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsCalendar3 
                                         className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
@@ -42,34 +42,40 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                     Fecha
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-left font-bold">
+
+                            <th className="px-4 md:px-6 py-4 text-left font-bold">
                                 <div className="flex items-center gap-2">
                                     <BsPerson 
                                         className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
                                         size={18} 
                                     />
-                                    Usuario
+                                    <span className="hidden sm:inline">Usuario</span>
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-center font-bold">
+
+                            <th className="hidden sm:table-cell px-4 md:px-6 py-4 text-center font-bold">
                                 <div className="flex items-center justify-center gap-2">
                                     <BsCode 
                                         className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
                                         size={16} 
                                     />
-                                    Código
+                                    <span className="hidden md:inline">Código</span>
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-right font-bold">
+
+                            <th className="px-4 md:px-6 py-4 text-right font-bold">
                                 <div className="flex items-center justify-end gap-2">
                                     <BsCashStack 
                                         className={isDark ? 'text-indigo-400' : 'text-indigo-600'} 
                                         size={16} 
                                     />
-                                    Total
+                                    <span className="hidden sm:inline">Total</span>
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-center font-bold">Acciones</th>
+
+                            <th className="px-4 md:px-6 py-4 text-center font-bold">
+                                <span className="hidden sm:inline">Acciones</span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody className={`
@@ -88,7 +94,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                         }
                                     `}
                                 >
-                                    <td className="px-6 py-4">
+                                    <td className="hidden md:table-cell px-6 py-4">
                                         <p className={`
                                             text-sm font-semibold transition-colors
                                             ${isDark ? 'text-gray-200' : 'text-gray-900'}
@@ -97,9 +103,9 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                         </p>
                                     </td>
 
-                                    <td className="px-6 py-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-9 h-9 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                                    <td className="px-4 md:px-6 py-4">
+                                        <div className="flex items-center gap-2 md:gap-3">
+                                            <div className="w-8 h-8 md:w-9 md:h-9 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
                                                 <TableImage
                                                     width='w-6'
                                                     text='Usuario sin imagen'
@@ -107,15 +113,21 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                                     initial={sale.sale.User?.name[0]}
                                                 />
                                             </div>
-                                            <div>
+                                            <div className="min-w-0 flex-1">
                                                 <p className={`
-                                                    text-sm font-medium transition-colors
+                                                    text-sm font-medium transition-colors truncate
                                                     ${isDark ? 'text-gray-200' : 'text-gray-900'}
                                                 `}>
                                                     {sale.sale.User?.name}
                                                 </p>
                                                 <p className={`
-                                                    text-xs capitalize transition-colors
+                                                    text-xs transition-colors md:hidden
+                                                    ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                                                `}>
+                                                    {sale.sale.saleDate as string}
+                                                </p>
+                                                <p className={`
+                                                    text-xs capitalize transition-colors hidden md:block
                                                     ${isDark ? 'text-gray-400' : 'text-gray-500'}
                                                 `}>
                                                     {sale.sale.User?.role}
@@ -124,9 +136,9 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                         </div>
                                     </td>
 
-                                    <td className="px-6 py-4 text-center">
+                                    <td className="hidden sm:table-cell px-4 md:px-6 py-4 text-center">
                                         <span className={`
-                                            inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg 
+                                            inline-flex items-center gap-1.5 px-2 md:px-3 py-1 md:py-1.5 rounded-lg 
                                             font-mono font-bold text-xs tracking-wider border transition-colors
                                             ${isDark 
                                                 ? 'bg-gradient-to-r from-indigo-900/50 to-purple-900/50 text-indigo-300 border-indigo-700' 
@@ -137,11 +149,11 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                         </span>
                                     </td>
 
-                                    <td className="px-6 py-4 text-right">
+                                    <td className="px-4 md:px-6 py-4 text-right">
                                         <div className="inline-flex items-center gap-2">
                                             <div className="flex flex-col items-end">
                                                 <span className={`
-                                                    text-2xl font-bold bg-clip-text text-transparent transition-colors
+                                                    text-lg md:text-2xl font-bold bg-clip-text text-transparent transition-colors
                                                     ${isDark 
                                                         ? 'bg-gradient-to-r from-indigo-400 to-purple-400' 
                                                         : 'bg-gradient-to-r from-indigo-600 to-purple-600'
@@ -159,7 +171,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                         </div>
                                     </td>
 
-                                    <td className="px-6 py-4 text-center">
+                                    <td className="px-4 md:px-6 py-4 text-center">
                                         <TableSalesActions saleId={sale.sale.saleId} />
                                     </td>
                                 </tr>

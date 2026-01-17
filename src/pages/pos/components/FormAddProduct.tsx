@@ -74,9 +74,9 @@ export const FormAddProduct: React.FC = () => {
                 </div>
             </div>
 
-            <div className='mt-4 flex items-center gap-4 w-full'>
-                <AddToCartButton className='p-2 flex-1' submit text='Agregar al Carrito' />
-                <CancelButton onClick={onCloseModal} className='p-2 flex-1' text='Cancelar' />
+            <div className='mt-4 flex flex-col md:flex-row items-center gap-4 w-full'>
+                <AddToCartButton className='p-2 w-full flex-1' submit text='Agregar al Carrito' />
+                <CancelButton onClick={onCloseModal} className='p-2 w-full flex-1' text='Cancelar' />
             </div>
         </form>
     )

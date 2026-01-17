@@ -30,16 +30,17 @@ export const OrderItem: React.FC<Props> = ({
         <li
             key={id}
             className={`
-                flex justify-between items-center rounded-xl p-3 transition-colors
+                flex flex-col sm:flex-row justify-between items-stretch sm:items-center 
+                rounded-xl p-2.5 md:p-3 transition-colors gap-3 sm:gap-0
                 ${isDark 
                     ? 'bg-gray-700 hover:bg-gray-600' 
                     : 'bg-gray-50 hover:bg-gray-100'
                 }
             `}
         >
-            <div className="flex items-center gap-5 mr-2">
+            <div className="flex items-center gap-3 md:gap-5 flex-1">
                 <div className={`
-                    w-24 h-24 rounded-xl overflow-hidden border transition-colors
+                    w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-xl overflow-hidden border transition-colors flex-shrink-0
                     ${isDark 
                         ? 'bg-gray-800 border-gray-600' 
                         : 'bg-white border-gray-200'
@@ -52,21 +53,21 @@ export const OrderItem: React.FC<Props> = ({
                     />
                 </div>
 
-                <div className="flex flex-col">
+                <div className="flex flex-col flex-1 min-w-0">
                     <p className={`
-                        font-medium transition-colors
+                        font-medium text-sm md:text-base transition-colors truncate
                         ${isDark ? 'text-gray-200' : 'text-gray-800'}
                     `}>
                         {name}
                     </p>
                     <p className={`
-                        text-sm transition-colors
+                        text-xs md:text-sm transition-colors
                         ${isDark ? 'text-gray-400' : 'text-gray-500'}
                     `}>
                         ${sellingPrice.toFixed(2)} × {quantity}
                     </p>
 
-                    <div className="flex items-center gap-2 mt-1">
+                    <div className="flex items-center gap-2 mt-2">
                         <button 
                             onClick={() => onDecreaseQuantity(id)} 
                             className={`
@@ -115,16 +116,16 @@ export const OrderItem: React.FC<Props> = ({
                 </div>
             </div>
 
-            <div className='flex flex-col gap-2'>
+            <div className='flex sm:flex-col gap-2 justify-between sm:justify-start items-center sm:items-end sm:ml-2'>
                 <p className={`
-                    font-semibold text-lg transition-colors
+                    font-semibold text-base md:text-lg transition-colors
                     ${isDark ? 'text-gray-200' : 'text-gray-800'}
                 `}>
                     ${total.toFixed(2)}
                 </p>
                 {discount > 0 && (
                     <p className={`
-                        font-semibold transition-colors
+                        font-semibold text-sm transition-colors
                         ${isDark ? 'text-green-400' : 'text-green-600'}
                     `}>
                         -${discount.toFixed(2)}

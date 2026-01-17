@@ -40,7 +40,7 @@ export const ModalRangePrices: React.FC<Props> = ({ onSetFilterPrices }) => {
     return (
         <ModalLayout width='w-xl'>
             <div className='space-y-7'>
-                <div className='flex gap-5 w-full items-center'>
+                <div className='flex flex-col md:flex-row gap-4 md:gap-5 w-full items-stretch md:items-center'>
                     
                     <div className='flex-1'>
                         <Label
@@ -101,14 +101,14 @@ export const ModalRangePrices: React.FC<Props> = ({ onSetFilterPrices }) => {
                     </div>
                 </div>
 
-                <div className='flex gap-7 w-full justify-end'>
+                <div className='flex flex-col sm:flex-row gap-3 sm:gap-7 w-full sm:justify-end'>
                     <SaveButton
-                        className='p-2 flex-1'
+                        className='p-2 w-full sm:flex-1'
                         text='Aplicar Filtro'
                         onClick={handleSubmit(onApplyFilter)}
                     />
                     <CancelButton
-                        className='p-2 flex-1'
+                        className='p-2 w-full sm:flex-1'
                         onClick={handleCancel}
                         text='Cancelar'
                     />
