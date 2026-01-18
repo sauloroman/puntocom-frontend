@@ -27,7 +27,7 @@ export const PurchaseInfoDrawer: React.FC = () => {
     if (!purchaseSelected) return null
         
     return (
-        <RightDrawerLayout width='w-4xl' title='Detalle de compra'>
+        <RightDrawerLayout width='w-full md:w-4xl' title='Detalle de compra'>
             <div className={`
                 flex flex-col h-full transition-colors
                 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}
@@ -37,7 +37,7 @@ export const PurchaseInfoDrawer: React.FC = () => {
                     border-b p-6 transition-colors
                     ${isDark 
                         ? 'bg-gray-800 border-gray-700' 
-                        : 'bg-white border-gray-200'
+                        : 'bg-white border-gray-100'
                     }
                 `}>
                     <div className="flex items-center justify-between mb-4">

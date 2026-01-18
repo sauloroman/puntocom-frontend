@@ -54,6 +54,7 @@ export const OrderItem: React.FC<Props> = ({
                 </div>
 
                 <div className="flex flex-col flex-1 min-w-0">
+
                     <p className={`
                         font-medium text-sm md:text-base transition-colors truncate
                         ${isDark ? 'text-gray-200' : 'text-gray-800'}

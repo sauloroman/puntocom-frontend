@@ -70,7 +70,6 @@ export const PurchasesSuppliers: React.FC = () => {
               </div>
             </div>
 
-            {/* Botones de acción - Solo desktop */}
             <div className='hidden md:flex items-center gap-3'>
               <GenerateReport onConfirm={() => onOpenConfirmAdminPassword(ModalNames.confirmCreateSupplierReport)} />
               <CreateButton className='w-40 p-2' onClick={openCreateSupplierModal} text="Crear proveedor" />
@@ -78,7 +77,6 @@ export const PurchasesSuppliers: React.FC = () => {
           </div>
         </div>
 
-        {/* Tabla o Grid */}
         <div>
           {
             isTableStyleActive
@@ -89,7 +87,6 @@ export const PurchasesSuppliers: React.FC = () => {
         </div>
       </section>
 
-      {/* Menú FAB - Solo mobile */}
       {showFABMenu && (
         <>
           <div 
@@ -117,17 +114,14 @@ export const PurchasesSuppliers: React.FC = () => {
         </>
       )}
 
-      {/* Botón FAB principal - Solo mobile */}
       <FAB onClick={() => setShowFABMenu(!showFABMenu)} />
 
-      {/* Modales */}
       {modalIsOpen && modalName === ModalNames.confirmAdminPassword && <ModalRequestPasswordAdmin />}
       {modalIsOpen && modalName === ModalNames.createSupplier && <ModalCreateSupplier />}
       {modalIsOpen && modalName === ModalNames.confirmCreateSupplierReport && <ModalConfirmCreateSupplierReport />}
       {modalIsOpen && modalName === ModalNames.confirmChangeStatusSupplier && <ModalConfirmChangeStatusSupplier />}
       {modalIsOpen && modalName === ModalNames.sendMessageToSupplier && <ModalWhatsappMessage />}
       
-      {/* Drawers */}
       {rightDrawerIsOpen && drawelName === DrawelNames.infoSupplier && <SupplierInfoDrawer />}
       {rightDrawerIsOpen && drawelName === DrawelNames.editSupplier && <SupplierEditDrawer />}
     </>

@@ -27,7 +27,7 @@ export const SaleInfoDrawer: React.FC = () => {
     if (!selectedSale) return null
         
     return (
-        <RightDrawerLayout width='w-4xl' title='Detalle de venta'>
+        <RightDrawerLayout width='w-full md:w-4xl' title='Detalle de venta'>
             <div className={`
                 flex flex-col h-full transition-colors
                 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}

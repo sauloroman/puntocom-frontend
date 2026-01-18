@@ -38,7 +38,7 @@ export const SupplierInfoDrawer: React.FC = () => {
   } = supplierSelected as Supplier
 
   return (
-    <RightDrawerLayout width="w-xl" title="Información de proveedor">
+    <RightDrawerLayout width="w-2xl" title="Información de proveedor">
       <div className="p-4 flex flex-col h-full">
 
         <div className="flex items-center gap-4 mb-6">

@@ -44,7 +44,7 @@ export const RightDrawerLayout: React.FC<DrawerProps> = ({ title, width, childre
             exit={{ x: "100%" }}
             transition={{ type: "keyframes", duration: 0.2 }}
           >
-            <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700">
+            <div className={`flex items-center justify-between p-3 sm:p-4 border-b ${isDark ? 'border-gray-700' : 'border-gray-300'}`}>
               <div className={`
                   flex items-center gap-2 font-semibold
                   ${isDark ? "text-indigo-400" : "text-indigo-600"}

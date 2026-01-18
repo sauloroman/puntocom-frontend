@@ -65,7 +65,7 @@ export const Pos: React.FC = () => {
             <aside className={`
                 fixed md:static top-0 right-0 h-screen z-50
                 overflow-y-auto transition-transform duration-300 ease-in-out
-                w-[340px] md:w-1/4 lg:w-1/5 xl:w-[430px]
+                w-[340px] md:w-1/4 lg:w-1/5 xl:w-[480px]
                 ${showCart ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}
             `}>
                 { 
