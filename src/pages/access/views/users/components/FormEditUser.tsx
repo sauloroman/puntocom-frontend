@@ -115,6 +115,7 @@ export const FormEditUser: React.FC = () => {
                         {
                         ...register('phone', {
                             required: 'El número es obligatorio',
+                            minLength: { value: 10, message: 'Mínimo 10 caracteres' },
                             maxLength: { value: 12, message: 'Máximo 12 caracteres' }
                         })
                         }

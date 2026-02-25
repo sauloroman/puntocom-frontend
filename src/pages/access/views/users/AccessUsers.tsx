@@ -1,39 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
-import { 
-    useDrawer, 
-    useModal, 
-    useUsers 
+import {
+    useDrawer,
+    useModal,
+    useReports,
+    useUsers
 } from '../../../../shared/hooks'
-import { 
-    CreateUserButton, 
-    ModalConfirmChangeStatusUser, 
-    ModalConfirmGenerateUsersReport, 
+import {
+    CreateUserButton,
+    ModalConfirmChangeStatusUser,
+    ModalConfirmGenerateUsersReport,
     ModalEmailSentToUser,
-    ModalRequestPasswordAdmin, 
+    ModalRequestPasswordAdmin,
     ModalCreateUser,
-    PaginationUsers, 
-    SearchUsers, 
-    SelectUsersByRole, 
-    SelectUsersByStatus, 
-    TableUsers, 
-    UserEditDrawer, 
-    UserInfoDrawer, 
-    UsersGrid 
+    PaginationUsers,
+    SearchUsers,
+    SelectUsersByRole,
+    SelectUsersByStatus,
+    TableUsers,
+    UserEditDrawer,
+    UserInfoDrawer,
+    UsersGrid
 } from './components'
-import {  
-    GenerateReportButton, 
-    SortElementsAlphaButton, 
+import {
+    GenerateReportButton,
+    SortElementsAlphaButton,
     ToggleGridTableViewButton,
     FAB
 } from '../../../../shared/components/button'
 import { BsPlus, BsFileEarmarkText } from 'react-icons/bs'
+import { SpinnerContainer, SpinnerScreen } from '../../../../shared/components/spinner'
 
 export const AccessUsers: React.FC = () => {
 
     const { modalIsOpen, modalName, onOpenConfirmAdminPassword, onOpenModal } = useModal()
-    const { users, getUsers, setTableStyle, isTableStyleActive, onOrderAlpha, isOrderedAsc } = useUsers()
+    const { users, getUsers, setTableStyle, isTableStyleActive, onOrderAlpha, isOrderedAsc, isLoading } = useUsers()
+    const { isLoading: isReportLoading } = useReports()
     const { rightDrawerIsOpen, drawelName } = useDrawer()
     const [showFABMenu, setShowFABMenu] = useState(false)
 
@@ -51,25 +54,29 @@ export const AccessUsers: React.FC = () => {
         setShowFABMenu(false)
     }
 
+    if (isReportLoading) {
+        return (<SpinnerScreen />)
+    }
+
     return (
         <>
             <section>
                 <div className="flex flex-col gap-4 mb-6">
-                    
+
                     <div className="w-full md:w-96">
                         <SearchUsers />
                     </div>
 
                     <div className='flex flex-col sm:flex-row items-stretch sm:items-center gap-3'>
-                        
+
                         <div className='flex flex-wrap items-center gap-2 flex-1'>
                             <ToggleGridTableViewButton onToggle={setTableStyle} status={isTableStyleActive} />
                             <SortElementsAlphaButton onToggle={onOrderAlpha} desc={isOrderedAsc} />
-                            
+
                             <div className="w-full sm:w-auto sm:min-w-[160px]">
                                 <SelectUsersByStatus />
                             </div>
-                            
+
                             <div className="w-full sm:w-auto sm:min-w-[160px]">
                                 <SelectUsersByRole />
                             </div>
@@ -82,18 +89,23 @@ export const AccessUsers: React.FC = () => {
                     </div>
                 </div>
 
-                { isTableStyleActive ? (<TableUsers data={users ?? []} />)  : (<UsersGrid data={users ?? []} />)}
-                
+
+                {
+                    isLoading
+                    ? (<div className='my-24'><SpinnerContainer size='lg' color='bg-white' /></div>)
+                    : ( isTableStyleActive ? (<TableUsers data={users ?? []} />) : (<UsersGrid data={users ?? []} />))
+                }
+
                 <PaginationUsers />
             </section>
 
             {showFABMenu && (
                 <>
-                    <div 
+                    <div
                         className="md:hidden fixed inset-0 bg-black/20 z-40"
                         onClick={() => setShowFABMenu(false)}
                     />
-                    
+
                     <div className="md:hidden fixed bottom-24 right-6 flex flex-col gap-3 z-50">
                         <button
                             onClick={openReportModal}

@@ -44,7 +44,7 @@ export const ModalCreateUser: React.FC = () => {
                             {
                             ...register('name', {
                                 required: 'El nombre es obligatorio',
-                                minLength: { value: 2, message: 'Mínimo 2 caracteres' },
+                                minLength: { value: 4, message: 'Mínimo 4 caracteres' },
                                 maxLength: { value: 60, message: 'Máximo 60 caracteres' }
                             })
                             }
@@ -64,7 +64,7 @@ export const ModalCreateUser: React.FC = () => {
                             {
                             ...register('lastname', {
                                 required: 'El apellido es obligatorio',
-                                minLength: { value: 2, message: 'Mínimo 2 caracteres' },
+                                minLength: { value: 4, message: 'Mínimo 4 caracteres' },
                                 maxLength: { value: 60, message: 'Máximo 60 caracteres' }
                             })
                             }
@@ -85,6 +85,7 @@ export const ModalCreateUser: React.FC = () => {
                             {
                             ...register('phone', {
                                 required: 'El número es obligatorio',
+                                minLength: { value: 10, message: 'Mínimo 10 caracteres' },
                                 maxLength: { value: 12, message: 'Máximo 12 caracteres' }
                             })
                             }

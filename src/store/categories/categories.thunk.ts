@@ -29,7 +29,14 @@ export const startGettingCategories = (pagination: Pagination) => {
             dispatch( setCategories(categories) )
             dispatch( setCategoriesMetaPagination({...meta, itemsPerPage: 10}) )
         } catch(error) {
-            console.log(error)
+            const errorMessage = handleError(error)
+            dispatch(
+                showAlert({
+                    title: "⚠️ No se pudo crear la categoría",
+                    text: errorMessage,
+                    type: AlertType.error,
+                })
+            );
         } finally {
             dispatch( setIsLoading( false ) )
         }
@@ -40,7 +47,7 @@ export const startGettingAllCategories = () => {
     return async ( dispatch: Dispatch ) => {
         dispatch(setIsLoading(true))
         try {
-            const { data } = await puntocomApiPrivate.get<GetAllCategoriesResponse>(`${urlCategories}/all`)
+            const { data } = await puntocomApiPrivate.get<GetAllCategoriesResponse>(urlCategories)
             const { categories } = data
             dispatch(setAllCategories(categories))
         } catch(error) {

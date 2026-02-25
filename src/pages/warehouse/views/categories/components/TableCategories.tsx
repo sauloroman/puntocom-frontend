@@ -113,7 +113,7 @@ export const TableCategories: React.FC<TableCategoriesProps> = ({ data }) => {
                     <div className="flex items-center gap-2 min-w-[120px]">
                       <TableImage
                         width="w-6"
-                        text="Categoría sin ícono"
+                        text=""
                         icon={cat.icon}
                         initial={cat.name[0]}
                       />

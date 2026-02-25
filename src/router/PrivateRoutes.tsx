@@ -10,11 +10,11 @@ export const PrivateRoutes: React.FC = () => {
   const { sales, getAllSales } = useSale()
   const { products, getProducts } = useProducts()
   const { users, getUsers } = useUsers()
-  const { purchases, getPurchases } = usePurchase()
+  // const { purchases, getPurchases } = usePurchase()
   const { adjustments, getInventoryAdjustments } = useInventoryAdjustment()
 
   useEffect(() => {
-    if ( !purchases ) getPurchases()
+    // if ( !purchases ) getPurchases()
     if ( !categories ) getCategories()
     if ( !allCategories ) getAllCategories()
     if ( !suppliers ) getAllSuppliers()

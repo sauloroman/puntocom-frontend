@@ -6,6 +6,7 @@ import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
 import { useDrawer, useUsers, useTheme } from '../../../../../shared/hooks'
 import { AvatarInitial } from '../../../../../shared/components/avatar'
 import { UserRoleTag, UserValidateTag } from './'
+import { StatusBadge } from '../../../../../shared/components/badgets'
 
 interface UserItemButtonsProps {
   userId: string
@@ -111,14 +112,7 @@ export const UserItem: React.FC<UserItemProps> = ({ user }) => {
 
           <div className="mt-2 flex flex-wrap gap-1.5 md:gap-2">
             <UserRoleTag role={user.role as Roles} />
-            <span
-              className={`px-2 py-0.5 text-xs font-medium rounded-md ${user.isActive
-                  ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                  : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-                }`}
-            >
-              {user.isActive ? 'Activo' : 'Inactivo'}
-            </span>
+            <StatusBadge status={user.isActive} />
             <UserValidateTag isValidated={user.isValidated} />
           </div>
         </div>

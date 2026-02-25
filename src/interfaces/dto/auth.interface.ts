@@ -9,7 +9,8 @@ export interface ForgotPasswordResponse {
 
 export interface ChangePasswordRequest {
     token: string,
-    newPassword: string
+    newPassword: string,
+    code: string,
 }
 
 export interface ChangePasswordResponse {

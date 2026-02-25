@@ -71,7 +71,7 @@ export const startGettingAllSuppliers = () => {
         dispatch(setIsLoading(true))
         try {
             
-            const {data} = await puntocomApiPrivate.get<GetAllSuppliers>(`${urlSuppliers}/all`)
+            const {data} = await puntocomApiPrivate.get<GetAllSuppliers>(urlSuppliers)
             const { suppliers } = data
             dispatch(setAllSuppliers(suppliers))
 

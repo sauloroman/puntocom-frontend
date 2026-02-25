@@ -34,7 +34,8 @@ export const ChangePasswordForm: React.FC = () => {
 
         changePassword({
             token: token,
-            newPassword: data.newPassword
+            newPassword: data.newPassword,
+            code: data.code
         })
     }
 

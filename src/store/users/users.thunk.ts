@@ -116,17 +116,20 @@ export const startFilteringUsersByStatus = (pagination: Pagination, status: bool
     return async (dispatch: Dispatch) => {
         dispatch(setIsLoading(true))
         try {
-
-            const url = `${urlUser}?page=${pagination.page}&limit=${pagination.limit}&sort=userCreatedAt:desc&filter={"userStatus": ${status}}`
+            const url = `${urlUser}/search?page=${pagination.page}&limit=${pagination.limit}&sort=userCreatedAt:desc&filter={"userStatus": ${status ? 1 : 0}}`
 
             const { data } = await puntocomApiPrivate.get<GetUsersResponse>(url)
             const { meta, users } = data
 
             dispatch(setUsers(users))
-            dispatch(setUsersMetaPagination({ ...meta, itemsPerPage: 10 }))
+            dispatch(setUsersMetaPagination({ ...meta, itemsPerPage: 6 }))
 
         } catch (error) {
-            console.log(error)
+            dispatch(showAlert({
+                title: '⚠️ Error al obtener usuarios filtrados por estado',
+                text: 'No se pudieron obtener los usuarios',
+                type: AlertType.error
+            }))
         } finally {
             dispatch(setIsLoading(false))
         }
@@ -138,13 +141,13 @@ export const startFilteringUsersByRole = (pagination: Pagination, role: Roles) =
         dispatch(setIsLoading(true))
         try {
 
-            const url = `${urlUser}?page=${pagination.page}&limit=${pagination.limit}&sort=userCreatedAt:desc&filter={"userRole": "${role}"}`
+            const url = `${urlUser}/search?page=${pagination.page}&limit=${pagination.limit}&sort=userCreatedAt:desc&filter={"userRole": "${role}"}`
 
             const { data } = await puntocomApiPrivate.get<GetUsersResponse>(url)
             const { meta, users } = data
 
             dispatch(setUsers(users))
-            dispatch(setUsersMetaPagination({ ...meta, itemsPerPage: 10 }))
+            dispatch(setUsersMetaPagination({ ...meta, itemsPerPage: 6 }))
 
         } catch (error) {
             console.log(error)
@@ -161,14 +164,14 @@ export const startGettingUsers = (pagination: Pagination) => {
 
             const { page, limit } = pagination
 
-            const { data } = await puntocomApiPrivate.get<GetUsersResponse>(`${urlUser}?page=${page}&limit=${limit}&sort=userCreatedAt:desc`)
+            const { data } = await puntocomApiPrivate.get<GetUsersResponse>(`${urlUser}/search?page=${page}&limit=${limit}&sort=userCreatedAt:desc`)
 
             const { meta, users } = data
 
             dispatch(setUsers(users))
             dispatch(setUsersMetaPagination({
                 ...meta,
-                itemsPerPage: 10
+                itemsPerPage: 6
             }))
 
         } catch (error) {
@@ -201,7 +204,6 @@ export const startCreatingUser = (userData: CreateUser) => {
     return async (dispatch: Dispatch) => {
         dispatch(setIsLoading(true))
         try {
-
             const { data } = await puntocomApiPrivate.post<CreateUserResponse>(urlUser, userData)
             const { message, user } = data
 
@@ -210,11 +212,11 @@ export const startCreatingUser = (userData: CreateUser) => {
             dispatch(setModalMessage(message))
 
         } catch (error) {
-            console.log(error)
+            const errorMessage = handleError(error)
             dispatch(
                 showAlert({
-                    title: "⚠️ Error usuario",
-                    text: 'No se pudo crear el usuario',
+                    title: "⚠️ Error registrar usuario",
+                    text: errorMessage,
                     type: AlertType.error,
                 })
             );
