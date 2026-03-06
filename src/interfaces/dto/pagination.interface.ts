@@ -1,4 +1,4 @@
-import type { Filter } from "../ui/filter.interface"
+import type { FilterSales } from "../ui/filter.interface"
 
 export interface Pagination {
     page: number,
@@ -9,5 +9,5 @@ export interface MetaPagination {
     page: number,
     totalPages: number,
     total: number,
-    filter?: Filter
+    filter?: FilterSales
 }

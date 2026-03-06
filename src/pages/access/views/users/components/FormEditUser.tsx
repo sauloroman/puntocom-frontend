@@ -10,7 +10,7 @@ import { ErrorMessageForm } from '../../../../../shared/components/error-message
 
 export const FormEditUser: React.FC = () => {
 
-    const { userSelected, updateUser } = useUsers()
+    const { userSelected, onUpdateUser } = useUsers()
     const { onCloseDrawers } = useDrawer()
     const { activateAlert } = useAlert()
     const { theme } = useTheme()
@@ -45,7 +45,7 @@ export const FormEditUser: React.FC = () => {
             })
         }
 
-        updateUser(userSelected.id!, data)
+        onUpdateUser(userSelected.id!, data)
         onCloseDrawers()
     }
 

@@ -3,26 +3,31 @@ import { FiSearch } from "react-icons/fi";
 import { useTheme } from "../../hooks";
 
 interface SearchProps {
-    placeholder: string,
-    onChange: ( value: string ) => void
+  placeholder: string
+  onChange: (value: string) => void
 }
 
-export const Search: React.FC<SearchProps> = ({ placeholder, onChange }) => {
+export const Search = React.forwardRef<HTMLInputElement, SearchProps>(
+({ placeholder, onChange }, ref) => {
+
   const { theme } = useTheme()
   const isDark = theme === "dark"
 
-  const [valueSearched, setvalueSearched] = useState<string>('')
+  const [valueSearched, setValueSearched] = useState<string>('')
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onChange( valueSearched )
+    e.preventDefault()
+    onChange(valueSearched)
   }
 
   return (
-    <form onSubmit={ handleSubmit } className="relative w-full">
+    <form onSubmit={handleSubmit} className="relative w-full">
       <input
+        ref={ref}
         type="text"
         placeholder={placeholder}
+        value={valueSearched}
+        onChange={(e) => setValueSearched(e.target.value)}
         className={`
           text-sm border w-full pl-10 pr-4 py-2 rounded-full
           focus:outline-none focus:ring-2
@@ -32,16 +37,12 @@ export const Search: React.FC<SearchProps> = ({ placeholder, onChange }) => {
             : 'bg-white border-gray-300 text-gray-700 placeholder-gray-400 focus:ring-indigo-100 focus:border-indigo-300'
           }
         `}
-        onChange={ (e) => setvalueSearched(e.target.value)}
-        value={valueSearched}
       />
+
       <FiSearch
-        className={`
-          absolute left-3 top-1/2 -translate-y-1/2 transition-colors
-          ${isDark ? 'text-gray-400' : 'text-gray-400'}
-        `}
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
         size={18}
       />
     </form>
-  );
-};
+  )
+})

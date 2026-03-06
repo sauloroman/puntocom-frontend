@@ -21,7 +21,8 @@ import {
     TableUsers,
     UserEditDrawer,
     UserInfoDrawer,
-    UsersGrid
+    UsersGrid,
+    AppliedUsersFilters
 } from './components'
 import {
     GenerateReportButton,
@@ -35,13 +36,13 @@ import { SpinnerContainer, SpinnerScreen } from '../../../../shared/components/s
 export const AccessUsers: React.FC = () => {
 
     const { modalIsOpen, modalName, onOpenConfirmAdminPassword, onOpenModal } = useModal()
-    const { users, getUsers, setTableStyle, isTableStyleActive, onOrderAlpha, isOrderedAsc, isLoading } = useUsers()
+    const { users, onGetUsers, onSetTableStyle, isTableStyleActive, onOrderAlpha, isOrderedAsc, isLoading } = useUsers()
     const { isLoading: isReportLoading } = useReports()
     const { rightDrawerIsOpen, drawelName } = useDrawer()
     const [showFABMenu, setShowFABMenu] = useState(false)
 
     useEffect(() => {
-        if (!users) getUsers()
+        if (!users) onGetUsers()
     }, [])
 
     const openCreateUserModal = () => {
@@ -63,14 +64,15 @@ export const AccessUsers: React.FC = () => {
             <section>
                 <div className="flex flex-col gap-4 mb-6">
 
-                    <div className="w-full md:w-96">
-                        <SearchUsers />
+                    <div className="w-full flex justify-between items-center">
+                        <div className="md:w-1/4"><SearchUsers /></div>
+                        <AppliedUsersFilters />
                     </div>
 
                     <div className='flex flex-col sm:flex-row items-stretch sm:items-center gap-3'>
 
                         <div className='flex flex-wrap items-center gap-2 flex-1'>
-                            <ToggleGridTableViewButton onToggle={setTableStyle} status={isTableStyleActive} />
+                            <ToggleGridTableViewButton onToggle={onSetTableStyle} status={isTableStyleActive} />
                             <SortElementsAlphaButton onToggle={onOrderAlpha} desc={isOrderedAsc} />
 
                             <div className="w-full sm:w-auto sm:min-w-[160px]">

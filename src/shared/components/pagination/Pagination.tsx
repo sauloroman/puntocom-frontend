@@ -40,7 +40,7 @@ export const Pagination: React.FC<PaginationProps> = ({
     >
       <div className="flex flex-col sm:flex-row flex-1 items-center justify-between gap-3 sm:gap-0">
         
-        <p className={`text-md md:text-sm ${isDark ? "text-gray-300" : "text-gray-700"}`}>
+        <p className={`text-md ${isDark ? "text-gray-300" : "text-gray-700"}`}>
           Mostrando{" "}
           <span className="font-medium">{(page - 1) * itemsPerPage + 1}</span> a{" "}
           <span className="font-medium">

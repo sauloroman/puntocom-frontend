@@ -1,16 +1,13 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
-import type { User, Roles } from "../../interfaces/dto/user.interface";
+import type { User } from "../../interfaces/dto/user.interface";
+import type { FilterUsers } from "../../interfaces/ui/filter.interface";
 
 interface IUsers {
   isLoading: boolean;
   users: User[] | null;
   userSelected: User | null;
-  filter: {
-    role: Roles | null;
-    status: boolean | null;
-    isVisible: boolean;
-  };
+  filter: FilterUsers;
   pagination: MetaPagination & { itemsPerPage: number };
   isPaginationVisible: boolean;
   hasEnteredPasswordCorrectly: boolean,
@@ -26,13 +23,13 @@ const initialState: IUsers = {
   filter: {
     role: null,
     status: null,
-    isVisible: true,
+    userName: null
   },
   pagination: {
     page: 1,
     total: 1,
     totalPages: 1,
-    itemsPerPage: 6,
+    itemsPerPage: 5,
   },
   isPaginationVisible: true,
   hasEnteredPasswordCorrectly: false,
@@ -93,20 +90,24 @@ export const usersSlice = createSlice({
       state.pagination.page = payload;
     },
 
-    setRoleFilter: (
-      state,
-      { payload }: PayloadAction<{ role: Roles | null; isVisible: boolean }>
-    ) => {
+    setRoleFilter: ( state, { payload }: PayloadAction<Pick<FilterUsers, 'role'>> ) => {
       state.filter.role = payload.role;
-      state.filter.isVisible = payload.isVisible;
     },
 
-    setStatusFilter: (
-      state,
-      { payload }: PayloadAction<{ status: boolean | null; isVisible: boolean }>
-    ) => {
+    setStatusFilter: ( state, { payload }: PayloadAction<Pick<FilterUsers, 'status'>>) => {
       state.filter.status = payload.status;
-      state.filter.isVisible = payload.isVisible;
+    },
+
+    setUserNameFilter: ( state, { payload }: PayloadAction<Pick<FilterUsers, 'userName'>>) => {
+      state.filter.userName = payload.userName
+    },
+
+    resetFilter: ( state ) => {
+      state.filter = {
+        role: null,
+        status: null,
+        userName: null
+      }
     },
 
     setPaginationVisible: (state, { payload }: PayloadAction<boolean>) => {
@@ -135,8 +136,10 @@ export const {
   setPage,
   setRoleFilter,
   setStatusFilter,
+  setUserNameFilter,
   setPaginationVisible,
   setHasEnteredPasswordCorrectly,
   setTableView,
   setOrderedAsc,
+  resetFilter,
 } = usersSlice.actions;

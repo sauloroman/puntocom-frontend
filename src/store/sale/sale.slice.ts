@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { SaleWithDetailsResponse } from "../../interfaces/dto/sale.interface";
 import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
-import type { Filter } from "../../interfaces/ui/filter.interface";
+import type { FilterSales } from "../../interfaces/ui/filter.interface";
 
 interface SliceState {
     isLoading: boolean,
@@ -11,7 +11,7 @@ interface SliceState {
     saleToPrint: SaleWithDetailsResponse | null,
     pagination: MetaPagination & { itemsPerPage: number },
     isPaginationVisible: boolean,
-    filter: Omit<Filter, 'supplier'>
+    filter: FilterSales
 }
 
 const initialState: SliceState = {
@@ -68,17 +68,17 @@ export const saleSlice = createSlice({
             state.pagination = payload
         },
 
-        setUserFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'user'>>) => {
+        setUserFilter: ( state, {payload}: PayloadAction<Pick<FilterSales, 'user'>>) => {
             state.filter.user.id = payload.user.id
             state.filter.user.name = payload.user.name
         },
 
-        setPricesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'price'>> ) => {
+        setPricesFilter: ( state, {payload}: PayloadAction<Pick<FilterSales, 'price'>> ) => {
             state.filter.price.minPrice = payload.price.minPrice
             state.filter.price.maxPrice = payload.price.maxPrice
         },
 
-        setDatesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'dates'>>) => {
+        setDatesFilter: ( state, {payload}: PayloadAction<Pick<FilterSales, 'dates'>>) => {
             state.filter.dates.dateStart = payload.dates.dateStart
             state.filter.dates.dateEnd = payload.dates.dateEnd
         },

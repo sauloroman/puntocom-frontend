@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { LuAsterisk } from 'react-icons/lu'
 import { ModalLayout } from '../../../../../layouts'
@@ -8,8 +8,11 @@ import { useModal, useUsers, useTheme } from '../../../../../shared/hooks'
 import { CancelButton, SaveButton } from '../../../../../shared/components/button'
 import { Input, Label } from '../../../../../shared/components/form'
 import { ErrorMessageForm } from '../../../../../shared/components/error-message'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 export const ModalCreateUser: React.FC = () => {
+    const [showPassword, setShowPassword] = useState(false)
+
     const { theme } = useTheme()
     const isDark = theme === "dark"
 
@@ -19,17 +22,17 @@ export const ModalCreateUser: React.FC = () => {
         formState: { errors }
     } = useForm<CreateUser>()
 
-    const { createUser } = useUsers()
+    const { onCreateUser } = useUsers()
     const { onCloseModal } = useModal()
 
-    const onCreateUser = (data: CreateUser) => {
-        createUser(data)
+    const createUser = (data: CreateUser) => {
+        onCreateUser(data)
         onCloseModal()
     }
 
     return (
         <ModalLayout width={'w-xl'} >
-            <form onSubmit={handleSubmit(onCreateUser)} className='flex-2 space-y-4 mb-4'>
+            <form onSubmit={handleSubmit(createUser)} className='flex-2 space-y-4 mb-4'>
                 <div className="flex items-center gap-5 w-full">
                     <div className='flex-1'>
                         <Label htmlFor='userName' className='mb-3 flex items-center justify-between gap-2'>
@@ -72,26 +75,26 @@ export const ModalCreateUser: React.FC = () => {
                         {errors.lastname && <ErrorMessageForm message={errors.lastname.message} />}
                     </div>
                 </div>
-                    <div className="flex-1 w-full">
-                        <Label htmlFor='userPhone' className='mb-3 flex items-center justify-between gap-2'>
-                            Número de teléfono
-                            <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
-                        </Label>
-                        <Input
-                            autoComplete='off'
-                            id='userPhone'
-                            type='text'
-                            placeholder='Teléfono de contacto'
-                            {
-                            ...register('phone', {
-                                required: 'El número es obligatorio',
-                                minLength: { value: 10, message: 'Mínimo 10 caracteres' },
-                                maxLength: { value: 12, message: 'Máximo 12 caracteres' }
-                            })
-                            }
-                        />
-                        {errors.phone && <ErrorMessageForm message={errors.phone.message} />}
-                    </div>
+                <div className="flex-1 w-full">
+                    <Label htmlFor='userPhone' className='mb-3 flex items-center justify-between gap-2'>
+                        Número de teléfono
+                        <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
+                    </Label>
+                    <Input
+                        autoComplete='off'
+                        id='userPhone'
+                        type='text'
+                        placeholder='Teléfono de contacto'
+                        {
+                        ...register('phone', {
+                            required: 'El número es obligatorio',
+                            minLength: { value: 10, message: 'Mínimo 10 caracteres' },
+                            maxLength: { value: 12, message: 'Máximo 12 caracteres' }
+                        })
+                        }
+                    />
+                    {errors.phone && <ErrorMessageForm message={errors.phone.message} />}
+                </div>
                 <div className="w-full">
                     <Label htmlFor='userRole' className='mb-3 flex items-center justify-between gap-2'>
                         Rol del usuario
@@ -142,14 +145,25 @@ export const ModalCreateUser: React.FC = () => {
                     {errors.email && <ErrorMessageForm message={errors.email.message} />}
                 </div>
                 <div className='w-full'>
-                    <Label htmlFor='userPassword' className='mb-3 flex items-center justify-between gap-2'>
+                    <Label
+                        htmlFor="userPassword"
+                        className={`
+                                    mb-2 flex items-center justify-between w-full text-sm font-medium
+                                    ${isDark ? 'text-gray-300' : 'text-gray-700'}
+                                  `}
+                    >
                         Contraseña
-                        <LuAsterisk size={15} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
+                        <div
+                            className={`cursor-pointer ${isDark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-600 hover:text-gray-900'}`}
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                        </div>
                     </Label>
                     <Input
                         id='userPassword'
-                        type='password'
-                        placeholder='Crea una contraseña'
+                        placeholder="***************"
+                        type={showPassword ? 'text' : 'password'}
                         {
                         ...register('password', {
                             required: 'El password es obligatorio',

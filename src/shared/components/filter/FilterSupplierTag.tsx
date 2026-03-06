@@ -7,7 +7,7 @@ interface Props {
     supplierName: string | null
 }
 
-export const FilterSuppierTag: React.FC<Props> = ({ supplierId, supplierName }) => {
+export const FilterSupplierTag: React.FC<Props> = ({ supplierId, supplierName }) => {
     const { theme } = useTheme()
     const isDark = theme === 'dark'
 

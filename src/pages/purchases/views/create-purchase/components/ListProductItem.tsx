@@ -52,7 +52,7 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
                     relative w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden transition-colors
                     ${isDark ? 'bg-gray-700' : 'bg-gray-100'}
                 `}>
-                    {product.image ? (
+                    {product.image !== 'Producto sin imagen' ? (
                         <img
                             src={product.image}
                             alt={product.name}

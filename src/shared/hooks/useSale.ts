@@ -19,9 +19,10 @@ import {
     setUserFilter 
 } from "../../store/sale/sale.slice"
 import type { ProductInCart } from "../../interfaces/dto/product.interface"
-import type { GetSale, SalesFilterDTO, SaleWithDetailsResponse, SaveSale } from "../../interfaces/dto/sale.interface"
+import type { GetSale, SaleWithDetailsResponse, SaveSale } from "../../interfaces/dto/sale.interface"
 import type { RootState } from "../../store"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
+import type {  FilterSalesDTO } from "../../interfaces/ui/filter.interface"
 
 export const useSale = () => {
     
@@ -88,17 +89,17 @@ export const useSale = () => {
     const applySalesFilters = (
         page: number,
         limit: number,
-        overrides?: Partial<SalesFilterDTO>
+        overrides?: Partial<FilterSalesDTO>
     ) => {
 
-        const current: SalesFilterDTO = {
+        const current: FilterSalesDTO = {
             userId: filter.user.id,
             dateStart: filter.dates.dateStart,
             dateEnd: filter.dates.dateEnd,
             minPrice: filter.price.minPrice,
             maxPrice: filter.price.maxPrice
         }
-        const applied: SalesFilterDTO = { ...current, ...overrides}
+        const applied: FilterSalesDTO = { ...current, ...overrides}
         const hasPriceFilter = applied.minPrice !== null && applied.maxPrice !== null
         const hasDateFilter = applied.dateStart !== null && applied.dateEnd !== null
         const hasOtherFilters = applied.userId !== null 

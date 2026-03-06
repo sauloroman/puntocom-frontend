@@ -38,7 +38,7 @@ export const UserInfoDrawer: React.FC = () => {
 
       </div>
 
-      <div className={`px-4 space-y-3 text-md mb-10 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+      <div className={`px-4 space-y-3 text-lg mb-10 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
         <p>
           <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>#Id: </span>
           {id}

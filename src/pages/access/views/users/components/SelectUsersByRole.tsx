@@ -6,32 +6,25 @@ import { Select } from '../../../../../shared/components/select'
 export const SelectUsersByRole: React.FC = () => {
 
     const {
-        filter: { isVisible },
-        filterUsersByRole,
-        onChangePaginationVisibility,
-        onSetFilterRole,
-        getUsers
+        onSetFilterUsersByRole,
     } = useUsers()
 
-    const onChange = ( value: Roles | string ) => {
-        onChangePaginationVisibility(true)
-        if ( value === 'Roles') {
-            getUsers()
-            onSetFilterRole(null, true)
-            return
-        }
-        filterUsersByRole(value as Roles)
+    const onChange = (value: Roles | string) => {
+        if ( value === 'Roles') return 
+        onSetFilterUsersByRole(value as Roles)
     }
 
     return (
-        <>
-        {
-            isVisible && <Select
+        <div className='w-full'>
+            <Select
                 onChange={onChange}
                 placeholder='Roles'
-                options={[Roles.ADMINISTRADOR, Roles.SUPERVISOR, Roles.VENDEDOR]}
+                options={[
+                    Roles.ADMINISTRADOR, 
+                    Roles.SUPERVISOR, 
+                    Roles.VENDEDOR
+                ]}
             />
-        }        
-        </>
+        </div>
     )
 }

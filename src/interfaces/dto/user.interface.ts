@@ -11,6 +11,11 @@ export interface GetUsersResponse {
   users: User[]
 }
 
+export interface GetAllUsersResponse {
+  ok: boolean,
+  users: User[]
+}
+
 export interface UserResponse {
   ok: boolean,
   message: string,

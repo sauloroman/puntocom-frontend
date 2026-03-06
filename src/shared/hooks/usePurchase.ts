@@ -27,15 +27,7 @@ import {
   startGettingProductsToBeInPurchase,
   startSavingPurchase,
 } from "../../store/purchase/purchase.thunk"
-
-interface PurchasesFilterDTO {
-  userId: string | null
-  supplierId: string | null
-  dateStart: string | null
-  dateEnd: string | null
-  minPrice: number | null
-  maxPrice: number | null
-}
+import type { FilterPurchasesDTO } from "../../interfaces/ui/filter.interface"
 
 export const usePurchase = () => {
   const dispatch = useDispatch<any>()
@@ -135,10 +127,10 @@ export const usePurchase = () => {
   const applyPurchasesFilters = (
     page: number,
     limit: number,
-    overrides?: Partial<PurchasesFilterDTO>
+    overrides?: Partial<FilterPurchasesDTO>
   ) => {
 
-    const current: PurchasesFilterDTO = {
+    const current: FilterPurchasesDTO = {
       userId: filter.user.id,
       supplierId: filter.supplier.id,
       dateStart: filter.dates.dateStart,
@@ -147,7 +139,7 @@ export const usePurchase = () => {
       maxPrice: filter.price.maxPrice,
     }
 
-    const applied: PurchasesFilterDTO = {
+    const applied: FilterPurchasesDTO = {
       ...current,
       ...overrides,
     }

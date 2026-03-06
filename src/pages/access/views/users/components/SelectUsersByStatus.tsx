@@ -4,33 +4,20 @@ import { Select } from '../../../../../shared/components/select'
 
 export const SelectUsersByStatus: React.FC = () => {
     
-    const { 
-        filter: { isVisible },
-        filterUsersByStatus,
-        getUsers,
-        onSetFilterStatus,
-        onChangePaginationVisibility
-    } = useUsers()
+    const {onSetFilterUsersByStatus} = useUsers()
     
-    const onChange = ( value: string ) => {
-        onChangePaginationVisibility(true)
-        if ( value === 'Estado') {
-            getUsers()
-            onSetFilterStatus(null, true)
-            return
-        }
-        filterUsersByStatus(value === 'Activo')
+    const onChange = ( status: string ) => {
+        if ( status === 'Estado' ) return
+       onSetFilterUsersByStatus(status)
     }
 
     return (
-        <>
-            {
-                isVisible && <Select 
-                    onChange={ onChange }
-                    placeholder='Estado'
-                    options={['Activo', 'Inactivo']}
-                />
-            }
-        </>
+        <div className='w-full'>
+           <Select 
+                onChange={ onChange }
+                placeholder='Estado'
+                options={['Activo', 'Inactivo']}
+            />
+        </div>
     )
 }

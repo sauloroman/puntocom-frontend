@@ -27,6 +27,8 @@ import { AlertType } from "../../interfaces/ui/alert.interface"
 import { handleError } from "../../config/api/handle-error"
 import { openModal, setModalMessage } from "../modal/modal.slice"
 import { ModalNames } from "../../interfaces/ui/modal.interface"
+import type { RootState } from "../store"
+import { login } from "../auth/auth.slice"
 
 const urlUser = '/api/user'
 
@@ -84,13 +86,19 @@ export const startChangingUserStatus = ( userId: string, status: boolean ) => {
 }
 
 export const startUploadingUserImage = ( userId: string, files: FormData ) => {
-    return async ( dispatch: Dispatch ) => {
+    return async ( dispatch: Dispatch, getState: () => RootState ) => {
         dispatch(setIsLoading(true))
-        try {
+        try {   
 
             const url = `${urlUser}/upload-image/${userId}`
             const { data } = await puntocomApiPrivate.patch<UploadUserImage>(url, files, { headers: { 'Content-Type': 'multipart/form-data'}})
             const { message, user } = data
+
+            const { auth: { user: userLogged } } = getState()
+            
+            if ( userLogged?.id === user.id ) {
+                dispatch(login(user))
+            }
 
             dispatch(updateUser({ userId, user }))
             dispatch(setUserSelected(user))
@@ -112,88 +120,47 @@ export const startUploadingUserImage = ( userId: string, files: FormData ) => {
     }
 }
 
-export const startFilteringUsersByStatus = (pagination: Pagination, status: boolean) => {
-    return async (dispatch: Dispatch) => {
+export const startFilteringUsers = (
+    role?: Roles,
+    status?: string,
+    userName?: string,
+    pagination?: Pagination
+) => {
+    return async ( dispatch: Dispatch, getState: () => RootState ) => {
         dispatch(setIsLoading(true))
         try {
-            const url = `${urlUser}/search?page=${pagination.page}&limit=${pagination.limit}&sort=userCreatedAt:desc&filter={"userStatus": ${status ? 1 : 0}}`
+            const { pagination: {itemsPerPage}} = getState().users
 
-            const { data } = await puntocomApiPrivate.get<GetUsersResponse>(url)
+            const params: any = {
+                page: pagination?.page.toString() ?? '1',
+                limit: pagination?.limit.toString() ?? itemsPerPage.toString()
+            }
+
+            if ( role ) {
+                params['role'] = role.toString()
+            }
+
+            if ( status ) {
+                params['status'] = status === 'Activo' ? 1 : 0
+            }
+
+            if ( userName ) {
+                params['userName'] = userName.trim()
+            }
+
+            const { data } = await puntocomApiPrivate.get<GetUsersResponse>(`${urlUser}/filter`, { params })
             const { meta, users } = data
-
+            const { filter, ...restPagination } = meta
+            
             dispatch(setUsers(users))
-            dispatch(setUsersMetaPagination({ ...meta, itemsPerPage: 6 }))
+            dispatch(setUsersMetaPagination({ ...restPagination, itemsPerPage }))
 
-        } catch (error) {
+        } catch(error) {
             dispatch(showAlert({
-                title: '⚠️ Error al obtener usuarios filtrados por estado',
-                text: 'No se pudieron obtener los usuarios',
+                title: '⚠️ Error filtrando usuarios',
+                text: 'No fue posible filtrar los usuarios',
                 type: AlertType.error
             }))
-        } finally {
-            dispatch(setIsLoading(false))
-        }
-    }
-}
-
-export const startFilteringUsersByRole = (pagination: Pagination, role: Roles) => {
-    return async (dispatch: Dispatch) => {
-        dispatch(setIsLoading(true))
-        try {
-
-            const url = `${urlUser}/search?page=${pagination.page}&limit=${pagination.limit}&sort=userCreatedAt:desc&filter={"userRole": "${role}"}`
-
-            const { data } = await puntocomApiPrivate.get<GetUsersResponse>(url)
-            const { meta, users } = data
-
-            dispatch(setUsers(users))
-            dispatch(setUsersMetaPagination({ ...meta, itemsPerPage: 6 }))
-
-        } catch (error) {
-            console.log(error)
-        } finally {
-            dispatch(setIsLoading(false))
-        }
-    }
-}
-
-export const startGettingUsers = (pagination: Pagination) => {
-    return async (dispatch: Dispatch) => {
-        dispatch(setIsLoading(true))
-        try {
-
-            const { page, limit } = pagination
-
-            const { data } = await puntocomApiPrivate.get<GetUsersResponse>(`${urlUser}/search?page=${page}&limit=${limit}&sort=userCreatedAt:desc`)
-
-            const { meta, users } = data
-
-            dispatch(setUsers(users))
-            dispatch(setUsersMetaPagination({
-                ...meta,
-                itemsPerPage: 6
-            }))
-
-        } catch (error) {
-            console.log(error)
-        } finally {
-            dispatch(setIsLoading(false))
-        }
-    }
-}
-
-export const startSearchingUsers = (userSearched: string) => {
-    return async (dispatch: Dispatch) => {
-        dispatch(setIsLoading(true))
-        try {
-
-            const { data } = await puntocomApiPrivate.get<GetUsersResponse>(`${urlUser}/search?sort=userName:asc&filter={"userName": "${userSearched}"}`)
-
-            const { users } = data
-            dispatch(setUsers(users))
-
-        } catch (error) {
-            console.log(error)
         } finally {
             dispatch(setIsLoading(false))
         }
@@ -227,13 +194,19 @@ export const startCreatingUser = (userData: CreateUser) => {
 }
 
 export const startUpdatingUser = (userId: string, userData: UpdateUser ) => {
-    return async ( dispatch: Dispatch ) => {
+    return async ( dispatch: Dispatch, getState: () => RootState ) => {
         dispatch(setIsLoading(true))
         try {
 
             const url = `${urlUser}/${userId}`
             const { data } = await puntocomApiPrivate.put<UpdateUserResponse>(url, userData)
             const { message, user } = data
+
+            const { auth: { user: userLogged } } = getState()
+            
+            if ( userLogged?.id === user.id ) {
+                dispatch(login(user))
+            }
 
             dispatch(updateUser({userId, user}))
             dispatch(setUserSelected(user))

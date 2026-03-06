@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { ProductInPurchase, PurchaseWithDetails, SavePurchaseDetail } from "../../interfaces/dto/purchase.interface";
 import type { Product } from "../../interfaces/dto/product.interface";
 import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
-import type { Filter } from "../../interfaces/ui/filter.interface";
+import type { FilterPurchases } from "../../interfaces/ui/filter.interface";
 
 interface PurchasesState {
     products: Product[] | null,
@@ -16,7 +16,7 @@ interface PurchasesState {
     purchasesPagination: MetaPagination & { itemsPerPage: number },
     isPurchasesPaginationVisible: boolean,
     isLoading: boolean,
-    filter: Filter
+    filter: FilterPurchases
 }
 
 const initialState: PurchasesState = {
@@ -155,22 +155,22 @@ export const purchaseSlice = createSlice({
             state.productsInPurchase = []
         },
 
-        setFilterUser: (state, { payload }: PayloadAction<Pick<Filter, 'user'>> ) => {
+        setFilterUser: (state, { payload }: PayloadAction<Pick<FilterPurchases, 'user'>> ) => {
             state.filter.user.id = payload.user.id
             state.filter.user.name = payload.user.name
         },
         
-        setFilterSupplier: (state, { payload }: PayloadAction<Pick<Filter, 'supplier'>> ) => {
+        setFilterSupplier: (state, { payload }: PayloadAction<Pick<FilterPurchases, 'supplier'>> ) => {
             state.filter.supplier.id = payload.supplier.id
             state.filter.supplier.name = payload.supplier.name
         },
 
-        setPricesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'price'>> ) => {
+        setPricesFilter: ( state, {payload}: PayloadAction<Pick<FilterPurchases, 'price'>> ) => {
             state.filter.price.minPrice = payload.price.minPrice
             state.filter.price.maxPrice = payload.price.maxPrice
         },
 
-        setDatesFilter: ( state, {payload}: PayloadAction<Pick<Filter, 'dates'>>) => {
+        setDatesFilter: ( state, {payload}: PayloadAction<Pick<FilterPurchases, 'dates'>>) => {
             state.filter.dates.dateStart = payload.dates.dateStart
             state.filter.dates.dateEnd = payload.dates.dateEnd
         },

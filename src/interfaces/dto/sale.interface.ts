@@ -85,11 +85,3 @@ export interface GetFilteredSalesResponse {
     },
     sales: SaleWithDetailsResponse[]
 }
-
-export interface SalesFilterDTO {
-    userId: string | null,
-    dateStart: string | null,
-    dateEnd: string | null,
-    minPrice: number | null,
-    maxPrice: number | null
-}

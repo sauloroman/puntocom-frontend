@@ -3,14 +3,12 @@ import {
     startChangingUserStatus, 
     startCheckingAdminPass, 
     startCreatingUser, 
-    startFilteringUsersByRole, 
-    startFilteringUsersByStatus, 
-    startGettingUsers, 
-    startSearchingUsers, 
+    startFilteringUsers, 
     startUpdatingUser, 
     startUploadingUserImage 
 } from "../../store/users/users.thunk"
 import { 
+    resetFilter,
     setHasEnteredPasswordCorrectly,
     setOrderedAsc, 
     setPage, 
@@ -18,11 +16,13 @@ import {
     setRoleFilter, 
     setStatusFilter, 
     setTableView, 
+    setUserNameFilter, 
     setUsers, 
     setUserSelected 
 } from "../../store/users/users.slice"
 import type { RootState } from "../../store"
 import type { CheckAdminPassword, CreateUser, Roles, UpdateUser } from "../../interfaces/dto/user.interface"
+import type { FilterUsersDTO } from "../../interfaces/ui/filter.interface"
 
 export const useUsers = () => {
 
@@ -40,67 +40,88 @@ export const useUsers = () => {
         isOrderedAsc,
     } = useSelector((state: RootState) => state.users )
 
-    const getUsers = () => {
-        dispatch(startGettingUsers({
-            page: 1,
-            limit: pagination.itemsPerPage
-        }))
+    const applyUserFilters = (
+        page: number,
+        limit: number,
+        overrides?: Partial<FilterUsersDTO>
+    ) => {
+
+        const current: FilterUsersDTO = {
+            role: filter.role,
+            status: filter.status,
+            userName: filter.userName
+        }
+        const applied: FilterUsersDTO = {...current, ...overrides}
+        const hasRoleFilter = applied.role !== null 
+        const hasStatusFilter = applied.status !== null
+        const hasUsernameFilter = applied.userName !== null
+        
+        if ( hasRoleFilter || hasStatusFilter || hasUsernameFilter ) {
+            dispatch(startFilteringUsers(
+                applied.role ?? undefined,
+                applied.status ?? undefined,
+                applied.userName ?? undefined,
+                { page, limit }
+            ))
+        } else {
+            dispatch(startFilteringUsers(
+                undefined, 
+                undefined, 
+                undefined, 
+                {page, limit}
+            ))
+        }
     }
 
-    const filterUsersByStatus = (status: boolean) => {
-        dispatch(setStatusFilter({ status, isVisible: true }))
-        dispatch(startFilteringUsersByStatus({
-            page: 1,
-            limit: pagination.itemsPerPage,
-        }, status ))
+    const onGetUsers = () => {
+        dispatch(startFilteringUsers(
+            undefined, 
+            undefined, 
+            undefined, 
+        ))
     }
 
-    const filterUsersByRole = (role: Roles) => {
-        dispatch(setRoleFilter({ role, isVisible: true }))
-        dispatch(startFilteringUsersByRole({
-            page: 1,
-            limit: pagination.itemsPerPage
-        }, role))
+    const onSetFilterUsersByStatus = (status: string | null) => {
+        dispatch(setStatusFilter({ status }))
+        dispatch(setPage(1))
+        applyUserFilters(1, pagination.itemsPerPage, { status })
+    }
+
+    const onSetFilterUsersByRole = (role: Roles | null) => {
+        dispatch(setRoleFilter({ role }))
+        dispatch(setPage(1))
+        applyUserFilters(1, pagination.itemsPerPage, { role })
+    }
+
+    const onSetFilterUsersByUserName = ( userName: string ) => {
+        dispatch(setUserNameFilter({ userName }))
+        dispatch(setPage(1))
+        applyUserFilters(1, pagination.itemsPerPage, {userName})
+    }
+
+    const onResetFilters = () => {
+        dispatch(resetFilter())
+        dispatch(setPage(1))
+        onGetUsers()
     }
 
     const onSetPage = ( page: number ) => {
         dispatch(setPage(page))
-
-        if ( filter.status !== null ) {
-            dispatch(startFilteringUsersByStatus({
-                page,
-                limit: pagination.itemsPerPage,
-            }, filter.status))
-        } else if ( filter.role !== null ) {
-            dispatch(startFilteringUsersByRole({
-                page,
-                limit: pagination.itemsPerPage,
-            }, filter.role))
-        } else {
-            dispatch(startGettingUsers({page, limit: pagination.itemsPerPage }))
-        }
+        applyUserFilters(page, pagination.itemsPerPage)
     }
 
-    const onSetFilterStatus = (status: boolean | null, isVisible: boolean ) => {
-        dispatch(setStatusFilter({ status, isVisible }))
-    }
-
-    const onSetFilterRole = ( role: Roles | null, isVisible: boolean ) => {
-        dispatch(setRoleFilter({role, isVisible}))
-    }
-
-    const createUser = ( data: CreateUser ) => {
+    const onCreateUser = ( data: CreateUser ) => {
         dispatch( startCreatingUser(data) )
     } 
 
-    const checkAdminPassword = ( data: CheckAdminPassword ) => {
+    const onCheckAdminPassword = ( data: CheckAdminPassword ) => {
         dispatch(startCheckingAdminPass({
             id: data.id,
             adminPassword: data.adminPassword
         } ))
     }
 
-    const resetEnteredAdminPassword = () => {
+    const onResetEnteredAdminPassword = () => {
         dispatch(setHasEnteredPasswordCorrectly(false))
     }
 
@@ -108,11 +129,7 @@ export const useUsers = () => {
         dispatch(setPaginationVisible(isVisible))
     }
 
-    const onSearchUser = ( userSearched: string ) => {
-        dispatch(startSearchingUsers(userSearched))
-    }
-
-    const setTableStyle = ( status: boolean ) => {
+    const onSetTableStyle = ( status: boolean ) => {
         dispatch( setTableView(status) )
     }
 
@@ -125,16 +142,16 @@ export const useUsers = () => {
         dispatch(startChangingUserStatus(id, status))
     }
 
-    const uploadUserImage = (userId: string, files: FormData) => {
+    const onUploadUserImage = (userId: string, files: FormData) => {
         dispatch(startUploadingUserImage(userId, files))
     }
 
     const onOrderAlpha = ( ordered: boolean ) => {
         dispatch(setOrderedAsc(ordered))
-        sortUsers()
+        onSortUsers()
     }    
 
-    const sortUsers = () => {
+    const onSortUsers = () => {
         const usersSorted = [...users!].sort((a, b) => {
             const fullNameA = `${a.name} ${a.lastname}`.toLowerCase();
             const fullNameB = `${b.name} ${b.lastname}`.toLowerCase();
@@ -149,7 +166,7 @@ export const useUsers = () => {
         dispatch(setUsers(usersSorted ?? []))
     }
 
-    const updateUser = ( userId: string, userData: UpdateUser ) => {
+    const onUpdateUser = ( userId: string, userData: UpdateUser ) => {
         dispatch(startUpdatingUser(userId, userData))
     }
 
@@ -164,24 +181,22 @@ export const useUsers = () => {
         users,
         userSelected,
 
-        checkAdminPassword,
-        createUser,
-        filterUsersByRole,
-        filterUsersByStatus,
-        getUsers,
         onChangePaginationVisibility,
         onChangeUserStatus,
+        onCheckAdminPassword,
+        onCreateUser,
+        onGetUsers,
         onOrderAlpha,
-        onSearchUser,
+        onResetEnteredAdminPassword,
+        onResetFilters,
         onSelectUser,
-        onSetFilterRole,
-        onSetFilterStatus,
+        onSetFilterUsersByRole,
+        onSetFilterUsersByStatus,
+        onSetFilterUsersByUserName,
         onSetPage,
-        setTableStyle,
-        sortUsers,
-        updateUser,
-        uploadUserImage,
-        resetEnteredAdminPassword,
+        onSetTableStyle,
+        onUpdateUser,
+        onUploadUserImage,
     }
 
 }

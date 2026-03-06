@@ -14,14 +14,14 @@ export const ModalRequestPasswordAdmin: React.FC = () => {
 
   const { confirmPasswordModal, onOpenModal } = useModal()
   const { user } = useAuth()
-  const { checkAdminPassword, hasEnteredPasswordCorrectly } = useUsers()
+  const { onCheckAdminPassword, hasEnteredPasswordCorrectly } = useUsers()
   const { theme } = useTheme()
   const isDark = theme === 'dark'
 
   const { handleSubmit, register, formState: { errors } } = useForm<CheckAdminPassword>()
 
   const onCheckAdminCredentials = (data: CheckAdminPassword) => {
-    checkAdminPassword({
+    onCheckAdminPassword({
       id: user!.id,
       adminPassword: data.adminPassword
     })
