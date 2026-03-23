@@ -6,6 +6,7 @@ import { AlertType } from "../../interfaces/ui/alert.interface";
 import { puntocomApiPrivate } from "../../config/api/puntocom.api";
 import type { Pagination } from "../../interfaces/dto/pagination.interface";
 import { handleError } from "../../config/api/handle-error";
+import type { RootState } from "../store";
 
 const urlInventoryAdjustment = '/api/inventory-adjustment'
 
@@ -18,6 +19,7 @@ export const startSavingInventoryAdjustment = ( adjustment: SaveInventoryAdjustm
                 adjustment
             )
             const { adjustmentSaved, message } = data
+
             dispatch(addInventoryAdjustment(adjustmentSaved))
             dispatch(showAlert({
                 title: 'Ajuste de inventario',
@@ -37,62 +39,35 @@ export const startSavingInventoryAdjustment = ( adjustment: SaveInventoryAdjustm
     }
 }
 
-export const startGettingInventoryAdjustments = ( pagination: Pagination ) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch(setIsLoading(true))
-        try {
-            const { page, limit } = pagination
-            const { data } = await puntocomApiPrivate.get<GetInventoryAdjustments>(
-                `${urlInventoryAdjustment}?page=${page}&limit=${limit}&sort=inventoryAdjustmentDate:desc`
-            )
-            const { adjustments, meta } = data
-
-            dispatch(setInventoryAdjustments(adjustments))
-            dispatch(setAdjustmentsMetaPagination({ ...meta, itemsPerPage: limit }))
-        } catch( error ) {
-            dispatch(showAlert({
-                title: 'Ajuste de inventario',
-                text: 'No se pudo obtener los ajustes de inventario',
-                type: AlertType.error
-            }))
-        } finally {
-            dispatch(setIsLoading(false))
-        }
-    }
-}
-
 export const startFilteringInventoryAdjustments = ( 
-    pagination: Pagination, 
-    userId?: string, 
-    adjustmentType?: string 
+    adjustmentType?: string, 
+    user?: string, 
+    pagination?: Pagination, 
 ) => {
-    return async ( dispatch: Dispatch ) => {
+    return async ( dispatch: Dispatch, getState: () => RootState ) => {
         dispatch(setIsLoading(true))
         try {
-            const { page, limit } = pagination
+            const { pagination: {itemsPerPage}} = getState().inventoryAdjustment
 
-            const filterObject: Record<string, string> = {}
-            
-            if (adjustmentType) {
-                filterObject.inventoryAdjustmentType = adjustmentType
-            }
-            
-            if (userId) {
-                filterObject.inventoryAdjustmentUser = userId
+            const params: any = {
+                page: pagination?.page.toString() ?? '1',
+                limit: pagination?.limit.toString() ?? itemsPerPage.toString()
             }
 
-            const filterParam = Object.keys(filterObject).length > 0 
-                ? `&filter=${JSON.stringify(filterObject)}`
-                : ''
+            if ( adjustmentType ) {
+                params['adjustmentType'] = adjustmentType
+            }
 
-            const url = `${urlInventoryAdjustment}?page=${page}&limit=${limit}&sort=inventoryAdjustmentDate:desc${filterParam}`
+            if ( user ) {
+                params['userId'] = user
+            }
 
-            const { data } = await puntocomApiPrivate.get<GetInventoryAdjustments>(url)
-
+            const { data } = await puntocomApiPrivate.get<GetInventoryAdjustments>(`${urlInventoryAdjustment}/filter`, { params })
             const { adjustments, meta } = data
-
+            const { filter, ...resetPagination } = meta
+            
             dispatch(setInventoryAdjustments(adjustments))
-            dispatch(setAdjustmentsMetaPagination({...meta, itemsPerPage: limit}))
+            dispatch(setAdjustmentsMetaPagination({...resetPagination, itemsPerPage }))
         } catch(error) {
             const errorMessage = handleError(error)
             console.log(errorMessage)

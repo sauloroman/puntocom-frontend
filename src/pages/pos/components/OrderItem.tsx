@@ -27,112 +27,68 @@ export const OrderItem: React.FC<Props> = ({
     const total = sellingPrice * quantity
     
     return (
-        <li
-            key={id}
+        <li className={`
+    flex flex-col rounded-xl p-2.5 md:p-3 transition-colors gap-2
+    ${isDark ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'}
+`}>
+    <div className="flex items-center gap-3">
+        <div className={`
+            w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden border flex-shrink-0
+            ${isDark ? 'bg-gray-800 border-gray-600' : 'bg-white border-gray-200'}
+        `}>
+            <img src={image} alt={name} className="w-full h-full object-cover" />
+        </div>
+
+        <div className="flex-1 min-w-0">
+            <p className={`font-medium text-sm md:text-base truncate ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+                {name}
+            </p>
+            <p className={`text-xs md:text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                ${sellingPrice.toFixed(2)} × {quantity}
+            </p>
+        </div>
+
+        <div className="flex-shrink-0 text-right">
+            <p className={`font-semibold text-base md:text-lg ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+                ${total.toFixed(2)}
+            </p>
+            {discount > 0 && (
+                <p className={`text-sm font-semibold ${isDark ? 'text-green-400' : 'text-green-600'}`}>
+                    -{discount.toFixed(2)}
+                </p>
+            )}
+        </div>
+    </div>
+
+    <div className="flex items-center gap-2 pl-1">
+        <button
+            onClick={() => onDecreaseQuantity(id)}
             className={`
-                flex flex-col sm:flex-row justify-between items-stretch sm:items-center 
-                rounded-xl p-2.5 md:p-3 transition-colors gap-3 sm:gap-0
-                ${isDark 
-                    ? 'bg-gray-700 hover:bg-gray-600' 
-                    : 'bg-gray-50 hover:bg-gray-100'
-                }
+                w-6 h-6 cursor-pointer flex items-center justify-center rounded-full border transition-colors
+                ${isDark ? 'border-gray-600 text-gray-300 hover:bg-gray-600' : 'border-gray-300 text-gray-600 hover:bg-gray-200'}
             `}
         >
-            <div className="flex items-center gap-3 md:gap-5 flex-1">
-                <div className={`
-                    w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-xl overflow-hidden border transition-colors flex-shrink-0
-                    ${isDark 
-                        ? 'bg-gray-800 border-gray-600' 
-                        : 'bg-white border-gray-200'
-                    }
-                `}>
-                    <img
-                        src={image}
-                        alt={name}
-                        className="w-full h-full object-cover"
-                    />
-                </div>
-
-                <div className="flex flex-col flex-1 min-w-0">
-
-                    <p className={`
-                        font-medium text-sm md:text-base transition-colors truncate
-                        ${isDark ? 'text-gray-200' : 'text-gray-800'}
-                    `}>
-                        {name}
-                    </p>
-                    <p className={`
-                        text-xs md:text-sm transition-colors
-                        ${isDark ? 'text-gray-400' : 'text-gray-500'}
-                    `}>
-                        ${sellingPrice.toFixed(2)} × {quantity}
-                    </p>
-
-                    <div className="flex items-center gap-2 mt-2">
-                        <button 
-                            onClick={() => onDecreaseQuantity(id)} 
-                            className={`
-                                w-6 h-6 cursor-pointer flex items-center justify-center 
-                                rounded-full border transition-colors
-                                ${isDark 
-                                    ? 'border-gray-600 text-gray-300 hover:bg-gray-600' 
-                                    : 'border-gray-300 text-gray-600 hover:bg-gray-200'
-                                }
-                            `}
-                        >
-                            <FiMinus size={14} />
-                        </button>
-                        <span className={`
-                            text-sm font-semibold w-4 text-center transition-colors
-                            ${isDark ? 'text-gray-200' : 'text-gray-700'}
-                        `}>
-                            {quantity}
-                        </span>
-                        <button 
-                            onClick={() => onIncreaseQuantity(id)} 
-                            className={`
-                                w-6 h-6 cursor-pointer flex items-center justify-center 
-                                rounded-full text-white transition-colors
-                                ${isDark 
-                                    ? 'bg-gray-300 hover:bg-gray-200 text-gray-900' 
-                                    : 'bg-black hover:bg-gray-800'
-                                }
-                            `}
-                        >
-                            <FiPlus size={14} />
-                        </button>
-                        <button 
-                            onClick={() => onDeleteProductFromCart(id)} 
-                            className={`
-                                ml-2 transition-colors
-                                ${isDark 
-                                    ? 'text-red-400 hover:text-red-300' 
-                                    : 'text-red-500 hover:text-red-600'
-                                }
-                            `}
-                        >
-                            <FiTrash2 size={16} />
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div className='flex sm:flex-col gap-2 justify-between sm:justify-start items-center sm:items-end sm:ml-2'>
-                <p className={`
-                    font-semibold text-base md:text-lg transition-colors
-                    ${isDark ? 'text-gray-200' : 'text-gray-800'}
-                `}>
-                    ${total.toFixed(2)}
-                </p>
-                {discount > 0 && (
-                    <p className={`
-                        font-semibold text-sm transition-colors
-                        ${isDark ? 'text-green-400' : 'text-green-600'}
-                    `}>
-                        -${discount.toFixed(2)}
-                    </p>
-                )}
-            </div>
-        </li>
+            <FiMinus size={14} />
+        </button>
+        <span className={`text-sm font-semibold w-4 text-center ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+            {quantity}
+        </span>
+        <button
+            onClick={() => onIncreaseQuantity(id)}
+            className={`
+                w-6 h-6 cursor-pointer flex items-center justify-center rounded-full text-white transition-colors
+                ${isDark ? 'bg-gray-800 hover:bg-gray-900' : 'bg-black hover:bg-gray-800'}
+            `}
+        >
+            <FiPlus size={14} />
+        </button>
+        <button
+            onClick={() => onDeleteProductFromCart(id)}
+            className={`ml-2 transition-colors ${isDark ? 'text-red-400 hover:text-red-300' : 'text-red-500 hover:text-red-600'}`}
+        >
+            <FiTrash2 size={16} />
+        </button>
+    </div>
+</li>
     )
 }

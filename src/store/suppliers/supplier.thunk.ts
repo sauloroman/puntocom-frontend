@@ -24,28 +24,25 @@ import {
     type UpdateSupplierResponse,
     type GetAllSuppliers
 } from "../../interfaces/dto/supplier.interface"
+import type { RootState } from "../store"
 
 const urlSuppliers = '/api/supplier'
 
-export const startGettingSuppliers = ( pagination: Pagination ) => {
+export const startGettingAllSuppliers = () => {
     return async ( dispatch: Dispatch ) => {
         dispatch(setIsLoading(true))
         try {
             
-            const { page, limit } = pagination
-            
-            const {data} = await puntocomApiPrivate.get<GetSuppliersResponse>(`${urlSuppliers}?page=${page}&limit=${limit}&sort=supplierCreatedAt:desc`)
-
-            const { data: {companies}} = await puntocomApiPrivate.get<GetUniqueCompaniesSupplier>(`${urlSuppliers}/companies`)
-
-            const { meta, suppliers } = data
-
-            dispatch(setSuppliers(suppliers))
-            dispatch(setCompanies(companies))
-            dispatch(setSuppliersMetaPagination({...meta, itemsPerPage: 10}))
+            const {data} = await puntocomApiPrivate.get<GetAllSuppliers>(urlSuppliers)
+            const { suppliers } = data
+            dispatch(setAllSuppliers(suppliers))
 
         } catch(error) {
-            console.log(error)
+            dispatch(showAlert({
+                title: '⚠️ Error obteniendo los proveedores',
+                text: 'No fue posible obtener todos los proveedores',
+                type: AlertType.error
+            }))
         } finally {
             dispatch(setIsLoading(false))
         }
@@ -59,86 +56,62 @@ export const startGettingUniqueCompanies = () => {
             const { data: {companies}} = await puntocomApiPrivate.get<GetUniqueCompaniesSupplier>(`${urlSuppliers}/companies`)
             dispatch(setCompanies(companies))
         } catch(error) {
-            console.log(error)
+            dispatch(showAlert({
+                title: '⚠️ Error obteniendo las empresas',
+                text: 'No fue posible obtener las empresas de los proveedores',
+                type: AlertType.error
+            }))
         } finally {
             dispatch(setIsLoading(false))
         }
     }
 }
 
-export const startGettingAllSuppliers = () => {
-    return async ( dispatch: Dispatch ) => {
+export const startFilteringSuppliers = ( 
+    status?: string,
+    company?: string,
+    supplierName?: string,
+    pagination?: Pagination
+) => {
+    return async ( dispatch: Dispatch, getState: () => RootState ) => {
         dispatch(setIsLoading(true))
         try {
-            
-            const {data} = await puntocomApiPrivate.get<GetAllSuppliers>(urlSuppliers)
-            const { suppliers } = data
-            dispatch(setAllSuppliers(suppliers))
 
-        } catch(error) {
-            console.log(error)
+            const { pagination: { itemsPerPage } } = getState().suppliers
+
+            const params: any = {
+                page: pagination?.page.toString() ?? '1',
+                limit: pagination?.limit.toString() ?? itemsPerPage.toString()
+            }
+
+            if ( status ) {
+                params['status'] = status === 'Activo' ? 1 : 0
+            }
+
+            if ( supplierName ) {
+                params['supplierName'] = supplierName.trim()
+            }
+            
+            if ( company ) {
+                params['company'] = company.trim()
+            }
+
+            const { data } = await puntocomApiPrivate.get<GetSuppliersResponse>(`${urlSuppliers}/filter`, { params })
+            const { meta, suppliers } = data
+
+            const { filter, ...restPagination } = meta
+
+            dispatch(setSuppliers(suppliers))
+            dispatch(setSuppliersMetaPagination({ ...restPagination, itemsPerPage }))
+
+        } catch( error ) {
+            dispatch(showAlert({
+                title: '⚠️ Error filtrando proveedores',
+                text: 'No fue posible filtrar los proveedores',
+                type: AlertType.error
+            }))
         } finally {
             dispatch(setIsLoading(false))
-        }
-    }
-}
-
-export const startSearchingSuppliers = ( supplierSearched: string ) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch( setIsLoading(true ) )
-        try {
-            
-            const {data} = await puntocomApiPrivate.get<GetSuppliersResponse>(`${urlSuppliers}/search?sort=supplierName:asc&filter={"supplierName": "${supplierSearched}"}`)
-
-            const { suppliers } = data
-            dispatch(setSuppliers(suppliers))
-
-        } catch(error) {
-            console.log(error)
-        } finally {
-            dispatch( setIsLoading(false) )
-        }
-    }
-}
-
-export const startFilteringSuppliersByStatus = ( pagination: Pagination, status: boolean) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch( setIsLoading( true ) )
-        try {
-            const { limit, page } = pagination
-            
-            const { data } = await puntocomApiPrivate.get<GetSuppliersResponse>(`${urlSuppliers}?page=${page}&limit=${limit}&sort=supplierName:asc&filter={"supplierStatus": ${status}}`)
-
-            const { meta, suppliers } = data
-
-            dispatch(setSuppliers(suppliers))
-            dispatch(setSuppliersMetaPagination({...meta, itemsPerPage: 10}))
-
-        } catch(error) {
-            console.log(error)
-        } finally {   
-            dispatch( setIsLoading( false ) )
-        }
-    }
-}
-
-export const startFilteringSuppliersByCompany = ( pagination: Pagination, company: string) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch( setIsLoading( true ) )
-        try {
-            const { limit, page } = pagination
-            
-            const { data } = await puntocomApiPrivate.get<GetSuppliersResponse>(`${urlSuppliers}?page=${page}&limit=${limit}&sort=supplierCreatedAt:desc&filter={"supplierCompany": "${company}"}`)
-
-            const { meta, suppliers } = data
-
-            dispatch(setSuppliers(suppliers))
-            dispatch(setSuppliersMetaPagination({...meta, itemsPerPage: 10}))
-
-        } catch(error) {
-            console.log(error)
-        } finally {   
-            dispatch( setIsLoading( false ) )
         }
     }
 }
@@ -160,14 +133,11 @@ export const startCreatingSupplier = ( createSupplierData: CreateSupplier ) => {
             }))
 
         } catch( error ) {
-            console.log(error)
-            dispatch(
-                showAlert({
-                    title: "⚠️ Error proveedor",
-                    text: 'No se pudo crear el proveedor',
-                    type: AlertType.error,
-                })
-            );
+            dispatch( showAlert({
+                title: "⚠️ Error proveedor",
+                text: 'No se pudo crear el proveedor',
+                type: AlertType.error,
+            }))
         } finally {
             dispatch(setIsLoading(false))
         }
@@ -192,13 +162,11 @@ export const startChangingSupplierStatus = ( supplierId: string, status: boolean
             }))
 
         } catch(error) {
-            dispatch(
-                showAlert({
-                    title: `⚠️ Error cambio estado proveedor`,
-                    text: `No se pudo ${status ? 'activar' : 'desactivar'} el proveedor`,
-                    type: AlertType.error,
-                })
-            );
+            dispatch(showAlert({
+                title: `⚠️ Error cambio estado proveedor`,
+                text: `No se pudo ${status ? 'activar' : 'desactivar'} el proveedor`,
+                type: AlertType.error,
+            }))
         } finally {
             dispatch(setIsLoading( false ))
         }

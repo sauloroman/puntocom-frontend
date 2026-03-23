@@ -4,12 +4,13 @@ import { motion } from 'framer-motion'
 interface Props {
     image: string,
     alt: string,
+    className?: string
 }
 
-export const AvatarImage: React.FC<Props> = ({ image, alt }) => {
+export const AvatarImage: React.FC<Props> = ({ image, alt, className }) => {
     return (
         <motion.div
-            className="h-20 w-20 rounded-xl overflow-hidden flex items-center justify-center"
+            className={`rounded-xl overflow-hidden flex items-center justify-center ${className}`}
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
         >

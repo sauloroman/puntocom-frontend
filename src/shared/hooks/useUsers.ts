@@ -4,6 +4,7 @@ import {
     startCheckingAdminPass, 
     startCreatingUser, 
     startFilteringUsers, 
+    startGettingAllUsers, 
     startUpdatingUser, 
     startUploadingUserImage 
 } from "../../store/users/users.thunk"
@@ -12,7 +13,6 @@ import {
     setHasEnteredPasswordCorrectly,
     setOrderedAsc, 
     setPage, 
-    setPaginationVisible, 
     setRoleFilter, 
     setStatusFilter, 
     setTableView, 
@@ -22,7 +22,7 @@ import {
 } from "../../store/users/users.slice"
 import type { RootState } from "../../store"
 import type { CheckAdminPassword, CreateUser, Roles, UpdateUser } from "../../interfaces/dto/user.interface"
-import type { FilterUsersDTO } from "../../interfaces/ui/filter.interface"
+import type { FilterUsers } from "../../interfaces/ui/filter.interface"
 
 export const useUsers = () => {
 
@@ -30,6 +30,7 @@ export const useUsers = () => {
 
     const { 
         users, 
+        allUsers,
         pagination, 
         isPaginationVisible,
         hasEnteredPasswordCorrectly,
@@ -43,15 +44,15 @@ export const useUsers = () => {
     const applyUserFilters = (
         page: number,
         limit: number,
-        overrides?: Partial<FilterUsersDTO>
+        overrides?: Partial<FilterUsers>
     ) => {
 
-        const current: FilterUsersDTO = {
+        const current: FilterUsers = {
             role: filter.role,
             status: filter.status,
             userName: filter.userName
         }
-        const applied: FilterUsersDTO = {...current, ...overrides}
+        const applied: FilterUsers = {...current, ...overrides}
         const hasRoleFilter = applied.role !== null 
         const hasStatusFilter = applied.status !== null
         const hasUsernameFilter = applied.userName !== null
@@ -79,6 +80,10 @@ export const useUsers = () => {
             undefined, 
             undefined, 
         ))
+    }
+
+    const onGetAllUsers = () => {
+        dispatch(startGettingAllUsers())
     }
 
     const onSetFilterUsersByStatus = (status: string | null) => {
@@ -125,10 +130,6 @@ export const useUsers = () => {
         dispatch(setHasEnteredPasswordCorrectly(false))
     }
 
-    const onChangePaginationVisibility = (isVisible: boolean) => {
-        dispatch(setPaginationVisible(isVisible))
-    }
-
     const onSetTableStyle = ( status: boolean ) => {
         dispatch( setTableView(status) )
     }
@@ -171,6 +172,7 @@ export const useUsers = () => {
     }
 
     return {
+        allUsers,
         filter,
         hasEnteredPasswordCorrectly,
         isLoading,
@@ -181,10 +183,10 @@ export const useUsers = () => {
         users,
         userSelected,
 
-        onChangePaginationVisibility,
         onChangeUserStatus,
         onCheckAdminPassword,
         onCreateUser,
+        onGetAllUsers,
         onGetUsers,
         onOrderAlpha,
         onResetEnteredAdminPassword,

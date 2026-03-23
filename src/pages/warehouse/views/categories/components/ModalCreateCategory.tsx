@@ -16,16 +16,16 @@ export const ModalCreateCategory: React.FC = () => {
         formState: {errors}        
     } = useForm<CreateCategory>()
     const { onCloseModal } = useModal()
-    const { createCategory } = useCategories()
+    const { onCreateCategory } = useCategories()
 
-    const onCreateCategory = ( data: CreateCategory ) => {
-        createCategory(data)
+    const createCategory = ( data: CreateCategory ) => {
+        onCreateCategory(data)
         onCloseModal()
     }
 
     return (
         <ModalLayout width={'w-lg'}>
-            <form onSubmit={handleSubmit(onCreateCategory)} className='space-y-4'>
+            <form onSubmit={handleSubmit(createCategory)} className='space-y-4'>
                 <div>
                     <Label htmlFor='categoryName' className='mb-3 flex items-center justify-between gap-2'>
                         Nombre de la categoría

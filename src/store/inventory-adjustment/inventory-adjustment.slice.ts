@@ -1,16 +1,14 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { AdjustmentEnum, InventoryAdjustmentResponse } from "../../interfaces/dto/inventory-adjustment.interface";
+import type { InventoryAdjustmentResponse } from "../../interfaces/dto/inventory-adjustment.interface";
 import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
+import type { FilterInventoryAdjustments } from "../../interfaces/ui/filter.interface";
 
 interface InventorySliceState {
     isLoading: boolean,
     adjustments: InventoryAdjustmentResponse[] | null,
     adjustmentSelected: InventoryAdjustmentResponse | null,
     pagination: MetaPagination & { itemsPerPage: number },
-    filter: {
-        adjustmentType: AdjustmentEnum | null,
-        adjustmentUserId: string | null,
-    },
+    filter: FilterInventoryAdjustments,
     isTableStyleActive: boolean,
     isGridStyleActive: boolean,
 }
@@ -27,7 +25,10 @@ const initialState: InventorySliceState = {
     },
     filter: {
         adjustmentType: null,
-        adjustmentUserId: null,
+        user: {
+            id: null,
+            name: null,
+        },
     },
     isTableStyleActive: true,
     isGridStyleActive: false
@@ -58,12 +59,22 @@ export const inventorySlice = createSlice({
             state.pagination = payload
         },
 
-        setAdjustmentTypeFilter: ( state, {payload}: PayloadAction<AdjustmentEnum | null>) => {
-            state.filter.adjustmentType = payload
+        setAdjustmentTypeFilter: ( state, {payload}: PayloadAction<Pick<FilterInventoryAdjustments, 'adjustmentType'>>) => {
+            state.filter.adjustmentType = payload.adjustmentType
         },
 
-        setAdjustmentUserFilter: ( state, {payload}: PayloadAction<string | null>) => {
-            state.filter.adjustmentUserId = payload
+        setAdjustmentUserFilter: ( state, {payload}: PayloadAction<Pick<FilterInventoryAdjustments, 'user'>>) => {
+            state.filter.user = payload.user
+        },
+
+        resetFilters: (state) => {
+            state.filter = {
+                adjustmentType: null,
+                user: {
+                    id: null,
+                    name: null
+                }
+            }
         },
 
         setPage: ( state, {payload}: PayloadAction<number> ) => {
@@ -79,6 +90,7 @@ export const inventorySlice = createSlice({
 
 export const {
     addInventoryAdjustment,
+    resetFilters,
     setAdjustmentsMetaPagination,
     setAdjustmentTypeFilter,
     setAdjustmentUserFilter,

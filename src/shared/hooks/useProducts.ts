@@ -1,30 +1,32 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import type { CreateProduct, EditProduct, Product } from "../../interfaces/dto/product.interface"
+
 import { 
     startChangingProductStatus, 
     startCreatingProduct, 
-    startFilteringProductsByCategory, 
-    startFilteringProductsByStatus, 
-    startFilteringProductsBySupplier, 
+    startFilteringProducts, 
     startGettingAllProducts, 
     startGettingAllProductsFull, 
-    startGettingProducts, 
     startGettingProductsByStock, 
-    startSearchingProducts, 
     startUpdatingProduct, 
     startUploadingProductImage 
 } from "../../store/products/products.thunk"
+
 import { 
-    setCategoryFilter, 
+    resetFilter,
     setOrderedAsc, 
     setPage, 
     setPaginationVisible, 
+    setProductCategoryFilter, 
+    setProductNameFilter, 
+    setProductPricesFilter, 
     setProducts, 
+    setProductStatusFilter, 
+    setProductSupplierFilter, 
     setSelectedProduct, 
-    setStatusFilter, 
-    setSupplierFilter 
 } from "../../store/products/products.slice"
+import type { FilterProductByItem, FilterProducts } from "../../interfaces/ui/filter.interface"
 
 export const useProducts = () => {
 
@@ -44,65 +46,123 @@ export const useProducts = () => {
         allProducts
     } = useSelector( (state: RootState) => state.products )
 
-    const filterProductsByStatus = (status: boolean) => {
-        dispatch(setStatusFilter({ status, isVisible: true }))
-        dispatch(startFilteringProductsByStatus({
-            page: 1,
-            limit: pagination.itemsPerPage
-        }, status))
+    const applyProductFilters = (
+        page: number,
+        limit: number,
+        overrides?: Partial<FilterProducts>
+    ) => {
+
+        const current: FilterProducts = {
+            category: filter.category,
+            productName: filter.productName,
+            status: filter.status,
+            supplier: filter.supplier,
+            price: filter.price
+        }
+
+        const applied = { ...current, ...overrides }
+        const hasStatusFilter = applied.status !== null
+        const hasCategoryFilter = applied.category !== null
+        const hasSupplierFilter = applied.supplier !== null
+        const hasProductnameFilter = applied.productName !== null
+        const hasPriceFilter = applied.price !== null
+
+        if ( 
+            hasStatusFilter || 
+            hasCategoryFilter || 
+            hasSupplierFilter || 
+            hasProductnameFilter ||
+            hasPriceFilter 
+        ) {
+            dispatch(startFilteringProducts(
+                applied.status ?? undefined,
+                applied.productName ?? undefined,
+                applied.category ?? undefined,
+                applied.supplier ?? undefined,
+                applied.price ?? undefined, 
+                { page, limit }
+            ))
+        } else {
+            dispatch(startFilteringProducts(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                { page, limit }
+            ))
+        }
+
     }
 
-    const filterProductsByCategory = (categoryId: string, categoryName: string) => {
-        dispatch(setCategoryFilter({id: categoryId, name: categoryName, isVisible: true}))
-        dispatch(startFilteringProductsByCategory({
-            page: 1,
-            limit: pagination.itemsPerPage
-        }, categoryId ))
+    const onGetProducts = () => {
+        dispatch(startFilteringProducts(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+        ))        
     }
 
-    const filterProductsBySupplier = (supplierId: string, supplierName: string) => {
-        dispatch(setSupplierFilter({ id: supplierId, name: supplierName, isVisible: true }))
-        dispatch(startFilteringProductsBySupplier({
-                page: 1, 
-                limit: pagination.itemsPerPage
-            }, supplierId ))
+    const onGetMinimalProducts = () => {
+        dispatch(startGettingAllProducts())
+    }
+
+    const onGetProductsByStock = () => {
+        dispatch(startGettingProductsByStock())
+    }
+
+    const onGetProductById = ( productId: string ): Product | null => {
+        if ( !products?.length ) return null
+        const product = products.find( pro => pro.id === productId )
+        if ( !product ) return null
+        return product
+    }
+
+    const onGetAllProducts = () => {
+        dispatch(startGettingAllProductsFull())
+    }
+
+    const onSetFilterProductsByName = (productName: string | null) => {
+        dispatch(setProductNameFilter({ productName }))
+        dispatch(setPage(1))
+        applyProductFilters(1, pagination.itemsPerPage, { productName })
+    }
+    
+    const onSetFilterProductsByStatus = (status: string | null) => {
+        dispatch(setProductStatusFilter({ status }))
+        dispatch(setPage(1))
+        applyProductFilters(1, pagination.itemsPerPage, { status })
+    }
+
+    const onSetFilterProductsByCategory = ( category: FilterProductByItem) => {
+        dispatch(setProductCategoryFilter({ category }))
+        dispatch(setPage(1))
+        applyProductFilters(1, pagination.itemsPerPage, { category })
+    }
+
+    const onSetFilterProductsBySupplier = (supplier: FilterProductByItem) => {
+        dispatch(setProductSupplierFilter({ supplier }))
+        dispatch(setPage(1))
+        applyProductFilters(1, pagination.itemsPerPage, { supplier })
+    }
+
+    const onSetFilterProductsByPrice = (minPrice: number | null, maxPrice: number | null ) => {
+        dispatch(setProductPricesFilter({ price: { minPrice, maxPrice }}))
+        dispatch(setPage(1))
+        applyProductFilters(1, pagination.itemsPerPage, { price: { minPrice, maxPrice }})
+    }
+
+    const onResetFilter = () => {
+        dispatch(resetFilter())
+        dispatch(setPage(1))
+        onGetProducts()
     }
 
     const onSetPage = ( page: number ) => {
         dispatch(setPage(page))
-
-        if ( filter.status !== null ) {
-            dispatch(startFilteringProductsByStatus({
-                page: 1,
-                limit: pagination.itemsPerPage
-            }, filter.status))
-        } else if ( filter.category.id ) {
-            dispatch(startFilteringProductsByCategory({
-                page: 1,
-                limit: pagination.itemsPerPage,
-            }, filter.category.id ))
-        } else if ( filter.supplier.id ) {
-            dispatch(startFilteringProductsBySupplier({
-                page: 1, 
-                limit: pagination.itemsPerPage
-            }, filter.supplier.id ))
-        } else {
-            dispatch(startGettingProducts({
-                page,
-                limit: pagination.itemsPerPage
-            }))
-        }
-    }
-
-    const getProducts = () => {
-        dispatch(startGettingProducts({
-            page: 1,
-            limit: pagination.itemsPerPage
-        }))        
-    }
-
-    const getMinimalProducts = () => {
-        dispatch(startGettingAllProducts())
+        applyProductFilters(page, pagination.itemsPerPage)
     }
 
     const onCreateProduct = ( data: CreateProduct ) => {
@@ -128,22 +188,6 @@ export const useProducts = () => {
         dispatch(startUploadingProductImage(productId, files))
     }
 
-    const onSearchProduct = ( productSearched: string ) => {
-        dispatch(startSearchingProducts(productSearched))
-    }
-
-    const onSetFilterStatus = (status: boolean | null, isVisible: boolean) => {
-        dispatch(setStatusFilter({ status, isVisible }))
-    }
-
-    const onSetFilterCategory = (id: string | null, name: string | null, isVisible: boolean) => {
-        dispatch(setCategoryFilter({ id, name, isVisible }))
-    }
-
-    const onSetFilterSupplier = (id: string | null, name: string | null, isVisible: boolean) => {
-        dispatch(setSupplierFilter({ id, name, isVisible }))
-    }
-
     const onChangePaginationVisibility = (isVisible: boolean) => {
         dispatch(setPaginationVisible(isVisible))
     }
@@ -154,10 +198,10 @@ export const useProducts = () => {
 
     const onOrderAlpha = ( ordered: boolean ) => {
         dispatch(setOrderedAsc(ordered))
-        sortProducts()
+        onSortProducts()
     }
 
-    const sortProducts = () => {
+    const onSortProducts = () => {
         const sortedProducts = [...products!].sort((a, b) => {
             const productNameA = a.name.toLowerCase()
             const productNameB = b.name.toLowerCase()
@@ -171,55 +215,39 @@ export const useProducts = () => {
         dispatch(setProducts(sortedProducts))
     }
 
-    const onGetProductsByStock = () => {
-        dispatch(startGettingProductsByStock())
-    }
-
-    const getProductById = ( productId: string ): Product | null => {
-        if ( !products?.length ) return null
-        const product = products.find( pro => pro.id === productId )
-        if ( !product ) return null
-        return product
-    }
-
-    const getAllProducts = () => {
-        dispatch(startGettingAllProductsFull())
-    }
-
     return {
-        isLoading,
-        isPaginationVisible,
-        products,
-        productsMinimal,
-        pagination,
-        productSelected,
-        filter,
-        isOrderedAsc,
-        productNormalStock,
-        productWarningStock,
-        productsLowStock,
         allProducts,
+        filter,
+        isLoading,
+        isOrderedAsc,
+        isPaginationVisible,
+        pagination,
+        productNormalStock,
+        products,
+        productSelected,
+        productsLowStock,
+        productsMinimal,
+        productWarningStock,
 
-        onSetPage,
-        getProducts,
-        getProductById,
-        getMinimalProducts,
-        getAllProducts,
-        onSelectProduct,
-        onCreateProduct,
-        onUpdateProduct,
-        onChangeProductStatus,
-        onUploadProductImage,
-        onSearchProduct,
-        onSetFilterStatus,
-        onSetFilterCategory,
-        onSetFilterSupplier,
         onChangePaginationVisibility,
-        filterProductsByStatus,
-        filterProductsByCategory,
-        filterProductsBySupplier,
+        onChangeProductStatus,
+        onCreateProduct,
+        onGetAllProducts,
+        onGetMinimalProducts,
+        onGetProductById,
+        onGetProducts,
+        onGetProductsByStock,
         onOrderAlpha,
-        onGetProductsByStock
+        onResetFilter,
+        onSelectProduct,
+        onSetFilterProductsByCategory,
+        onSetFilterProductsByName,
+        onSetFilterProductsByPrice,
+        onSetFilterProductsByStatus,
+        onSetFilterProductsBySupplier,
+        onSetPage,
+        onUpdateProduct,
+        onUploadProductImage,
     }
 
 }

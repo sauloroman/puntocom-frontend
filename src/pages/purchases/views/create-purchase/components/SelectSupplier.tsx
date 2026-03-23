@@ -3,7 +3,7 @@ import { usePurchase, useSuppliers } from '../../../../../shared/hooks'
 import { Select } from '../../../../../shared/components/select'
 
 export const SelectSupplier: React.FC = () => {
-    const { allSuppliers, getAllSuppliers } = useSuppliers()
+    const { allSuppliers, onGetAllSuppliers } = useSuppliers()
     const { onSetSupplierSelected } = usePurchase()
 
     if ( !allSuppliers) return null 
@@ -11,7 +11,7 @@ export const SelectSupplier: React.FC = () => {
     const suppliersName = allSuppliers.map( supp => `${supp.name} ${supp.lastname} - ${supp.company}` )
 
     useEffect(() => {
-        getAllSuppliers()
+        onGetAllSuppliers()
     }, [])
 
     const onSelectSupplier = ( value: string ) => {

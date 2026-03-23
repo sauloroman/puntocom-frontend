@@ -11,6 +11,7 @@ interface TableCategoriesProps {
 }
 
 export const TableCategories: React.FC<TableCategoriesProps> = ({ data }) => {
+  
   const { onOpenRightDrawer } = useDrawer();
   const { onSelectCategory } = useCategories();
   const { theme } = useTheme();

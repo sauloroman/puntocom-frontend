@@ -1,13 +1,14 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Category } from "../../interfaces/dto/category.interface";
 import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
+import type { FilterCategories } from "../../interfaces/ui/filter.interface";
 
 interface ICategories {
     isLoading: boolean,
     categories: Category[] | null,
     allCategories: Category[] | null,
     categorySelected: Category | null,
-    filter: { status: boolean | null, isVisible: boolean },
+    filter: FilterCategories,
     pagination: MetaPagination & { itemsPerPage: number },
     isPaginationVisible: boolean,
     isOrderedAsc: boolean,
@@ -19,14 +20,14 @@ const initialState: ICategories = {
     allCategories: null,
     categorySelected: null,
     filter: { 
+        categoryName: null, 
         status: null,
-        isVisible: true 
     },
     pagination: {
         page: 1,
         total: 1,
         totalPages: 1,
-        itemsPerPage: 10,
+        itemsPerPage: 8,
     },
     isPaginationVisible: true,
     isOrderedAsc: false,
@@ -85,13 +86,19 @@ export const categoriesSlice = createSlice({
             state.categorySelected = null
         },
 
-        setStatusFilter: (state, { payload}: PayloadAction<{status: boolean | null, isVisible: boolean}>) => {
+        setCategoryStatusFilter: (state, { payload}: PayloadAction<Pick<FilterCategories, 'status'>>) => {
             state.filter.status = payload.status
-            state.filter.isVisible = payload.isVisible
         },
 
-        setPaginationVisible: ( state, {payload}: PayloadAction<boolean>) => {
-            state.isPaginationVisible = payload
+        setCategoryNameFilter: (state, {payload}: PayloadAction<Pick<FilterCategories, 'categoryName'>>) => {
+            state.filter.categoryName = payload.categoryName
+        },
+
+        resetFilter: ( state ) => {
+            state.filter = {
+                categoryName: null,
+                status: null
+            }
         }
 
     }
@@ -99,15 +106,16 @@ export const categoriesSlice = createSlice({
 
 export const {
     addCategory,
-    updateCategory,
-    setIsLoading,
-    setCategories,
-    setAllCategories,
-    setCategorySelected,
     resetCategories,
+    setAllCategories,
+    setCategories,
     setCategoriesMetaPagination,
-    setPage,
-    setStatusFilter,
-    setPaginationVisible,
+    setCategoryNameFilter,
+    setCategorySelected,
+    setCategoryStatusFilter,
+    setIsLoading,
     setOrderedAsc,
+    setPage,
+    updateCategory,
+    resetFilter,
 } = categoriesSlice.actions

@@ -10,19 +10,19 @@ import {
   TableSales, 
   FilterSalesByUser,
   ModalSalesRangeDates,
-  ModalSalesRangePrices
+  ModalSalesRangePrices,
 } from './components'
 import { SpinnerContainer } from '../../shared/components/spinner'
 import { FilterByDateButton, FilterByPriceButton } from '../../shared/components/button'
 
 export const Sales: React.FC = () => {
 
-  const { sales, getAllSales, isLoading } = useSale()
+  const { sales, onGetAllSales, isLoading } = useSale()
   const { rightDrawerIsOpen, drawelName } = useDrawer()
   const { modalIsOpen, modalName } = useModal()
 
   useEffect(() => {
-    if ( sales.length === 0 ) getAllSales()
+    if ( sales.length === 0 ) onGetAllSales()
   }, [])
 
   return (

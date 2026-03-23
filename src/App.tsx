@@ -5,8 +5,8 @@ import { AlertContainer } from './shared/components/alert'
 export const App: React.FC = () => {
   return (
     <>
-      <RoutesApp />
-      <AlertContainer />
+      <RoutesApp /> 
+      <AlertContainer /> 
     </>
   )
 } 

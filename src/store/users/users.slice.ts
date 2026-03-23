@@ -6,6 +6,7 @@ import type { FilterUsers } from "../../interfaces/ui/filter.interface";
 interface IUsers {
   isLoading: boolean;
   users: User[] | null;
+  allUsers: User[] | null,
   userSelected: User | null;
   filter: FilterUsers;
   pagination: MetaPagination & { itemsPerPage: number };
@@ -19,6 +20,7 @@ interface IUsers {
 const initialState: IUsers = {
   isLoading: false,
   users: null,
+  allUsers: null,
   userSelected: null,
   filter: {
     role: null,
@@ -69,6 +71,10 @@ export const usersSlice = createSlice({
       state.users = payload;
     },
 
+    setAllUsers: ( state, {payload}: PayloadAction<User[]>) => {
+      state.allUsers = payload
+    },
+
     setUserSelected: (state, { payload }: PayloadAction<User>) => {
       state.userSelected = payload;
     },
@@ -110,10 +116,6 @@ export const usersSlice = createSlice({
       }
     },
 
-    setPaginationVisible: (state, { payload }: PayloadAction<boolean>) => {
-      state.isPaginationVisible = payload;
-    },
-
     setHasEnteredPasswordCorrectly: ( state, {payload}: PayloadAction<boolean> ) => {
       state.hasEnteredPasswordCorrectly = payload
     },
@@ -130,6 +132,7 @@ export const {
   addUser,
   updateUser,
   setUsers,
+  setAllUsers,
   setUserSelected,
   resetUsers,
   setUsersMetaPagination,
@@ -137,7 +140,6 @@ export const {
   setRoleFilter,
   setStatusFilter,
   setUserNameFilter,
-  setPaginationVisible,
   setHasEnteredPasswordCorrectly,
   setTableView,
   setOrderedAsc,

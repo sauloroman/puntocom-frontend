@@ -2,26 +2,25 @@ import { useDispatch, useSelector } from "react-redux"
 import { 
     startChangingSupplierStatus, 
     startCreatingSupplier, 
-    startFilteringSuppliersByCompany, 
-    startFilteringSuppliersByStatus, 
+    startFilteringSuppliers, 
     startGettingAllSuppliers, 
-    startGettingSuppliers, 
     startGettingUniqueCompanies, 
-    startSearchingSuppliers, 
     startUpdatingSupplier 
 } from "../../store/suppliers/supplier.thunk"
 import { 
-    setCompanyFilter, 
+    resetFilter,
     setOrderedAsc, 
     setPage, 
-    setPaginationVisible, 
-    setStatusFilter, 
     setSuppliers, 
+    setSuppliersCompanyFilter, 
     setSupplierSelected, 
+    setSuppliersNameFilter, 
+    setSuppliersStatusFilter, 
     setTableView
 } from "../../store/suppliers/supplier.slice"
 import type { CreateSupplier, UpdateSupplier } from "../../interfaces/dto/supplier.interface"
 import type { RootState } from "../../store"
+import type { FilterSuppliers } from "../../interfaces/ui/filter.interface"
 
 export const useSuppliers = () => {
     const dispatch = useDispatch<any>()
@@ -39,37 +38,85 @@ export const useSuppliers = () => {
         isOrderedAsc
     } = useSelector((state: RootState) => state.suppliers)
 
-    const getSuppliers = () => {
-        dispatch(startGettingSuppliers({ page: 1, limit: pagination.itemsPerPage }))
+    const applySuppliersFilter = (
+        page: number,
+        limit: number,
+        overrides?: Partial<FilterSuppliers>
+    ) => {
+
+        const current: FilterSuppliers = {
+            company: filter.company,
+            status: filter.status,
+            supplierName: filter.supplierName
+        }
+        const applied: FilterSuppliers = { ...current, ...overrides }
+        const hasStatusFilter = applied.status !== null
+        const hasCompanyFilter = applied.company !== null
+        const hasSupplierNameFilter = applied.supplierName !== null
+
+        if ( hasCompanyFilter || hasStatusFilter || hasSupplierNameFilter ) {
+            dispatch(startFilteringSuppliers(
+                applied.status ?? undefined,
+                applied.company ?? undefined,
+                applied.supplierName ?? undefined,
+                { page, limit }
+            ))
+        } else {
+            dispatch(startFilteringSuppliers(
+                undefined,
+                undefined,
+                undefined,
+                { page, limit }
+            ))
+        }
+
     }
 
-    const getAllSuppliers = () => {
+    const onGetSuppliers = () => {
+        dispatch(startFilteringSuppliers(
+            undefined,
+            undefined,
+            undefined
+        ))
+    }
+
+    const onGetAllSuppliers = () => {
         dispatch(startGettingAllSuppliers())
     }
 
-    const filterSuppliersByStatus = (status: boolean) => {
-        dispatch(setStatusFilter({ status, isVisible: true }))
-        dispatch(startFilteringSuppliersByStatus({ page: 1, limit: pagination.itemsPerPage }, status))
+    const onGetUniqueCompanies = () => {
+        dispatch(startGettingUniqueCompanies())
     }
 
-    const filterSuppliersByCompany = (company: string) => {
-        dispatch(setCompanyFilter({ company, isVisible: true }))
-        dispatch(startFilteringSuppliersByCompany({ page: 1, limit: pagination.itemsPerPage }, company))
+    const onSetFilterSuppliersByStatus = ( status: string | null ) => {
+        dispatch(setSuppliersStatusFilter({ status }))
+        dispatch(setPage(1))
+        applySuppliersFilter(1, pagination.itemsPerPage, { status })
     }
 
-    const onSetFilterStatus = (status: boolean | null, isVisible: boolean) => {
-        dispatch(setStatusFilter({ status, isVisible }))
+    const onSetFilterSuppliersByCompany = ( company: string | null ) => {
+        dispatch(setSuppliersCompanyFilter({ company }))
+        dispatch(setPage(1))
+        applySuppliersFilter(1, pagination.itemsPerPage, { company })
     }
 
-    const onSetFilterCompanies = (company: string | null, isVisible: boolean) => {
-        dispatch(setCompanyFilter({ company, isVisible }))
+    const onSetFilterSuppliersByName = ( supplierName: string | null ) => {
+        dispatch(setSuppliersNameFilter({supplierName}))
+        dispatch(setPage(1))
+        applySuppliersFilter(1, pagination.itemsPerPage, { supplierName })
+    }
+    
+    const onResetFilters = () => {
+        dispatch(resetFilter())
+        dispatch(setPage(1))
+        onGetSuppliers()
     }
 
-    const createSupplier = (data: CreateSupplier) => {
+    const onCreateSupplier = (data: CreateSupplier) => {
         dispatch(startCreatingSupplier(data))
     }
 
-    const updateSupplier = (supplierId: string, supplierData: UpdateSupplier) => {
+    const onUpdateSupplier = (supplierId: string, supplierData: UpdateSupplier) => {
         dispatch(startUpdatingSupplier(supplierId, supplierData))
     }
 
@@ -78,40 +125,25 @@ export const useSuppliers = () => {
         if (supplier) dispatch(setSupplierSelected(supplier))
     }
 
-    const changeSupplierStatus = (supplierId: string, status: boolean) => {
+    const onChangeSupplierStatus = (supplierId: string, status: boolean) => {
         dispatch(startChangingSupplierStatus(supplierId, status))
-    }
-
-    const onSearchSupplier = (supplierSearched: string) => {
-        dispatch(startSearchingSuppliers(supplierSearched))
     }
 
     const onSetPage = (page: number) => {
         dispatch(setPage(page))
-
-        if (filter.status !== null) {
-            dispatch(startFilteringSuppliersByStatus({ page, limit: pagination.itemsPerPage }, filter.status))
-        } else if (filter.company !== null ) {
-            dispatch(startFilteringSuppliersByCompany({page, limit: pagination.itemsPerPage}, filter.company))
-        } else {
-            dispatch(startGettingSuppliers({ page, limit: pagination.itemsPerPage }))
-        }
+        applySuppliersFilter(page, pagination.itemsPerPage)
     }
 
-    const onChangePaginationVisibility = (isVisible: boolean) => {
-        dispatch(setPaginationVisible(isVisible))
-    }
-
-    const setTableStyle = ( status: boolean ) => {
+    const onSetTableStyle = ( status: boolean ) => {
         dispatch( setTableView(status) )
     }
 
     const onOrderAlpha = (ordered: boolean) => {
         dispatch(setOrderedAsc(ordered))
-        sortSuppliers()
+        onSortSuppliers()
     }
 
-    const sortSuppliers = () => {
+    const onSortSuppliers = () => {
         const sortedSuppiers = [...suppliers!].sort((a, b) => {
             const supplierA = `${a.name} ${a.lastname}`.toLowerCase()
             const supplierB = `${b.name} ${b.lastname}`.toLowerCase()
@@ -125,38 +157,34 @@ export const useSuppliers = () => {
         dispatch(setSuppliers( sortedSuppiers ))
     }
 
-    const getUniqueCompanies = () => {
-        dispatch(startGettingUniqueCompanies())
-    }
-
     return {
+        activeSuppliers: suppliers?.filter( s => s.isActive ),
+        allSuppliers,
         companies,
         filter,
         isGridStyleActive,
         isLoading,
+        isOrderedAsc,
         isPaginationVisible,
         isTableStyleActive,
         pagination,
         suppliers,
-        allSuppliers,
         supplierSelected,
-        isOrderedAsc,
 
-        getAllSuppliers,
-        getUniqueCompanies,
-        changeSupplierStatus,
-        createSupplier,
-        filterSuppliersByCompany,
-        filterSuppliersByStatus,
-        getSuppliers,
-        onChangePaginationVisibility,
-        onSearchSupplier,
-        onSelectSupplier,
-        onSetFilterCompanies,
-        onSetFilterStatus,
-        onSetPage,
-        setTableStyle,
-        updateSupplier,
+        onChangeSupplierStatus,
+        onCreateSupplier,
+        onGetAllSuppliers,
+        onGetSuppliers,
+        onGetUniqueCompanies,
         onOrderAlpha,
+        onResetFilters,
+        onSelectSupplier,
+        onSetFilterSuppliersByCompany,
+        onSetFilterSuppliersByName,
+        onSetFilterSuppliersByStatus,
+        onSetPage,
+        onSetTableStyle,
+        onSortSuppliers,
+        onUpdateSupplier,
     }
 }

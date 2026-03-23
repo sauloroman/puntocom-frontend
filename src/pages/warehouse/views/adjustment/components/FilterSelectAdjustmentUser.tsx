@@ -5,19 +5,20 @@ import { Select } from '../../../../../shared/components/select'
 const placeholder = 'Usuarios'
 
 export const FilterSelectAdjustmentUser: React.FC = () => {
-    const { users } = useUsers()
-    const { getInventoryAdjustments, onSetFilterAdjustmentUser } = useInventoryAdjustment()
-    const userNames = users?.map( user => `${user.name} ${user.lastname}`) ?? []
+    const { allUsers } = useUsers()
+
+    const { onSetFilterAdjustmentUser } = useInventoryAdjustment()
+    const userNames = allUsers?.map( user => `${user.name} ${user.lastname}`) ?? []
 
     const onSelectUser = ( value: string ) => {
-        if ( value.trim() === placeholder ) {
-            getInventoryAdjustments()
-            onSetFilterAdjustmentUser(null)
-            return
-        }
+        if ( value.trim() === placeholder ) return 
 
-        const user = users?.find( user => `${user.name} ${user.lastname}` === value )
-        onSetFilterAdjustmentUser( user?.id ?? '')
+        const user = allUsers?.find( user => `${user.name} ${user.lastname}` === value )
+        
+        onSetFilterAdjustmentUser({
+            id: user?.id!,
+            name: user?.name!
+        })
     }
 
     return (

@@ -79,14 +79,14 @@ export const PurchaseInfoDrawer: React.FC = () => {
                 </header>
 
                 {purchaseSelected.purchase.Supplier && <PurchaseDetailSupplier 
-                    name={purchaseSelected.purchase.Supplier.supplierName}
-                    phone={purchaseSelected.purchase.Supplier.supplierPhone}
+                    name={purchaseSelected.purchase.Supplier.name}
+                    phone={purchaseSelected.purchase.Supplier.phone}
                 />}
 
                 {purchaseSelected.purchase.User && <PurchaseDetailUser 
-                    image={purchaseSelected.purchase.User.userImage}
-                    name={purchaseSelected.purchase.User.userName}
-                    role={purchaseSelected.purchase.User.userRole}
+                    image={purchaseSelected.purchase.User.image}
+                    name={purchaseSelected.purchase.User.name}
+                    role={purchaseSelected.purchase.User.role}
                 />}
 
                 <div className="flex-1 overflow-y-auto p-6 no-scrollbar">

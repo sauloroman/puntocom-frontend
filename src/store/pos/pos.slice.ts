@@ -37,7 +37,7 @@ export const posSlice = createSlice({
       state.products = payload;
     },
 
-    updateProduct: (state, {payload}: PayloadAction<{ productId: string, quantityDiscount: number }>) => {
+    updateProductStockInPOS: (state, {payload}: PayloadAction<{ productId: string, quantityDiscount: number }>) => {
       state.products = state.products?.map( pro => {
         if ( pro.id === payload.productId) {
           pro.stock = pro.stock - payload.quantityDiscount
@@ -113,5 +113,5 @@ export const {
   increaseQuantity,
   clearCart,
   decreaseQuantity,
-  updateProduct,
+  updateProductStockInPOS,
 } = posSlice.actions;

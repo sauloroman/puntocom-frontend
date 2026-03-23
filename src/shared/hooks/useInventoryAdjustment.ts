@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import type { AdjustmentEnum, SaveInventoryAdjustment } from "../../interfaces/dto/inventory-adjustment.interface"
-import { startFilteringInventoryAdjustments, startGettingInventoryAdjustments, startSavingInventoryAdjustment } from "../../store/inventory-adjustment/inventory-adjustment.thunk"
-import { setAdjustmentTypeFilter, setAdjustmentUserFilter, setInventoryAdjustmentSelected, setPage, setTableView } from "../../store/inventory-adjustment/inventory-adjustment.slice"
+import { startFilteringInventoryAdjustments, startSavingInventoryAdjustment } from "../../store/inventory-adjustment/inventory-adjustment.thunk"
+import { resetFilters, setAdjustmentTypeFilter, setAdjustmentUserFilter, setInventoryAdjustmentSelected, setPage, setTableView } from "../../store/inventory-adjustment/inventory-adjustment.slice"
+import type { FilterInventoryAdjustments } from "../../interfaces/ui/filter.interface"
 
 export const useInventoryAdjustment = () => {
 
@@ -16,46 +17,68 @@ export const useInventoryAdjustment = () => {
         isTableStyleActive 
     } = useSelector( (state: RootState) => state.inventoryAdjustment )
 
-    const filterInventoryAdjustments = ( page: number ) => {
-        const { adjustmentType, adjustmentUserId } = filter
-        const paginationConfig = { page: page, limit: pagination.itemsPerPage }
+    const applyInventoryAdjustmentsFilter = (
+        page: number,
+        limit: number,
+        overrides?: Partial<FilterInventoryAdjustments>
+    ) => {
 
-        if (!adjustmentType && !adjustmentUserId) {
-            dispatch(startGettingInventoryAdjustments(paginationConfig))
-            return
+        const current: FilterInventoryAdjustments = {
+            adjustmentType: filter.adjustmentType,
+            user: filter.user
+        }
+        const applied = { ...current, ...overrides }
+        const hasAdjustmentTypeFilter = applied.adjustmentType !== null
+        const hasUserIdFilter = applied.user.id !== null
+
+        if ( hasAdjustmentTypeFilter || hasUserIdFilter ) {
+            dispatch(startFilteringInventoryAdjustments(
+                applied.adjustmentType ?? undefined,
+                applied.user.id ?? undefined,
+                { page, limit }
+            ))
+        } else {
+            dispatch(startFilteringInventoryAdjustments(
+                undefined,
+                undefined,
+                { page, limit }
+            ))
         }
 
+    }
+
+    const onGetInventoryAdjustments = () => {
         dispatch(startFilteringInventoryAdjustments(
-            paginationConfig,
-            adjustmentUserId || undefined,
-            adjustmentType || undefined
+            undefined,
+            undefined
         ))
     }
-
+    
     const onSetFilterAdjustmentType = ( type: AdjustmentEnum | null ) => {
-        dispatch(setAdjustmentTypeFilter( type ))
+        dispatch(setAdjustmentTypeFilter({adjustmentType: type}))
+        dispatch(setPage(1))
+        applyInventoryAdjustmentsFilter(1, pagination.itemsPerPage, { adjustmentType: type })
+
     }
 
-    const onSetFilterAdjustmentUser = ( userId: string | null ) => {
-        dispatch(setAdjustmentUserFilter(userId))
+    const onSetFilterAdjustmentUser = ( user: {id: string | null, name: string | null} ) => {
+        dispatch(setAdjustmentUserFilter({ user }))
+        dispatch(setPage(1))
+        applyInventoryAdjustmentsFilter(1, pagination.itemsPerPage, { user })
     }
 
     const onResetFilters = () => {
-        dispatch(setAdjustmentTypeFilter(null))
-        dispatch(setAdjustmentUserFilter(null))
-        dispatch(startGettingInventoryAdjustments({ page: 1, limit: pagination.itemsPerPage }))
+        dispatch(resetFilters())
+        dispatch(setPage(1))
+        onGetInventoryAdjustments()
     }
 
-    const getInventoryAdjustments = () => {
-        dispatch( startGettingInventoryAdjustments({ page: 1, limit: pagination.itemsPerPage }))
-    }
-
-    const saveInventoryAdjustment = ( data: SaveInventoryAdjustment ) => {
+    const onSaveInventoryAdjustment = ( data: SaveInventoryAdjustment ) => {
         if ( data === null ) return
         dispatch( startSavingInventoryAdjustment( data ) )
     }
 
-    const selectInventoryAdjustment = ( adjustmentId: string ) => {
+    const onSelectInventoryAdjustment = ( adjustmentId: string ) => {
         if ( !adjustments ) return null
         const inventoryAdjustment = adjustments?.find( adj => adj.adjustmentId === adjustmentId )
         if ( !inventoryAdjustment ) return
@@ -64,10 +87,10 @@ export const useInventoryAdjustment = () => {
 
     const onSetPage = ( page: number ) => {
         dispatch(setPage(page))
-        filterInventoryAdjustments(page)
+        applyInventoryAdjustmentsFilter(page, pagination.itemsPerPage)
     }
 
-    const setTableStyle = ( status: boolean ) => {
+    const onSetTableStyle = ( status: boolean ) => {
         dispatch( setTableView(status) )
     }
 
@@ -79,15 +102,14 @@ export const useInventoryAdjustment = () => {
         isTableStyleActive,
         pagination,
 
-        filterInventoryAdjustments,
-        getInventoryAdjustments,
+        onGetInventoryAdjustments,
         onResetFilters,
+        onSaveInventoryAdjustment,
+        onSelectInventoryAdjustment,
         onSetFilterAdjustmentType,
         onSetFilterAdjustmentUser,
         onSetPage,
-        saveInventoryAdjustment,
-        selectInventoryAdjustment,
-        setTableStyle,
+        onSetTableStyle,
     }
 
 }

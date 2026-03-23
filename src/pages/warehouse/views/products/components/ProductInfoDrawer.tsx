@@ -24,7 +24,6 @@ export const ProductInfoDrawer: React.FC = () => {
         >
             <div className="flex flex-col gap-4 max-w-full overflow-hidden">
                 
-                {/* Imagen del producto */}
                 <div className="flex justify-center">
                     <div className='relative w-full max-w-sm'>
                         <img
@@ -50,7 +49,6 @@ export const ProductInfoDrawer: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Nombre y descripción */}
                 <div className='space-y-2'>
                     <h2 className={`
                         text-xl font-bold transition-colors duration-200
@@ -62,7 +60,6 @@ export const ProductInfoDrawer: React.FC = () => {
                     `}>{product.description}</p>
                 </div>
 
-                {/* Estado y fechas */}
                 <div className={`
                     flex flex-wrap items-center justify-between gap-3 p-3 rounded-lg
                     ${isDark ? 'bg-gray-800/50' : 'bg-gray-50'}
@@ -78,7 +75,6 @@ export const ProductInfoDrawer: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Grid de información principal */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className={`
                         p-4 rounded-lg transition-colors duration-200
@@ -129,6 +125,7 @@ export const ProductInfoDrawer: React.FC = () => {
                         </p>
                     </div>
                 </div>
+
                 {product.Category && (
                     <div className={`
                         p-4 rounded-lg transition-colors duration-200
@@ -141,9 +138,9 @@ export const ProductInfoDrawer: React.FC = () => {
                         <div className="flex items-center gap-3">
                             <div className='w-14 h-14 flex-shrink-0'>
                                 {
-                                    product.Category.icon !== 'Categoría sin ícono' 
-                                    ? (<AvatarImage image={product.Category.icon} alt="Ícono de categoría" />) 
-                                    : (<AvatarInitialSquare name={product.Category.name} />)
+                                    product.Category.icon !== '' 
+                                    ? (<AvatarImage className='h-full w-full' image={product.Category.icon} alt="Ícono de categoría" />) 
+                                    : (<AvatarInitialSquare className='h-full w-full' name={product.Category.name} />)
                                 }
                             </div>
                             <div className='flex-1 min-w-0'>
@@ -157,6 +154,7 @@ export const ProductInfoDrawer: React.FC = () => {
                         </div>
                     </div>
                 )}
+
                 {product.Supplier && (
                     <div className={`
                         p-4 rounded-lg transition-colors duration-200
@@ -207,7 +205,6 @@ export const ProductInfoDrawer: React.FC = () => {
                     </div>
                 )}
 
-                {/* Código de barras */}
                 <div className={`
                     flex justify-center p-4 rounded-lg
                     ${isDark ? 'bg-gray-800/30' : 'bg-gray-50'}

@@ -61,7 +61,7 @@ export const saleSlice = createSlice({
         },
 
         addSale: ( state, {payload}: PayloadAction<SaleWithDetailsResponse> ) => {
-            state.sales.unshift( payload )
+            state.sales?.unshift( payload )
         },
 
         setSalesMetaPagination: (state, {payload}: PayloadAction<MetaPagination & {itemsPerPage: number}>) => {

@@ -42,7 +42,7 @@ export const CategoryItemMenu: React.FC<Props> = ({
             `}
         >
 
-            {categoryIcon === 'Categoría sin ícono' ? (
+            {categoryIcon === '' ? (
                 <MdOutlineCategory 
                     className={`flex-shrink-0 transition-colors ${
                         isDark 

@@ -4,13 +4,14 @@ import { AsideMenu, Header, ModalAddProduct, ModalSaveSale, OrderPanel, Paginati
 import { useCategories, useModal, useSale, useTheme, usePos } from '../../shared/hooks'
 import { SpinnerContainer } from '../../shared/components/spinner'
 import { BsGrid3X3Gap, BsCart3 } from 'react-icons/bs'
+import { ModalNoStock } from '../sales/components'
 
 export const Pos: React.FC = () => {
     const { theme } = useTheme()
     const isDark = theme === "dark"
 
-    const { getCategories, categories } = useCategories()
-    const { getProductsToSale, products } = usePos()
+    const { onGetCategories, categories } = useCategories()
+    const { onGetProductsToSale, products } = usePos()
     const { modalName, modalIsOpen } = useModal()
     const { isLoading } = useSale()
 
@@ -18,8 +19,8 @@ export const Pos: React.FC = () => {
     const [showCart, setShowCart] = useState(false)
 
     useEffect(() => {
-        if (!categories) getCategories()
-        if (!products) getProductsToSale()
+        if (!categories) onGetCategories()
+        if (!products) onGetProductsToSale()
     }, [])
 
     return (
@@ -116,6 +117,8 @@ export const Pos: React.FC = () => {
 
             {modalIsOpen && modalName === ModalNames.addProduct && <ModalAddProduct />}
             {modalIsOpen && modalName === ModalNames.saveSale && <ModalSaveSale />}
+            {modalIsOpen && modalName === ModalNames.noStock && <ModalNoStock />}
+            
         </div>
     )
 }

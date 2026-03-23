@@ -11,15 +11,15 @@ export const AsideMenu: React.FC<AsideMenuProps> = ({ onClose }) => {
     const { theme } = useTheme()
     const isDark = theme === "dark"
 
-    const { categoryActive, filterProductsByCategory, getProductsToSale } = usePos()
-    const { categories } = useCategories()
-    const activeCategories = categories?.filter(cat => cat.isActive)
+    const { categoryActive, onFilterProductsByCategory, onGetProductsToSale } = usePos()
+    const { allCategories } = useCategories()
+    const activeCategories = allCategories?.filter(cat => cat.isActive)
 
     useEffect(() => {
         if (categoryActive) {
-            filterProductsByCategory(categoryActive)
+            onFilterProductsByCategory(categoryActive)
         } else {
-            getProductsToSale()
+            onGetProductsToSale()
         }
     }, [categoryActive])
 
@@ -59,7 +59,7 @@ export const AsideMenu: React.FC<AsideMenuProps> = ({ onClose }) => {
                     <CategoryItemMenu
                         categoryId={''}
                         categoryName={'Todos'}
-                        categoryIcon={'Categoría sin ícono'}
+                        categoryIcon={''}
                         onSelect={onClose}
                     />
                     {

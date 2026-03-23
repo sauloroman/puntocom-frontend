@@ -24,10 +24,10 @@ export const ModalCreateSupplier: React.FC = () => {
 
     const { onCloseModal } = useModal()
     const { activateAlert } = useAlert()
-    const { createSupplier, getUniqueCompanies, companies } = useSuppliers()
+    const { onCreateSupplier, onGetUniqueCompanies, companies } = useSuppliers()
     const { theme } = useTheme()
 
-    const onCreateSupplier = (data: CreateSupplier) => {
+    const createSupplier = (data: CreateSupplier) => {
 
         if (newCompany && companies?.includes(newCompany)) {
             activateAlert({
@@ -39,24 +39,24 @@ export const ModalCreateSupplier: React.FC = () => {
         }
 
         if (newCompany) {
-            createSupplier({
+            onCreateSupplier({
                 ...data,
                 company: newCompany
             })
         } else {
-            createSupplier(data)
+            onCreateSupplier(data)
         }
 
         onCloseModal()
     }
 
     useEffect(() => {
-        getUniqueCompanies()
+        onGetUniqueCompanies()
     }, [])
 
     return (
         <ModalLayout width={'w-2xl'}>
-            <form onSubmit={handleSubmit(onCreateSupplier)} className='space-y-4'>
+            <form onSubmit={handleSubmit(createSupplier)} className='space-y-4'>
 
                 <div className="flex items-center gap-5 w-full">
                     <div className='flex-1'>

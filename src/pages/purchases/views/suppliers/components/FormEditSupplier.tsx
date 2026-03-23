@@ -13,7 +13,7 @@ export const FormEditSupplier: React.FC = () => {
     const { theme } = useTheme()
     const isDark = theme === "dark"
 
-    const { supplierSelected, updateSupplier, companies } = useSuppliers()
+    const { supplierSelected, onUpdateSupplier, companies } = useSuppliers()
     const { onCloseDrawers } = useDrawer()
     const { activateAlert } = useAlert()
 
@@ -77,7 +77,7 @@ export const FormEditSupplier: React.FC = () => {
             return
         }
 
-        updateSupplier(supplierSelected.id!, payload)
+        onUpdateSupplier(supplierSelected.id!, payload)
         onCloseDrawers()
     }
 

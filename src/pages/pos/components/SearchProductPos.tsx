@@ -4,16 +4,16 @@ import { Search } from '../../../shared/components/form'
 
 export const SearchProductPos: React.FC = () => {
 
-  const { searchProduct } = usePos()
+  const { onSearchProduct } = usePos()
 
-  const onSearchProduct = ( searched: string ) => {
-    searchProduct(searched)
+  const searchProduct = ( searched: string ) => {
+    onSearchProduct(searched)
   }
 
   return (
     <div className='w-2/3 md:w-1/3'>
         <Search 
-            onChange={onSearchProduct}
+            onChange={searchProduct}
             placeholder='Buscar productos para vender'
         />
     </div>

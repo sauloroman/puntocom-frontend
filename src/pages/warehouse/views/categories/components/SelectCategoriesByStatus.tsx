@@ -4,27 +4,18 @@ import { Select } from '../../../../../shared/components/select'
 
 export const SelectCategoriesByStatus: React.FC = () => {
 
-    const { filter: { isVisible }, filterCategoriesByStatus, getCategories, onSetFilterStatus, onChangePaginationVisibility } = useCategories()
+    const { onSetFilterCategoriesByStatus } = useCategories()
 
-    const onChange = (value: string) => {
-        onChangePaginationVisibility(true)
-        if ( value === 'Estado' ) {
-            getCategories()
-            onSetFilterStatus(null, true)
-            return
-        }
-        filterCategoriesByStatus( value === 'Activo' )
+    const onChange = (status: string) => {
+        if (status === 'Estado') return
+        onSetFilterCategoriesByStatus(status)
     }
 
     return (
-        <>
-            {
-                isVisible && <Select
-                    onChange={onChange}
-                    placeholder='Estado'
-                    options={['Activo', 'Inactivo']}
-                /> 
-            }
-        </>
+        <Select
+            onChange={onChange}
+            placeholder='Estado'
+            options={['Activo', 'Inactivo']}
+        />
     )
 }

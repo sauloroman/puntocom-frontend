@@ -70,6 +70,19 @@ export const purchaseSlice = createSlice({
             state.products = payload
         },
 
+        addProductToBeInPurchase: ( state, {payload}: PayloadAction<Product> ) => {
+            state.products?.unshift(payload)
+        },
+
+        updateProductToBeInPurchase: ( state, {payload}: PayloadAction<{ productId: string, product: Product }>) => {
+            state.products = state.products?.map( pro => {
+                if ( pro.id === payload.productId ) {
+                    return payload.product
+                }
+                return pro
+            }) ?? []
+        },
+
         setProductsMetaPagination: (state, { payload }: PayloadAction<MetaPagination & { itemsPerPage: number }>) => {
             state.pagination = payload
         },
@@ -86,7 +99,7 @@ export const purchaseSlice = createSlice({
             state.purchaseSelected = payload
         },
 
-        setSupplierSelected: (state, { payload }: PayloadAction<string>) => {
+        setSupplierSelected: (state, { payload }: PayloadAction<string | null>) => {
             state.supplierSelected = payload
         },
 
@@ -102,7 +115,7 @@ export const purchaseSlice = createSlice({
             state.productSelectedToAdd = payload
         },
 
-        updateProduct: (state, { payload }: PayloadAction<SavePurchaseDetail>) => {
+        updateProductStock: (state, { payload }: PayloadAction<SavePurchaseDetail>) => {
             state.products = state.products?.map(pro => {
                 if (pro.id === payload.productId) {
                     pro.stock = pro.stock + payload.quantity
@@ -200,27 +213,29 @@ export const purchaseSlice = createSlice({
 })
 
 export const {
-    setFilterUser,
-    setFilterSupplier,
-    setPricesFilter,
-    setDatesFilter,
-    setProducts,
-    setProductsMetaPagination,
-    setPurchasesMetaPagination,
-    setIsPurchasesPaginationVisible,
-    setPurchases,
-    setPurchaseSelected,
-    setProductSelectedToAdd,
-    setSupplierSelected,
-    setIsLoading,
-    setPageProducts,
-    setPagePurchases,
+    addProductToBeInPurchase,
     addProductInPurchase,
     addPurchase,
-    updateProduct,
-    resetFilter,
-    removeProductInPurchase,
     clearProductsInPurchase,
+    decrementProductQuantityInPurchase,
     incrementProductQuantityInPurchase,
-    decrementProductQuantityInPurchase
+    removeProductInPurchase,
+    resetFilter,
+    setDatesFilter,
+    setFilterSupplier,
+    setFilterUser,
+    setIsLoading,
+    setIsPurchasesPaginationVisible,
+    setPageProducts,
+    setPagePurchases,
+    setPricesFilter,
+    setProducts,
+    setProductSelectedToAdd,
+    setProductsMetaPagination,
+    setPurchases,
+    setPurchaseSelected,
+    setPurchasesMetaPagination,
+    setSupplierSelected,
+    updateProductStock,
+    updateProductToBeInPurchase,
 } = purchaseSlice.actions

@@ -30,7 +30,7 @@ export const FilterSupplierTag: React.FC<Props> = ({ supplierId, supplierName })
                             font-medium transition-colors
                             ${isDark ? 'text-indigo-300' : 'text-indigo-900'}
                         `}>
-                    Supplier:
+                    Proveedor:
                 </span>
                 <span className={`
                             transition-colors

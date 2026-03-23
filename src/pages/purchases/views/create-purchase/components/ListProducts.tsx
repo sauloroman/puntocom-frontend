@@ -8,14 +8,12 @@ interface Props {
 }
 
 export const ListProducts: React.FC<Props> = ({ products }) => {
-    const { getProducts } = useProducts()
+    const { onGetProducts } = useProducts()
     const { theme } = useTheme()
     const isDark = theme === 'dark'
 
     useEffect(() => {
-        if ( !products ) {
-            getProducts()
-        }
+        if ( !products ) onGetProducts()
     }, [])
 
     return (

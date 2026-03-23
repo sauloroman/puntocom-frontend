@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Product, ProductMinimal } from "../../interfaces/dto/product.interface";
 import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
+import type { FilterProducts } from "../../interfaces/ui/filter.interface";
 
 interface ProductState {
     isLoading: boolean,
@@ -11,18 +12,7 @@ interface ProductState {
     productWarningStock: Product[],
     productNormalStock: Product[],
     productSelected: Product | null,
-    filter: { 
-        status: boolean | null,
-        category: {
-            id: string | null,
-            name: string | null
-        },
-        supplier: {
-            id: string | null,
-            name: string | null
-        }
-        isVisible: boolean
-    },
+    filter: FilterProducts,
     pagination: MetaPagination & { itemsPerPage: number },
     isPaginationVisible: boolean,
     isOrderedAsc: boolean
@@ -38,7 +28,6 @@ const initialState: ProductState = {
     productsLowStock: [],
     productWarningStock: [],
     filter: {
-        status: null,
         category: {
             id: null,
             name: null
@@ -47,7 +36,12 @@ const initialState: ProductState = {
             id: null,
             name: null
         },
-        isVisible: true
+        productName: null,
+        status: null,
+        price: {
+            maxPrice: null,
+            minPrice: null
+        },
     },
     pagination: {
         page: 1,
@@ -76,6 +70,15 @@ export const productsSlice = createSlice({
                 }
                 return product
             })
+        },
+
+        updateProductStockInWarehouse: (state, {payload}: PayloadAction<{ productId: string, quantityDiscount: number }>) => {
+            state.products = state.products?.map( pro => {
+                if ( pro.id === payload.productId) {
+                    pro.stock = pro.stock - payload.quantityDiscount
+                }
+                return pro
+            }) ?? []
         },
 
         setProductsMinimal: ( state, { payload }: PayloadAction<ProductMinimal[]>) => {
@@ -118,21 +121,43 @@ export const productsSlice = createSlice({
             state.pagination = payload
         },
 
-        setStatusFilter: ( state, {payload}: PayloadAction<{status: boolean | null, isVisible: boolean}>) => {
+        setProductStatusFilter: ( state, {payload}: PayloadAction<Pick<FilterProducts, 'status'>>) => {
             state.filter.status = payload.status
-            state.filter.isVisible = payload.isVisible
         },
 
-        setCategoryFilter: ( state, {payload}: PayloadAction<{ id: string | null, name: string | null, isVisible: boolean}>) => {
-            state.filter.category.id = payload.id
-            state.filter.category.name = payload.name
-            state.filter.isVisible = payload.isVisible
+        setProductCategoryFilter: ( state, {payload}: PayloadAction<Pick<FilterProducts, 'category'>>) => {
+            state.filter.category = payload.category  
         },
 
-        setSupplierFilter: ( state, {payload}: PayloadAction<{ id: string | null, name: string | null, isVisible: boolean }>) => {
-            state.filter.supplier.id = payload.id
-            state.filter.supplier.name = payload.name
-            state.filter.isVisible = payload.isVisible
+        setProductSupplierFilter: ( state, {payload}: PayloadAction<Pick<FilterProducts, 'supplier'>>) => {
+            state.filter.supplier = payload.supplier
+        },
+
+        setProductNameFilter: ( state, {payload}: PayloadAction<Pick<FilterProducts, 'productName'>>) => {
+            state.filter.productName = payload.productName
+        },
+
+        setProductPricesFilter: ( state, { payload }: PayloadAction<Pick<FilterProducts, 'price'>> ) => {
+            state.filter.price = payload.price
+        },
+
+        resetFilter: ( state ) => {
+            state.filter = {
+                category: {
+                    id: null,
+                    name: null,
+                },
+                supplier: {
+                    id: null,
+                    name: null,
+                },
+                productName: null,
+                status: null,
+                price: {
+                    maxPrice: null,
+                    minPrice: null
+                },
+            }
         },
 
         setPaginationVisible: ( state, {payload}: PayloadAction<boolean>) => {
@@ -147,20 +172,24 @@ export const productsSlice = createSlice({
 
 export const {
     addProducts,
-    setCategoryFilter,
+    resetFilter,
+    setAllProducts,
     setIsLoading,
     setOrderedAsc,
     setPage,
     setPaginationVisible,
+    setProductCategoryFilter,
+    setProductNameFilter,
+    setProductPricesFilter,
     setProducts,
-    setAllProducts,
     setProductsLowStock,
     setProductsMetaPagination,
     setProductsMinimal,
     setProductsNormalStock,
+    setProductStatusFilter,
+    setProductSupplierFilter,
     setProductsWarningStock,
     setSelectedProduct,
-    setStatusFilter,
-    setSupplierFilter,
     updateProduct,
+    updateProductStockInWarehouse,
 } = productsSlice.actions

@@ -10,10 +10,10 @@ import { SelectActiveProducts, SelectAdjustmentType } from './'
 
 export const ModalCreateInventoryAdjustment: React.FC = () => {
 
-    const { getMinimalProducts, productsMinimal } = useProducts()
+    const { onGetMinimalProducts, productsMinimal } = useProducts()
     const { user } = useAuth()
     const { onCloseModal } = useModal()
-    const { saveInventoryAdjustment } = useInventoryAdjustment()
+    const { onSaveInventoryAdjustment } = useInventoryAdjustment()
 
     const {
         handleSubmit,
@@ -22,13 +22,13 @@ export const ModalCreateInventoryAdjustment: React.FC = () => {
         formState: { errors }
     } = useForm<SaveInventoryAdjustment>()
 
-    const onSaveInventoryAdjustment = (data: SaveInventoryAdjustment) => {
+    const saveInventoryAdjustment = (data: SaveInventoryAdjustment) => {
         const payload: SaveInventoryAdjustment = {
             ...data,
             adjustmentQuantity: Number(data.adjustmentQuantity),
             userId: user?.id ?? ''
         }
-        saveInventoryAdjustment(payload)
+        onSaveInventoryAdjustment(payload)
         onCloseModalSaveAdjustment()
     }
 
@@ -38,13 +38,13 @@ export const ModalCreateInventoryAdjustment: React.FC = () => {
     }
 
     useEffect(() => {
-        if (!productsMinimal) getMinimalProducts()
+        if (!productsMinimal) onGetMinimalProducts()
     }, [])
 
     return (
         <ModalLayout width="w-xl">
             <form
-                onSubmit={handleSubmit(onSaveInventoryAdjustment)}
+                onSubmit={handleSubmit(saveInventoryAdjustment)}
                 className="flex-2 space-y-6 mb-4 rounded-md"
             >
                 <div className="flex-1">

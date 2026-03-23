@@ -2,10 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { 
     startChangingCategoryStatus, 
     startCreatingCategory, 
-    startFilteringCategoriesByStatus, 
-    startGettingAllCategories, 
-    startGettingCategories, 
-    startSearchingCategories, 
+    startFilteringCategories, 
+    startGettingAllCategories,  
     startUpdatingCategory, 
     startUploadingCategoryImage 
 } from "../../store/categories/categories.thunk"
@@ -14,48 +12,97 @@ import {
     setCategorySelected, 
     setOrderedAsc, 
     setPage, 
-    setPaginationVisible, 
-    setStatusFilter 
+    setCategoryStatusFilter, 
+    setCategoryNameFilter,
+    resetFilter
 } from "../../store/categories/categories.slice"
 import type { RootState } from "../../store"
 import type { CreateCategory, UpdateCategory } from "../../interfaces/dto/category.interface"
+import type { FilterCategories } from "../../interfaces/ui/filter.interface"
 
 export const useCategories = () => {
 
     const dispatch = useDispatch<any>() 
     const { 
-        categories, 
         allCategories,
+        categories, 
         categorySelected, 
-        isLoading, 
-        pagination,
         filter,
-        isPaginationVisible,
+        isLoading, 
         isOrderedAsc,
+        isPaginationVisible,
+        pagination,
     } = useSelector( (state: RootState) => state.categories )
 
-    const getCategories = () => {
-        dispatch( startGettingCategories({ page: 1, limit: pagination.itemsPerPage }) )
+    const applyCategoryFilters = (
+        page: number,
+        limit: number,
+        overrides?: FilterCategories
+    ) => {
+
+        const current: FilterCategories = {
+            categoryName: filter.categoryName,
+            status: filter.status
+        }
+        const applied: FilterCategories = {...current, ...overrides}
+        const hasCategoryNameFilter = applied.categoryName !== null
+        const hasStatusFilter = applied.status !== null
+
+        if ( hasCategoryNameFilter || hasStatusFilter ) {
+            dispatch(startFilteringCategories(
+                applied.status ?? undefined,
+                applied.categoryName ?? undefined,
+                { page, limit }
+            ))
+        } else {
+            dispatch(startFilteringCategories(
+                undefined,
+                undefined,
+                { page, limit }
+            ))
+        }
+
     }
 
-    const getAllCategories = () => {
+    const onGetCategories = () => {
+       dispatch(startFilteringCategories(
+            undefined,
+            undefined,
+        ))
+    }
+
+    const onGetAllCategories = () => {
         dispatch(startGettingAllCategories())
     }
 
-    const filterCategoriesByStatus = ( status: boolean ) => {
-        dispatch( setStatusFilter({status, isVisible: true}) )
-        dispatch(startFilteringCategoriesByStatus({ page: 1, limit: pagination.itemsPerPage}, status))
+    const onSetFilterCategoriesByStatus = (status: string | null) => {
+        dispatch( setCategoryStatusFilter({status}) )
+        dispatch(setPage(1))
+        applyCategoryFilters(1, pagination.itemsPerPage, { status })
     }
 
-    const onSetFilterStatus = (status: boolean | null, isVisible: boolean) => {
-        dispatch( setStatusFilter({status, isVisible}) )
+    const onSetFilterCategoriesByName = (categoryName: string | null) => {
+        dispatch( setCategoryNameFilter({categoryName}) )
+        dispatch(setPage(1))
+        applyCategoryFilters(1, pagination.itemsPerPage, { categoryName })
     }
 
-    const createCategory = ( data: CreateCategory ) => {
+    const onResetFilters = () => {
+        dispatch(resetFilter())
+        dispatch(setPage(1))
+        onGetCategories()
+    }
+    
+    const onSetPage = ( page: number ) => {
+        dispatch(setPage(page))
+        applyCategoryFilters(page, pagination.itemsPerPage)
+    }
+   
+    const onCreateCategory = ( data: CreateCategory ) => {
         dispatch( startCreatingCategory(data) )
     }
 
-    const updateCategory = ( categoryId: string, categoryData: UpdateCategory ) => {
+    const onUpdateCategory = ( categoryId: string, categoryData: UpdateCategory ) => {
         dispatch( startUpdatingCategory(categoryId, categoryData))
     }
 
@@ -64,38 +111,20 @@ export const useCategories = () => {
         dispatch( setCategorySelected(category!) )
     }
 
-    const uploadCategoryIcon = (categoryId: string, files: FormData ) => {
+    const onUploadCategoryIcon = (categoryId: string, files: FormData ) => {
         dispatch(startUploadingCategoryImage(categoryId, files))
     }
 
-    const changeCategoryStatus = (categoryId: string, status: boolean) => {
+    const onChangeCategoryStatus = (categoryId: string, status: boolean) => {
         dispatch(startChangingCategoryStatus(categoryId, status))
-    }
-
-    const onSearchCategory = ( categorySearched: string ) => {
-        dispatch(startSearchingCategories(categorySearched))
-    }
-
-    const onSetPage = ( page: number ) => {
-         dispatch(setPage(page))
-
-        if (filter.status !== null) {
-            dispatch(startFilteringCategoriesByStatus({ page, limit: pagination.itemsPerPage }, filter.status))
-        } else {
-            dispatch(startGettingCategories({ page, limit: pagination.itemsPerPage }))
-        }
-    }
-
-    const onChangePaginationVisibility = ( isVisible: boolean ) => {
-        dispatch( setPaginationVisible(isVisible) )
     }
 
     const onOrderAlpha = ( ordered: boolean ) => {
         dispatch(setOrderedAsc(ordered))
-        sortCategories()
+        onSortCategories()
     }
 
-    const sortCategories = () => {
+    const onSortCategories = () => {
         const categoriesSorted = [...categories!].sort((a, b) => {
             const categoryA = a.name.toLowerCase()
             const categoryB = b.name.toLowerCase()
@@ -111,27 +140,27 @@ export const useCategories = () => {
     }
 
     return {
-        categorySelected,
-        categories,
+        activeCategories: allCategories?.filter( c => c.isActive ),
         allCategories,
-        isLoading,
-        pagination,
+        categories,
+        categorySelected,
         filter,
-        isPaginationVisible,
+        isLoading,
         isOrderedAsc,
+        isPaginationVisible,
+        pagination,
 
+        onChangeCategoryStatus,
+        onCreateCategory,
+        onGetAllCategories,
+        onGetCategories,
+        onOrderAlpha,
+        onResetFilters,
         onSelectCategory,
-        getCategories,
-        getAllCategories,
-        createCategory,
-        updateCategory,
-        uploadCategoryIcon,
-        changeCategoryStatus,
-        filterCategoriesByStatus,
+        onSetFilterCategoriesByName,
+        onSetFilterCategoriesByStatus,
         onSetPage,
-        onSetFilterStatus,
-        onSearchCategory,
-        onChangePaginationVisibility,
-        onOrderAlpha
+        onUpdateCategory,
+        onUploadCategoryIcon,
     }
 }

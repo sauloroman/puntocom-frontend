@@ -3,8 +3,8 @@ import { useTheme } from '../../hooks'
 import { LucideCheckCircle } from 'lucide-react'
 
 interface Props {
-    status: string | null
-    statusLabel: string | null
+    status: string | null | undefined
+    statusLabel: string | null | undefined
 }
 
 export const FilterStatusTag: React.FC<Props> = ({ status, statusLabel }) => {

@@ -1,3 +1,4 @@
+export { AppliedSuppliersFilter } from './AppliedSuppliersFilter'
 export { ButtonSuppliersReport } from './ButtonSuppliersReport'
 export { FormEditSupplier } from './FormEditSupplier'
 export { ModalConfirmChangeStatusSupplier } from './ModalConfirmChangeStatusSupplier'

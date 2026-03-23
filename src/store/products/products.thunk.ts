@@ -28,41 +28,18 @@ import { AlertType } from "../../interfaces/ui/alert.interface"
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 import type { Pagination } from "../../interfaces/dto/pagination.interface"
 import { handleError } from "../../config/api/handle-error"
+import type { RootState } from "../store"
+import type { FilterProductByItem, PriceRange } from "../../interfaces/ui/filter.interface"
+import { addProductToBeInPurchase, updateProductToBeInPurchase } from "../purchase/purchase.slice"
 
 const urlProducts = '/api/product'
-
-export const startGettingProducts = ( pagination: Pagination ) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch(setIsLoading(true))
-        try {
-
-            const { page, limit } = pagination
-
-            const { data } = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}?page=${page}&limit=${limit}&sort=productCreatedAt:desc`)
-
-            const { meta, products } = data
-
-            dispatch(setProducts(products))
-            dispatch(setProductsMetaPagination({...meta, itemsPerPage: 20 }))
-
-        } catch(error) {
-            dispatch(showAlert({
-                title: "⚠️ Error productos",
-                text: 'No se pudieron obtener los productos',
-                type: AlertType.error,
-            }))
-        } finally {
-            dispatch(setIsLoading(false))
-        }
-    }
-}
 
 export const startGettingAllProducts = () => {
     return async ( dispatch: Dispatch ) => {
         dispatch(setIsLoading(true))
         try {
             
-            const { data } = await puntocomApiPrivate.get<GetProductsMinimal>(`${urlProducts}/all-minimal`)
+            const { data } = await puntocomApiPrivate.get<GetProductsMinimal>(`${urlProducts}/minimal`)
             const { products } = data
 
             dispatch(setProductsMinimal(products))
@@ -82,7 +59,7 @@ export const startGettingAllProductsFull = () => {
     return async ( dispatch: Dispatch ) => {
         dispatch(setIsLoading(true))
         try {
-            const { data } = await puntocomApiPrivate.get<GetAllProducts>(`${urlProducts}/all`)
+            const { data } = await puntocomApiPrivate.get<GetAllProducts>(urlProducts)
             const { products } = data
 
             dispatch(setAllProducts(products))
@@ -90,6 +67,64 @@ export const startGettingAllProductsFull = () => {
             dispatch(showAlert({
                 title: "⚠️ Error productos",
                 text: 'No se pudieron obtener los productos',
+                type: AlertType.error,
+            }))
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startFilteringProducts = (
+    status?: string,
+    productName?: string,
+    category?: FilterProductByItem,
+    supplier?: FilterProductByItem,
+    prices?: PriceRange,
+    pagination?: Pagination
+) => {
+    return async ( dispatch: Dispatch, getState: () => RootState ) => {
+        dispatch(setIsLoading(true))
+        try {
+            const { pagination: {itemsPerPage}} = getState().products
+
+            const params: any = {
+                page: pagination?.page.toString() ?? '1',
+                limit: pagination?.limit.toString() ?? itemsPerPage.toString()
+            }
+
+            if ( status ) {
+                params['status'] = status === 'Activo' ? 1 : 0
+            }
+
+            if ( productName ) {
+                params['product'] = productName.trim()
+            }
+            
+            if ( category?.id ) {
+                params['category'] = category.id
+            }
+
+            if ( supplier?.id ) {
+                params['supplier'] = supplier.id
+            }
+
+            if ( prices?.minPrice !== undefined && prices?.maxPrice !== undefined ) {
+                params['minPrice'] = prices?.minPrice?.toString() 
+                params['maxPrice'] = prices?.maxPrice?.toString() 
+            }
+
+            const { data } = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}/filter`, { params })
+            const { meta, products } = data
+            const { filter, ...restMetaPagination } = meta
+
+            dispatch(setProducts(products))
+            dispatch(setProductsMetaPagination({ ...restMetaPagination, itemsPerPage }))
+
+        } catch(error) {
+            dispatch(showAlert({
+                title: "⚠️ Error productos",
+                text: 'No se pudieron obtener los productos filtrados',
                 type: AlertType.error,
             }))
         } finally {
@@ -130,69 +165,6 @@ export const startGettingProductsByStock = () => {
     }
 }
 
-export const startFilteringProductsByStatus = ( pagination: Pagination, status: boolean) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch( setIsLoading( true ) )
-        try {
-            const { limit, page } = pagination
-            
-            const { data } = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}?page=${page}&limit=${limit}&sort=productName:asc&filter={"productStatus": ${status}}`)
-
-            const { meta, products } = data
-
-            dispatch(setProducts(products))
-            dispatch(setProductsMetaPagination({...meta, itemsPerPage: 20}))
-
-        } catch(error) {
-            console.log(error)
-        } finally {   
-            dispatch( setIsLoading( false ) )
-        }
-    }
-}
-
-export const startFilteringProductsByCategory = (pagination: Pagination, categoryId: string) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch( setIsLoading( true ) )
-        try {
-            const { limit, page } = pagination
-            
-            const { data } = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}?page=${page}&limit=${limit}&sort=productCreatedAt:asc&filter={"productCategory": "${categoryId}"}`)
-
-            const { meta, products } = data
-
-            dispatch(setProducts(products))
-            dispatch(setProductsMetaPagination({...meta, itemsPerPage: 20}))
-
-        } catch(error) {
-            console.log(error)  
-        } finally {   
-            dispatch( setIsLoading( false ) )
-        }
-    }
-}
-
-export const startFilteringProductsBySupplier = (pagination: Pagination, supplierId: string) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch( setIsLoading( true ) )
-        try {
-            const { limit, page } = pagination
-            
-            const { data } = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}?page=${page}&limit=${limit}&sort=productCreatedAt:asc&filter={"productSupplier": "${supplierId}"}`)
-
-            const { meta, products } = data
-
-            dispatch(setProducts(products))
-            dispatch(setProductsMetaPagination({...meta, itemsPerPage: 20}))
-
-        } catch(error) {
-            console.log(error)  
-        } finally {   
-            dispatch( setIsLoading( false ) )
-        }
-    }
-}
-
 export const startCreatingProduct = (productData: CreateProduct) => {
     return async (dispatch: Dispatch) => {
         dispatch(setIsLoading(true))
@@ -202,6 +174,8 @@ export const startCreatingProduct = (productData: CreateProduct) => {
             const { product } = data
 
             dispatch(addProducts(product))
+            dispatch(addProductToBeInPurchase(product))
+
             dispatch(showAlert({
                 title: 'Creación de Producto',
                 text: `Producto: ${productData.name}`,
@@ -264,6 +238,7 @@ export const startUploadingProductImage = (productId: string, files: FormData) =
             const { message, product } = data
 
             dispatch(updateProduct({productId, product}))
+            dispatch(updateProductToBeInPurchase({ productId, product }))
             dispatch(setSelectedProduct(product))
             dispatch(showAlert({
                 title: 'Imagen Subida',
@@ -277,22 +252,6 @@ export const startUploadingProductImage = (productId: string, files: FormData) =
                 text: 'No se pudo subir la imagen',
                 type: AlertType.error
             }))
-        } finally {
-            dispatch(setIsLoading(false))
-        }
-    }
-}
-
-export const startSearchingProducts = ( productSearched: string ) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch(setIsLoading(true))
-        try {
-            const {data} = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}/search?page=1&limit=20&sort=productCreatedAt:desc&filter={"productName": "${productSearched}"}`)
-            const { meta, products } = data
-            dispatch( setProducts(products) )
-            dispatch(setProductsMetaPagination({...meta, itemsPerPage: 20}))
-        } catch(error) {
-            console.log(error)
         } finally {
             dispatch(setIsLoading(false))
         }

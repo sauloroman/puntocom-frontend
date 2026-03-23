@@ -189,7 +189,7 @@ export const ModalSaveSale: React.FC = () => {
                     </OutlineButton>
                     
                     <OutlineButton 
-                        className='border-2 w-full border-red-600 text-red-600' 
+                        className='border-2 w-full border-blue-600 text-blue-600' 
                         onClick={onCloseModal}
                     >
                         Aceptar

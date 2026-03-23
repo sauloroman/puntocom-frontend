@@ -1,6 +1,7 @@
 import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 import { 
     addUser, 
+    setAllUsers, 
     setHasEnteredPasswordCorrectly, 
     setIsLoading, 
     setUsers, 
@@ -18,6 +19,7 @@ import {
     type UploadUserImage,
     type UpdateUser,
     type UpdateUserResponse,
+    type GetAllUsersResponse,
 } from "../../interfaces/dto/user.interface"
 import type { Dispatch } from "@reduxjs/toolkit"
 import type { Pagination } from "../../interfaces/dto/pagination.interface"
@@ -112,6 +114,25 @@ export const startUploadingUserImage = ( userId: string, files: FormData ) => {
             dispatch(showAlert({
                 title: '⚠️ Error imagen usuario',
                 text: 'No se pudo subir la imagen',
+                type: AlertType.error
+            }))
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startGettingAllUsers = () => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(true))
+        try {
+            const { data } = await puntocomApiPrivate.get<GetAllUsersResponse>(urlUser)
+            const { users } = data
+            dispatch(setAllUsers(users))
+        } catch(error) {
+            dispatch(showAlert({
+                title: '⚠️ Error Usuarios',
+                text: 'No fue posible obtener todos los usuarios',
                 type: AlertType.error
             }))
         } finally {

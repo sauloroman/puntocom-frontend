@@ -10,7 +10,7 @@ import { CancelButton, SaveButton } from '../../../../../shared/components/butto
 
 export const FormEditCategory: React.FC = () => {
 
-    const { categorySelected, updateCategory } = useCategories()
+    const { categorySelected, onUpdateCategory } = useCategories()
     const { activateAlert } = useAlert()
     const { onCloseDrawers } = useDrawer()
 
@@ -37,9 +37,9 @@ export const FormEditCategory: React.FC = () => {
         }
 
         if (data.description && data.name === categorySelected?.name) {
-            updateCategory(categorySelected?.id!, { description: data.description })
+            onUpdateCategory(categorySelected?.id!, { description: data.description })
         } else {
-            updateCategory(categorySelected?.id!, data)
+            onUpdateCategory(categorySelected?.id!, data)
         }
 
         onCloseDrawers()

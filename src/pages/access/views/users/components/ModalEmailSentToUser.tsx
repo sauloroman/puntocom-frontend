@@ -8,11 +8,11 @@ export const ModalEmailSentToUser: React.FC = () => {
   const isDark = theme === "dark"
 
   const { modalMessage, onCloseConfirmAdminPassword } = useModal()
-  const { resetEnteredAdminPassword } = useUsers()
+  const { onResetEnteredAdminPassword } = useUsers()
 
   const onClose = () => {
     onCloseConfirmAdminPassword()
-    resetEnteredAdminPassword()
+    onResetEnteredAdminPassword()
   }
 
   return (

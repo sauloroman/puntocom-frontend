@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
 import { 
+  AppliedSuppliersFilter,
   ModalConfirmChangeStatusSupplier,
   ModalConfirmCreateSupplierReport,
   ModalCreateSupplier, 
@@ -15,21 +16,44 @@ import {
   SupplierInfoDrawer, 
   TableSuppliers 
 } from './components'
-import { useDrawer, useModal, useSuppliers } from '../../../../shared/hooks'
+import { useDrawer, useModal, useReports, useSuppliers } from '../../../../shared/hooks'
 import { ModalRequestPasswordAdmin } from '../../../access/views/users/components'
 import { CreateButton, SortElementsAlphaButton, ToggleGridTableViewButton, FAB } from '../../../../shared/components/button'
 import { GenerateReport } from '../../../reports/components/GenerateReport'
 import { BsPlus, BsFileEarmarkText } from 'react-icons/bs'
+import { SpinnerScreen } from '../../../../shared/components/spinner'
 
 export const PurchasesSuppliers: React.FC = () => {
 
-  const { modalIsOpen, modalName, onOpenModal, onOpenConfirmAdminPassword } = useModal()
-  const { suppliers, getSuppliers, setTableStyle, isTableStyleActive, onOrderAlpha, isOrderedAsc } = useSuppliers()
+  const { 
+    modalIsOpen, 
+    modalName, 
+    onOpenConfirmAdminPassword, 
+    onOpenModal, 
+  } = useModal()
+
+  const { isLoading: isReportLoading } = useReports()
+
+  const { 
+    companies, 
+    isOrderedAsc, 
+    isTableStyleActive, 
+    onGetSuppliers, 
+    onGetUniqueCompanies,
+    onOrderAlpha, 
+    onSetTableStyle, 
+    suppliers, 
+  } = useSuppliers()
+
   const { rightDrawerIsOpen, drawelName } = useDrawer()
   const [showFABMenu, setShowFABMenu] = useState(false)
 
   useEffect(() => {
-    if (!suppliers) getSuppliers()
+    if (!suppliers) onGetSuppliers()
+  }, [])
+
+  useEffect(() => {
+    if ( !companies ) onGetUniqueCompanies()
   }, [])
 
   const openCreateSupplierModal = () => {
@@ -42,32 +66,28 @@ export const PurchasesSuppliers: React.FC = () => {
     setShowFABMenu(false)
   }
 
+  if ( isReportLoading ) {
+    return (<SpinnerScreen />)
+  }
+
   return (
     <>
       <section>
-        {/* Header responsive */}
         <div className="flex flex-col gap-4 mb-6">
           
-          {/* Buscador */}
-          <div className="w-full md:w-96">
-            <SearchSupplier />
+          <div className="w-full flex justify-between items-center">
+            <div className="md:w-1/4"><SearchSupplier /></div>
+            <AppliedSuppliersFilter />
           </div>
 
-          {/* Controles principales */}
           <div className='flex flex-col sm:flex-row items-stretch sm:items-center gap-3'>
             
-            {/* Controles de filtrado y ordenamiento */}
             <div className='flex flex-wrap items-center gap-2 flex-1'>
               <SortElementsAlphaButton onToggle={onOrderAlpha} desc={isOrderedAsc} />
-              <ToggleGridTableViewButton onToggle={setTableStyle} status={isTableStyleActive} />
+              <ToggleGridTableViewButton onToggle={onSetTableStyle} status={isTableStyleActive} />
               
-              <div className='w-full sm:w-auto sm:min-w-[200px]'>
-                <SelectSupplierByCompany />
-              </div>
-              
-              <div className="w-full sm:w-auto sm:min-w-[160px]">
-                <SelectSupplierByStatus />
-              </div>
+              <div className='w-full sm:w-auto sm:min-w-[200px]'><SelectSupplierByCompany /></div>
+              <div className="w-full sm:w-auto sm:min-w-[200px]"><SelectSupplierByStatus /></div>
             </div>
 
             <div className='hidden md:flex items-center gap-3'>

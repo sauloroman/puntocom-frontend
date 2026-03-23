@@ -3,7 +3,7 @@ import { useTheme } from '../../hooks'
 import { LuSearch } from 'react-icons/lu'
 
 interface Props {
-    search: string | null
+    search: string | null | undefined
 }
 
 export const FilterSearchTag: React.FC<Props> = ({ search }) => {

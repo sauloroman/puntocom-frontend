@@ -9,10 +9,10 @@ export const OrderPanel: React.FC = () => {
     const isDark = theme === "dark"
 
     const { cart, total } = useCart()
-    const { saveSale } = useSale()
+    const { onSaveSale } = useSale()
 
-    const onSaveSale = () => {
-        saveSale(cart!, total)
+    const saveSale = () => {
+        onSaveSale(cart!, total)
     }
 
     return (
@@ -46,7 +46,7 @@ export const OrderPanel: React.FC = () => {
 
                 <div className="mt-auto pt-4 space-y-3">
                     <OrderSummary />
-                    <SaveButton onClick={onSaveSale} className='w-full p-3' text='Registrar Venta' />
+                    <SaveButton onClick={saveSale} className='w-full p-3' text='Registrar Venta' />
                 </div>
             </div>
         </div>

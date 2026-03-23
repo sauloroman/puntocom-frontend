@@ -1,3 +1,4 @@
+import type { AdjustmentEnum } from "../dto/inventory-adjustment.interface"
 import type { Roles } from "../dto/user.interface"
 
 // General filters
@@ -57,8 +58,42 @@ export interface FilterUsers {
     role: Roles | null
 }
 
-export interface FilterUsersDTO {
-  userName: string | null,
-  status: string | null,
-  role: Roles | null
+// Category filters
+
+export interface FilterCategories {
+    categoryName?: string | null,
+    status?: string | null
+}
+
+// Supplier filters
+
+export interface FilterSuppliers {
+    supplierName?: string | null,
+    status?: string | null,
+    company?: string | null
+}
+
+// Product filters
+
+export interface FilterProductByItem {
+    id: string | null,
+    name: string | null
+}
+
+export interface FilterProducts {
+    productName?: string | null,
+    status?: string | null,
+    category: FilterProductByItem,
+    supplier: FilterProductByItem,
+    price: PriceRange
+}
+
+// Inventory Adjustments filters
+
+export interface FilterInventoryAdjustments {
+    adjustmentType?: AdjustmentEnum | null,
+    user: {
+        id: string | null,
+        name: string | null
+    }
 }

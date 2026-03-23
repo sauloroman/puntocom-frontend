@@ -6,15 +6,15 @@ export interface Purchase {
     purchaseDate: string,
     puchaseTotal: number,
     Supplier?: {
-        supplierId: string,
-        supplierName: string,
-        supplierPhone: string
+        id: string,
+        name: string,
+        phone: string
     },
     User?: {
-        userId: string,
-        userName: string,
-        userRole: string,
-        userImage: string
+        id: string,
+        name: string,
+        role: string,
+        image: string
     }
 }
 

@@ -3,28 +3,19 @@ import { useProducts } from '../../../../../shared/hooks'
 import { Select } from '../../../../../shared/components/select'
 
 export const SelectProductsByStatus: React.FC = () => {
-    
-    const { filter: { isVisible }, onChangePaginationVisibility, getProducts, onSetFilterStatus, filterProductsByStatus } = useProducts()
-    
-    const onChange = ( value: string ) => {
-        onChangePaginationVisibility(true)
-        if ( value === 'Estado' ) {
-            getProducts()
-            onSetFilterStatus(null, true)
-            return
-        }
-        filterProductsByStatus( value === 'Activo' )
+
+    const { onSetFilterProductsByStatus } = useProducts()
+
+    const onChange = (value: string) => {
+        if (value === 'Estado') return
+        onSetFilterProductsByStatus(value)
     }
 
     return (
-        <>
-            {
-                isVisible && <Select 
-                    onChange={ onChange }
-                    placeholder='Estado'
-                    options={['Activo', 'Inactivo']}
-                />
-            }
-        </>
+        <Select
+            onChange={onChange}
+            placeholder='Estado'
+            options={['Activo', 'Inactivo']}
+        />
     )
 }

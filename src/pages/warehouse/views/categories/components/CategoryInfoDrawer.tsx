@@ -16,25 +16,25 @@ export const CategoryInfoDrawer: React.FC = () => {
     <RightDrawerLayout width="w-[320px] md:w-xl" title="Información de categoría">
       <div className="p-4 flex flex-col h-full">
         <div className="flex items-center gap-4 mb-6">
-          {icon !== "Categoría sin ícono" ? (
+          {icon !== "" ? (
             <AvatarImage image={icon} alt="Ícono de categoría" />
           ) : (
             <AvatarInitialSquare name={name} />
           )}
 
           <div>
-            <h3 className={`text-lg font-semibold ${isDark ? "text-gray-100" : "text-gray-800"}`}>
+            <h3 className={`text-lg font-semibold mb-3 ${isDark ? "text-gray-100" : "text-gray-800"}`}>
               {name}
             </h3>
             <StatusBadge status={isActive} />
           </div>
         </div>
 
-        <p className={`${isDark ? "text-gray-300" : "text-gray-700"} text-md mb-4`}>
+        <p className={`${isDark ? "text-gray-300" : "text-gray-700"} text-lg mb-4`}>
           {description || "Sin descripción."}
         </p>
 
-        <div className={`space-y-2 text-md mb-10 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+        <div className={`space-y-2 text-lg mb-10 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
           <p>
             <span className={`font-medium ${isDark ? "text-gray-200" : "text-gray-800"}`}>#Id:</span> {id}
           </p>

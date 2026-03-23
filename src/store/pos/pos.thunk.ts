@@ -4,6 +4,9 @@ import { puntocomApiPrivate } from "../../config/api/puntocom.api"
 import { type GetProductsResponse } from "../../interfaces/dto/product.interface"
 import type { Pagination } from "../../interfaces/dto/pagination.interface"
 import { productsValidToSale } from "../../shared/helpers/products-valid-to-sale"
+import { AlertType } from "../../interfaces/ui/alert.interface"
+import { showAlert } from "../alert/alert.slice"
+import type { RootState } from "../store"
 
 const urlProducts = '/api/product'
 
@@ -12,7 +15,7 @@ export const startGettingProductsToSale = (pagination: Pagination) => {
         dispatch(setIsLoading(true))
         try {
             const { page, limit } = pagination
-            const { data } = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}?page=${page}&limit=${limit}&sort=productName:desc`)
+            const { data } = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}/filter?page=${page}&limit=${limit}&status=1`)
             const { meta, products } = data
             const productsToSale = productsValidToSale(products)
 
@@ -20,48 +23,53 @@ export const startGettingProductsToSale = (pagination: Pagination) => {
             dispatch(setProductsMetaPagination({...meta, total: productsToSale.length, itemsPerPage: 50 }))
 
         } catch (error) {
-            console.log(error)
+            dispatch(showAlert({
+                title: "⚠️ Error obtener productos",
+                text: 'No se pudieron obtener todos los productos para vender',
+                type: AlertType.error,
+            }))
         } finally {
             dispatch(setIsLoading(false))
         }
     }
 }
 
-export const startSearchingProducts = (productSearched: string) => {
-    return async (dispatch: Dispatch) => {
+export const startFilteringProductsPOS = (
+    category?: string,
+    productName?: string,
+    pagination?: Pagination
+) => {
+    return async ( dispatch: Dispatch, getState: () => RootState ) => {
         dispatch(setIsLoading(true))
         try {
-            const { data } = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}/search?page=1&limit=50&sort=productCreatedAt:desc&filter={"productName": "${productSearched}"}`)
+            const { pagination: {itemsPerPage}} = getState().pos
+
+            const params: any = {
+                page: pagination?.page.toString() ?? '1',
+                limit: pagination?.limit.toString() ?? itemsPerPage.toString()
+            }
+
+            if ( category ) {
+                params['category'] = category
+            }
+
+            if ( productName ) {
+                params['product'] = productName.trim()
+            }
+
+            const { data } = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}/filter`, { params })
             const { meta, products } = data
-            const productsToSale = productsValidToSale(products)
+            const { filter, ...restMetaPagination } = meta
+            
+            dispatch(setProducts(products))
+            dispatch(setProductsMetaPagination({ ...restMetaPagination, itemsPerPage }))
 
-            dispatch(setProducts(productsToSale))
-            dispatch(setProductsMetaPagination({...meta, total: productsToSale.length, itemsPerPage: 50 }))
-
-        } catch (error) {
-            console.log(error)
-        } finally {
-            dispatch(setIsLoading(false))
-        }
-    }
-}
-
-export const startFilteringProductsByCategory = (pagination: Pagination, categoryId: string) => {
-    return async (dispatch: Dispatch) => {
-        dispatch(setIsLoading(true))
-        try {
-            const { limit, page } = pagination
-
-            const { data } = await puntocomApiPrivate.get<GetProductsResponse>(`${urlProducts}?page=${page}&limit=${limit}&sort=productCreatedAt:asc&filter={"productCategory": "${categoryId}"}`)
-
-            const { meta, products } = data
-            const productsToSale = productsValidToSale(products)
-
-            dispatch(setProducts(productsToSale))
-            dispatch(setProductsMetaPagination({...meta, total: productsToSale.length, itemsPerPage: 50 }))
-
-        } catch (error) {
-            console.log(error)
+        } catch( error ) {
+            dispatch(showAlert({
+                title: "⚠️ Error filtrar productos",
+                text: 'No se pudieron filtrar los productos',
+                type: AlertType.error,
+            }))
         } finally {
             dispatch(setIsLoading(false))
         }

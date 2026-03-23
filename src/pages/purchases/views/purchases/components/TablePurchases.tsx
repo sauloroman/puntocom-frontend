@@ -9,7 +9,7 @@ interface TablePurchasesProps {
     data: Purchase[];
 }
 
-export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
+export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {    
     const { theme } = useTheme();
     const isDark = theme === "dark";
 
@@ -102,13 +102,13 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                                 text-sm font-medium transition-colors truncate max-w-[120px] md:max-w-none
                                                 ${isDark ? 'text-gray-200' : 'text-gray-900'}
                                             `}>
-                                                {purchase.Supplier?.supplierName}
+                                                {purchase.Supplier?.name}
                                             </p>
                                             <p className={`
                                                 text-xs transition-colors hidden sm:block
                                                 ${isDark ? 'text-gray-400' : 'text-gray-500'}
                                             `}>
-                                                {purchase.Supplier?.supplierPhone}
+                                                {purchase.Supplier?.phone}
                                             </p>
                                             <p className={`
                                                 text-xs transition-colors md:hidden mt-1
@@ -125,8 +125,8 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                                 <TableImage
                                                     width='w-6'
                                                     text='Usuario sin imagen'
-                                                    icon={purchase.User?.userImage ?? 'Usuario sin imagen'}
-                                                    initial={purchase.User?.userName[0]}
+                                                    icon={purchase.User?.image ?? 'Usuario sin imagen'}
+                                                    initial={purchase.User?.name[0]}
                                                 />
                                             </div>
                                             <div>
@@ -134,13 +134,13 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                                     text-sm font-medium transition-colors
                                                     ${isDark ? 'text-gray-200' : 'text-gray-900'}
                                                 `}>
-                                                    {purchase.User?.userName}
+                                                    {purchase.User?.name}
                                                 </p>
                                                 <p className={`
                                                     text-xs capitalize transition-colors
                                                     ${isDark ? 'text-gray-400' : 'text-gray-500'}
                                                 `}>
-                                                    {purchase.User?.userRole}
+                                                    {purchase.User?.role}
                                                 </p>
                                             </div>
                                         </div>
@@ -168,7 +168,6 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                         </div>
                                     </td>
 
-                                    {/* Acciones - Siempre visible */}
                                     <td className="px-4 md:px-6 py-4 text-center">
                                         <TablePurchasesActions purchaseId={purchase.purchaseId} />
                                     </td>

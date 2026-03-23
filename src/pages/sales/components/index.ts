@@ -1,5 +1,6 @@
 export { AppliedSalesFilters } from './AppliedSalesFilters'
 export { FilterSalesByUser } from './FilterSalesByUser'
+export { ModalNoStock } from './ModalNoStock'
 export { ModalSalesRangeDates } from './ModalSalesRangeDates'
 export { ModalSalesRangePrices } from './ModalSalesRangePrices'
 export { PaginationSales } from './PaginationSales'

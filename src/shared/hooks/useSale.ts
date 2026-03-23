@@ -6,7 +6,6 @@ import {
 } from "react-redux"
 import { 
     startFilteringSales,
-    startGettingAllSales, 
     startSavingSale 
 } from "../../store/sale/sale.thunk"
 import { 
@@ -38,54 +37,6 @@ export const useSale = () => {
         isPaginationVisible 
     } = useSelector( (state: RootState) => state.sale )
 
-    const saveSale = ( productsInCart: ProductInCart[], total: number ) => {
-        if (  productsInCart?.length === 0 || total === 0 ) {
-            dispatch(showAlert({
-                title: 'Venta no registrada',
-                text: 'Ingresa productos a la venta',
-                type: AlertType.warning
-            }))
-            return;
-        };
-        
-        const payload: SaveSale = {
-            total: total,
-            details: productsInCart.map( p => ({
-                productId: p.product.id,
-                discount: p.discount,
-                quantity: p.quantity,
-                unitPrice: p.product.sellingPrice
-            }))
-        } 
-
-        dispatch( startSavingSale( payload ) )
-    }
-
-    const getAllSales = () => {
-        dispatch(startGettingAllSales({
-            page: 1,
-            limit: pagination.itemsPerPage
-        }))
-    }
-
-    const onChangePaginationVisibility = ( isVisible: boolean ) => {
-        dispatch(setPaginationVisible(isVisible))
-    }
-
-    const onSetSelectedSale = ( saleId: string ) => {
-        const sale = sales.find( sale => sale.sale.saleId === saleId )
-        if ( !sale ) return
-        dispatch(setSelectedSale( sale ))
-    }
-
-    const onGetSaleById = async (): Promise<SaleWithDetailsResponse> => {
-        if (!selectedSale) throw new Error('Seleccione una venta para imprimir')
-        const saleId = selectedSale.sale.saleId
-        const { data } = await puntocomApiPrivate.get<GetSale>(`/api/sale/${saleId}`)
-        const { sale } = data
-        return sale
-    }
-
     const applySalesFilters = (
         page: number,
         limit: number,
@@ -115,9 +66,63 @@ export const useSale = () => {
                     : undefined
             ))
         } else {
-            dispatch(startGettingAllSales({ page, limit }))
+            dispatch(startFilteringSales(
+                undefined,
+                undefined,
+                undefined,
+                { page, limit }
+            ))
         }
 
+    }
+
+    const onSaveSale = ( productsInCart: ProductInCart[], total: number ) => {
+        if (  productsInCart?.length === 0 || total === 0 ) {
+            dispatch(showAlert({
+                title: 'Venta no registrada',
+                text: 'Ingresa productos a la venta',
+                type: AlertType.warning
+            }))
+            return;
+        };
+        
+        const payload: SaveSale = {
+            total: total,
+            details: productsInCart.map( p => ({
+                productId: p.product.id,
+                discount: p.discount,
+                quantity: p.quantity,
+                unitPrice: p.product.sellingPrice
+            }))
+        } 
+
+        dispatch( startSavingSale( payload ) )
+    }
+
+    const onGetAllSales = () => {
+        dispatch(startFilteringSales(
+            undefined,
+            undefined,
+            undefined
+        ))
+    }
+
+    const onChangePaginationVisibility = ( isVisible: boolean ) => {
+        dispatch(setPaginationVisible(isVisible))
+    }
+
+    const onSetSelectedSale = ( saleId: string ) => {
+        const sale = sales.find( sale => sale.sale.saleId === saleId )
+        if ( !sale ) return
+        dispatch(setSelectedSale( sale ))
+    }
+
+    const onGetSaleById = async (): Promise<SaleWithDetailsResponse> => {
+        if (!selectedSale) throw new Error('Seleccione una venta para imprimir')
+        const saleId = selectedSale.sale.saleId
+        const { data } = await puntocomApiPrivate.get<GetSale>(`/api/sale/${saleId}`)
+        const { sale } = data
+        return sale
     }
 
     const onSetPage = (page: number) => {
@@ -146,7 +151,7 @@ export const useSale = () => {
     const onResetFilters = () => {
         dispatch(resetFilter())
         dispatch(setPage(1))
-        getAllSales()
+        onGetAllSales()
     }
 
     return {
@@ -161,8 +166,8 @@ export const useSale = () => {
         saleToPrint,
         
         // Actions
-        getAllSales,
-        saveSale,
+        onGetAllSales,
+        onSaveSale,
         onChangePaginationVisibility,
         onSetPage,
         onSetSelectedSale,

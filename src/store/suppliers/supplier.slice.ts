@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Supplier } from "../../interfaces/dto/supplier.interface";
 import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
+import type { FilterSuppliers } from "../../interfaces/ui/filter.interface";
 
 interface ISuppliers {
     isLoading: boolean,
@@ -8,11 +9,7 @@ interface ISuppliers {
     allSuppliers: Supplier[] | null,
     companies: string[] | null,
     supplierSelected: Supplier | null,
-    filter: {
-        company: string | null, 
-        status: boolean | null, 
-        isVisible: boolean 
-    },
+    filter: FilterSuppliers,
     pagination: MetaPagination & {itemsPerPage: number},
     isPaginationVisible: boolean,
     isTableStyleActive: boolean,
@@ -29,7 +26,7 @@ const initialState: ISuppliers = {
     filter: { 
         company: null,
         status: null,
-        isVisible: true 
+        supplierName: null
     },
     pagination: {
         page: 1,
@@ -94,6 +91,14 @@ export const suppliersSlice = createSlice({
             state.pagination = payload
         },
 
+        resetFilter: ( state ) => {
+            state.filter = {
+                company: null,
+                status: null,
+                supplierName: null
+            }
+        },
+
         setPage: (state, {payload}: PayloadAction<number>) => {
             state.pagination.page = payload
         },
@@ -104,14 +109,16 @@ export const suppliersSlice = createSlice({
             state.supplierSelected = null
         },
 
-        setStatusFilter: (state, { payload}: PayloadAction<{status: boolean | null, isVisible: boolean}>) => {
+        setSuppliersStatusFilter: (state, { payload}: PayloadAction<Pick<FilterSuppliers, 'status'>>) => {
             state.filter.status = payload.status
-            state.filter.isVisible = payload.isVisible
         },
 
-        setCompanyFilter: (state, {payload}: PayloadAction<{company: string | null, isVisible: boolean}>) => {
+        setSuppliersCompanyFilter: (state, {payload}: PayloadAction<Pick<FilterSuppliers, 'company'>>) => {
             state.filter.company = payload.company
-            state.filter.isVisible = payload.isVisible
+        },
+
+        setSuppliersNameFilter: (state, {payload}: PayloadAction<Pick<FilterSuppliers, 'supplierName'>>) => {
+            state.filter.supplierName = payload.supplierName
         },
 
         setPaginationVisible: ( state, {payload}: PayloadAction<boolean>) => {
@@ -127,19 +134,21 @@ export const suppliersSlice = createSlice({
 })
 
 export const {
-    setCompanies,
     addSupplier,
-    updateSupplier,
-    setIsLoading,
-    setSuppliers,
-    setAllSuppliers,
-    setSupplierSelected,
+    resetFilter,
     resetSuppliers,
-    setSuppliersMetaPagination,
+    setAllSuppliers,
+    setCompanies,
+    setIsLoading,
+    setOrderedAsc,
     setPage,
-    setStatusFilter,
-    setCompanyFilter,
     setPaginationVisible,
+    setSuppliers,
+    setSuppliersCompanyFilter,
+    setSupplierSelected,
+    setSuppliersMetaPagination,
+    setSuppliersNameFilter,
+    setSuppliersStatusFilter,
     setTableView,
-    setOrderedAsc
+    updateSupplier,
 } = suppliersSlice.actions

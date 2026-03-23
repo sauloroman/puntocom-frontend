@@ -1,12 +1,11 @@
-import { clearCart, updateProduct } from "../pos/pos.slice";
+import { clearCart, updateProductStockInPOS } from "../pos/pos.slice";
 import { ModalNames } from "../../interfaces/ui/modal.interface";
 import { openModal } from "../modal/modal.slice";
 import { puntocomApiPrivate } from "../../config/api/puntocom.api";
 import { addSale, setIsLoading, setSaleCreated, setSales, setSalesMetaPagination, setSaleToPrint } from "./sale.slice";
 import type { 
     SaveSaleResponse, 
-    SaveSale, 
-    GetAllSalesResponse, 
+    SaveSale,    
     GetFilteredSalesResponse,
     GetSale
 } from "../../interfaces/dto/sale.interface";
@@ -15,25 +14,57 @@ import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
 import type { Pagination } from "../../interfaces/dto/pagination.interface";
 import type { DateRange, PriceRange } from "../../interfaces/ui/filter.interface";
+import type { RootState } from "../store";
+import { updateProduct, updateProductStockInWarehouse } from "../products/products.slice";
+import type { ChangeProductStatusResponse } from "../../interfaces/dto/product.interface";
+import { updateProductToBeInPurchase } from "../purchase/purchase.slice";
 
 const urlSale = '/api/sale'
 
 export const startSavingSale = ( saveSale: SaveSale ) => {
-    return async ( dispatch: Dispatch ) => {
+    return async ( dispatch: Dispatch, getState: () => RootState ) => {
         dispatch( setIsLoading( true ) )
         try {
-            
             const { data } = await puntocomApiPrivate.post<SaveSaleResponse>(`${urlSale}`, saveSale )
             const { sale, ok } = data
             
+            let stockIsOver = false
+
             if ( ok ) {
+
                 for( const product of saveSale.details ) {
-                    dispatch( updateProduct({ productId: product.productId, quantityDiscount: product.quantity }))
+                    dispatch( updateProductStockInPOS({ 
+                        productId: product.productId, 
+                        quantityDiscount: product.quantity 
+                    }))
+
+                    dispatch( updateProductStockInWarehouse({
+                        productId: product.productId,
+                        quantityDiscount: product.quantity
+                    }))
+
+                    const { products: productsInWarehouse } = getState().products
+                    const productInWarehouse = productsInWarehouse?.find( p => p.id === product.productId )
+
+                    if ( productInWarehouse && productInWarehouse.stock <= 0 ) {
+                        stockIsOver = true
+                        const { data } = await puntocomApiPrivate.patch<ChangeProductStatusResponse>(`/api/product/deactivate/${productInWarehouse.id}`)
+                        const { product } = data
+
+                        dispatch(updateProduct({ productId: productInWarehouse.id, product }))
+                        dispatch(updateProductToBeInPurchase({ productId: productInWarehouse.id, product }))
+                    }
                 }
-                dispatch(openModal(ModalNames.saveSale))
+                
                 dispatch(clearCart())
                 dispatch(setSaleCreated(sale))
                 dispatch(addSale(sale))
+
+                if ( stockIsOver ) {
+                    dispatch(openModal(ModalNames.noStock))
+                } else {
+                    dispatch(openModal(ModalNames.saveSale))
+                }
             }
 
         } catch(error) {
@@ -48,41 +79,20 @@ export const startSavingSale = ( saveSale: SaveSale ) => {
     }
 }
 
-export const startGettingAllSales = ( pagination: Pagination ) => {
-    return async ( dispatch: Dispatch ) => {
-        dispatch( setIsLoading( true ) )
-        try {
-            const { page, limit } = pagination
-            const { data } = await puntocomApiPrivate.get<GetAllSalesResponse>(`${urlSale}?page=${page}&limit=${limit}&sort=saleDate:desc`)
-            const { meta, sales } = data
-
-            dispatch(setSales(sales))
-            dispatch(setSalesMetaPagination({ ...meta, itemsPerPage: limit }))
-        } catch(error) {
-            dispatch(showAlert({
-                title: 'Error Ventas 🗒️',
-                text: 'No se pudieron obtener las ventas',
-                type: AlertType.error
-            }))
-        } finally {
-            dispatch( setIsLoading( false ) )
-        }
-    }
-}
-
 export const startFilteringSales = ( 
     userId?: string,
     prices?: PriceRange, 
     dates?: DateRange, 
     pagination?: Pagination 
 ) => {
-    return async ( dispatch: Dispatch ) => {
+    return async ( dispatch: Dispatch, getState: () => RootState ) => {
         dispatch( setIsLoading( true ) )
         try {
+            const { pagination: { itemsPerPage }} = getState().sale
+
             const params: any = {
                 page: pagination?.page.toString() ?? '1',
-                limit: pagination?.limit.toString() ?? '10',
-                sort: 'saleDate:desc'
+                limit: pagination?.limit.toString() ?? itemsPerPage,
             }
 
             if ( prices?.minPrice !== undefined && prices?.maxPrice !== undefined ) {
@@ -104,7 +114,7 @@ export const startFilteringSales = (
             const { filter, ...restMetaPagination } = meta
 
             dispatch(setSales(sales))
-            dispatch(setSalesMetaPagination({ ...restMetaPagination, itemsPerPage: pagination?.limit ?? 15 }))
+            dispatch(setSalesMetaPagination({ ...restMetaPagination, itemsPerPage }))
 
         } catch( error ) {
             dispatch(showAlert({

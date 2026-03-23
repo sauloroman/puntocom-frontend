@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import { addProductToCart, decreaseQuantity, deleteProductFromCart, increaseQuantity, setCategoryActive, setProductToAdd } from "../../store/pos/pos.slice"
-import { startFilteringProductsByCategory, startGettingProductsToSale, startSearchingProducts } from "../../store/pos/pos.thunk"
+import { startFilteringProductsPOS, startGettingProductsToSale } from "../../store/pos/pos.thunk"
 import type { Product, ProductInCart } from "../../interfaces/dto/product.interface"
 
 export const usePos = () => {
@@ -13,22 +13,27 @@ export const usePos = () => {
         dispatch(setCategoryActive(category))
     }
 
-    const getProductsToSale = () => {
+    const onGetProductsToSale = () => {
         dispatch(startGettingProductsToSale({
             page: 1,
             limit: pagination.itemsPerPage
         }))
     }
 
-    const filterProductsByCategory = ( categoryId: string ) => {
-        dispatch(startFilteringProductsByCategory({
-            page: 1,
-            limit: pagination.itemsPerPage
-        }, categoryId))
+    const onFilterProductsByCategory = ( categoryId: string ) => {
+        dispatch(startFilteringProductsPOS(
+            categoryId,
+            undefined,
+            { page: 1, limit: pagination.itemsPerPage }
+        ))
     }
 
-    const searchProduct = (productSearched: string) => {
-        dispatch(startSearchingProducts(productSearched))
+    const onSearchProduct = (productSearched: string) => {
+        dispatch(startFilteringProductsPOS(
+            undefined,
+            productSearched,
+            { page: 1, limit: pagination.itemsPerPage }
+        ))
     }
 
     const onSetProductToAdd = ( productId: string ) => {
@@ -70,9 +75,9 @@ export const usePos = () => {
         cart,
         
         onSetCategoryActive,
-        getProductsToSale,
-        searchProduct,
-        filterProductsByCategory,
+        onGetProductsToSale,
+        onSearchProduct,
+        onFilterProductsByCategory,
         onSetProductToAdd,
         onAddProductToCart,
         onDeleteProductFromCart,

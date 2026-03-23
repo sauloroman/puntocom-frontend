@@ -9,13 +9,13 @@ interface Props {
 
 export const TableAdjustmentsActions: React.FC<Props> = ({ adjustmentId }) => {
     
-    const { selectInventoryAdjustment } = useInventoryAdjustment()
+    const { onSelectInventoryAdjustment } = useInventoryAdjustment()
     const { onOpenLeftDrawer } = useDrawer()
     const { theme } = useTheme()
     const isDark = theme === 'dark'
 
     const onSelectAdjustment = () => {
-        selectInventoryAdjustment(adjustmentId)
+        onSelectInventoryAdjustment(adjustmentId)
         onOpenLeftDrawer(DrawelNames.infoAdjustment)
     }
 

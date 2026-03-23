@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
-import { useCategories, useDrawer, useModal, useSuppliers, useProducts } from '../../../../shared/hooks'
-import { CreateButton, SortElementsAlphaButton, FAB } from '../../../../shared/components/button'
+import { useCategories, useDrawer, useModal, useSuppliers, useProducts, useReports } from '../../../../shared/hooks'
+import { CreateButton, SortElementsAlphaButton, FAB, FilterByPriceButton } from '../../../../shared/components/button'
 import {
-  FilterProductsByCategoryDrawer,
   ModalConfirmChangeStatusProduct,
   ModalConfirmCreateProductsReport,
   ModalCreateProduct,
@@ -15,42 +14,42 @@ import {
   SelectProductsByStatus,
   PaginationProducts,
   ModalProductImage,
-  FilterProductsBySuppliersDrawer,
-  FilterTags,
-  FilterProductsByCategories,
-  FilterProductsBySupplier
+  SelectProductsBySupplier,
+  SelectProductsByCategory,
+  AppliedProductsFilter,
+  ModalProductsRangePrices
 } from './components'
 import { ModalRequestPasswordAdmin } from '../../../access/views/users/components'
 import { GenerateReport } from '../../../reports/components'
-import { SpinnerContainer } from '../../../../shared/components/spinner'
+import { SpinnerContainer, SpinnerScreen } from '../../../../shared/components/spinner'
 import { BsPlus, BsFileEarmarkText } from 'react-icons/bs'
 
 export const WarehouseProducts: React.FC = () => {
 
-  const { rightDrawerIsOpen, leftDrawerIsOpen, drawelName } = useDrawer()
-  const { filter, getProducts, onOrderAlpha, isOrderedAsc, isLoading, products } = useProducts()
-  const { categories, getCategories, getAllCategories } = useCategories()
-  const { suppliers, getSuppliers, getAllSuppliers } = useSuppliers()
+  const { rightDrawerIsOpen, drawelName } = useDrawer()
+  const { onGetProducts, onOrderAlpha, isOrderedAsc, isLoading, products } = useProducts()
+  const { categories, onGetCategories, onGetAllCategories } = useCategories()
+  const { suppliers, onGetSuppliers, onGetAllSuppliers } = useSuppliers()
   const { onOpenModal, modalIsOpen, modalName, onOpenConfirmAdminPassword } = useModal()
+  const { isLoading: isReportLoading } = useReports()
+
   const [showFABMenu, setShowFABMenu] = useState(false)
 
   useEffect(() => {
-    if ( !products ){
-      getProducts()
-    }
-    
-    if (!categories) {
-      getCategories()
-    }
+    if ( !products )onGetProducts()
+  }, [])
 
-    if (!suppliers) {
-      getSuppliers()
-    }
+  useEffect(() => {
+    if (!categories) onGetCategories()
+  }, [])
+
+  useEffect(() => {
+    if (!suppliers) onGetSuppliers()
   }, [])
 
   const openCreateProductModal = () => {
-    getAllCategories()
-    getAllSuppliers()
+    onGetAllCategories()
+    onGetAllSuppliers()
     onOpenModal(ModalNames.createProdut)
     setShowFABMenu(false)
   }
@@ -60,25 +59,30 @@ export const WarehouseProducts: React.FC = () => {
     setShowFABMenu(false)
   }
 
+  if ( isReportLoading ) {
+    return <SpinnerScreen />
+  }
+
   return (
     <>
       <section>
         <div className="flex flex-col gap-4 mb-6">
           
-          <div className="w-full md:w-96">
-            <SearchProduct />
+          <div className="w-full flex justify-between items-center">
+            <div className="md:w-1/4"><SearchProduct /></div>
+            <AppliedProductsFilter />
           </div>
 
           <div className='flex flex-col sm:flex-row items-stretch sm:items-center gap-3'>
             
-            <div className='flex flex-wrap items-center gap-2 flex-1'>
+            <div className='flex items-center gap-2 flex-1'>
               <SortElementsAlphaButton onToggle={onOrderAlpha} desc={isOrderedAsc} />
+              <FilterByPriceButton modal={ModalNames.rangeProductsPrices} />
               
-              { filter.supplier.id === null && (<FilterProductsByCategories />) }
-              { filter.category.id === null && (<FilterProductsBySupplier />) }
-              
-              <div className='w-full sm:w-48'>
+              <div className='w-7/12 flex items-center gap-3'>
                 <SelectProductsByStatus />
+                <SelectProductsBySupplier />
+                <SelectProductsByCategory />
               </div>
             </div>
 
@@ -88,8 +92,6 @@ export const WarehouseProducts: React.FC = () => {
             </div>
           </div>
         </div>
-
-        <FilterTags />
 
         {
           isLoading
@@ -134,11 +136,10 @@ export const WarehouseProducts: React.FC = () => {
       {modalIsOpen && modalName === ModalNames.confirmChangeStatusProduct && <ModalConfirmChangeStatusProduct />}
       {modalIsOpen && modalName === ModalNames.confirmCreateProductsReport && <ModalConfirmCreateProductsReport />}
       {modalIsOpen && modalName === ModalNames.seeProductImage && <ModalProductImage />}
+      {modalIsOpen && modalName === ModalNames.rangeProductsPrices && <ModalProductsRangePrices />}
 
       {rightDrawerIsOpen && drawelName === DrawelNames.infoProduct && <ProductInfoDrawer />}
       {rightDrawerIsOpen && drawelName === DrawelNames.editProduct && <ProductEditDrawer />}
-      {leftDrawerIsOpen && drawelName === DrawelNames.filterProductsCategories && <FilterProductsByCategoryDrawer />}
-      {leftDrawerIsOpen && drawelName === DrawelNames.filterProductsSuppliers && <FilterProductsBySuppliersDrawer />}
     </>
   )
 }

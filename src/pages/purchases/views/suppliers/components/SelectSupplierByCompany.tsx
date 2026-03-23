@@ -4,36 +4,18 @@ import { Select } from '../../../../../shared/components/select'
 
 export const SelectSupplierByCompany: React.FC = () => {
 
-    const {
-        filter: { isVisible },
-        filterSuppliersByCompany,
-        onChangePaginationVisibility,
-        onSetFilterCompanies,
-        getSuppliers,
-        companies
-    } = useSuppliers()
+    const { companies, onSetFilterSuppliersByCompany } = useSuppliers()
 
-    const onChange = (value: string) => {
-        onChangePaginationVisibility(true)
-
-        if (value === 'Empresas') {
-            getSuppliers()
-            onSetFilterCompanies(null, true)
-            return
-        }
-
-        filterSuppliersByCompany(value)
+    const onChange = (company: string) => {
+        if ( company === 'Empresas' ) return
+        onSetFilterSuppliersByCompany(company)
     }
 
     return (
-        <>
-            {
-                isVisible && <Select
-                    onChange={onChange}
-                    placeholder='Empresas'
-                    options={companies ?? []}
-                />
-            }
-        </>        
+        <Select
+            onChange={onChange}
+            placeholder='Empresas'
+            options={companies ?? []}
+        />
     )
 }

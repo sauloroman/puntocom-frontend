@@ -51,6 +51,7 @@ export const ModalNames = {
     rangeSalesPrices: 'rangeSalesPrices' as ModalNames,
     rangePurchasesPrices: 'rangePurchasesPrices' as ModalNames,
     rangePurchasesDates: 'rangePurchasesDates' as ModalNames,
+    rangeProductsPrices: 'rangeProductsPrices' as ModalNames,
     reportSuppliers: 'reportSuppliers' as ModalNames,
     saveSale: 'saveSale' as ModalNames,
     seeProductImage: 'seeProductImage' as ModalNames,
@@ -58,5 +59,6 @@ export const ModalNames = {
     supplierSenMessageWhatsapp: 'supplierSenMessageWhatsapp' as ModalNames,
     addProductPurchase: 'addProductPurchase' as ModalNames,
     emailSentForgotPassword: 'emailSentForgotPassword' as ModalNames,
-    passwordChanged: 'passwordChanged' as ModalNames
+    passwordChanged: 'passwordChanged' as ModalNames,
+    noStock: 'noStock' as ModalNames,
 }

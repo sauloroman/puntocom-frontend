@@ -103,7 +103,7 @@ export const TableAdjustments: React.FC<Props> = ({ data }) => {
                                     </td>
                                     
                                     <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
-                                        <TypeBadgeAdjustmentType type={adj.adjustmentType} />
+                                        <TypeBadgeAdjustmentType type={adj?.adjustmentType ?? ''} />
                                     </td>
                                     
                                     <td className="hidden lg:table-cell px-4 sm:px-6 py-3 sm:py-4 text-center whitespace-nowrap">

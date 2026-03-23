@@ -60,35 +60,28 @@ export const generarTicketPDF = async (saleCreated: any, products: any[]) => {
     {
       layout: 'noBorders',
       table: {
-        widths: ['*', 'auto', 'auto', 'auto'],
-        body: products.map(({ product, quantity, discount, unitPrice }) => {
-          const subtotal = quantity * unitPrice - discount;
-          return [
-            {
-              text: product?.name ?? 'Producto',
-              margin: [0, 2, 0, 0],
-              fontSize: 8
-            },
-            {
-              text: `x${quantity}`,
-              alignment: 'right',
-              margin: [0, 2, 0, 0],
-              fontSize: 8
-            },
-            {
-              text: `$${unitPrice.toFixed(2)}`,
-              alignment: 'right',
-              margin: [0, 2, 0, 0],
-              fontSize: 8
-            },
-            {
-              text: `$${subtotal.toFixed(2)}`,
-              alignment: 'right',
-              margin: [0, 2, 0, 0],
-              fontSize: 8
-            },
-          ];
-        }),
+        widths: ['*', 'auto', 'auto', 'auto', 'auto'],
+        body: [
+          // Encabezado
+          [
+            { text: 'Producto',   bold: true, fontSize: 7, margin: [0, 2, 0, 4] },
+            { text: 'Cant.',      bold: true, fontSize: 7, alignment: 'right', margin: [0, 2, 0, 4] },
+            { text: 'Precio',     bold: true, fontSize: 7, alignment: 'right', margin: [0, 2, 4, 4] },
+            { text: 'Desc.',      bold: true, fontSize: 7, alignment: 'right', margin: [0, 2, 4, 4] },
+            { text: 'Total',      bold: true, fontSize: 7, alignment: 'right', margin: [0, 2, 0, 4] },
+          ],
+          // Filas de productos
+          ...products.map(({ product, quantity, discount, unitPrice }) => {
+            const subtotal = quantity * unitPrice - discount;
+            return [
+              { text: product?.name ?? 'Producto',   margin: [0, 2, 0, 0], fontSize: 8 },
+              { text: `x${quantity}`,                alignment: 'right', margin: [0, 2, 0, 0], fontSize: 8 },
+              { text: `$${unitPrice.toFixed(2)}`,    alignment: 'right', margin: [0, 2, 4, 0], fontSize: 8 },
+              { text: `$${discount.toFixed(2)}`,     alignment: 'right', margin: [0, 2, 4, 0], fontSize: 8 },
+              { text: `$${subtotal.toFixed(2)}`,     alignment: 'right', margin: [0, 2, 0, 0], fontSize: 8 },
+            ];
+          }),
+        ],
       },
     },
     {
@@ -117,7 +110,7 @@ export const generarTicketPDF = async (saleCreated: any, products: any[]) => {
     }
   );  
 
-  const docDefinition: TDocumentDefinitions  = {
+  const docDefinition: TDocumentDefinitions = {
     pageSize: {
       width: 220,
       height: 'auto',

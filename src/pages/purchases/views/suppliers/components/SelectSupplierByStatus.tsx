@@ -3,34 +3,19 @@ import { useSuppliers } from '../../../../../shared/hooks'
 import { Select } from '../../../../../shared/components/select'
 
 export const SelectSupplierByStatus: React.FC = () => {
-  
-  const {
-    filter: { isVisible },
-    filterSuppliersByStatus,
-    getSuppliers,
-    onSetFilterStatus,
-    onChangePaginationVisibility
-  } = useSuppliers()
 
-  const onChange = ( value: string ) => {
-    onChangePaginationVisibility( true )
-    if ( value === 'Estado' ) {
-      getSuppliers()
-      onSetFilterStatus(null, true)
-      return
-    }
-    filterSuppliersByStatus( value === 'Activo')
+  const { onSetFilterSuppliersByStatus } = useSuppliers()
+
+  const onChange = (status: string) => {
+    if (status === 'Estado') return
+    onSetFilterSuppliersByStatus(status)
   }
 
   return (
-    <>
-      {
-        isVisible && <Select 
-          onChange={ onChange }
-          placeholder='Estado'
-          options={['Activo', 'Inactivo']}
-        /> 
-      }
-    </>
+    <Select
+      onChange={onChange}
+      placeholder='Estado'
+      options={['Activo', 'Inactivo']}
+    />
   )
 }

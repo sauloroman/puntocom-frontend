@@ -7,7 +7,7 @@ import { PurchaseOrderItem } from './'
 
 export const PurchaseOrder: React.FC = () => {
     const { theme } = useTheme()
-    const { productsInPurchase, savePurchase, supplierSelected } = usePurchase()
+    const { productsInPurchase, onSavePurchase, supplierSelected } = usePurchase()
     const { activateAlert } = useAlert()
     const isDark = theme === 'dark'
 
@@ -19,7 +19,7 @@ export const PurchaseOrder: React.FC = () => {
         return acc + item.quantity
     }, 0)
 
-    const onSavePurchase = () => {
+    const savePurchase = () => {
         if ( !supplierSelected ) {
             activateAlert({
                 title: 'Error en compra 🗒️',
@@ -39,7 +39,7 @@ export const PurchaseOrder: React.FC = () => {
             }))
         } 
 
-        savePurchase(purchase)
+        onSavePurchase(purchase)
     }
 
     return (
@@ -123,7 +123,7 @@ export const PurchaseOrder: React.FC = () => {
                     </div>
 
                     <SaveButton
-                        onClick={onSavePurchase}
+                        onClick={savePurchase}
                         text='Confirmar Compra'
                         className="mt-3 sm:mt-4 w-full py-2.5 sm:py-3 rounded-lg font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-all text-sm sm:text-base"
                     />

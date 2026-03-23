@@ -23,11 +23,7 @@ export const SelectActiveProducts: React.FC<SelectActiveProductsProps> = ({ regi
                     : 'bg-white border-gray-300 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500'
                 }
             `}
-            {
-                ...register('productId', {
-                    required: 'El producto es obligatorio'
-                })
-            }
+            { ...register('productId', { required: 'El producto es obligatorio'})}
         >
             {products.map((product, i) => (
                 <option 

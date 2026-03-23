@@ -18,24 +18,19 @@ import { FAB, ToggleGridTableViewButton } from '../../../../shared/components/bu
 import { ModalRequestPasswordAdmin } from '../../../access/views/users/components'
 import { GenerateReport } from '../../../reports/components'
 import { BsPlus, BsFileEarmarkText } from 'react-icons/bs'
+import { AppliedInventoryAdjustmentsFilters } from './components/AppliedInventoryAdjustmentsFilters'
 
 export const WarehouseAdjustment: React.FC = () => {
   
   const { drawelName, leftDrawerIsOpen } = useDrawer()
   const { modalIsOpen, modalName, onOpenConfirmAdminPassword, onOpenModal } = useModal()
-  const { adjustments, isLoading, getInventoryAdjustments, filter, filterInventoryAdjustments, isTableStyleActive, setTableStyle } = useInventoryAdjustment()
+  const { adjustments, isLoading, onGetInventoryAdjustments, isTableStyleActive, onSetTableStyle } = useInventoryAdjustment()
   const { isLoading: isReportsLoading } = useReports()
   const [showFABMenu, setShowFABMenu] = useState(false)
 
   useEffect(() => {
-    if ( !adjustments ) {
-      getInventoryAdjustments()
-    }
+    if ( !adjustments ) onGetInventoryAdjustments()
   }, [])
-
-  useEffect(() => {
-    filterInventoryAdjustments(1)
-  }, [filter])
 
   const openCreateAdjustmentModal = () => {
     setShowFABMenu(false)
@@ -50,12 +45,13 @@ export const WarehouseAdjustment: React.FC = () => {
   return (
     <>
       <section>
+        <div className="mb-5 flex items-center justify-end">
+          <AppliedInventoryAdjustmentsFilters />
+        </div>
         <div className="flex flex-col gap-4 mb-6">
-          
           <div className='flex flex-col sm:flex-row items-stretch sm:items-center gap-3'>
-            
             <div className='flex flex-wrap items-center gap-2 flex-1'>
-              <ToggleGridTableViewButton status={isTableStyleActive} onToggle={setTableStyle} />
+              <ToggleGridTableViewButton status={isTableStyleActive} onToggle={onSetTableStyle} />
               
               <div className='w-full sm:w-60'>
                 <FilterSelectAdjustmentUser />

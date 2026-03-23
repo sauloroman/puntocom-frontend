@@ -5,12 +5,12 @@ import { UploadImage } from '../../../../../shared/components/upload'
 
 export const UploadCategoryImage: React.FC = () => {
 
-    const { categorySelected, uploadCategoryIcon } = useCategories()
+    const { categorySelected, onUploadCategoryIcon } = useCategories()
     const [ showUploadBox, setShowUploadBox ] = useState<boolean>(false)
     const { onCloseDrawers } = useDrawer()
 
     const uploadIcon = ( formData: FormData ) => {
-        uploadCategoryIcon( categorySelected?.id!, formData )
+        onUploadCategoryIcon( categorySelected?.id!, formData )
         onCloseDrawers()
     }
 

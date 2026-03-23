@@ -22,13 +22,11 @@ import {
 export const PurchasesPage: React.FC = () => {
   const { modalIsOpen, modalName } = useModal()
   const { rightDrawerIsOpen, drawelName } = useDrawer()
-  const { purchases, getPurchases, isLoading } = usePurchase()
+  const { purchases, onGetPurchases, isLoading } = usePurchase()
   const [purchasesInfo, setPurchasesInfo] = useState<Purchase[]>([])
 
   useEffect(() => {
-    if (!purchases) {
-      getPurchases()
-    }
+    if (!purchases) onGetPurchases()
   }, [])
 
   useEffect(() => {

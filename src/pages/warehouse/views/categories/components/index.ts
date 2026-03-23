@@ -1,3 +1,4 @@
+export { AppliedCategoryFilters } from './AppliedCategoryFilters'
 export { CategoryEditDrawer } from './CategoryEditDrawer'
 export { CategoryInfoDrawer } from './CategoryInfoDrawer'
 export { FormEditCategory } from './FormEditCategory'

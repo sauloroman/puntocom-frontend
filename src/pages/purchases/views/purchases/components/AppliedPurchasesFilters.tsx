@@ -1,5 +1,5 @@
 import React from 'react'
-import { FilterDateTag, FilterPriceTag, FilterSuppierTag, FilterUserTag } from '../../../../../shared/components/filter'
+import { FilterDateTag, FilterPriceTag, FilterSupplierTag, FilterUserTag } from '../../../../../shared/components/filter'
 import { usePurchase, useTheme } from '../../../../../shared/hooks'
 
 export const AppliedPurchasesFilters: React.FC = () => {
@@ -31,7 +31,7 @@ export const AppliedPurchasesFilters: React.FC = () => {
                 userId={filter.user.id}
                 userName={filter.user.name}
             />
-            <FilterSuppierTag 
+            <FilterSupplierTag 
                 supplierId={filter.supplier.id}
                 supplierName={filter.supplier.name}
             />

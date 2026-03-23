@@ -1,6 +1,6 @@
 import React from 'react'
 import { useUsers } from '../../../../../shared/hooks'
-import { AppliedFilters, FilterRoleTag, FilterSearchTag, FilterStatus } from '../../../../../shared/components/filter'
+import { AppliedFilters, FilterRoleTag, FilterSearchTag, FilterStatusTag } from '../../../../../shared/components/filter'
 import type { Roles } from '../../../../../interfaces/dto/user.interface'
 
 export const AppliedUsersFilters: React.FC = () => {
@@ -19,7 +19,7 @@ export const AppliedUsersFilters: React.FC = () => {
             <FilterSearchTag
                 search={filter.userName}
             />
-            <FilterStatus 
+            <FilterStatusTag 
                 status={filter.status}
                 statusLabel={filter.status}
             />

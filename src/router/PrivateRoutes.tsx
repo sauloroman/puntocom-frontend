@@ -5,23 +5,24 @@ import { useCategories, useInventoryAdjustment, useProducts, usePurchase, useSal
 
 export const PrivateRoutes: React.FC = () => {
   
-  const { categories, allCategories, getAllCategories, getCategories } = useCategories()
-  const { suppliers, getAllSuppliers } = useSuppliers()
-  const { sales, getAllSales } = useSale()
-  const { products, getProducts } = useProducts()
-  const { users, onGetUsers } = useUsers()
-  // const { purchases, getPurchases } = usePurchase()
-  const { adjustments, getInventoryAdjustments } = useInventoryAdjustment()
+  const { categories, allCategories, onGetAllCategories, onGetCategories } = useCategories()
+  const { suppliers, onGetAllSuppliers } = useSuppliers()
+  const { sales, onGetAllSales } = useSale()
+  const { products, onGetProducts } = useProducts()
+  const { users, allUsers, onGetUsers, onGetAllUsers } = useUsers()
+  const { purchases, onGetPurchases } = usePurchase()
+  const { adjustments, onGetInventoryAdjustments } = useInventoryAdjustment()
 
   useEffect(() => {
-    // if ( !purchases ) getPurchases()
-    if ( !categories ) getCategories()
-    if ( !allCategories ) getAllCategories()
-    if ( !suppliers ) getAllSuppliers()
-    if ( !products ) getProducts()
+    if ( !purchases ) onGetPurchases()
+    if ( !categories ) onGetCategories()
+    if ( !allCategories ) onGetAllCategories()
+    if ( !suppliers ) onGetAllSuppliers()
+    if ( !products ) onGetProducts()
     if ( !users ) onGetUsers()
-    if ( !sales ) getAllSales()
-    if ( !adjustments ) getInventoryAdjustments()
+    if ( !allUsers ) onGetAllUsers()
+    if ( !sales ) onGetAllSales()
+    if ( !adjustments ) onGetInventoryAdjustments()
   }, [])
 
   return (
