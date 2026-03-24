@@ -12,7 +12,8 @@ export const ModalCreateProduct: React.FC = () => {
     handleSubmit,
     register,
     formState: { errors },
-    reset
+    reset,
+    getValues
   } = useForm<CreateProduct>()
 
   const { onCloseModal } = useModal()
@@ -76,9 +77,9 @@ export const ModalCreateProduct: React.FC = () => {
 
         <div className="flex gap-5 w-full items-center">
           {[
-            { id: 'sellingPrice', label: 'Precio de venta $', placeholder: '$25.00', min: 1 },
-            { id: 'stock', label: 'Stock', placeholder: '15', min: 1 },
-            { id: 'stockMin', label: 'Stock Mínimo', placeholder: '5', min: 1 }
+            { id: 'sellingPrice', label: 'Precio de venta $', placeholder: '$25.00', message: 'El precio de venta es obligatorio' },
+            { id: 'stock',        label: 'Stock',             placeholder: '15',     message: 'El stock debe ser mayor a 0' },
+            { id: 'stockMin',     label: 'Stock Mínimo',      placeholder: '5',      message: 'El stock mínimo debe ser mayor a 0' },
           ].map((field) => (
             <div key={field.id} className="flex-1">
               <Label
@@ -91,7 +92,7 @@ export const ModalCreateProduct: React.FC = () => {
               <Input
                 id={field.id}
                 placeholder={field.placeholder}
-                min={field.min}
+                type="number"
                 className={`
                   w-full p-2 rounded-lg border focus:ring-2 text-sm transition-colors
                   ${isDark
@@ -99,8 +100,12 @@ export const ModalCreateProduct: React.FC = () => {
                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-indigo-500'}
                 `}
                 {...register(field.id as keyof CreateProduct, {
-                  required: 'Obligatorio',
-                  min: 1
+                  required: field.message,
+                  min: { value: 1, message: field.message },
+                  ...(field.id === 'stockMin' && {
+                    validate: (value) =>
+                      Number(value) < Number(getValues('stock')) || 'El stock mínimo debe ser menor al stock'
+                  })
                 })}
               />
               {errors[field.id as keyof CreateProduct] && (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ModalNames } from '../../interfaces/ui/modal.interface'
-import { AsideMenu, Header, ModalAddProduct, ModalSaveSale, OrderPanel, PaginationPos, ProductsList } from './components'
+import { AsideMenu, Header, ModalAddProduct, ModalConfirmSale, ModalSaveSale, OrderPanel, PaginationPos, ProductsList } from './components'
 import { useCategories, useModal, useSale, useTheme, usePos } from '../../shared/hooks'
 import { SpinnerContainer } from '../../shared/components/spinner'
 import { BsGrid3X3Gap, BsCart3 } from 'react-icons/bs'
@@ -118,6 +118,7 @@ export const Pos: React.FC = () => {
             {modalIsOpen && modalName === ModalNames.addProduct && <ModalAddProduct />}
             {modalIsOpen && modalName === ModalNames.saveSale && <ModalSaveSale />}
             {modalIsOpen && modalName === ModalNames.noStock && <ModalNoStock />}
+            {modalIsOpen && modalName === ModalNames.confirmSale && <ModalConfirmSale />}
             
         </div>
     )

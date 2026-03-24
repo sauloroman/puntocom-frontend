@@ -77,14 +77,7 @@ export const useSale = () => {
     }
 
     const onSaveSale = ( productsInCart: ProductInCart[], total: number ) => {
-        if (  productsInCart?.length === 0 || total === 0 ) {
-            dispatch(showAlert({
-                title: 'Venta no registrada',
-                text: 'Ingresa productos a la venta',
-                type: AlertType.warning
-            }))
-            return;
-        };
+        if ( isSaleCartEmpty(productsInCart, total) ) return
         
         const payload: SaveSale = {
             total: total,
@@ -97,6 +90,18 @@ export const useSale = () => {
         } 
 
         dispatch( startSavingSale( payload ) )
+    }
+
+    const isSaleCartEmpty = (productsInCart: ProductInCart[], total: number): boolean => {
+        if (  productsInCart?.length === 0 || total === 0 ) {
+            dispatch(showAlert({
+                title: 'Venta no registrada',
+                text: 'No es posible generar una venta sin productos',
+                type: AlertType.warning
+            }))
+            return true
+        }
+        return false
     }
 
     const onGetAllSales = () => {
@@ -166,16 +171,17 @@ export const useSale = () => {
         saleToPrint,
         
         // Actions
-        onGetAllSales,
-        onSaveSale,
+        isSaleCartEmpty,
         onChangePaginationVisibility,
+        onGetAllSales,
+        onGetSaleById,
+        onResetFilters,
+        onSaveSale,
+        onSetFilterSalesByDateRange,
+        onSetFilterSalesByPriceRange,
+        onSetFilterSalesByUser,
         onSetPage,
         onSetSelectedSale,
-        onGetSaleById,
-        onSetFilterSalesByUser,
-        onSetFilterSalesByPriceRange,
-        onSetFilterSalesByDateRange,
-        onResetFilters,
     }
 
 }

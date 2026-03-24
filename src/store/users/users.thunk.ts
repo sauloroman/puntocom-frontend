@@ -57,9 +57,20 @@ export const startCheckingAdminPass = (dataAdminPassword: CheckAdminPassword ) =
 }
 
 export const startChangingUserStatus = ( userId: string, status: boolean ) => {
-    return async ( dispatch: Dispatch ) => {
+    return async ( dispatch: Dispatch, getState: () => RootState ) => {
         dispatch(setIsLoading( true ))
         try {
+
+            const { user: userLogged } = getState().auth
+
+            if ( userLogged?.id === userId ) {
+                dispatch(dispatch(showAlert({
+                    title: 'Cambio de estado',
+                    text: 'No puedes cambiar tu propio estado',
+                    type: AlertType.warning 
+                })))
+                return
+            }
             
             const { data } = await puntocomApiPrivate.patch<ChangeUserStatusResponse>(`${urlUser}/${status ? 'activate' : 'deactivate'}/${userId}`)
 

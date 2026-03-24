@@ -76,7 +76,7 @@ export const FormAddProductPurchase: React.FC<Props> = ({ sellingPrice }) => {
                             required: 'La cantidad es requerida',
                             min: {
                                 value: 1,
-                                message: 'Mínimo 1'
+                                message: 'La cantidad mínima es 1'
                             }
                         })
                         }

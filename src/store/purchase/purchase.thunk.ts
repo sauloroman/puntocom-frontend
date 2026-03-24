@@ -8,6 +8,7 @@ import type { Pagination } from "../../interfaces/dto/pagination.interface";
 import type { GetProductsResponse } from "../../interfaces/dto/product.interface";
 import type { DateRange, PriceRange } from "../../interfaces/ui/filter.interface";
 import type { RootState } from "../store";
+import { handleError } from "../../config/api";
 
 const urlPurchases = '/api/purchase'
 
@@ -35,9 +36,10 @@ export const startSavingPurchase = (savePurchase: SavePurchase) => {
             }
 
         } catch (error) {
+            const errorMessage = handleError(error)
             dispatch(showAlert({
                 title: 'Error Compras 🗒️',
-                text: 'No se pudo guardar la compra',
+                text: errorMessage,
                 type: AlertType.error
             }))
         } finally {

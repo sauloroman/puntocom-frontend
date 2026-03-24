@@ -1,18 +1,21 @@
 import React from 'react'
 import { FaRegListAlt } from "react-icons/fa"
-import { useSale, useCart, useTheme } from '../../../shared/hooks'
+import { useTheme, useModal, useSale, useCart } from '../../../shared/hooks'
 import { SaveButton } from '../../../shared/components/button'
 import { OrderSummary, OrderList } from './'
+import { ModalNames } from '../../../interfaces/ui/modal.interface'
 
 export const OrderPanel: React.FC = () => {
+
+    const { cart, total } = useCart()
+    const { isSaleCartEmpty } = useSale()
+    const { onOpenModal } = useModal()
     const { theme } = useTheme()
     const isDark = theme === "dark"
 
-    const { cart, total } = useCart()
-    const { onSaveSale } = useSale()
-
-    const saveSale = () => {
-        onSaveSale(cart!, total)
+    const onConfirmSale = () => {
+        if (isSaleCartEmpty(cart!, total)) return
+        onOpenModal(ModalNames.confirmSale)
     }
 
     return (
@@ -46,7 +49,7 @@ export const OrderPanel: React.FC = () => {
 
                 <div className="mt-auto pt-4 space-y-3">
                     <OrderSummary />
-                    <SaveButton onClick={saveSale} className='w-full p-3' text='Registrar Venta' />
+                    <SaveButton onClick={onConfirmSale} className='w-full p-3' text='Registrar Venta' />
                 </div>
             </div>
         </div>
