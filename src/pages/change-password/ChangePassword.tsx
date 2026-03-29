@@ -13,8 +13,8 @@ export const ChangePassword: React.FC = () => {
 
   return (
     <RecoveryLayout
-      imageDark=''
-      imageWhite=''
+      imageDark='https://res.cloudinary.com/dlamufioy/image/upload/v1774414034/puntocom/6_bhbrpu.png'
+      imageWhite='https://res.cloudinary.com/dlamufioy/image/upload/v1774414034/puntocom/3_ktw2eb.png'
       title="Crea una nueva contraseña"
       description="Asegúrate de que sea segura y fácil de recordar."
     >

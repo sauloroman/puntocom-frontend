@@ -5,62 +5,30 @@ import { DashboardKpisSection, ProductsWithoutSalesList, SalesByUserDonutChart, 
 
 export const Dashboard: React.FC = () => {
 
-  const { stats } = useDashboard()
+  const { stats, getStats } = useDashboard()
 
-  // useEffect(() => {
-  //   getStats()
-  // }, [])
+  useEffect(() => {
+    getStats()
+  }, [])
 
-  const mockStats = {
-      kpis: {
-        totalSales: 0,
-        totalPurchases: 0,
-        criticalStockProducts: 0
-      },
-      charts: {
-        salesByDate: [],
-        purchasesByDate: [],
-        salesPercentageByUser: [],
-
-      },
-      insights: {
-        topProduct: null,
-        productsWithoutSales: []
-      }
-    }
-
-  // if ( !stats ) {
-  //   const mockStats = {
-  //     kpis: [],
-  //     charts: {
-  //       salesByDate: [],
-  //       purchasesByDate: [],
-  //       salesPercentageByUser: [],
-
-  //     },
-  //     insights: {
-  //       topProduct: null,
-  //       productsWithoutSales: []
-  //     }
-  //   }
-  // }
+  if ( !stats ) return null
 
   return (
     <PuntoComLayout>
       <div className="space-y-8 py-5 md:w-[90%] mx-auto">
-        <DashboardKpisSection kpis={mockStats.kpis} />
+        <DashboardKpisSection kpis={stats.kpis} />
         
         <section className="grid md:grid-cols-6 md:gap-5">
           <div className="col-span-4 space-y-6 mb-5 md:mb-0">
             <SalesVsPurchasesChart
-              sales={mockStats.charts.salesByDate}
-              purchases={mockStats.charts.purchasesByDate}
+              sales={stats.charts.salesByDate}
+              purchases={stats.charts.purchasesByDate}
             />
-            <TopProductCard product={mockStats.insights.topProduct}/>
+            <TopProductCard product={stats.insights.topProduct}/>
           </div>
           <div className="col-span-2 space-y-6">
-            <SalesByUserDonutChart data={mockStats.charts.salesPercentageByUser} />
-            <ProductsWithoutSalesList products={mockStats.insights.productsWithoutSales} />
+            <SalesByUserDonutChart data={stats.charts.salesPercentageByUser} />
+            <ProductsWithoutSalesList products={stats.insights.productsWithoutSales} />
           </div>
         </section>
 

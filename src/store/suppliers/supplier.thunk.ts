@@ -133,9 +133,10 @@ export const startCreatingSupplier = ( createSupplierData: CreateSupplier ) => {
             }))
 
         } catch( error ) {
+            const errorMessage = handleError(error)
             dispatch( showAlert({
-                title: "⚠️ Error proveedor",
-                text: 'No se pudo crear el proveedor',
+                title: "⚠️ Error al crear proveedor",
+                text: errorMessage,
                 type: AlertType.error,
             }))
         } finally {

@@ -17,9 +17,9 @@ export const CategoryInfoDrawer: React.FC = () => {
       <div className="p-4 flex flex-col h-full">
         <div className="flex items-center gap-4 mb-6">
           {icon !== "" ? (
-            <AvatarImage image={icon} alt="Ícono de categoría" />
+            <AvatarImage image={icon} className="w-20 h-20" alt="Ícono de categoría" />
           ) : (
-            <AvatarInitialSquare name={name} />
+            <AvatarInitialSquare className="w-20 h-20" name={name} />
           )}
 
           <div>

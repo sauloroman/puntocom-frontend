@@ -6,22 +6,20 @@ import { formatUserNames, getUserByFormattedName } from '../../helpers/format-us
 const DEFAULT_VALUE = 'Usuarios'
 
 interface Props {
-    onResetFilter: () => void,
     onApplyFilter: ( userId: string, value: string ) => void 
+    onResetFilter?: () => void,
 }
 
-export const SelectUserFilter: React.FC<Props> = ({ onResetFilter, onApplyFilter }) => {
+export const SelectUserFilter: React.FC<Props> = ({ onApplyFilter }) => {
     
-    const { users } = useUsers()
-    if ( !users ) return null
-    const userNames = formatUserNames(users)
+    const { allUsers } = useUsers()
+    if ( !allUsers ) return null
+    const userNames = formatUserNames(allUsers)
 
     const selectUser = ( value: string ) => {
-        if (value === DEFAULT_VALUE ) {
-            onResetFilter()
-            return
-        }
-        const user = getUserByFormattedName( users, value )
+        if (value === DEFAULT_VALUE ) return
+
+        const user = getUserByFormattedName( allUsers, value )
         if (!user) return
         onApplyFilter( user.id, value )
     }

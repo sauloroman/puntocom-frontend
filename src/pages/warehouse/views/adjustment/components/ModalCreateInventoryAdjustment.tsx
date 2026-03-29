@@ -65,11 +65,10 @@ export const ModalCreateInventoryAdjustment: React.FC = () => {
                         id="adjustmentQuantity"
                         autoComplete="off"
                         type="number"
-                        min={1}
                         placeholder="50"
                         {...register('adjustmentQuantity', {
                             required: 'La nueva cantidad es requerida',
-                            min: { value: 1, message: 'Valor mínimo 1' }
+                            min: { value: 1, message: 'El valor de stock debe ser mínimo 1' },
                         })}
                     />
                     {errors.adjustmentQuantity && (

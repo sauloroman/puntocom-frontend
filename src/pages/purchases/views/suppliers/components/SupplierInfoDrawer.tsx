@@ -6,6 +6,7 @@ import { RightDrawerLayout } from "../../../../../layouts"
 import { SpinnerContainer } from "../../../../../shared/components/spinner"
 import { AvatarInitialSquare } from "../../../../../shared/components/avatar"
 import { WhatsAppButton } from "../../../../../shared/components/button"
+import { StatusBadge } from "../../../../../shared/components/badgets"
 
 export const SupplierInfoDrawer: React.FC = () => {
 
@@ -42,25 +43,12 @@ export const SupplierInfoDrawer: React.FC = () => {
       <div className="p-4 flex flex-col h-full">
 
         <div className="flex items-center gap-4 mb-6">
-          <AvatarInitialSquare name={name} />
+          <AvatarInitialSquare className="w-20 h-20" name={name} />
           <div>
             <h3 className={`font-semibold text-xl mb-2 ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>
               {name} {lastname}
             </h3>
-            <span
-              className={`
-                px-3 py-1 rounded-full text-xs font-medium border
-                ${isActive
-                  ? isDark
-                    ? 'bg-green-800 text-green-300 border-green-600'
-                    : 'bg-green-100 text-green-700 border-green-300'
-                  : isDark
-                    ? 'bg-gray-700 text-gray-400 border-gray-600'
-                    : 'bg-gray-100 text-gray-600 border-gray-300'}
-              `}
-            >
-              {isActive ? "Activo" : "Inactivo"}
-            </span>
+            <StatusBadge status={isActive} />
           </div>
         </div>
 

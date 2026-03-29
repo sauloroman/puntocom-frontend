@@ -4,14 +4,10 @@ import { SelectUserFilter } from '../../../shared/components/select'
 
 export const FilterSalesByUser: React.FC = () => {
     
-    const {
-        onSetFilterSalesByUser,
-        onResetFilters
-    } = useSale()
+    const { onSetFilterSalesByUser } = useSale()
 
     return (
         <SelectUserFilter 
-            onResetFilter={onResetFilters} 
             onApplyFilter={onSetFilterSalesByUser} 
         />
     )

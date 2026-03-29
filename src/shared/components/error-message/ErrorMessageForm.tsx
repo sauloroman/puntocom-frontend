@@ -6,6 +6,6 @@ interface Props {
 
 export const ErrorMessageForm: React.FC<Props> = ({ message }) => {
   return (
-    <p className='text-red-600 mt-1 text-right text-xs'>{message}</p>
+    <p className='text-red-500 mt-1 text-right text-sm'>{message}</p>
   )
 }

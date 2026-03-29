@@ -11,6 +11,8 @@ const predefinedMessages = [
     'Buenos días, necesito cotización para los siguientes artículos.',
 ]
 
+const MAX_CHARS = 500
+
 export const ModalWhatsappMessage: React.FC = () => {
     const { theme } = useTheme()
     const isDark = theme === "dark"
@@ -30,7 +32,7 @@ export const ModalWhatsappMessage: React.FC = () => {
     return (
         <ModalLayout width='w-2xl'>
             <div className="p-6">
-                {/* Header */}
+
                 <div className="flex items-center gap-3 mb-6">
                     <div className={`
                         w-12 h-12 rounded-full flex items-center justify-center
@@ -104,11 +106,7 @@ export const ModalWhatsappMessage: React.FC = () => {
                         Mensajes sugeridos
                     </label>
                     <select
-                        onChange={(e) => {
-                            if (e.target.value) {
-                                setMessage(e.target.value)
-                            }
-                        }}
+                        onChange={e => setMessage(e.target.value.slice(0, MAX_CHARS))}
                         className={`
                             w-full px-4 py-3 rounded-lg text-sm transition-colors
                             focus:outline-none focus:ring-2 border cursor-pointer
@@ -136,6 +134,7 @@ export const ModalWhatsappMessage: React.FC = () => {
                         Mensaje personalizado
                     </label>
                     <textarea
+                        maxLength={MAX_CHARS}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder="Escribe tu mensaje aquí..."
@@ -152,9 +151,15 @@ export const ModalWhatsappMessage: React.FC = () => {
                     />
                     <p className={`
                         text-xs mt-1 transition-colors
-                        ${isDark ? 'text-gray-500' : 'text-gray-500'}
+                        ${message.length >= MAX_CHARS
+                            ? 'text-red-500'
+                            : isDark ? 'text-gray-500' : 'text-gray-500'
+                        }
                     `}>
-                        {message.length} caracteres
+                        {message.length}/{MAX_CHARS} caracteres
+                        {message.length >= MAX_CHARS && (
+                            <span className="ml-2 font-medium">Límite alcanzado</span>
+                        )}
                     </p>
                 </div>
 

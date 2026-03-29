@@ -25,9 +25,8 @@ export const startSavingSale = ( saveSale: SaveSale ) => {
     return async ( dispatch: Dispatch, getState: () => RootState ) => {
         dispatch( setIsLoading( true ) )
         try {
-            const { data } = await puntocomApiPrivate.post<SaveSaleResponse>(`${urlSale}`, saveSale )
+            const { data } = await puntocomApiPrivate.post<SaveSaleResponse>(urlSale, saveSale)
             const { sale, ok } = data
-            
             let stockIsOver = false
 
             if ( ok ) {
@@ -43,12 +42,13 @@ export const startSavingSale = ( saveSale: SaveSale ) => {
                         quantityDiscount: product.quantity
                     }))
 
-                    const { products: productsInWarehouse } = getState().products
+                    const { allProducts: productsInWarehouse } = getState().products
                     const productInWarehouse = productsInWarehouse?.find( p => p.id === product.productId )
 
                     if ( productInWarehouse && productInWarehouse.stock <= 0 ) {
                         stockIsOver = true
-                        const { data } = await puntocomApiPrivate.patch<ChangeProductStatusResponse>(`/api/product/deactivate/${productInWarehouse.id}`)
+                        const urlToDeactivate = `/api/product/deactivate/${productInWarehouse.id}`
+                        const { data } = await puntocomApiPrivate.patch<ChangeProductStatusResponse>(urlToDeactivate)
                         const { product } = data
 
                         dispatch(updateProduct({ productId: productInWarehouse.id, product }))
