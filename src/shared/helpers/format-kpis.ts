@@ -27,8 +27,6 @@ export const mergeSalesPurchasesData = (
         }
     })
 
-    console.log(map)
-
     return Array.from(map.values()).sort((a, b) => a.date.localeCompare(b.date))
 }
 

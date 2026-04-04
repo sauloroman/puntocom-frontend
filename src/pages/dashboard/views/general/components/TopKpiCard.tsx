@@ -34,7 +34,7 @@ export const TopKpiCard: React.FC<TopKpiCardProps> = ({ title, value, subtitle, 
       <div className={`absolute top-0 left-0 right-0 h-[3px] ${a.bar}`} />
 
       <div className='flex items-start justify-between'>
-        <p className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{title}</p>
+        <p className={`text-md font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{title}</p>
         <div className={`p-2 rounded-lg ${isDark ? a.dark : a.light}`}>{icon}</div>
       </div>
 

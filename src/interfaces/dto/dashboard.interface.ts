@@ -1,10 +1,10 @@
 export interface SalesStats {
-    salesbycategory: {
-        categoryid: string,
-        categoryname: string,
-        categoryicon: string,
-        totalsales: number,
-        quantitysold: number,
+    salesByCategory: {
+        categoryId: string,
+        categoryName: string,
+        categoryIcon: string,
+        totalSales: number,
+        quantitySold: number,
         percetage: number
     }[],
     salesByDate: {
@@ -12,30 +12,30 @@ export interface SalesStats {
         total: number
     }[],
     salesByUser: {
-        userid: string
-        username: string,
+        userId: string
+        userName: string,
         role: string,
-        totalsales: number,
-        orderscount: number,
-        averageordervalue: number,
+        totalSales: number,
+        ordersCount: number,
+        averageOrderValue: number,
         percentage: number
     }[],
     productsWithoutSales: {
-        productid: string
-        productname: string
+        productId: string
+        productName: string
         stock: number
     }[],
     salesSummary: {
-        totalorders: number,
-        averageordervalue: number,
-        maxordervalue: number,
-        minordervalue: number
+        totalOrders: number,
+        averageOrderValue: number,
+        maxOrderValue: number,
+        minOrderValue: number
     },
     getTopSellingProducts: {
-        productid: string
-        productname: string
-        quantitysold: number
-        totalgenerated: number
+        productId: string
+        productName: string
+        quantitySold: number
+        totalGenerated: number
     }[]
 }
 

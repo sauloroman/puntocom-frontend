@@ -1,1 +1,2 @@
-export { DashboardGeneral } from '../views/general/DashboardGeneral'
+export { DashboardGeneral } from './general/DashboardGeneral'
+export { DashboardSales } from './sales/DashboardSales'

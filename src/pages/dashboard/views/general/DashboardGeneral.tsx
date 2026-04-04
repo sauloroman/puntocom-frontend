@@ -3,9 +3,9 @@ import {
   FiTrendingUp, FiShoppingCart, FiDollarSign,
   FiAlertTriangle, FiPackage, FiUsers, FiCreditCard,
 } from 'react-icons/fi'
+import type { KpisStats } from '../../../../interfaces/dto/dashboard.interface'
 import { useTheme } from '../../../../shared/hooks'
 import { useDashboard } from '../../../../shared/hooks'
-import type { KpisStats } from '../../../../interfaces/dto/dashboard.interface'
 import { calcMargin, formatMoney, mergeSalesPurchasesData } from '../../../../shared/helpers'
 import { FinancialBreakdown, RevenueChart, SideStat, TopKpiCard } from './components'
 
@@ -23,9 +23,9 @@ export const DashboardGeneral: React.FC = () => {
   )
 
   useEffect(() => {
-    if ( stats.kpisStats! ) getKpisStats()
-    if ( stats.salesStats! ) getSalesStats()    
-    if ( stats.purchasesStats! ) getPurchasesStats()
+    getKpisStats()
+    getSalesStats()    
+    getPurchasesStats()
   }, [])
 
   return (
