@@ -1,38 +1,42 @@
 import React, { useEffect } from 'react'
-import { PuntoComLayout } from '../../layouts'
-import { useDashboard } from '../../shared/hooks'
-import { DashboardKpisSection, ProductsWithoutSalesList, SalesByUserDonutChart, SalesVsPurchasesChart, TopProductCard } from './components'
+import { PuntoComLayout, TabsLayout } from '../../layouts'
+import { useTabs } from '../../shared/hooks'
+import { WindowsTab } from '../../interfaces/ui/tabs.interface'
+import { DashboardGeneral } from './views'
+
+const tabs = ['General', 'Estadísticas Ventas', 'Estadísticas Compras', 'Estadísticas Productos']
 
 export const Dashboard: React.FC = () => {
 
-  const { stats, getStats } = useDashboard()
+  const { tab: activeTab, setActiveTab, setWindow } = useTabs()
+
+  const renderContent = () => {
+    switch( activeTab ) {
+      case tabs[0]:
+        return (<DashboardGeneral />)
+      case tabs[1]:
+        return (<div>Estadísticas de ventas</div>)
+      case tabs[2]:
+        return (<div>Estadísticas de compras</div>)
+      case tabs[3]:
+        return (<div>Estadísticas de productos</div>)
+    }
+  }
 
   useEffect(() => {
-    getStats()
+    setWindow(WindowsTab.dashboard)
+    setActiveTab(tabs[0])
   }, [])
-
-  if ( !stats ) return null
-
+  
   return (
     <PuntoComLayout>
-      <div className="space-y-8 py-5 md:w-[90%] mx-auto">
-        <DashboardKpisSection kpis={stats.kpis} />
-        
-        <section className="grid md:grid-cols-6 md:gap-5">
-          <div className="col-span-4 space-y-6 mb-5 md:mb-0">
-            <SalesVsPurchasesChart
-              sales={stats.charts.salesByDate}
-              purchases={stats.charts.purchasesByDate}
-            />
-            <TopProductCard product={stats.insights.topProduct}/>
-          </div>
-          <div className="col-span-2 space-y-6">
-            <SalesByUserDonutChart data={stats.charts.salesPercentageByUser} />
-            <ProductsWithoutSalesList products={stats.insights.productsWithoutSales} />
-          </div>
-        </section>
-
-      </div>
+      <TabsLayout
+        tabs={ tabs }
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      >
+        {renderContent()}
+      </TabsLayout>
     </PuntoComLayout>
   )
 }

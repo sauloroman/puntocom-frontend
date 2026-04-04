@@ -1,4 +1,5 @@
 export { formatDate, today } from './format-dates'
+export { calcMargin, formatMoney, mergeSalesPurchasesData } from './format-kpis'
 export { formatPrices } from './format-prices'
 export { formatSupplierNames, getSupplierByFormattedName } from './format-supplier-names'
 export { formatUserNames, getUserByFormattedName } from './format-user-names'

@@ -21,13 +21,13 @@ export const TestCredentialsBanner: React.FC = () => {
         `} size={20} />
         <div className="flex-1">
           <p className={`
-            text-sm font-semibold mb-2
+            text-md font-semibold mb-2
             ${isDark ? 'text-blue-300' : 'text-blue-800'}
           `}>
             Credenciales de prueba
           </p>
           <div className={`
-            text-xs space-y-1
+            text-md space-y-1
             ${isDark ? 'text-blue-200' : 'text-blue-700'}
           `}>
             <p><span className="font-medium">Usuario:</span> test@correo.com</p>

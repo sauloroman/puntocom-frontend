@@ -1,6 +1,11 @@
-import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
-import { startGettingDashboardStats } from "../../store/dashboard/dashboard.thunk"
+import { useDispatch, useSelector } from "react-redux"
+import { 
+    startGettingKpisStats, 
+    startGettingProductsStats, 
+    startGettingPurchasesStats, 
+    startGettingSalesStats 
+} from "../../store/dashboard/dashboard.thunk"
 
 export const useDashboard = () => {
 
@@ -11,8 +16,20 @@ export const useDashboard = () => {
         stats 
     } = useSelector( (state: RootState) => state.dashboard )
 
-    const getStats = () => {
-        dispatch(startGettingDashboardStats())
+    const getSalesStats = () => {
+        dispatch(startGettingSalesStats())
+    }
+
+    const getPurchasesStats = () => {
+        dispatch(startGettingPurchasesStats())
+    }
+
+    const getKpisStats = () => {
+        dispatch(startGettingKpisStats())
+    }
+
+    const getProductsStats = () => {
+        dispatch(startGettingProductsStats())
     }
 
     return {
@@ -21,7 +38,10 @@ export const useDashboard = () => {
         stats,
 
         // Methods
-        getStats,
+        getSalesStats,
+        getPurchasesStats,
+        getKpisStats,
+        getProductsStats
     }
 
 }

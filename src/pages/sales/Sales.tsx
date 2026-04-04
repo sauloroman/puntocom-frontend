@@ -16,7 +16,7 @@ import { SpinnerContainer } from '../../shared/components/spinner'
 import { FilterByDateButton, FilterByPriceButton } from '../../shared/components/button'
 
 export const Sales: React.FC = () => {
-
+  
   const { sales, onGetAllSales, isLoading } = useSale()
   const { rightDrawerIsOpen, drawelName } = useDrawer()
   const { modalIsOpen, modalName } = useModal()

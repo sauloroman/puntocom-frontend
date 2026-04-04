@@ -9,7 +9,6 @@ import { SpinnerContainer } from '../../../shared/components/spinner'
 import { LoginButton } from '../../../shared/components/button'
 import { TestCredentialsBanner } from './LoginTestCredentials'
 
-
 interface LoginFormInputs {
   email: string
   password: string
@@ -86,7 +85,6 @@ export const LoginForm: React.FC = () => {
       </div>
 
       <TestCredentialsBanner />
-      
       
       <Link to='/auth/forgot-password'>
         <div className="flex justify-end w-full">

@@ -4,7 +4,7 @@ import { Purchases, Sales, Warehouse, Access, Reports, Settings, Pos, Dashboard 
 import { useCategories, useInventoryAdjustment, useProducts, usePurchase, useSale, useSuppliers, useUsers } from '../shared/hooks'
 
 export const PrivateRoutes: React.FC = () => {
-  
+
   const { categories, allCategories, onGetAllCategories, onGetCategories } = useCategories()
   const { suppliers, onGetAllSuppliers } = useSuppliers()
   const { sales, onGetAllSales } = useSale()

@@ -1,6 +1,0 @@
-export { DashboardKpisSection } from './DashboardKpis'
-export { KpiCard } from './KpiCard'
-export { ProductsWithoutSalesList } from './ProductsWithoutSales'
-export { SalesVsPurchasesChart } from './SalesVsPurchasesChart'
-export { SalesByUserDonutChart } from './SalesByUserDonutChart'
-export { TopProductCard } from './TopProduct'

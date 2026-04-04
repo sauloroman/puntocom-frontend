@@ -1,0 +1,1 @@
+export { DashboardGeneral } from '../views/general/DashboardGeneral'
