@@ -1,11 +1,14 @@
+import React from 'react'
 import { BsBox, BsCoin } from "react-icons/bs"
-import { IoCartOutline, IoKeyOutline, IoLogOutOutline, IoCalculatorOutline, IoDocumentTextOutline  } from "react-icons/io5"
+import { IoCartOutline, IoKeyOutline, IoLogOutOutline, IoCalculatorOutline, IoDocumentTextOutline } from "react-icons/io5"
 import { MdOutlineDarkMode } from "react-icons/md"
 import { TfiStatsUp } from "react-icons/tfi"
 import { useAuth, useMenu, useTheme } from "../../hooks"
 import { ThemeType } from "../../../interfaces/ui/theme.interface"
 import { UserWidget } from "../../../pages/access/views/users/components"
 import { MenuSection, MenuItem, type MenuItemProps } from "./"
+import { roleAccess } from '../../../router/role.routes'
+import type { Roles } from '../../../interfaces/dto/user.interface'
 
 interface MenuProps {
   collapsed: boolean
@@ -16,10 +19,14 @@ interface MenuProps {
 export const Menu: React.FC<MenuProps> = ({ collapsed, mobileOpen = false }) => {
 
   const { closeMenuMobile } = useMenu()
-  const { onLogout } = useAuth()
+  const { onLogout, user } = useAuth()
   const { activateDarkMode, activateLightMode, theme } = useTheme()
-  const toggleDarkMode = () => theme === ThemeType.dark ? activateLightMode() : activateDarkMode() 
   
+  const toggleDarkMode = () =>
+    theme === ThemeType.dark ? activateLightMode() : activateDarkMode()
+
+  const allowedRoutes = roleAccess[user?.role as Roles]
+
   const generalItems: MenuItemProps[] = [
     { to: '/', icon: <TfiStatsUp />, label: 'Dashboard' },
     { to: '/warehouse', icon: <BsBox />, label: 'Almacén' },
@@ -30,23 +37,36 @@ export const Menu: React.FC<MenuProps> = ({ collapsed, mobileOpen = false }) => 
     { to: '/pos', icon: <IoCalculatorOutline />, label: 'Registrar Venta' },
   ]
 
+  // 🔥 Filtra según permisos
+  const filteredGeneralItems = generalItems.filter(item =>
+    !item.to || allowedRoutes.includes(item.to)
+  )
+
   const systemItems: MenuItemProps[] = [
-    { icon: <MdOutlineDarkMode />, label: 'Modo Oscuro', isToggle: true, onClick: toggleDarkMode, toggled: theme === ThemeType.dark  }
+    { 
+      icon: <MdOutlineDarkMode />,
+      label: 'Modo Oscuro',
+      isToggle: true,
+      onClick: toggleDarkMode,
+      toggled: theme === ThemeType.dark
+    }
   ]
 
   return (
     <div className="flex flex-col h-full space-y-8">
+
       <MenuSection
         mobileOpen={mobileOpen}
-        onMobileClose={closeMenuMobile} 
-        title="Menú General" 
-        collapsed={collapsed} 
-        items={generalItems}
+        onMobileClose={closeMenuMobile}
+        title="Menú General"
+        collapsed={collapsed}
+        items={filteredGeneralItems}
       />
-      <MenuSection 
+
+      <MenuSection
         mobileOpen={mobileOpen}
-        title="Sistema" 
-        collapsed={collapsed} 
+        title="Sistema"
+        collapsed={collapsed}
         items={systemItems}
       />
 
@@ -60,6 +80,7 @@ export const Menu: React.FC<MenuProps> = ({ collapsed, mobileOpen = false }) => 
           mobileOpen={mobileOpen}
         />
       </ul>
+
     </div>
   )
 }

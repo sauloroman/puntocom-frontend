@@ -32,7 +32,7 @@ export const SaleDetailUser: React.FC<Props> = ({ image, name, role }) => {
             </div>
             <div className="flex items-center space-x-3">
                 <div className="flex-shrink-0">
-                    {(image) ? (
+                    {image !== 'Usuario sin imagen' ? (
                         <img
                             src={image}
                             alt={name}

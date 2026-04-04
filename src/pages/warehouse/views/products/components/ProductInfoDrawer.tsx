@@ -2,15 +2,18 @@ import React from 'react'
 import { FaExpand } from "react-icons/fa"
 import { RightDrawerLayout } from '../../../../../layouts'
 import { ModalNames } from '../../../../../interfaces/ui/modal.interface'
-import { useModal, useProducts, useTheme } from '../../../../../shared/hooks'
+import { useAuth, useModal, useProducts, useTheme } from '../../../../../shared/hooks'
 import { formatPrices } from '../../../../../shared/helpers'
 import { AvatarImage, AvatarInitialSquare } from '../../../../../shared/components/avatar'
 import { StatusBadge } from '../../../../../shared/components/badgets'
 import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
+import { Roles } from '../../../../../interfaces/dto/user.interface'
 
 export const ProductInfoDrawer: React.FC = () => {
+    const { user: authenticatedUser } = useAuth()
     const { theme } = useTheme()
     const isDark = theme === "dark"
+    const role = authenticatedUser?.role
 
     const { productSelected: product } = useProducts()
     const { onOpenModal } = useModal()
@@ -155,7 +158,7 @@ export const ProductInfoDrawer: React.FC = () => {
                     </div>
                 )}
 
-                {product.Supplier && (
+                {product.Supplier && [Roles.ADMINISTRADOR, Roles.SUPERVISOR].includes(role as Roles) && (
                     <div className={`
                         p-4 rounded-lg transition-colors duration-200
                         ${isDark ? 'bg-gray-800/50 border border-gray-700' : 'bg-white border border-gray-200 shadow-sm'}

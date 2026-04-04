@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { PuntoComLayout, TabsLayout } from '../../layouts'
 import { useTabs } from '../../shared/hooks'
 import { WindowsTab } from '../../interfaces/ui/tabs.interface'
-import { DashboardGeneral, DashboardSales } from './views'
+import { DashboardGeneral, DashboardPurchases, DashboardSales } from './views'
 
 const tabs = ['General', 'Estadísticas Ventas', 'Estadísticas Compras', 'Estadísticas Productos']
 
@@ -17,7 +17,7 @@ export const Dashboard: React.FC = () => {
       case tabs[1]:
         return (<DashboardSales />)
       case tabs[2]:
-        return (<div>Estadísticas de compras</div>)
+        return (<DashboardPurchases />)
       case tabs[3]:
         return (<div>Estadísticas de productos</div>)
     }

@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react'
+import { IoMdInformationCircleOutline } from "react-icons/io";
 import {
   FiTrendingUp, FiShoppingCart, FiDollarSign,
   FiAlertTriangle, FiPackage, FiUsers, FiCreditCard,
 } from 'react-icons/fi'
 import type { KpisStats } from '../../../../interfaces/dto/dashboard.interface'
-import { useTheme } from '../../../../shared/hooks'
 import { useDashboard } from '../../../../shared/hooks'
 import { calcMargin, formatMoney, mergeSalesPurchasesData } from '../../../../shared/helpers'
 import { FinancialBreakdown, RevenueChart, SideStat, TopKpiCard } from './components'
+import { HeaderBox } from '../sales/components'
 
 
 export const DashboardGeneral: React.FC = () => {
   const { stats, getKpisStats, getSalesStats, getPurchasesStats } = useDashboard()
-  const { theme } = useTheme()
-  const isDark = theme === 'dark'
 
   const kpis: KpisStats | null = stats?.kpisStats ?? null
 
@@ -29,7 +28,7 @@ export const DashboardGeneral: React.FC = () => {
   }, [])
 
   return (
-    <div className='min-h-screen'>
+    <div>
       <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-4'>
         <TopKpiCard
           title='Ventas Totales'
@@ -62,30 +61,35 @@ export const DashboardGeneral: React.FC = () => {
       </div>
 
       <div className='grid grid-cols-1 gap-4'>
+
         <RevenueChart data={chartData} />
 
-        <div className='flex flex-col gap-3'>
-          <p className={`text-sm font-semibold px-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-            Inventario y usuarios
-          </p>
+        <div className='flex flex-col gap-3 mt-5'>
+          <HeaderBox>
+            <IoMdInformationCircleOutline size={20} />
+            Inventario y Usuarios
+          </HeaderBox>
 
-          <SideStat
-            label='Productos activos'
-            value={kpis?.totalActiveProducts ?? '—'}
-            icon={<FiPackage />}
-          />
-          <SideStat
-            label='Valor total en stock'
-            value={kpis ? formatMoney(kpis.totalStockValue, true) : '—'}
-            icon={<FiCreditCard />}
-          />
-          <SideStat
-            label='Usuarios activos'
-            value={kpis?.totalActiveUsers ?? '—'}
-            icon={<FiUsers />}
-          />
-
-          {kpis && <FinancialBreakdown kpis={kpis} />}
+          <div className='grid md:grid-cols-2 gap-5'>
+            <div className='flex flex-col gap-3'>
+              <SideStat
+                label='Productos activos'
+                value={kpis?.totalActiveProducts ?? '—'}
+                icon={<FiPackage />}
+              />
+              <SideStat
+                label='Valor total en stock'
+                value={kpis ? formatMoney(kpis.totalStockValue, true) : '—'}
+                icon={<FiCreditCard />}
+              />
+              <SideStat
+                label='Usuarios activos'
+                value={kpis?.totalActiveUsers ?? '—'}
+                icon={<FiUsers />}
+              />
+            </div>
+            {kpis && <FinancialBreakdown kpis={kpis} />}
+          </div>
         </div>
       </div>
     </div>

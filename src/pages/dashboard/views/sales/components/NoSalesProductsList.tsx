@@ -29,9 +29,9 @@ export const NoSalesProductsList: React.FC<NoSalesProductsListProps> = ({ produc
     return (
         <div
             className={`
-        rounded-xl border p-5
-        ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200 shadow-sm'}
-      `}
+                rounded-xl border p-5
+                ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200 shadow-sm'}
+            `}
         >
             <HeaderBox>
                 <IoIosTrendingDown size={15} />
@@ -50,26 +50,17 @@ export const NoSalesProductsList: React.FC<NoSalesProductsListProps> = ({ produc
                         }
                 `}
             >
-                        <div
-                            className={`
-                                w-10 h-10 rounded-md flex items-center justify-center text-sm font-bold
-                                ${isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'}
-                            `}
-                        >
-                            {p.productName.charAt(0).toUpperCase()}
-                        </div>
-
                         <div className='flex-1 min-w-0'>
                             <p
                                 className={`
-                                    text-sm font-semibold leading-tight line-clamp-2
+                                    text-md font-semibold leading-tight line-clamp-2
                                     ${isDark ? 'text-gray-200' : 'text-gray-700'}
                                 `}
                             >
                                 {p.productName}
                             </p>
 
-                            <p className={`text-xs mt-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                            <p className={`text-sm mt-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
                                 Stock: <span className='font-medium'>{p.stock}</span>
                             </p>
                         </div>

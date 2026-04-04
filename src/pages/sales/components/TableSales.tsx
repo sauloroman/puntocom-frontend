@@ -4,6 +4,8 @@ import type { SaleWithDetailsResponse } from "../../../interfaces/dto/sale.inter
 import { TableImage } from "../../../shared/components/table";
 import { useTheme } from "../../../shared/hooks";
 import { TableSalesActions } from "./";
+import { UserRoleTag } from "../../access/views/users/components";
+import type { Roles } from "../../../interfaces/dto/user.interface";
 
 interface TableSalesProps {
     data: SaleWithDetailsResponse[];
@@ -23,7 +25,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                 : 'border-gray-200 bg-white'
             }
         `}>
-            <div className="max-h-[550px] overflow-y-auto custom-scrollbar no-scrollbar">
+            <div className="max-h-[650px] overflow-y-auto custom-scrollbar no-scrollbar">
                 <table className="min-w-full">
                     <thead className={`
                         text-xs uppercase tracking-wide sticky top-0 z-10 shadow-sm transition-colors
@@ -96,7 +98,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                 >
                                     <td className="hidden md:table-cell px-6 py-4">
                                         <p className={`
-                                            text-sm font-semibold transition-colors
+                                            text-md font-semibold transition-colors
                                             ${isDark ? 'text-gray-200' : 'text-gray-900'}
                                         `}>
                                             {sale.sale.saleDate as string} 
@@ -105,9 +107,9 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
 
                                     <td className="px-4 md:px-6 py-4">
                                         <div className="flex items-center gap-2 md:gap-3">
-                                            <div className="w-8 h-8 md:w-9 md:h-9 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                                            <div className="w-8 h-8 md:w-9 md:h-9 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-md flex-shrink-0">
                                                 <TableImage
-                                                    width='w-6'
+                                                    width='w-8'
                                                     text='Usuario sin imagen'
                                                     icon={sale.sale.User?.image ?? 'Usuario sin imagen'}
                                                     initial={sale.sale.User?.name[0]}
@@ -115,7 +117,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                             </div>
                                             <div className="min-w-0 flex-1">
                                                 <p className={`
-                                                    text-sm font-medium transition-colors truncate
+                                                    text-md font-medium transition-colors truncate mb-2
                                                     ${isDark ? 'text-gray-200' : 'text-gray-900'}
                                                 `}>
                                                     {sale.sale.User?.name}
@@ -126,12 +128,7 @@ export const TableSales: React.FC<TableSalesProps> = ({ data }) => {
                                                 `}>
                                                     {sale.sale.saleDate as string}
                                                 </p>
-                                                <p className={`
-                                                    text-xs capitalize transition-colors hidden md:block
-                                                    ${isDark ? 'text-gray-400' : 'text-gray-500'}
-                                                `}>
-                                                    {sale.sale.User?.role}
-                                                </p>
+                                                <UserRoleTag role={sale.sale.User?.role as Roles} />
                                             </div>
                                         </div>
                                     </td>

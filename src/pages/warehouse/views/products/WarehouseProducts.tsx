@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
-import { useCategories, useDrawer, useModal, useSuppliers, useProducts, useReports } from '../../../../shared/hooks'
+import { useCategories, useDrawer, useModal, useSuppliers, useProducts, useReports, useAuth } from '../../../../shared/hooks'
 import { CreateButton, SortElementsAlphaButton, FAB, FilterByPriceButton } from '../../../../shared/components/button'
 import {
   ModalConfirmChangeStatusProduct,
@@ -23,9 +23,11 @@ import { ModalRequestPasswordAdmin } from '../../../access/views/users/component
 import { GenerateReport } from '../../../reports/components'
 import { SpinnerContainer, SpinnerScreen } from '../../../../shared/components/spinner'
 import { BsPlus, BsFileEarmarkText } from 'react-icons/bs'
+import { Roles } from '../../../../interfaces/dto/user.interface'
 
 export const WarehouseProducts: React.FC = () => {
 
+  const { user: authenticatedUser } = useAuth()
   const { rightDrawerIsOpen, drawelName } = useDrawer()
   const { onGetProducts, onOrderAlpha, isOrderedAsc, isLoading, products } = useProducts()
   const { categories, onGetCategories, onGetAllCategories } = useCategories()
@@ -34,6 +36,8 @@ export const WarehouseProducts: React.FC = () => {
   const { isLoading: isReportLoading } = useReports()
 
   const [showFABMenu, setShowFABMenu] = useState(false)
+
+  const role = authenticatedUser?.role
 
   useEffect(() => {
     if ( !products )onGetProducts()
@@ -87,8 +91,14 @@ export const WarehouseProducts: React.FC = () => {
             </div>
 
             <div className='hidden md:flex items-center gap-3'>
-              <GenerateReport onConfirm={() => onOpenConfirmAdminPassword(ModalNames.confirmCreateProductsReport)} />
-              <CreateButton className='w-40 p-2' onClick={openCreateProductModal} text='Crear Producto' />
+              {
+                [Roles.ADMINISTRADOR].includes(role as Roles) && (
+                  <>         
+                    <GenerateReport onConfirm={() => onOpenConfirmAdminPassword(ModalNames.confirmCreateProductsReport)} />
+                    <CreateButton className='w-40 p-2' onClick={openCreateProductModal} text='Crear Producto' />
+                  </>
+                )
+              }
             </div>
           </div>
         </div>

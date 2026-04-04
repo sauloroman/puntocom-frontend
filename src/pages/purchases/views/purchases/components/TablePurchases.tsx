@@ -4,6 +4,8 @@ import type { Purchase } from "../../../../../interfaces/dto/purchase.interface"
 import { useTheme } from "../../../../../shared/hooks";
 import { TableImage } from "../../../../../shared/components/table";
 import { TablePurchasesActions } from "./";
+import { UserRoleTag } from "../../../../access/views/users/components";
+import type { Roles } from "../../../../../interfaces/dto/user.interface";
 
 interface TablePurchasesProps {
     data: Purchase[];
@@ -90,7 +92,7 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                 >
                                     <td className="hidden md:table-cell px-6 py-4">
                                         <p className={`
-                                            text-sm font-semibold transition-colors
+                                            text-md font-semibold transition-colors
                                             ${isDark ? 'text-gray-200' : 'text-gray-900'}
                                         `}>
                                             {purchase.purchaseDate.toString()}
@@ -99,13 +101,13 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                     <td className="px-4 md:px-6 py-4">
                                         <div className="flex flex-col">
                                             <p className={`
-                                                text-sm font-medium transition-colors truncate max-w-[120px] md:max-w-none
+                                                text-md font-medium transition-colors truncate max-w-[120px] md:max-w-none
                                                 ${isDark ? 'text-gray-200' : 'text-gray-900'}
                                             `}>
                                                 {purchase.Supplier?.name}
                                             </p>
                                             <p className={`
-                                                text-xs transition-colors hidden sm:block
+                                                text-md transition-colors hidden sm:block
                                                 ${isDark ? 'text-gray-400' : 'text-gray-500'}
                                             `}>
                                                 {purchase.Supplier?.phone}
@@ -121,9 +123,9 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
 
                                    <td className="hidden lg:table-cell px-6 py-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-9 h-9 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                                            <div className="w-9 h-9 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0 mb-2">
                                                 <TableImage
-                                                    width='w-6'
+                                                    width='w-8'
                                                     text='Usuario sin imagen'
                                                     icon={purchase.User?.image ?? 'Usuario sin imagen'}
                                                     initial={purchase.User?.name[0]}
@@ -131,17 +133,14 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                                             </div>
                                             <div>
                                                 <p className={`
-                                                    text-sm font-medium transition-colors
+                                                    text-sm font-medium transition-colors mb-1
                                                     ${isDark ? 'text-gray-200' : 'text-gray-900'}
                                                 `}>
                                                     {purchase.User?.name}
                                                 </p>
-                                                <p className={`
-                                                    text-xs capitalize transition-colors
-                                                    ${isDark ? 'text-gray-400' : 'text-gray-500'}
-                                                `}>
-                                                    {purchase.User?.role}
-                                                </p>
+                                                <UserRoleTag 
+                                                    role={purchase.User?.role as Roles}
+                                                />
                                             </div>
                                         </div>
                                     </td>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { MdOutlineCompareArrows } from "react-icons/md";
 import {
   LineChart, Line, XAxis, YAxis,
   CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -6,6 +7,7 @@ import {
 import type { ChartDataPoint } from '../../../../../interfaces/dto/dashboard.interface'
 import { useTheme } from '../../../../../shared/hooks'
 import { ChartTooltip } from './CharToolTip'
+import { HeaderBox } from '../../sales/components';
 
 interface RevenueChartProps {
   data: ChartDataPoint[]
@@ -43,9 +45,10 @@ export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
         ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200 shadow-sm'}
       `}
     >
-      <p className={`text-sm font-semibold mb-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+      <HeaderBox>
+        <MdOutlineCompareArrows size={20} />
         Ventas vs Compras
-      </p>
+      </HeaderBox>
 
       <ResponsiveContainer width='100%' height={260}>
         <LineChart data={data} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>

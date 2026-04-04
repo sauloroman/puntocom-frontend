@@ -1,15 +1,18 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useModal, usePos } from '../../../shared/hooks'
+import { useAuth, useModal, usePos } from '../../../shared/hooks'
 import { Input, Label } from '../../../shared/components/form'
 import { AddToCartButton, CancelButton } from '../../../shared/components/button'
+import { Roles } from '../../../interfaces/dto/user.interface'
 
 interface ProductInCartMeta {
     quantity: number,
-    discount: number
+    discount?: number
 }
 
 export const FormAddProduct: React.FC = () => {
+
+    const { user: authenticatedUser } = useAuth()
     const { productToAdd, onAddProductToCart } = usePos()
     const { onCloseModal } = useModal()
     const { 
@@ -18,10 +21,13 @@ export const FormAddProduct: React.FC = () => {
         formState: { errors } 
     } = useForm<ProductInCartMeta>()
 
+    const role = authenticatedUser?.role
+
     const addProductToCart = ({ quantity, discount }: ProductInCartMeta) => {
+        console.log({discount})
         onAddProductToCart({
             quantity: +quantity,
-            discount: +discount,
+            discount: discount ? +discount : 0,
             product: productToAdd!,
         })
         onCloseModal()
@@ -52,26 +58,29 @@ export const FormAddProduct: React.FC = () => {
                     />
                     {errors.quantity && (<p className=' text-red-600 mt-1 font-bold text-right text-md'>{errors.quantity.message}</p>)}
                 </div>
-                <div>
-                    <Label>Descuento ($)</Label>
-                    <Input
-                        {
-                        ...register('discount', {
-                            min: {
-                                value: 1,
-                                message: 'Descuento no permitido'
-                            },
-                            max: {
-                                value: productToAdd?.sellingPrice ?? 100,
-                                message: 'Descuento excesivo'
+                {
+                    [Roles.ADMINISTRADOR].includes(role as Roles) && 
+                    <div>
+                        <Label>Descuento ($)</Label>
+                        <Input
+                            {
+                            ...register('discount', {
+                                min: {
+                                    value: 1,
+                                    message: 'Descuento no permitido'
+                                },
+                                max: {
+                                    value: productToAdd?.sellingPrice ?? 100,
+                                    message: 'Descuento excesivo'
+                                }
+                            })
                             }
-                        })
-                        }
-                        className='h-20 font-semibold text-4xl'
-                        type='number'
-                    />
-                    {errors.discount && (<p className=' text-red-600 mt-1 font-bold text-right text-md'>{errors.discount.message}</p>)}
-                </div>
+                            className='h-20 font-semibold text-4xl'
+                            type='number'
+                        />
+                        {errors.discount && (<p className=' text-red-600 mt-1 font-bold text-right text-md'>{errors.discount.message}</p>)}
+                    </div>
+                }
             </div>
 
             <div className='mt-4 flex flex-col md:flex-row items-center gap-4 w-full'>

@@ -1,14 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { WindowsTab } from '../../interfaces/ui/tabs.interface'
 import { useTabs } from '../../shared/hooks'
-import { PuntoComLayout, TabsLayout  } from '../../layouts'
+import { PuntoComLayout, TabsLayout } from '../../layouts'
 import { WarehouseCategories, WarehouseProducts, WarehouseLowStock, WarehouseAdjustment } from './views'
-
-const tabs = ["Categorías", "Productos", "Control de Stock", "Ajustes de Almacén"]
+import { useAuth } from '../../shared/hooks'
+import type { Roles } from '../../interfaces/dto/user.interface'
+import { warehouseTabsAccess } from '../../interfaces/ui/warehouse.interface'
 
 export const Warehouse: React.FC = () => {
-  
+
   const { tab: activeTab, setActiveTab, setWindow } = useTabs()
+  const { user } = useAuth()
+
+  const allowedTabs = useMemo(() => {
+    return warehouseTabsAccess[user?.role as Roles]
+  }, [user?.role as Roles])
 
   const renderContent = () => {
     switch (activeTab) {
@@ -26,14 +32,14 @@ export const Warehouse: React.FC = () => {
   }
 
   useEffect(() => {
-    setWindow( WindowsTab.warehouse )
-    setActiveTab(tabs[0])
-  }, [])
+    setWindow(WindowsTab.warehouse)
+    setActiveTab(allowedTabs[0])
+  }, [allowedTabs])
 
   return (
     <PuntoComLayout>
       <TabsLayout
-        tabs={tabs}
+        tabs={allowedTabs} 
         activeTab={activeTab}
         onTabChange={setActiveTab}
       >

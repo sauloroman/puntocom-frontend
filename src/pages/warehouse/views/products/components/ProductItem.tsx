@@ -3,20 +3,24 @@ import { CgDetailsMore } from 'react-icons/cg'
 import { CiEdit } from 'react-icons/ci'
 import type { Product } from '../../../../../interfaces/dto/product.interface'
 import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
-import { useDrawer, useProducts, useTheme } from '../../../../../shared/hooks'
+import { useAuth, useDrawer, useProducts, useTheme } from '../../../../../shared/hooks'
 import { StatusBadge } from '../../../../../shared/components/badgets'
 import { formatPrices } from '../../../../../shared/helpers'
 import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
+import { Roles } from '../../../../../interfaces/dto/user.interface'
 
 interface ProductItemButtonsProps {
   productId: string
 }
 
 export const ProductItemButtons: React.FC<ProductItemButtonsProps> = ({ productId }) => {
+
+  const { user: authenticatedUser } = useAuth()
   const { onOpenRightDrawer } = useDrawer()
   const { onSelectProduct } = useProducts()
   const { theme } = useTheme()
   const isDark = theme === "dark"
+  const role = authenticatedUser?.role
 
   const onSelect = () => {
     onSelectProduct(productId)
@@ -42,19 +46,22 @@ export const ProductItemButtons: React.FC<ProductItemButtonsProps> = ({ productI
       >
         <CgDetailsMore size={13} />
       </button>
-
-      <button
-        onClick={onEdit}
-        className={`
-          cursor-pointer p-2 rounded-lg border transition
-          ${isDark
-            ? 'bg-gray-800 border-gray-700 text-white hover:bg-gray-700'
-            : 'bg-white border-gray-300 hover:bg-gray-50'
-          }
-        `}
-      >
-        <CiEdit size={13} />
-      </button>
+      
+      {
+        [Roles.ADMINISTRADOR].includes(role as Roles) && 
+        <button
+          onClick={onEdit}
+          className={`
+            cursor-pointer p-2 rounded-lg border transition
+            ${isDark
+              ? 'bg-gray-800 border-gray-700 text-white hover:bg-gray-700'
+              : 'bg-white border-gray-300 hover:bg-gray-50'
+            }
+          `}
+        >
+          <CiEdit size={13} />
+        </button>
+      }
     </div>
   )
 }

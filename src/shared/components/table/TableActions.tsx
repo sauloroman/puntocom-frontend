@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { CiMenuKebab, CiEdit } from "react-icons/ci";
 import { CgDetailsMore } from "react-icons/cg";
-import { useTheme } from "../../hooks";
+import { useAuth, useTheme } from "../../hooks";
+import { Roles } from "../../../interfaces/dto/user.interface";
 
 interface TableActionsProps {
   onView: () => void;
@@ -11,12 +12,15 @@ interface TableActionsProps {
 }
 
 export const TableActions: React.FC<TableActionsProps> = ({ onView, onEdit, hideEdit = false }) => {
+
+  const { user: authenticatedUser } = useAuth()
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const role = authenticatedUser?.role
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -95,7 +99,7 @@ export const TableActions: React.FC<TableActionsProps> = ({ onView, onEdit, hide
               Ver Detalles
             </button>
 
-            {!hideEdit && onEdit && (
+            {!hideEdit && onEdit && [Roles.ADMINISTRADOR].includes(role as Roles) && (
               <button
                 onClick={() => {
                   onEdit();

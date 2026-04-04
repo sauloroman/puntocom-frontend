@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { ModalNames } from '../../../../interfaces/ui/modal.interface'
 import { DrawelNames } from '../../../../interfaces/ui/drawel.interface'
-import { useCategories, useDrawer, useModal } from '../../../../shared/hooks'
+import { useAuth, useCategories, useDrawer, useModal } from '../../../../shared/hooks'
 import { CreateButton, FAB } from '../../../../shared/components/button'
 import {
   AppliedCategoryFilters,
@@ -16,9 +16,11 @@ import {
 } from './components'
 import { SortElementsAlphaButton } from '../../../../shared/components/button'
 import { SpinnerContainer } from '../../../../shared/components/spinner'
+import { Roles } from '../../../../interfaces/dto/user.interface'
 
 export const WarehouseCategories: React.FC = () => {
 
+  const { user: authenticatedUser } = useAuth()
   const {
     allCategories,
     categories,
@@ -35,6 +37,8 @@ export const WarehouseCategories: React.FC = () => {
     if (!categories) onGetCategories()
     if (!allCategories) onGetAllCategories()
   }, [])
+
+  const role = authenticatedUser?.role
 
   return (
     <>
@@ -53,7 +57,14 @@ export const WarehouseCategories: React.FC = () => {
             </div>
           </div>
 
-          <CreateButton className='hidden md:flex w-52 p-2' onClick={() => onOpenModal(ModalNames.createCategory)} text='Crear categoría' />
+          { [Roles.ADMINISTRADOR].includes(role as Roles) &&  
+            <CreateButton 
+              className='hidden md:flex w-52 p-2' 
+              text='Crear categoría' 
+              onClick={() => onOpenModal(ModalNames.createCategory)} 
+            /> 
+          }
+          
         </div>
         <div>
           {

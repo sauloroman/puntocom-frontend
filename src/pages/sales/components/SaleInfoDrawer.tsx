@@ -58,7 +58,8 @@ export const SaleInfoDrawer: React.FC = () => {
                         </div>
                         <div className="flex flex-col gap-4">
                             <div className={`
-                                px-4 py-2 rounded-lg font-medium transition-colors
+                                text-2xl text-center
+                                px-4 py-2 rounded-lg font-bold transition-colors
                                 ${isDark 
                                     ? 'bg-indigo-900/50 text-indigo-300' 
                                     : 'bg-indigo-50 text-indigo-700'

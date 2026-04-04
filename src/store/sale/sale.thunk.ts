@@ -18,6 +18,7 @@ import type { RootState } from "../store";
 import { updateProduct, updateProductStockInWarehouse } from "../products/products.slice";
 import type { ChangeProductStatusResponse } from "../../interfaces/dto/product.interface";
 import { updateProductToBeInPurchase } from "../purchase/purchase.slice";
+import { handleError } from "../../config/api";
 
 const urlSale = '/api/sale'
 
@@ -68,9 +69,10 @@ export const startSavingSale = ( saveSale: SaveSale ) => {
             }
 
         } catch(error) {
+            const errorMessage = handleError(error)
             dispatch(showAlert({
                 title: 'Error Ventas 🗒️',
-                text: 'No se pudo guardar la venta',
+                text: `Error al guardar la venta. ${errorMessage}`,
                 type: AlertType.error
             }))
         } finally {

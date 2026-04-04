@@ -14,6 +14,7 @@ export interface SalesStats {
     salesByUser: {
         userId: string
         userName: string,
+        userImage: string,
         role: string,
         totalSales: number,
         ordersCount: number,

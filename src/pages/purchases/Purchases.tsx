@@ -1,14 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { WindowsTab } from '../../interfaces/ui/tabs.interface'
 import { PuntoComLayout, TabsLayout } from '../../layouts'
-import { useTabs } from '../../shared/hooks'
+import { useAuth, useTabs } from '../../shared/hooks'
 import { CreatePurchase, PurchasesPage, PurchasesSuppliers } from './views'
+import { purchasesTabsAccess } from '../../interfaces/ui/purchases.interface'
+import type { Roles } from '../../interfaces/dto/user.interface'
 
 const tabs = ["Registrar Compra", "Registro de compras", "Proveedores del sistema"]
 
 export const Purchases: React.FC = () => {
-  
+
+  const { user: authenticatedUser } = useAuth()
   const { tab: activeTab, setActiveTab, setWindow } = useTabs()
+
+  const allowedTabs = useMemo(() => 
+    purchasesTabsAccess[authenticatedUser?.role as Roles], 
+    [authenticatedUser?.role]
+  )
 
   const renderContent = () => {
     switch(activeTab) {
@@ -29,7 +37,7 @@ export const Purchases: React.FC = () => {
   return (
     <PuntoComLayout>
       <TabsLayout
-        tabs={tabs}
+        tabs={allowedTabs}
         activeTab={activeTab}
         onTabChange={setActiveTab}
       >

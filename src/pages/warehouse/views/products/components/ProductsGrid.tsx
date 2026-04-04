@@ -32,13 +32,12 @@ export const ProductsGrid: React.FC = () => {
         <p className="text-gray-400 text-xs mt-1 text-center max-w-[260px]">
           Los productos aparecerán aquí una vez que se registren o coincidan con el filtro aplicado
         </p>
-
       </div>
     )
   }
 
   return (
-    <div className='grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5 lg:gap-8 w-[95%] m-auto pt-2 py-8'>
+    <div className='grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5 lg:gap-8 m-auto pt-2 py-8'>
       {
         products.map(product => (
           <ProductItem

@@ -2,7 +2,7 @@ import React from 'react'
 import { FaRegUser } from "react-icons/fa6";
 import { useTheme } from '../../../../../shared/hooks'
 import { formatMoney } from '../../../../../shared/helpers'
-import { AvatarInitialSquare } from '../../../../../shared/components/avatar'
+import { AvatarImage, AvatarInitialSquare } from '../../../../../shared/components/avatar'
 import { UserRoleTag } from '../../../../access/views/users/components'
 import type { Roles } from '../../../../../interfaces/dto/user.interface'
 import { HeaderBox } from './HeaderBox';
@@ -10,6 +10,7 @@ import { HeaderBox } from './HeaderBox';
 interface UserStat {
     userId: string
     userName: string
+    userImage: string
     role: string
     totalSales: number
     ordersCount: number
@@ -49,8 +50,12 @@ export const SalesByUserList: React.FC<SalesByUserListProps> = ({ users }) => {
                 {users.map((u) => (
                     <div key={u.userId} className='grid grid-cols-[1fr_auto_auto] gap-x-4 items-center'>
                         <div className='flex items-center gap-2 min-w-0'>
-                            <AvatarInitialSquare className='w-14 h-14 text-[15px]' name={u.userName} />
 
+                            {
+                                u.userImage !== 'Usuario sin imagen'
+                                ? ( <AvatarImage image={u.userImage} alt={u.userName} className='w-12 h-12' />)
+                                : ( <AvatarInitialSquare className='w-12 h-12 text-[15px]' name={u.userName} /> ) 
+                            }
                             <div className='min-w-0'>
                                 <p className={`text-md mb-2 font-medium truncate ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
                                     {u.userName}
