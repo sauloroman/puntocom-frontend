@@ -24,29 +24,54 @@ export const EntityReportList: React.FC = () => {
   const { theme } = useTheme()
   const isDark = theme === "dark"
 
-  const { onSelectedReports } = useReports()
+  const { onSelectedReports, selectedReports } = useReports()
 
   return (
     <div className='grid grid-cols-4 gap-8 w-full'>
       {
-        entitiesTitle.map(entity => (
-          <div 
-            onClick={() => onSelectedReports(entity as ReportEntities)} 
-            key={entity} 
-            className='flex flex-col items-center gap-1 cursor-pointer transition hover:scale-110'
-          >
-            <IoIosFolderOpen 
-              size={40} 
-              color={isDark ? '#6b7280' : '#e5e5e5'} 
-            />
-            <p className={`
-              uppercase text-sm font-semibold transition-colors
-              ${isDark ? 'text-gray-300' : 'text-gray-600'}
-            `}>
-              {getSpanishNameEntity(entity)}
-            </p>
-          </div>
-        ))
+        entitiesTitle.map(entity => {
+
+          const isActive = selectedReports === entity
+
+          return (
+            <div 
+              onClick={() => onSelectedReports(entity as ReportEntities)} 
+              key={entity} 
+              className={`
+                flex flex-col items-center gap-1 cursor-pointer transition-all duration-200 p-3 rounded-lg
+                ${isActive 
+                  ? 'scale-110 bg-purple-100 dark:bg-purple-900/30' 
+                  : 'hover:scale-110'
+                }
+              `}
+            >
+              <IoIosFolderOpen 
+                size={40} 
+                className={`
+                  transition-colors
+                  ${isActive 
+                    ? 'text-purple-600' 
+                    : isDark 
+                      ? 'text-gray-500' 
+                      : 'text-gray-300'
+                  }
+                `}
+              />
+
+              <p className={`
+                uppercase text-sm font-semibold transition-colors
+                ${isActive 
+                  ? 'text-purple-600' 
+                  : isDark 
+                    ? 'text-gray-300' 
+                    : 'text-gray-600'
+                }
+              `}>
+                {getSpanishNameEntity(entity)}
+              </p>
+            </div>
+          )
+        })
       }
     </div>
   )

@@ -15,10 +15,9 @@ import { AlertType } from "../../interfaces/ui/alert.interface";
 import type { Pagination } from "../../interfaces/dto/pagination.interface";
 import type { DateRange, PriceRange } from "../../interfaces/ui/filter.interface";
 import type { RootState } from "../store";
-import { updateProduct, updateProductStockInWarehouse } from "../products/products.slice";
-import type { ChangeProductStatusResponse } from "../../interfaces/dto/product.interface";
-import { updateProductToBeInPurchase } from "../purchase/purchase.slice";
+import { setProducts, setProductsMetaPagination, setProductsMinimal, setProductsNoStock } from "../products/products.slice";
 import { handleError } from "../../config/api";
+import type { GetProductsMinimal, GetProductsResponse, ProductMinimal } from "../../interfaces/dto/product.interface";
 
 const urlSale = '/api/sale'
 
@@ -26,46 +25,48 @@ export const startSavingSale = ( saveSale: SaveSale ) => {
     return async ( dispatch: Dispatch, getState: () => RootState ) => {
         dispatch( setIsLoading( true ) )
         try {
+            const { pagination } = getState().products
             const { data } = await puntocomApiPrivate.post<SaveSaleResponse>(urlSale, saveSale)
             const { sale, ok } = data
-            let stockIsOver = false
 
-            if ( ok ) {
+            if ( !ok ) return
 
-                for( const product of saveSale.details ) {
-                    dispatch( updateProductStockInPOS({ 
-                        productId: product.productId, 
-                        quantityDiscount: product.quantity 
-                    }))
+            for( const product of saveSale.details ) {
+                dispatch( updateProductStockInPOS({ 
+                    productId: product.productId, 
+                    quantityDiscount: product.quantity 
+                }))
+            }
 
-                    dispatch( updateProductStockInWarehouse({
-                        productId: product.productId,
-                        quantityDiscount: product.quantity
-                    }))
-
-                    const { allProducts: productsInWarehouse } = getState().products
-                    const productInWarehouse = productsInWarehouse?.find( p => p.id === product.productId )
-
-                    if ( productInWarehouse && productInWarehouse.stock <= 0 ) {
-                        stockIsOver = true
-                        const urlToDeactivate = `/api/product/deactivate/${productInWarehouse.id}`
-                        const { data } = await puntocomApiPrivate.patch<ChangeProductStatusResponse>(urlToDeactivate)
-                        const { product } = data
-
-                        dispatch(updateProduct({ productId: productInWarehouse.id, product }))
-                        dispatch(updateProductToBeInPurchase({ productId: productInWarehouse.id, product }))
-                    }
-                }
+            dispatch(clearCart())
+            dispatch(setSaleCreated(sale))
+            dispatch(addSale(sale))
                 
-                dispatch(clearCart())
-                dispatch(setSaleCreated(sale))
-                dispatch(addSale(sale))
+            const { data: dataProducts } = await puntocomApiPrivate.get<GetProductsResponse>(`/api/product/filter?page=${pagination.page}&limit=${pagination.itemsPerPage}`)
+            const { meta, products } = dataProducts
+            const { filter, ...restMetaPagination } = meta
+            dispatch(setProducts(products))
+            dispatch(setProductsMetaPagination({ ...restMetaPagination, itemsPerPage: pagination.itemsPerPage }))
 
-                if ( stockIsOver ) {
-                    dispatch(openModal(ModalNames.noStock))
-                } else {
-                    dispatch(openModal(ModalNames.saveSale))
+            const { data: dataProductsMinimal } = await puntocomApiPrivate.get<GetProductsMinimal>(`/api/product/minimal`)
+            const { products: productsMinimal } = dataProductsMinimal
+            dispatch(setProductsMinimal(productsMinimal))
+
+            const productsNoStock: ProductMinimal[] = productsMinimal.filter( pro => pro.productStock <= 0 )
+            dispatch(setProductsNoStock(productsNoStock))
+            
+            let productsInSaleWithNoStock: ProductMinimal[] = []
+            const productsInSale = saveSale.details.map( pro => pro.productId )
+            productsNoStock.forEach( pro => {
+                if ( productsInSale.includes(pro.productId) ) {
+                    productsInSaleWithNoStock.push(pro)
                 }
+            })
+
+            if ( productsInSaleWithNoStock.length !== 0 ) {
+                dispatch(openModal(ModalNames.noStock))
+            } else {
+                dispatch(openModal(ModalNames.saveSale))
             }
 
         } catch(error) {
@@ -119,9 +120,10 @@ export const startFilteringSales = (
             dispatch(setSalesMetaPagination({ ...restMetaPagination, itemsPerPage }))
 
         } catch( error ) {
+            const errorMessage = handleError(error)
             dispatch(showAlert({
                 title: 'Error Ventas 🗒️',
-                text: 'No se pudieron filtrar las ventas',
+                text: errorMessage ?? 'No se pudieron filtrar las ventas',
                 type: AlertType.error
             }))
         } finally {
@@ -138,9 +140,10 @@ export const startGettingSaleById = ( saleId: string ) => {
             const { sale } = data
             dispatch(setSaleToPrint(sale))
         } catch( error ) {
+            const errorMessage = handleError(error)
             dispatch(showAlert({
                 title: 'Error Ventas 🗒️',
-                text: 'No se pudo obtener la venta por id',
+                text: errorMessage ?? 'No se pudo obtener la venta por id',
                 type: AlertType.error
             }))
         } finally {

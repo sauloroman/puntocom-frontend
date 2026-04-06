@@ -8,6 +8,7 @@ interface ProductState {
     products: Product[] | null,
     productsMinimal: ProductMinimal[] | null,
     allProducts: Product[] | null,
+    productsNoStock: ProductMinimal[],
     productsLowStock: Product[],
     productWarningStock: Product[],
     productNormalStock: Product[],
@@ -24,6 +25,7 @@ const initialState: ProductState = {
     products: null,
     allProducts: null,
     productSelected: null,
+    productsNoStock: [],
     productNormalStock: [],
     productsLowStock: [],
     productWarningStock: [],
@@ -79,6 +81,10 @@ export const productsSlice = createSlice({
                 }
                 return pro
             }) ?? []
+        },
+
+        setProductsNoStock: ( state, {payload}: PayloadAction<ProductMinimal[]>) => {
+            state.productsNoStock = payload
         },
 
         setProductsMinimal: ( state, { payload }: PayloadAction<ProductMinimal[]>) => {
@@ -186,6 +192,7 @@ export const {
     setProductsMetaPagination,
     setProductsMinimal,
     setProductsNormalStock,
+    setProductsNoStock,
     setProductStatusFilter,
     setProductSupplierFilter,
     setProductsWarningStock,

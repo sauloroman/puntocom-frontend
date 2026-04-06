@@ -5,7 +5,6 @@ import type { Product } from '../../../../../interfaces/dto/product.interface'
 import { DrawelNames } from '../../../../../interfaces/ui/drawel.interface'
 import { useAuth, useDrawer, useProducts, useTheme } from '../../../../../shared/hooks'
 import { StatusBadge } from '../../../../../shared/components/badgets'
-import { formatPrices } from '../../../../../shared/helpers'
 import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
 import { Roles } from '../../../../../interfaces/dto/user.interface'
 
@@ -46,9 +45,9 @@ export const ProductItemButtons: React.FC<ProductItemButtonsProps> = ({ productI
       >
         <CgDetailsMore size={13} />
       </button>
-      
+
       {
-        [Roles.ADMINISTRADOR].includes(role as Roles) && 
+        [Roles.ADMINISTRADOR].includes(role as Roles) &&
         <button
           onClick={onEdit}
           className={`
@@ -124,22 +123,28 @@ export const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           {product.name}
         </h3>
 
-        <div className='flex justify-between items-center'>
-          <p className={`text-md font-bold ${ isDark ? 'text-gray-400' : 'text-indigo-500'}`}>
-            {formatPrices(product.sellingPrice)}
-          </p>
-
-          <div className='flex gap-2'>
-            <span
-              className={`
-                mt-1 text-xs font-semibold
-                ${isDark ? "text-gray-400" : "text-green-600"}
-              `}
-            >
-              Stock: {product.stock}
-            </span>
-          </div>
+        <div className='flex gap-2'>
+          <span
+            className={`
+              inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-2xl font-bold
+              ${product.stock === 0
+                  ? isDark
+                    ? "bg-red-900/50 text-red-300"
+                    : "bg-red-100 text-red-700"
+                  : product.stock <= product.stockMin
+                    ? isDark
+                      ? "bg-amber-900/50 text-amber-300"
+                      : "bg-amber-100 text-amber-700"
+                    : isDark
+                      ? "bg-emerald-900/50 text-emerald-300"
+                      : "bg-emerald-100 text-emerald-700"
+                      }
+            `}
+          >
+            {product.stock === 0 ? "Sin stock" : `${product.stock} uds`}
+          </span>
         </div>
+
       </div>
     </div>
   )

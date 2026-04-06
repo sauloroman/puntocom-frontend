@@ -38,6 +38,7 @@ export const useProducts = () => {
         products, 
         productsMinimal,
         pagination, 
+        productsNoStock,
         productSelected, 
         filter,
         productNormalStock,
@@ -228,6 +229,7 @@ export const useProducts = () => {
         productsLowStock,
         productsMinimal,
         productWarningStock,
+        productsNoStock,
 
         onChangePaginationVisibility,
         onChangeProductStatus,

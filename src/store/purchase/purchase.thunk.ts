@@ -1,6 +1,7 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import type { GetFilteredPurchases, SavePurchase, SavePurchaseResponse } from "../../interfaces/dto/purchase.interface";
-import { addPurchase, clearProductsInPurchase, setIsLoading, setProducts, setProductsMetaPagination, setPurchases, setPurchasesMetaPagination, setSupplierSelected, updateProductStock } from "./purchase.slice";
+import { addPurchase, clearProductsInPurchase, setIsLoading, setProducts, setProductsMetaPagination, setPurchases, setPurchasesMetaPagination, setSupplierSelected } from "./purchase.slice";
+import { setProducts as setProductsInWarehouse, setProductsMetaPagination as setProductsMetaPaginationInWarehouse } from '../products/products.slice'
 import { showAlert } from "../alert/alert.slice";
 import { AlertType } from "../../interfaces/ui/alert.interface";
 import { puntocomApiPrivate } from "../../config/api/puntocom.api";
@@ -13,27 +14,36 @@ import { handleError } from "../../config/api";
 const urlPurchases = '/api/purchase'
 
 export const startSavingPurchase = (savePurchase: SavePurchase) => {
-    return async (dispatch: Dispatch) => {
+    return async (dispatch: Dispatch, getState: () => RootState) => {
         dispatch(setIsLoading(true))
         try {
+            const { pagination } = getState().products
 
             const { data } = await puntocomApiPrivate.post<SavePurchaseResponse>(urlPurchases, savePurchase)
             const { ok, purchase } = data
 
-            if ( ok ) {
-                for ( const product of savePurchase.details ) {
-                    dispatch(updateProductStock(product))
-                }
+            if (!ok) return
 
-                dispatch(addPurchase(purchase))
-                dispatch(clearProductsInPurchase())
-                dispatch(setSupplierSelected(null))
-                dispatch(showAlert({
-                    title: 'Compras 🗒️',
-                    text: 'Compra guardada exitosamente',
-                    type: AlertType.success
-                }))
-            }
+            dispatch(addPurchase(purchase))
+            dispatch(clearProductsInPurchase())
+            dispatch(setSupplierSelected(null))
+
+            const { data: dataProducts } = await puntocomApiPrivate.get<GetProductsResponse>(`/api/product/filter?page=${pagination.page}&limit=${pagination.itemsPerPage}`)
+            const { meta, products } = dataProducts
+            const { filter, ...restMetaPagination } = meta
+
+            dispatch(setProducts(products))
+            dispatch(setProductsMetaPagination({ ...restMetaPagination, itemsPerPage: pagination.itemsPerPage }))
+
+            dispatch(setProductsInWarehouse(products))
+            dispatch(setProductsMetaPaginationInWarehouse({ ...restMetaPagination, itemsPerPage: pagination.itemsPerPage }))
+
+            dispatch(showAlert({
+                title: 'Compras 🗒️',
+                text: 'Compra guardada exitosamente',
+                type: AlertType.success
+            }))
+            
 
         } catch (error) {
             const errorMessage = handleError(error)

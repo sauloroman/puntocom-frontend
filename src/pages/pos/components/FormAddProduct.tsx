@@ -24,7 +24,6 @@ export const FormAddProduct: React.FC = () => {
     const role = authenticatedUser?.role
 
     const addProductToCart = ({ quantity, discount }: ProductInCartMeta) => {
-        console.log({discount})
         onAddProductToCart({
             quantity: +quantity,
             discount: discount ? +discount : 0,

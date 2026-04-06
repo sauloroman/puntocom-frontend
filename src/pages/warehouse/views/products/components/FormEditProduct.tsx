@@ -117,10 +117,10 @@ export const FormEditProduct: React.FC = () => {
           placeholder='$25.00'
           min={1}
           {
-          ...register('sellingPrice', {
-            required: 'Obligatorio',
-            min: 1,
-          })
+            ...register('sellingPrice', {
+              required: 'Obligatorio',
+              min: { value: 1, message: 'El precio debe ser positivo'},
+            })
           }
         />
         {errors.sellingPrice && <ErrorMessageForm message={errors.sellingPrice.message} />}

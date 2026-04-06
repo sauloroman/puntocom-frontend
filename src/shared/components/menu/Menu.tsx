@@ -37,7 +37,6 @@ export const Menu: React.FC<MenuProps> = ({ collapsed, mobileOpen = false }) => 
     { to: '/pos', icon: <IoCalculatorOutline />, label: 'Registrar Venta' },
   ]
 
-  // 🔥 Filtra según permisos
   const filteredGeneralItems = generalItems.filter(item =>
     !item.to || allowedRoutes.includes(item.to)
   )

@@ -26,7 +26,7 @@ export const SaleDetailItem: React.FC<Props> = ({ detail }) => {
                 <div className="flex justify-between items-start mb-2">
                     <div className="flex-1 min-w-0 pr-4">
                         <p className={`
-                            text-sm font-medium mb-1 transition-colors
+                            text-md font-medium mb-1 transition-colors
                             ${isDark ? 'text-gray-200' : 'text-gray-900'}
                         `}>
                             {detail.Product?.name || 'Producto sin nombre'}
@@ -42,7 +42,7 @@ export const SaleDetailItem: React.FC<Props> = ({ detail }) => {
                     </div>
                 </div>
                 <div className={`
-                    flex items-center justify-between text-xs mt-3 pt-3 border-t transition-colors
+                    flex items-center justify-between text-md mt-3 pt-3 border-t transition-colors
                     ${isDark 
                         ? 'text-gray-400 border-gray-700' 
                         : 'text-gray-600 border-gray-100'

@@ -1,20 +1,34 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { Product } from '../../../../../interfaces/dto/product.interface'
 import { useProducts, useTheme } from '../../../../../shared/hooks'
 import { ListProductItem, SelectSupplier, PaginationProductsPurchase } from './'
+import { ToggleButton } from '../../../../../shared/components/button'
 
 interface Props {
     products: Product[]
 }
 
 export const ListProducts: React.FC<Props> = ({ products }) => {
+
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>(products)
+
     const { onGetProducts } = useProducts()
     const { theme } = useTheme()
     const isDark = theme === 'dark'
 
     useEffect(() => {
-        if ( !products ) onGetProducts()
+        if (!products) onGetProducts()
     }, [])
+
+    const onToggleInactiveProducts = (status: boolean) => {
+        let productsFiltered = []
+        if (status) {
+            productsFiltered = products.filter(pro => !pro.isActive)
+        } else {
+            productsFiltered = products.filter(pro => pro.isActive)
+        }
+        setFilteredProducts(productsFiltered)
+    }
 
     return (
         <div className={`
@@ -28,16 +42,34 @@ export const ListProducts: React.FC<Props> = ({ products }) => {
                 `}>
                     Lista de productos
                 </h2>
-                <SelectSupplier />
+
+                <div className="flex justify-between items-center gap-15">
+                    <SelectSupplier />
+                    <div className='flex items-center gap-2'>
+                        <p className={`${isDark ? 'text-gray-200' : 'text-gray-700'} text-sm`}>Inactivos</p>
+                        <ToggleButton onToggle={onToggleInactiveProducts} />
+                    </div>
+                </div>
             </div>
             <ul className="flex flex-col gap-2 sm:gap-3 overflow-y-scroll h-[60vh] sm:h-[70vh] p-2 sm:p-4 no-scrollbar mb-8 sm:mb-12">
                 {
-                    products?.map( product => (
-                        <ListProductItem 
-                            product={product}
-                            key={product.id} 
-                        />
-                    ))
+                    filteredProducts?.length > 0 ? (
+                        filteredProducts.map(product => (
+                            <ListProductItem
+                                product={product}
+                                key={product.id}
+                            />
+                        ))
+                    ) : (
+                        <div className="flex items-center justify-center h-full">
+                            <p className={`
+                    text-sm sm:text-base text-center
+                    ${isDark ? 'text-gray-400' : 'text-gray-500'}
+                `}>
+                                No hay productos para mostrar
+                            </p>
+                        </div>
+                    )
                 }
             </ul>
             <PaginationProductsPurchase />

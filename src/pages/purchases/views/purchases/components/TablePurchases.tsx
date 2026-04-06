@@ -23,7 +23,7 @@ export const TablePurchases: React.FC<TablePurchasesProps> = ({ data }) => {
                 : 'border-gray-200 bg-white'
             }
         `}>
-            <div className="max-h-[550px] overflow-y-auto custom-scrollbar no-scrollbar">
+            <div className="max-h-[750px] overflow-y-auto custom-scrollbar no-scrollbar">
                 <table className="min-w-full">
                     <thead className={`
                         text-xs uppercase tracking-wide sticky top-0 z-10 shadow-sm transition-colors

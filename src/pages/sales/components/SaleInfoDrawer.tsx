@@ -43,7 +43,7 @@ export const SaleInfoDrawer: React.FC = () => {
                     <div className="flex items-center justify-between mb-4">
                         <div>
                             <div className={`
-                                text-sm mb-1 flex items-center gap-2 transition-colors
+                                text-md mb-1 flex items-center gap-2 transition-colors
                                 ${isDark ? 'text-gray-400' : 'text-gray-500'}
                             `}>
                                 <FiTag className="w-4 h-4" />
@@ -71,7 +71,7 @@ export const SaleInfoDrawer: React.FC = () => {
                         </div>
                     </div>
                     <div className={`
-                        text-sm flex items-center gap-2 transition-colors
+                        text-md flex items-center gap-2 transition-colors
                         ${isDark ? 'text-gray-400' : 'text-gray-600'}
                     `}>
                         <FiCalendar className="w-4 h-4" />
@@ -87,7 +87,7 @@ export const SaleInfoDrawer: React.FC = () => {
 
                 <div className="flex-1 overflow-y-auto p-6">
                     <div className={`
-                        text-sm font-medium mb-4 flex items-center gap-2 transition-colors
+                        text-md font-medium mb-4 flex items-center gap-2 transition-colors
                         ${isDark ? 'text-gray-400' : 'text-gray-500'}
                     `}>
                         <FiPackage className="w-4 h-4" />
@@ -109,7 +109,7 @@ export const SaleInfoDrawer: React.FC = () => {
                 `}>
                     <div className="space-y-2">
                         <div className={`
-                            flex justify-between text-sm transition-colors
+                            flex justify-between text-md transition-colors
                             ${isDark ? 'text-gray-400' : 'text-gray-600'}
                         `}>
                             <span>Subtotal</span>

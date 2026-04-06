@@ -1,11 +1,13 @@
-import React from 'react'
-import { BsBoxSeam } from 'react-icons/bs'
-import { ModalLayout } from '../../../layouts'
-import { ConfirmButton } from '../../../shared/components/button'
-import { useModal, useTheme } from '../../../shared/hooks'
-import { ModalNames } from '../../../interfaces/ui/modal.interface'
+import { BsBoxSeam } from "react-icons/bs"
+import { ModalLayout } from "../../../layouts"
+import { ConfirmButton } from "../../../shared/components/button"
+import { ModalNames } from "../../../interfaces/ui/modal.interface"
+import { useModal, useProducts, useTheme } from "../../../shared/hooks"
+import type { Product, ProductMinimal } from "../../../interfaces/dto/product.interface"
 
 export const ModalNoStock: React.FC = () => {
+
+    const { productsNoStock } = useProducts()
     const { onOpenModal } = useModal()
     const { theme } = useTheme()
     const isDark = theme === "dark"
@@ -15,7 +17,7 @@ export const ModalNoStock: React.FC = () => {
     }
 
     return (
-        <ModalLayout width='w-lg'>
+        <ModalLayout width='w-2xl'>
             <div className="text-center px-6 py-4">
 
                 <div className={`
@@ -33,17 +35,31 @@ export const ModalNoStock: React.FC = () => {
                 </h3>
 
                 <p className={`
-                    mb-3 transition-colors
+                    mb-5 transition-colors
                     ${isDark ? 'text-gray-300' : 'text-gray-600'}
                 `}>
-                    El producto ha sido desactivado. Stock insuficiente. Reabastece pronto y evita futuras perdidas.
+                    Los siguientes productos se han agotado:
                 </p>
+
+                <ul className={`
+                    max-h-50 overflow-y-auto text-left px-4 py-6 list-none mb-10
+                    ${isDark ? 'text-gray-300' : 'text-gray-700'}
+                `}>
+                    {productsNoStock?.map((product: ProductMinimal) => (
+                        <li 
+                            key={product.productId} 
+                            className="mb-1 list-disc"
+                        >
+                            {product.productName}
+                        </li>
+                    ))}
+                </ul>
 
                 <p className={`
                     w-[80%] m-auto mb-6 text-sm transition-colors
                     ${isDark ? 'text-gray-400' : 'text-gray-500'}
                 `}>
-                    No es posible agregar más unidades de este producto a la orden
+                    No es posible agregar más unidades de estos productos a la orden
                 </p>
 
                 <div onClick={onOpenSaleCreated}>

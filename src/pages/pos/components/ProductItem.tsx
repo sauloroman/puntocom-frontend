@@ -1,25 +1,36 @@
 import React from 'react'
 import { IoAddCircleOutline } from "react-icons/io5"
-import { FiBox } from "react-icons/fi"
 import { ModalNames } from '../../../interfaces/ui/modal.interface'
-import { useModal, useTheme, usePos } from '../../../shared/hooks'
+import { useModal, useTheme, usePos, useAlert } from '../../../shared/hooks'
+import { AlertType } from '../../../interfaces/ui/alert.interface'
 
 interface Props {
   name: string
   price: number
-  stock: number
+  stock: number,
+  stockMin: number,
   image: string
   id: string
 }
 
-export const ProductItem: React.FC<Props> = ({ id, image, name, price, stock }) => {
+export const ProductItem: React.FC<Props> = ({ id, image, name, price, stock, stockMin }) => {
     const { theme } = useTheme()
     const isDark = theme === "dark"
 
-    const { onSetProductToAdd } = usePos()
+    const { onSetProductToAdd, cart } = usePos()
     const { onOpenModal } = useModal()
+    const { activateAlert } = useAlert()
 
     const onSelectProduct = () => {
+        const isAlreadyInCart = cart?.find( productInCart => productInCart.product.id === id )
+        if ( isAlreadyInCart ) {
+            return activateAlert({
+                title: 'Error registro de venta',
+                text: 'El producto ya se encuentra en el carrito',
+                type: AlertType.warning,
+            })
+        }
+
         onSetProductToAdd(id)
         onOpenModal(ModalNames.addProduct)
     }
@@ -57,12 +68,25 @@ export const ProductItem: React.FC<Props> = ({ id, image, name, price, stock }) 
                 </h3>
 
                 <div className="flex items-center justify-between">
-                    <p className={`
-                        text-xl font-bold flex items-center gap-2 transition-colors
-                        ${isDark ? 'text-gray-400' : 'text-gray-500'}
-                    `}>
-                        <FiBox size={20} /> {stock}
-                    </p>
+                    <span
+            className={`
+              inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-2xl font-bold
+              ${stock === 0
+                  ? isDark
+                    ? "bg-red-900/50 text-red-300"
+                    : "bg-red-100 text-red-700"
+                  : stock <= stockMin
+                    ? isDark
+                      ? "bg-amber-900/50 text-amber-300"
+                      : "bg-amber-100 text-amber-700"
+                    : isDark
+                      ? "bg-emerald-900/50 text-emerald-300"
+                      : "bg-emerald-100 text-emerald-700"
+                      }
+            `}
+          >
+            {stock === 0 ? "Sin stock" : `${stock} uds`}
+          </span>
                     <span className={`
                         font-bold text-lg transition-colors
                         ${isDark ? 'text-green-400' : 'text-green-600'}

@@ -41,6 +41,7 @@ export const ProductsList: React.FC = () => {
                         price={product.sellingPrice}
                         image={product.image}
                         stock={product.stock}
+                        stockMin={product.stockMin}
                         id={product.id}
                         key={product.id}
                     />
