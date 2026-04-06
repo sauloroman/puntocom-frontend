@@ -42,7 +42,6 @@ export const useSale = () => {
         limit: number,
         overrides?: Partial<FilterSalesDTO>
     ) => {
-
         const current: FilterSalesDTO = {
             userId: filter.user.id,
             dateStart: filter.dates.dateStart,
@@ -63,7 +62,8 @@ export const useSale = () => {
                     : undefined,
                 hasDateFilter
                     ? { dateStart: applied.dateStart!, dateEnd: applied.dateEnd! }
-                    : undefined
+                    : undefined,
+                { page, limit }
             ))
         } else {
             dispatch(startFilteringSales(

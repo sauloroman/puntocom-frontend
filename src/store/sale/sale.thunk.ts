@@ -107,7 +107,7 @@ export const startFilteringSales = (
                 params['dateTo'] = dates.dateEnd
             }
 
-            if ( userId) {
+            if ( userId ) {
                 params['user'] = userId
             }
 

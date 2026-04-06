@@ -15,9 +15,7 @@ export const DashboardSales: React.FC = () => {
   }, [])
 
   const s = stats?.salesStats
-
-  console.log(s)
-
+  
   return (
     <div className='min-h-screen flex flex-col gap-4'>
       <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4'>

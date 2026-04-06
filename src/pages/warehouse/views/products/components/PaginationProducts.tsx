@@ -4,25 +4,18 @@ import { Pagination } from '../../../../../shared/components/pagination'
 
 export const PaginationProducts: React.FC = () => {
   
-  const { isPaginationVisible, pagination, onSetPage } = useProducts()
+  const { pagination, onSetPage } = useProducts()
   const { itemsPerPage, page, total, totalPages } = pagination
-
-  const onPageChange = (page: number) => {
-    onSetPage(page)
-  }
 
   return (
     <div className='flex flex-end items-center'>
-      {
-        isPaginationVisible &&
         <Pagination 
           itemsPerPage={itemsPerPage}
-          onPageChange={onPageChange}
+          onPageChange={onSetPage}
           page={page}
           total={total}
           totalPages={totalPages}
         />
-      }
     </div>
   )
 }

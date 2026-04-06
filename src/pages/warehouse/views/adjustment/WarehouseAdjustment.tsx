@@ -13,7 +13,7 @@ import {
   PaginationAdjustments, 
   TableAdjustments, 
 } from './components'
-import { SpinnerContainer } from '../../../../shared/components/spinner'
+import { SpinnerContainer, SpinnerScreen } from '../../../../shared/components/spinner'
 import { FAB, ToggleGridTableViewButton } from '../../../../shared/components/button'
 import { ModalRequestPasswordAdmin } from '../../../access/views/users/components'
 import { GenerateReport } from '../../../reports/components'
@@ -25,7 +25,7 @@ export const WarehouseAdjustment: React.FC = () => {
   const { drawelName, leftDrawerIsOpen } = useDrawer()
   const { modalIsOpen, modalName, onOpenConfirmAdminPassword, onOpenModal } = useModal()
   const { adjustments, isLoading, onGetInventoryAdjustments, isTableStyleActive, onSetTableStyle } = useInventoryAdjustment()
-  const { isLoading: isReportsLoading } = useReports()
+  const { isLoading: isReportLoading } = useReports()
   const [showFABMenu, setShowFABMenu] = useState(false)
 
   useEffect(() => {
@@ -40,6 +40,10 @@ export const WarehouseAdjustment: React.FC = () => {
   const openReportModal = () => {
     onOpenConfirmAdminPassword(ModalNames.confirmCreateInventoryAdjustmentsReport)
     setShowFABMenu(false)
+  }
+
+  if ( isReportLoading ) {
+    return <SpinnerScreen />
   }
 
   return (
@@ -70,7 +74,7 @@ export const WarehouseAdjustment: React.FC = () => {
         </div>
 
         {
-          (isLoading || isReportsLoading)
+          (isLoading || isReportLoading)
           ? (
             <div className='my-24'><SpinnerContainer size='lg' color='bg-white' /></div>
           )

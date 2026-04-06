@@ -3,6 +3,7 @@ import { PuntoComLayout, TabsLayout } from '../../layouts'
 import { useTabs } from '../../shared/hooks'
 import { WindowsTab } from '../../interfaces/ui/tabs.interface'
 import { DashboardGeneral, DashboardPurchases, DashboardSales } from './views'
+import { DashboardProducts } from './views/products/DashboardProducts'
 
 const tabs = ['General', 'Estadísticas Ventas', 'Estadísticas Compras', 'Estadísticas Productos']
 
@@ -19,7 +20,7 @@ export const Dashboard: React.FC = () => {
       case tabs[2]:
         return (<DashboardPurchases />)
       case tabs[3]:
-        return (<div>Estadísticas de productos</div>)
+        return (<DashboardProducts />)
     }
   }
 

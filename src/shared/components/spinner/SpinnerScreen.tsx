@@ -1,51 +1,59 @@
 import React, { useEffect, useState } from 'react'
 
-const STEPS = ['Recopilando datos...', 'Procesando registros...', 'Construyendo reporte...', 'Casi listo...']
+const STEPS = [
+  'Recopilando datos...',
+  'Procesando registros...',
+  'Construyendo reporte...',
+  'Casi listo...'
+]
 
 export const SpinnerScreen: React.FC = () => {
   const [stepIndex, setStepIndex] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setStepIndex((prev) => (prev < STEPS.length - 1 ? prev + 1 : prev))
+      setStepIndex(prev => (prev < STEPS.length - 1 ? prev + 1 : prev))
     }, 2200)
     return () => clearInterval(interval)
   }, [])
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 bg-blue-50 dark:bg-slate-950 transition-colors duration-300">
-      <div className="flex flex-col items-center gap-2">
-        <span className="text-2xl tracking-[0.5em] uppercase text-blue-700 dark:text-blue-300 font-semibold">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-12 bg-white dark:bg-purple-900 transition-colors duration-300">
+
+      <div className="flex flex-col items-center gap-2 animate-fade-in">
+        <h1 className="text-3xl font-semibold tracking-wide text-indigo-700 dark:text-violet-300">
           PuntoCom
-        </span>
-        <div className="h-px w-32 bg-blue-300 dark:bg-blue-700 rounded-full" />
+        </h1>
+        <div className="h-[2px] w-28 bg-indigo-600 dark:bg-violet-400 rounded-full" />
       </div>
 
-      <div className="flex flex-col items-center gap-5">
-        <div className="relative w-14 h-14">
-          <div className="absolute inset-0 rounded-full border-[3px] border-blue-200 dark:border-blue-900" />
-          <div className="absolute inset-0 rounded-full border-[3px] border-transparent border-t-blue-600 dark:border-t-blue-400 animate-spin" />
-          <div className="absolute inset-[6px] rounded-full bg-blue-100 dark:bg-blue-950 flex items-center justify-center">
-            <svg className="w-4 h-4 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 17v-6h6v6m-8 4h10a2 2 0 002-2V7l-5-5H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-            </svg>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center gap-1.5">
-          <p className="text-sm font-medium text-blue-700 dark:text-blue-300">Generando Reporte</p>
-          <p key={stepIndex} className="text-xs tracking-wide text-blue-400 dark:text-blue-500 animate-pulse">
-            {STEPS[stepIndex]}
-          </p>
-        </div>
+      <div className="relative w-20 h-20 flex items-center justify-center">
+        <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-indigo-600 dark:border-t-violet-300 animate-[spin_2.5s_linear_infinite]" />
+        <div className="absolute inset-[8px] rounded-full border-4 border-transparent border-t-indigo-500 dark:border-t-violet-200 animate-[spin_1.6s_linear_infinite_reverse]" />
+        <div className="absolute inset-[18px] rounded-full border-4 border-transparent border-t-indigo-400 dark:border-t-violet-100 animate-[spin_1s_linear_infinite]" />
       </div>
 
-      <div className="flex gap-1.5">
+      <div className="flex flex-col items-center">
+        <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
+          Generando Reporte
+        </p>
+
+        <p
+          key={stepIndex}
+          className="text-xs mt-1 text-indigo-600 dark:text-violet-300 animate-typewriter"
+        >
+          {STEPS[stepIndex]}
+        </p>
+      </div>
+
+      <div className="flex gap-2">
         {STEPS.map((_, i) => (
           <div
             key={i}
-            className={`h-1 rounded-full transition-all duration-500 ${
-              i <= stepIndex ? 'w-6 bg-blue-600 dark:bg-blue-400' : 'w-2 bg-blue-200 dark:bg-blue-800'
+            className={`h-2 w-2 rounded-full transition-all duration-500 ${
+              i === stepIndex
+                ? 'bg-indigo-600 dark:bg-violet-300 scale-125 animate-bounce-slow'
+                : 'bg-slate-300 dark:bg-purple-700 scale-100'
             }`}
           />
         ))}

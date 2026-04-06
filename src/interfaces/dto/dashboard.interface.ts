@@ -53,10 +53,27 @@ export interface PurchasesStats {
     }[],
     purchasesBySupplier: {
         supplierId: string,
+        supplierName: string,
+        supplierLastname: string,
         supplierCompany: string,
         totalPurchases: number,
         ordersCount: number,
         percentage: number
+    }[],
+    topPurchasedProducts: {
+        productId:     string
+        productName:   string
+        totalQuantity: number
+        totalSpent:    number
+        avgUnitPrice:  number
+    }[],
+    purchasesByCategory: {
+        categoryId:    string
+        categoryName:  string
+        categoryIcon:  string
+        totalQuantity: number
+        totalSpent:    number
+        percentage:    number
     }[],
 }
 
