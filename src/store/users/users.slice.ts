@@ -124,6 +124,21 @@ export const usersSlice = createSlice({
       state.isTableStyleActive = payload
       state.isGridStyleActive = !payload
     },
+
+    resetUsersState: (state) => {
+      state.isLoading = false
+      state.users = null
+      state.allUsers = null
+      state.userSelected = null
+      state.filter = { role: null, status: null, userName: null }
+      state.pagination = { page: 1, total: 1, totalPages: 1, itemsPerPage: 5 }
+      state.isPaginationVisible = true
+      state.hasEnteredPasswordCorrectly = false
+      state.isTableStyleActive = true
+      state.isGridStyleActive = false
+      state.isOrderedAsc = false
+    },
+
   },
 });
 
@@ -144,4 +159,5 @@ export const {
   setTableView,
   setOrderedAsc,
   resetFilter,
+  resetUsersState,
 } = usersSlice.actions;

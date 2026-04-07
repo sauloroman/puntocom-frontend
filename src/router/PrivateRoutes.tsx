@@ -9,7 +9,7 @@ export const PrivateRoutes: React.FC = () => {
   const { categories, allCategories, onGetAllCategories, onGetCategories } = useCategories()
   const { suppliers, onGetAllSuppliers } = useSuppliers()
   const { sales, onGetAllSales } = useSale()
-  const { products, onGetProducts } = useProducts()
+  const { products, productsMinimal, onGetProducts, onGetMinimalProducts } = useProducts()
   const { users, allUsers, onGetUsers, onGetAllUsers } = useUsers()
   const { purchases, onGetPurchases } = usePurchase()
   const { adjustments, onGetInventoryAdjustments } = useInventoryAdjustment()
@@ -19,7 +19,10 @@ export const PrivateRoutes: React.FC = () => {
     if (!categories) onGetCategories()
     if (!allCategories) onGetAllCategories()
     if (!suppliers) onGetAllSuppliers()
+    
     if (!products) onGetProducts()
+    if (!productsMinimal) onGetMinimalProducts()
+
     if (!users) onGetUsers()
     if (!allUsers) onGetAllUsers()
     if (!sales) onGetAllSales()

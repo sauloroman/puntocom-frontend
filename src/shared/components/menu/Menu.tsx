@@ -19,7 +19,7 @@ interface MenuProps {
 export const Menu: React.FC<MenuProps> = ({ collapsed, mobileOpen = false }) => {
 
   const { closeMenuMobile } = useMenu()
-  const { onLogout, user } = useAuth()
+  const { onCloseSession, user } = useAuth()
   const { activateDarkMode, activateLightMode, theme } = useTheme()
   
   const toggleDarkMode = () =>
@@ -72,7 +72,7 @@ export const Menu: React.FC<MenuProps> = ({ collapsed, mobileOpen = false }) => 
       <ul className="list-none mt-auto space-y-6">
         <UserWidget collapsed={collapsed} />
         <MenuItem 
-          onClick={onLogout}
+          onClick={onCloseSession}
           label="Cerrar Sesión"
           icon={<IoLogOutOutline />}
           collapsed={collapsed}

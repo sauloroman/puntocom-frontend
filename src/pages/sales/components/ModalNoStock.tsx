@@ -3,7 +3,7 @@ import { ModalLayout } from "../../../layouts"
 import { ConfirmButton } from "../../../shared/components/button"
 import { ModalNames } from "../../../interfaces/ui/modal.interface"
 import { useModal, useProducts, useTheme } from "../../../shared/hooks"
-import type { Product, ProductMinimal } from "../../../interfaces/dto/product.interface"
+import type { ProductMinimal } from "../../../interfaces/dto/product.interface"
 
 export const ModalNoStock: React.FC = () => {
 

@@ -253,6 +253,32 @@ export const purchaseSlice = createSlice({
             }
         },
 
+        resetPurchasesState: (state) => {
+            state.products = null
+            state.purchases = null
+            state.purchaseSelected = null
+            state.productSelectedToAdd = null
+            state.productsInPurchase = []
+            state.supplierSelected = null
+            state.isLoading = false
+            state.pagination = { page: 1, total: 1, totalPages: 1, itemsPerPage: 30 }
+            state.isPaginationVisible = true
+            state.purchasesPagination = { page: 1, total: 1, totalPages: 1, itemsPerPage: 20 }
+            state.isPurchasesPaginationVisible = true
+            state.filter = {
+                dates: { dateStart: null, dateEnd: null },
+                price: { minPrice: null, maxPrice: null },
+                supplier: { id: null, name: null },
+                user: { id: null, name: null },
+            }
+            state.filterProducts = {
+                status: null,
+                productName: null,
+                category: { id: null, name: null },
+                price: { maxPrice: null, minPrice: null },
+                supplier: { id: null, name: null },
+            }
+        },
     }
 })
 
@@ -285,4 +311,5 @@ export const {
     setStatusProductsFilter,
     setNameProductsFilter,
     resetProductsFilter,
+    resetPurchasesState,
 } = purchaseSlice.actions

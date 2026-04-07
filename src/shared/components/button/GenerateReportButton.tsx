@@ -17,8 +17,8 @@ export const GenerateReportButton: React.FC<GenerateReportButtonProps> = ({ text
       type='button'
       onClick={onClick}
       className={`
+        w-full text-center justify-center
         text-sm cursor-pointer flex items-center gap-2 rounded-full px-4 py-2 transition-colors duration-200
-
         ${
           isDark
             ? "bg-yellow-600 text-gray-800 hover:bg-yellow-600" 

@@ -105,7 +105,6 @@ export const startFilteringProductToBeInPurchase = (
                     params['product'] = productName.trim()
                 }
     
-                console.log(params)
                 const { data } = await puntocomApiPrivate.get<GetProductsResponse>('/api/product/filter', { params })
                 const { meta, products } = data
                 const { filter, ...restMetaPagination } = meta

@@ -81,7 +81,20 @@ export const reportsSlice = createSlice({
         deleteReport: (state, {payload}: PayloadAction<{ type: ReportEntities, reportId: string }>) => {
             if (!state.allReports) return;
             state.allReports[payload.type] = state.allReports[payload.type].filter(repo => repo.id !== payload.reportId);
-        }
+        },
+
+        resetReportsState: (state) => {
+            state.isLoading = false
+            state.users = { listReport: '' }
+            state.suppliers = { listReport: '' }
+            state.products = { listReport: '' }
+            state.purchases = { listReport: '' }
+            state.inventoryAdjustments = { listReport: '' }
+            state.allReports = null
+            state.selectedReports = 'users'
+            state.reportIdSelected = ''
+            state.urlReportSelected = ''
+        },
 
     }
 })
@@ -93,5 +106,6 @@ export const {
     setSelectedReports,
     setUrlReportSelected,
     setReportIdSelected,
-    deleteReport
+    deleteReport,
+    resetReportsState
 } = reportsSlice.actions 

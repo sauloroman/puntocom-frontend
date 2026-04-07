@@ -114,7 +114,22 @@ export const saleSlice = createSlice({
                     name: null
                 }
             }
-        }
+        },
+
+        resetSalesState: (state) => {
+            state.isLoading = false
+            state.saleCreated = null
+            state.selectedSale = null
+            state.saleToPrint = null
+            state.sales = []
+            state.pagination = { page: 1, total: 1, totalPages: 1, itemsPerPage: 15 }
+            state.isPaginationVisible = true
+            state.filter = {
+                user: { id: null, name: null },
+                price: { minPrice: null, maxPrice: null },
+                dates: { dateStart: null, dateEnd: null },
+            }
+        },
         
     }
 })
@@ -133,4 +148,5 @@ export const {
     setUserFilter,
     setSaleToPrint,
     resetFilter,
+    resetSalesState,
 } = saleSlice.actions

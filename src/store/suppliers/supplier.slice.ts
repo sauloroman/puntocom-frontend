@@ -130,6 +130,19 @@ export const suppliersSlice = createSlice({
             state.isGridStyleActive = !payload
         },
 
+        resetSuppliersState: (state) => {
+            state.isLoading = false
+            state.suppliers = null
+            state.allSuppliers = null
+            state.companies = null
+            state.supplierSelected = null
+            state.filter = { company: null, status: null, supplierName: null }
+            state.pagination = { page: 1, total: 1, totalPages: 1, itemsPerPage: 8 }
+            state.isPaginationVisible = true
+            state.isTableStyleActive = true
+            state.isGridStyleActive = false
+            state.isOrderedAsc = false
+        },
     }
 })
 
@@ -151,4 +164,5 @@ export const {
     setSuppliersStatusFilter,
     setTableView,
     updateSupplier,
+    resetSuppliersState,
 } = suppliersSlice.actions

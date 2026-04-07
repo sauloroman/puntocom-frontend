@@ -99,6 +99,25 @@ export const categoriesSlice = createSlice({
                 categoryName: null,
                 status: null
             }
+        },
+
+        resetCategoriesState: ( state ) => {
+            state.isLoading = false
+            state.categories = null
+            state.allCategories = null
+            state.categorySelected = null
+            state.filter = { 
+                categoryName: null, 
+                status: null,
+            }
+            state.pagination = {
+                page: 1,
+                total: 1,
+                totalPages: 1,
+                itemsPerPage: 8,
+            }
+            state.isPaginationVisible = true
+            state.isOrderedAsc = false
         }
 
     }
@@ -118,4 +137,5 @@ export const {
     setPage,
     updateCategory,
     resetFilter,
+    resetCategoriesState,
 } = categoriesSlice.actions

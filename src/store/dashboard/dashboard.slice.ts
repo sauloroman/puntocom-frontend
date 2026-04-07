@@ -39,7 +39,17 @@ export const dashboardSlice = createSlice({
 
         setIsLoading: ( state, { payload }: PayloadAction<boolean> ) => {
             state.isLoading = payload
-        }
+        },
+
+        resetDashboardState: (state) => {
+            state.stats = {
+                kpisStats: undefined,
+                productsStats: undefined,
+                purchasesStats: undefined,
+                salesStats: undefined,
+            }
+            state.isLoading = false
+        },
     }
 })
 
@@ -48,5 +58,6 @@ export const {
     setSalesStats,
     setPurchasesStats,
     setProductsStats,
-    setIsLoading
+    setIsLoading,
+    resetDashboardState
 } = dashboardSlice.actions 

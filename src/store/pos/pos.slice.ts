@@ -99,6 +99,15 @@ export const posSlice = createSlice({
         ) ?? [];
       }
     },
+
+    resetPosState: (state) => {
+      state.products = null
+      state.productToAdd = null
+      state.cart = []
+      state.categoryActive = ''
+      state.isLoading = false
+      state.pagination = { page: 1, total: 1, totalPages: 1, itemsPerPage: 50 }
+    },
   },
 });
 
@@ -114,4 +123,5 @@ export const {
   clearCart,
   decreaseQuantity,
   updateProductStockInPOS,
+  resetPosState,
 } = posSlice.actions;

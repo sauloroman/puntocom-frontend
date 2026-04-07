@@ -9,6 +9,7 @@ import {
     startGettingAllProducts, 
     startGettingAllProductsFull, 
     startGettingProductsByStock, 
+    startGettingProductsNoStock, 
     startUpdatingProduct, 
     startUploadingProductImage 
 } from "../../store/products/products.thunk"
@@ -104,6 +105,10 @@ export const useProducts = () => {
             undefined,
             undefined,
         ))        
+    }
+
+    const onGetProductsNoStock = () => {
+        dispatch(startGettingProductsNoStock())
     }
 
     const onGetMinimalProducts = () => {
@@ -238,6 +243,7 @@ export const useProducts = () => {
         onGetMinimalProducts,
         onGetProductById,
         onGetProducts,
+        onGetProductsNoStock,
         onGetProductsByStock,
         onOrderAlpha,
         onResetFilter,

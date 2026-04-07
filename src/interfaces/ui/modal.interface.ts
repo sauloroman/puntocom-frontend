@@ -27,7 +27,8 @@ export type ModalNames =
 'supplierSenMessageWhatsapp' |
 'addProductPurchase' |
 'emailSentForgotPassword' |
-'passwordChanged'
+'passwordChanged' |
+'reminderStock'
 
 export const ModalNames = {
     addProduct: 'addProduct' as ModalNames,
@@ -62,4 +63,5 @@ export const ModalNames = {
     seeProductImage: 'seeProductImage' as ModalNames,
     sendMessageToSupplier: 'sendMessageToSupplier' as ModalNames,
     supplierSenMessageWhatsapp: 'supplierSenMessageWhatsapp' as ModalNames,
+    reminderStock: 'reminderStock' as ModalNames,
 }

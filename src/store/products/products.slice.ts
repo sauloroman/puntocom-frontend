@@ -172,7 +172,29 @@ export const productsSlice = createSlice({
 
         setOrderedAsc: (state, {payload}:PayloadAction<boolean>) => {
             state.isOrderedAsc = payload
-        }
+        },
+
+        resetProductsState: (state) => {
+            state.isLoading = true
+            state.productsMinimal = null
+            state.products = null
+            state.allProducts = null
+            state.productSelected = null
+            state.productsNoStock = []
+            state.productNormalStock = []
+            state.productsLowStock = []
+            state.productWarningStock = []
+            state.filter = {
+                category: { id: null, name: null },
+                supplier: { id: null, name: null },
+                productName: null,
+                status: null,
+                price: { maxPrice: null, minPrice: null },
+            }
+            state.pagination = { page: 1, total: 1, totalPages: 1, itemsPerPage: 20 }
+            state.isPaginationVisible = true
+            state.isOrderedAsc = false
+        },
     }
 })
 
@@ -199,4 +221,5 @@ export const {
     setSelectedProduct,
     updateProduct,
     updateProductStockInWarehouse,
+    resetProductsState,
 } = productsSlice.actions

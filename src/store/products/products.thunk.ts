@@ -9,7 +9,8 @@ import type {
     EditProductResponse,
     ProductsByStock,
     GetProductsMinimal,
-    GetAllProducts
+    GetAllProducts,
+    ProductMinimal,
 } from "../../interfaces/dto/product.interface"
 import { 
     addProducts, 
@@ -20,6 +21,7 @@ import {
     setProductsMetaPagination, 
     setProductsMinimal, 
     setProductsNormalStock, 
+    setProductsNoStock, 
     setProductsWarningStock, 
     setSelectedProduct, 
     updateProduct } from "./products.slice"
@@ -38,10 +40,8 @@ export const startGettingAllProducts = () => {
     return async ( dispatch: Dispatch ) => {
         dispatch(setIsLoading(true))
         try {
-            
             const { data } = await puntocomApiPrivate.get<GetProductsMinimal>(`${urlProducts}/minimal`)
             const { products } = data
-
             dispatch(setProductsMinimal(products))
         } catch(error) {
             dispatch(showAlert({
@@ -71,6 +71,28 @@ export const startGettingAllProductsFull = () => {
             }))
         } finally {
             dispatch(setIsLoading(false))
+        }
+    }
+}
+
+export const startGettingProductsNoStock = () => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch( setIsLoading( true ))
+        try {
+            const { data } = await puntocomApiPrivate.get<GetProductsMinimal>(`${urlProducts}/minimal`)
+            const { products } = data
+            
+            const productsNoStock: ProductMinimal[] = products.filter( pro => pro.productStock <= 0 )
+            dispatch(setProductsNoStock(productsNoStock))
+
+        } catch( error ) {
+            dispatch(showAlert({
+                title: "⚠️ Error productos",
+                text: 'No se pudieron obtener los productos sin stock',
+                type: AlertType.error,
+            }))
+        } finally {
+            dispatch( setIsLoading( false ))
         }
     }
 }
@@ -120,7 +142,6 @@ export const startFilteringProducts = (
 
             dispatch(setProducts(products))
             dispatch(setProductsMetaPagination({ ...restMetaPagination, itemsPerPage }))
-
         } catch(error) {
             dispatch(showAlert({
                 title: "⚠️ Error productos",

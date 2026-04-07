@@ -25,6 +25,13 @@ export const alertSlice = createSlice({
             state.text = null
             state.type = AlertType.info
             state.isVisible = false
+        },
+
+        resetAlertState: (state) => {
+            state.title = null
+            state.text = null
+            state.type = AlertType.info
+            state.isVisible = false
         }
 
     }
@@ -32,5 +39,6 @@ export const alertSlice = createSlice({
 
 export const {
     showAlert,
-    closeAlert
+    closeAlert,
+    resetAlertState
 } = alertSlice.actions

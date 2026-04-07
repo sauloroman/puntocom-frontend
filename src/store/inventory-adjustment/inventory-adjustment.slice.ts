@@ -85,6 +85,19 @@ export const inventorySlice = createSlice({
             state.isTableStyleActive = payload
             state.isGridStyleActive = !payload
         },
+
+        resetInventoryState: (state) => {
+            state.isLoading = false
+            state.adjustments = null
+            state.adjustmentSelected = null
+            state.pagination = { page: 1, total: 0, totalPages: 0, itemsPerPage: 10 }
+            state.filter = {
+                adjustmentType: null,
+                user: { id: null, name: null },
+            }
+            state.isTableStyleActive = true
+            state.isGridStyleActive = false
+        },
     }
 })
 
@@ -99,4 +112,5 @@ export const {
     setIsLoading,
     setPage,
     setTableView,
+    resetInventoryState,
 } = inventorySlice.actions

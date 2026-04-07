@@ -42,6 +42,15 @@ export const authSlice = createSlice({
 
         setForgotPassword: ( state, { payload }: PayloadAction<{ email: string}>) => {
             state.forgotPasswordEmail = payload
+        },
+
+        resetAuthState: (state) => {
+            state.status = AuthStatus.UNAUTHENTICATED
+            state.user = null
+            state.isLoading = false
+            state.forgotPasswordEmail = {
+                email: null
+            } 
         }
 
     }
@@ -51,5 +60,6 @@ export const {
     login,
     logout,
     setIsLoading,
-    setForgotPassword
+    setForgotPassword,
+    resetAuthState
 } = authSlice.actions
