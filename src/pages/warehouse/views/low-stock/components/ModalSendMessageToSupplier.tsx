@@ -36,8 +36,8 @@ export const ModalSendMessageToSupplier: React.FC = () => {
     }
 
     return (
-        <ModalLayout width='w-full sm:w-[95%] md:w-[850px] lg:w-[900px]'>
-            <div className='p-3 sm:p-4 md:p-5 overflow-y-scroll h-[500px] md:h-[550px] no-scrollbar'>          
+        <ModalLayout width='w-full sm:w-[95%] md:w-[850px] lg:w-[1000px]'>
+            <div className='p-3 sm:p-4 md:p-5 overflow-y-scroll h-[500px] md:h-[600px] no-scrollbar'>          
                 <div className='hidden md:block mb-4 sm:mb-6'>
                     <h2 className={`
                         text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2 transition-colors duration-200

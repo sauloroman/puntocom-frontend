@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { ProductInPurchase, PurchaseWithDetails, SavePurchaseDetail } from "../../interfaces/dto/purchase.interface";
 import type { Product } from "../../interfaces/dto/product.interface";
 import type { MetaPagination } from "../../interfaces/dto/pagination.interface";
-import type { FilterPurchases } from "../../interfaces/ui/filter.interface";
+import type { FilterProducts, FilterPurchases } from "../../interfaces/ui/filter.interface";
 
 interface PurchasesState {
     products: Product[] | null,
@@ -16,7 +16,8 @@ interface PurchasesState {
     purchasesPagination: MetaPagination & { itemsPerPage: number },
     isPurchasesPaginationVisible: boolean,
     isLoading: boolean,
-    filter: FilterPurchases
+    filter: FilterPurchases,
+    filterProducts: FilterProducts
 }
 
 const initialState: PurchasesState = {
@@ -57,6 +58,22 @@ const initialState: PurchasesState = {
         user: {
             id: null,
             name: null,
+        }
+    },
+    filterProducts: {
+        status: null,
+        productName: null,
+        category: {
+            id: null,
+            name: null,
+        },
+        price: {
+            maxPrice: null,
+            minPrice: null
+        },
+        supplier: {
+            id: null,
+            name: null
         }
     }
 }
@@ -207,7 +224,34 @@ export const purchaseSlice = createSlice({
                     name: null
                 }
             }
-        }
+        },
+
+        setStatusProductsFilter: ( state, { payload }: PayloadAction<Pick<FilterProducts, 'status'>>) => {
+            state.filterProducts.status = payload.status
+        },
+
+        setNameProductsFilter: ( state, { payload }: PayloadAction<Pick<FilterProducts, 'productName'>>) => {
+            state.filterProducts.productName = payload.productName
+        },
+
+        resetProductsFilter: (state) => {
+            state.filterProducts = {
+                status: null,
+                productName: null,
+                category: {
+                    id: null,
+                    name: null,
+                },
+                price: {
+                    maxPrice: null,
+                    minPrice: null
+                },
+                supplier: {
+                    id: null,
+                    name: null
+                }
+            }
+        },
 
     }
 })
@@ -238,4 +282,7 @@ export const {
     setSupplierSelected,
     updateProductStock,
     updateProductToBeInPurchase,
+    setStatusProductsFilter,
+    setNameProductsFilter,
+    resetProductsFilter,
 } = purchaseSlice.actions

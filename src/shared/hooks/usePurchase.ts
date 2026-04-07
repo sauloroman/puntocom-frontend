@@ -8,14 +8,17 @@ import {
   incrementProductQuantityInPurchase,
   removeProductInPurchase,
   resetFilter,
+  resetProductsFilter,
   setDatesFilter,
   setFilterSupplier,
   setFilterUser,
+  setNameProductsFilter,
   setPageProducts,
   setPagePurchases,
   setPricesFilter,
   setProductSelectedToAdd,
   setPurchaseSelected,
+  setStatusProductsFilter,
   setSupplierSelected,
 } from "../../store/purchase/purchase.slice"
 
@@ -26,17 +29,18 @@ import type {
 
 import {
   startFilteringPurchases,
-  startGettingProductsToBeInPurchase,
+  startFilteringProductToBeInPurchase,
   startSavingPurchase,
 } from "../../store/purchase/purchase.thunk"
 
-import type { FilterPurchasesDTO } from "../../interfaces/ui/filter.interface"
+import type { FilterProducts, FilterPurchasesDTO } from "../../interfaces/ui/filter.interface"
 
 export const usePurchase = () => {
   const dispatch = useDispatch<any>()
 
   const {
     filter,
+    filterProducts,
     products,
     pagination,
     isPaginationVisible,
@@ -50,7 +54,7 @@ export const usePurchase = () => {
     isLoading,
   } = useSelector((state: RootState) => state.purchase)
 
-    const applyPurchasesFilters = (
+  const applyPurchasesFilters = (
     page: number,
     limit: number,
     overrides?: Partial<FilterPurchasesDTO>
@@ -98,9 +102,52 @@ export const usePurchase = () => {
     }
   }
 
+  const applyProductsToBeInPurchaseFilters = (
+    page: number,
+    limit: number,
+    overrides?: Partial<FilterProducts>
+  ) => {
+
+    const current: FilterProducts = {
+      category: filterProducts.category,
+      productName: filterProducts.productName,
+      status: filterProducts.status,
+      supplier: filterProducts.supplier,
+      price: filterProducts.price
+    }
+
+    const applied = { ...current, ...overrides }
+    const hasStatusFilter = applied.status !== null
+    const hasCategoryFilter = applied.category !== null
+    const hasSupplierFilter = applied.supplier !== null
+    const hasProductnameFilter = applied.productName !== null
+    const hasPriceFilter = applied.price !== null
+
+    if (
+      hasStatusFilter ||
+      hasCategoryFilter ||
+      hasSupplierFilter ||
+      hasProductnameFilter ||
+      hasPriceFilter
+    ) {
+      dispatch(startFilteringProductToBeInPurchase(
+        applied.status ?? undefined,
+        applied.productName ?? undefined,
+        { page, limit }
+      ))
+    } else {
+      dispatch(startFilteringProductToBeInPurchase(
+        undefined,
+        undefined,
+        { page, limit }
+      ))
+    }
+
+  }
+
 
   const onGetPurchases = () => {
-    dispatch( startFilteringPurchases(
+    dispatch(startFilteringPurchases(
       undefined,
       undefined,
       undefined,
@@ -109,10 +156,11 @@ export const usePurchase = () => {
   }
 
   const onGetProductsToBeInPurchase = () => {
-    dispatch(startGettingProductsToBeInPurchase({
-      page: 1,
-      limit: pagination.itemsPerPage,
-    }))
+    dispatch(startFilteringProductToBeInPurchase(
+      undefined,
+      undefined,
+      { page: 1, limit: pagination.itemsPerPage }
+    ))
   }
 
   const onSetSelectedPurchase = (purchaseId: string) => {
@@ -157,19 +205,32 @@ export const usePurchase = () => {
     dispatch(decrementProductQuantityInPurchase(productId))
   }
 
+  const onSetFilterProductsByName = (productName: string | null) => {
+    dispatch(setNameProductsFilter({ productName }))
+    dispatch(setPageProducts(1))
+    applyProductsToBeInPurchaseFilters(1, pagination.itemsPerPage, { productName })
+  }
+
+  const onSetFilterProductsByStatus = (status: string | null) => {
+    dispatch(setStatusProductsFilter({ status }))
+    dispatch(setPageProducts(1))
+    applyProductsToBeInPurchaseFilters(1, pagination.itemsPerPage, { status })
+  }
+
   const onSetPagePagination = (page: number) => {
     dispatch(setPageProducts(page))
-    dispatch(
-      startGettingProductsToBeInPurchase({
-        page,
-        limit: pagination.itemsPerPage,
-      })
-    )
+    applyProductsToBeInPurchaseFilters(page, pagination.itemsPerPage)
+  }
+
+  const onResetFilterProducts = () => {
+    dispatch(resetProductsFilter())
+    dispatch(setPageProducts(1))
+    onGetProductsToBeInPurchase()
   }
 
   const onSetPagePurchasesPagination = (page: number) => {
     dispatch(setPagePurchases(page))
-    applyPurchasesFilters(page, purchasesPagination.itemsPerPage) 
+    applyPurchasesFilters(page, purchasesPagination.itemsPerPage)
   }
 
   const onSetFilterPurchasesByUser = (userId: string, userName: string) => {
@@ -178,19 +239,19 @@ export const usePurchase = () => {
     applyPurchasesFilters(1, purchasesPagination.itemsPerPage, { userId })
   }
 
-  const onSetFilterPurchasesBySupplier = ( supplierId: string, supplierName: string ) => {
+  const onSetFilterPurchasesBySupplier = (supplierId: string, supplierName: string) => {
     dispatch(setFilterSupplier({ supplier: { id: supplierId, name: supplierName } }))
     dispatch(setPagePurchases(1))
-    applyPurchasesFilters(1, purchasesPagination.itemsPerPage, {supplierId})
+    applyPurchasesFilters(1, purchasesPagination.itemsPerPage, { supplierId })
   }
 
-  const onSetFilterPurchasesByPriceRange = ( minPrice: number | null, maxPrice: number | null ) => {
+  const onSetFilterPurchasesByPriceRange = (minPrice: number | null, maxPrice: number | null) => {
     dispatch(setPricesFilter({ price: { minPrice, maxPrice } }))
     dispatch(setPagePurchases(1))
     applyPurchasesFilters(1, purchasesPagination.itemsPerPage, { minPrice, maxPrice })
   }
 
-  const onSetFilterPurchasesByDateRange = ( dateStart: string | null, dateEnd: string | null ) => {
+  const onSetFilterPurchasesByDateRange = (dateStart: string | null, dateEnd: string | null) => {
     dispatch(setDatesFilter({ dates: { dateStart, dateEnd } }))
     dispatch(setPagePurchases(1))
     applyPurchasesFilters(1, purchasesPagination.itemsPerPage, { dateStart, dateEnd })
@@ -205,6 +266,7 @@ export const usePurchase = () => {
   return {
     // state
     filter,
+    filterProducts,
     isLoading,
     isPaginationVisible,
     isPurchasesPaginationVisible,
@@ -235,5 +297,8 @@ export const usePurchase = () => {
     onSetPagePurchasesPagination,
     onSetSelectedPurchase,
     onSetSupplierSelected,
+    onSetFilterProductsByName,
+    onSetFilterProductsByStatus,
+    onResetFilterProducts,
   }
 }

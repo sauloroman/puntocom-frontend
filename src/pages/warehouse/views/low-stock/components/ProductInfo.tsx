@@ -55,29 +55,29 @@ export const ProductInfo: React.FC<Props> = ({ product }) => {
                 <div className={`
                     border rounded-lg p-3 transition-colors duration-200
                     ${isDark
-                        ? 'bg-red-950/40 border-red-800/50'
+                        ? 'bg-gray-950/40 border-gray-800/50'
                         : 'bg-red-50 border-red-200'
                     }
                 `}>
                     <div className='flex items-center justify-between mb-2'>
                         <span className={`
                             text-xs font-semibold uppercase tracking-wide
-                            ${isDark ? 'text-red-400' : 'text-red-700'}
+                            ${isDark ? 'text-gray-400' : 'text-gray-700'}
                         `}>
                             Nivel de Stock
                         </span>
-                        <svg className={`w-5 h-5 ${isDark ? 'text-red-400' : 'text-red-600'}`} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <svg className={`w-5 h-5 ${isDark ? 'text-gray-400' : 'text-gray-600'}`} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z' />
                         </svg>
                     </div>
                     <div className='flex items-center justify-between'>
                         <div>
-                            <p className={`text-xs ${isDark ? 'text-red-300' : 'text-red-600'}`}>Stock Actual</p>
-                            <p className={`text-2xl font-bold ${isDark ? 'text-red-400' : 'text-red-700'}`}>{product.stock}</p>
+                            <p className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Stock Actual</p>
+                            <p className={`text-2xl font-bold ${isDark ? 'text-gray-400' : 'text-gray-700'}`}>{product.stock}</p>
                         </div>
                         <div className='text-right'>
-                            <p className={`text-xs ${isDark ? 'text-red-300' : 'text-red-600'}`}>Stock Mínimo</p>
-                            <p className={`text-2xl font-bold ${isDark ? 'text-red-400' : 'text-red-700'}`}>{product.stockMin}</p>
+                            <p className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Stock Mínimo</p>
+                            <p className={`text-2xl font-bold ${isDark ? 'text-gray-400' : 'text-gray-700'}`}>{product.stockMin}</p>
                         </div>
                     </div>
                 </div>

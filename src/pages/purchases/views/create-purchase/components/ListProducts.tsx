@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import type { Product } from '../../../../../interfaces/dto/product.interface'
-import { useProducts, useTheme } from '../../../../../shared/hooks'
-import { ListProductItem, SelectSupplier, PaginationProductsPurchase } from './'
-import { ToggleButton } from '../../../../../shared/components/button'
+import { usePurchase, useTheme } from '../../../../../shared/hooks'
+import { ListProductItem, SelectSupplier, PaginationProductsPurchase, FilterProductsInPurchasesByStatus, SearchProduct } from './'
+import { SpinnerContainer } from '../../../../../shared/components/spinner'
 
 interface Props {
     products: Product[]
@@ -10,25 +10,13 @@ interface Props {
 
 export const ListProducts: React.FC<Props> = ({ products }) => {
 
-    const [filteredProducts, setFilteredProducts] = useState<Product[]>(products)
-
-    const { onGetProducts } = useProducts()
+    const { onGetProductsToBeInPurchase, isLoading } = usePurchase()
     const { theme } = useTheme()
     const isDark = theme === 'dark'
 
     useEffect(() => {
-        if (!products) onGetProducts()
+        if (!products) onGetProductsToBeInPurchase()
     }, [])
-
-    const onToggleInactiveProducts = (status: boolean) => {
-        let productsFiltered = []
-        if (status) {
-            productsFiltered = products.filter(pro => !pro.isActive)
-        } else {
-            productsFiltered = products.filter(pro => pro.isActive)
-        }
-        setFilteredProducts(productsFiltered)
-    }
 
     return (
         <div className={`
@@ -42,19 +30,22 @@ export const ListProducts: React.FC<Props> = ({ products }) => {
                 `}>
                     Lista de productos
                 </h2>
-
-                <div className="flex justify-between items-center gap-15">
+                
+                <SearchProduct />
+                <div className="flex justify-between items-center gap-8">
                     <SelectSupplier />
-                    <div className='flex items-center gap-2'>
-                        <p className={`${isDark ? 'text-gray-200' : 'text-gray-700'} text-sm`}>Inactivos</p>
-                        <ToggleButton onToggle={onToggleInactiveProducts} />
-                    </div>
+                    <FilterProductsInPurchasesByStatus />
                 </div>
             </div>
-            <ul className="flex flex-col gap-2 sm:gap-3 overflow-y-scroll h-[60vh] sm:h-[70vh] p-2 sm:p-4 no-scrollbar mb-8 sm:mb-12">
+
+            {
+                isLoading 
+                ? (<div className='my-24'><SpinnerContainer size='lg' color='bg-white' /></div>)
+                : (
+                     <ul className="flex flex-col gap-2 sm:gap-3 overflow-y-scroll h-[60vh] sm:h-[70vh] p-2 sm:p-4 no-scrollbar mb-8 sm:mb-12">
                 {
-                    filteredProducts?.length > 0 ? (
-                        filteredProducts.map(product => (
+                    products?.length > 0 ? (
+                        products.map(product => (
                             <ListProductItem
                                 product={product}
                                 key={product.id}
@@ -72,6 +63,9 @@ export const ListProducts: React.FC<Props> = ({ products }) => {
                     )
                 }
             </ul>
+                )
+            }
+           
             <PaginationProductsPurchase />
         </div>
     )
