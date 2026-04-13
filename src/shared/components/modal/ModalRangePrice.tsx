@@ -38,7 +38,7 @@ export const ModalRangePrices: React.FC<Props> = ({ onSetFilterPrices }) => {
     }
 
     return (
-        <ModalLayout width='w-xl'>
+        <ModalLayout width='w-3xl'>
             <div className='space-y-7'>
                 <div className='flex flex-col md:flex-row gap-4 md:gap-5 w-full items-stretch md:items-center'>
                     

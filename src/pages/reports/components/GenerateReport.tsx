@@ -20,7 +20,7 @@ export const GenerateReport: React.FC<Props> = ({ onConfirm }) => {
             {
                 isLoading
                 ? (<SpinnerContainer color='bg-white' size='sm' />)
-                : ((<GenerateReportButton onClick={onConfirmPasswordModal} text='Reporte' />))
+                : ((<GenerateReportButton onClick={onConfirmPasswordModal} text='Generar Reporte' />))
             }
         </div>
     )

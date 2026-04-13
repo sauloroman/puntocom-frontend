@@ -3,6 +3,7 @@ import type { Product } from '../../../../../interfaces/dto/product.interface'
 import { ModalNames } from '../../../../../interfaces/ui/modal.interface';
 import { AlertType } from '../../../../../interfaces/ui/alert.interface';
 import { useAlert, useModal, usePurchase, useTheme } from '../../../../../shared/hooks';
+import { FiHash, FiTag, FiBox, FiPackage, FiMoreHorizontal } from 'react-icons/fi'
 
 interface Props {
     product: Product
@@ -60,9 +61,7 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
                         />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                            <svg className={`w-6 h-6 sm:w-8 sm:h-8 ${isDark ? 'text-blue-400' : 'text-blue-500'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                            </svg>
+                            <FiPackage className={`w-6 h-6 sm:w-8 sm:h-8 ${isDark ? 'text-blue-400' : 'text-blue-500'}`} />
                         </div>
                     )}
                     {!product.isActive && (
@@ -90,7 +89,6 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
                         </p>
                     </div>
                     
-                    {/* Precio visible en mobile - top right */}
                     <div className="sm:hidden flex-shrink-0 text-right">
                         <div className={`
                             text-lg font-bold transition-colors
@@ -103,9 +101,7 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
 
                 <div className="flex flex-wrap items-center gap-2 mt-2 text-xs sm:text-sm">
                     <div className="flex items-center gap-1.5">
-                        <svg className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
-                        </svg>
+                        <FiHash className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} />
                         <span className={`
                             font-mono text-xs transition-colors
                             ${isDark ? 'text-gray-400' : 'text-gray-600'}
@@ -119,6 +115,7 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
                             flex items-center gap-1.5 px-2 py-0.5 sm:py-1 rounded-md transition-colors
                             ${isDark ? 'bg-blue-900/30' : 'bg-blue-50'}
                         `}>
+                            <FiTag className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isDark ? 'text-blue-400' : 'text-blue-700'}`} />
                             <span className={`
                                 text-xs font-medium transition-colors
                                 ${isDark ? 'text-blue-400' : 'text-blue-700'}
@@ -135,12 +132,10 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
                             : isDark ? 'bg-green-900/30' : 'bg-green-50'
                         }
                     `}>
-                        <svg className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isLowStock
+                        <FiBox className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isLowStock
                             ? isDark ? 'text-red-400' : 'text-red-600'
                             : isDark ? 'text-green-400' : 'text-green-600'
-                            }`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                        </svg>
+                            }`} />
                         <span className={`
                             text-xs font-semibold transition-colors
                             ${isLowStock 
@@ -183,9 +178,7 @@ export const ListProductItem: React.FC<Props> = ({ product }) => {
             </div>
 
             <div className="hidden sm:block flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                <svg className={`w-5 h-5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8h16M4 16h16" />
-                </svg>
+                <FiMoreHorizontal className={`w-5 h-5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} />
             </div>
         </div>
     );

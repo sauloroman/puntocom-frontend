@@ -14,7 +14,7 @@ export const CreateUserButton: React.FC = () => {
     return (
         <CreateButton
             onClick={ onConfirmPasswordModal } 
-            className='p-2 w-40' 
+            className='p-2 w-50' 
             text='Crear Usuario' 
         />
     )

@@ -7,6 +7,7 @@ import { useAuth, useDrawer, useProducts, useTheme } from '../../../../../shared
 import { StatusBadge } from '../../../../../shared/components/badgets'
 import placeholderProduct from '../../../../../assets/img/placeholder-product.png'
 import { Roles } from '../../../../../interfaces/dto/user.interface'
+import { formatMoney } from '../../../../../shared/helpers'
 
 interface ProductItemButtonsProps {
   productId: string
@@ -123,7 +124,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           {product.name}
         </h3>
 
-        <div className='flex gap-2'>
+        <div className='flex gap-2 justify-between items-center'>
           <span
             className={`
               inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-2xl font-bold
@@ -141,7 +142,19 @@ export const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
                       }
             `}
           >
-            {product.stock === 0 ? "Sin stock" : `${product.stock} uds`}
+            {product.stock === 0 ? "Sin stock" : `${product.stock} u`}
+          </span>
+
+          <span
+            className={`
+              inline-flex items-center px-3 py-1 rounded-lg text-sm font-semibold
+              ${isDark
+                ? "bg-blue-900/40 text-blue-300 border border-blue-800"
+                : "bg-blue-50 text-blue-700 border border-blue-200"
+              }
+            `}
+          >
+            ${formatMoney(product.sellingPrice)}
           </span>
         </div>
 

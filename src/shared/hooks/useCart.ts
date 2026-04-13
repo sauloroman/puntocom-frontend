@@ -1,9 +1,11 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import { useEffect, useState } from "react"
+import { clearCart } from "../../store/pos/pos.slice"
 
 export const useCart = () => {
     
+    const dispatch = useDispatch<any>()
     const { cart } = useSelector( (state: RootState) => state.pos )
     const [ cartResults, setCartResult ] = useState({
         subtotal: 0,
@@ -29,6 +31,10 @@ export const useCart = () => {
         return cart?.reduce( (total, pro) => total + pro.discount, 0) ?? 0
     }
 
+    const clearProductsInCart = () => {
+        dispatch( clearCart() )
+    }
+
     useEffect(() => {
         calculateTotal()
     }, [cart])
@@ -38,6 +44,8 @@ export const useCart = () => {
         subtotal: cartResults.subtotal,
         discount: cartResults.discount,
         total: cartResults.total,
+
+        clearProductsInCart
     }
 
 }

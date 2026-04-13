@@ -77,7 +77,7 @@ export const ModalCreateProduct: React.FC = () => {
 
         <div className="flex gap-5 w-full items-center">
           {[
-            { id: 'sellingPrice', label: 'Precio de venta $', placeholder: '$25.00', message: 'El precio de venta es obligatorio' },
+            { id: 'sellingPrice', label: 'Precio de venta $', placeholder: '$25.00', message: 'El precio de venta debe ser mayor a 0' },
             { id: 'stock',        label: 'Stock',             placeholder: '15',     message: 'El stock debe ser mayor a 0' },
             { id: 'stockMin',     label: 'Stock Mínimo',      placeholder: '5',      message: 'El stock mínimo debe ser mayor a 0' },
           ].map((field) => (

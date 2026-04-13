@@ -6,7 +6,7 @@ import { useCart, useSale, useModal, useTheme } from '../../../shared/hooks'
 
 export const ModalConfirmSale: React.FC = () => {
 
-    const { cart, total } = useCart()
+    const { cart, total, clearProductsInCart } = useCart()
     const { onSaveSale } = useSale()
     const { onCloseModal } = useModal()
     const { theme } = useTheme()
@@ -14,6 +14,11 @@ export const ModalConfirmSale: React.FC = () => {
 
     const saveSale = () => {
         onSaveSale(cart!, total)
+        onCloseModal()
+    }
+
+    const onCancelSale = () => {
+        clearProductsInCart()
         onCloseModal()
     }
 
@@ -92,7 +97,7 @@ export const ModalConfirmSale: React.FC = () => {
                     />
                     <CancelButton
                         className="p-2 flex-1"
-                        onClick={onCloseModal}
+                        onClick={onCancelSale}
                         text="Cancelar Registro de venta"
                     />
                 </div>

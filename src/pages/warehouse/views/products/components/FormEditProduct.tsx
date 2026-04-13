@@ -119,7 +119,7 @@ export const FormEditProduct: React.FC = () => {
           {
             ...register('sellingPrice', {
               required: 'Obligatorio',
-              min: { value: 1, message: 'El precio debe ser positivo'},
+              min: { value: 1, message: 'El precio debe ser mayor a 0'},
             })
           }
         />

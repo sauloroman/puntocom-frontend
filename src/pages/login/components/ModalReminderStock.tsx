@@ -71,10 +71,10 @@ export const ModalReminderStock: React.FC = () => {
                 </ul>
 
                 <div className="flex justify-center gap-4">
-
+{/* 
                     <div className="w-full">
                         <GenerateReportButton text='Generar reporte' />                
-                    </div>
+                    </div> */}
 
                     <div className='w-full' onClick={onLogout}>
                         <ConfirmButton 
